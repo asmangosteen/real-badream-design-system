@@ -1,1 +1,32 @@
-
+{
+  "ref-spacing-00": "-2px", "ref-spacing-01": "1px", "ref-spacing-02": "2px", "ref-spacing-03": "3px",
+  "ref-spacing-04": "4px", "ref-spacing-05": "6px", "ref-spacing-06": "8px", "ref-spacing-07": "10px",
+  "ref-spacing-08": "12px", "ref-spacing-09": "14px", "ref-spacing-10": "16px", "ref-spacing-11": "20px",
+  "ref-spacing-12": "24px", "ref-spacing-13": "28px", "ref-spacing-14": "32px", "ref-spacing-15": "36px",
+  "ref-spacing-16": "40px", "ref-spacing-17": "48px", "ref-spacing-18": "56px", "ref-spacing-19": "64px",
+  "ref-spacing-20": "72px", "ref-spacing-21": "80px", "ref-spacing-22": "120px", "ref-spacing-23": "200px",
+  "rule": "Gap과 Padding 구분 없이 Spacing 값을 사용. 2·4·8 배수 기반, 일부 구간 예외값 적용.",
+  "grid": {
+    "mobile": {
+      "frame": "390 × 844 (figma-iPhone14)",
+      "columns": 4,
+      "marginToken": "ref-spacing-11",
+      "marginValue": "20px",
+      "gutterToken": "ref-spacing-08",
+      "gutterValue": "12px",
+      "contentWidth": "350px",
+      "bottomPadding": "40px"
+    },
+    "web": {
+      "frame": "1920 × 1080 (figma-slide16:9)",
+      "columns": 12,
+      "marginToken": "ref-spacing-16",
+      "marginValue": "40px",
+      "gutterToken": "ref-spacing-12",
+      "gutterValue": "24px",
+      "contentWidth": "1840px",
+      "bottomPadding": "40px"
+    },
+    "scrollRule": "Mobile/Web 모두 스크롤 시 하단 padding 40px 필수 적용"
+  }
+}
