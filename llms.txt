@@ -1,0 +1,39 @@
+# 바드림 디자인 시스템
+
+> 배달라이더를 위한 전기이륜차 구독 플랫폼 바드림의 디자인 시스템입니다.
+> 이 파일은 저장소 전체의 색인입니다. 실제 값과 상세 내용은 각 링크된 파일에 있습니다.
+
+## 필수 규칙 (모든 작업 전 확인)
+
+- 색상/스페이싱/라운드/그림자/타이포그래피는 반드시 tokens/ 폴더의 토큰을 사용합니다. 임의 값 생성 금지.
+- 컬러 역할 고정: Blue(sys-color-brand-primary-default)=CTA/활성/링크, Orange(sys-color-theme-warning-default)=경고, Red(sys-color-theme-error-default)=오류/파괴적 액션 전용. 역할을 임의로 바꾸지 않습니다.
+- 로고, 캐릭터, 제조사/BSS 아이콘은 assets/ 안의 원본 파일을 그대로 사용합니다. 재작도, 색상 변경 금지.
+- UX 카피는 해요체, 사용자 관점, 행동 지향적으로 작성합니다. docs/DESIGN.md의 UX Writing 섹션을 따릅니다.
+- 필요한 토큰/에셋이 저장소에 없으면 임의로 만들지 말고, 없다는 것을 명시합니다.
+
+## 디자인 토큰 (tokens/)
+
+- tokens/tokens.css: 전체 토큰의 CSS 변수 버전. 실제 구현 시 이걸 우선 참조합니다.
+- tokens/colors.json: 컬러 팔레트 및 시스템 컬러 역할 매핑
+- tokens/typography.json: 폰트 스타일 9종 × weight 4종 조합표
+- tokens/spacing.json: 스페이싱 스케일 및 그리드 값
+- tokens/radius.json: 라운드, 보더 두께, 오퍼시티 값
+- tokens/shadows.json: 그림자 7종 및 컴포넌트별 매핑
+
+## 원칙 및 가이드 (docs/)
+
+- docs/DESIGN.md: 브랜드 아이덴티티, UX 라이팅 원칙, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (DESIGN2.md 원본)
+- docs/SCREEN.md: 착한구독·신차구매 두 핵심 플로우의 화면 흐름, 상태 머신, UX 패턴 (통합본)
+
+## 에셋 (assets/)
+
+- assets/logo/: CI(사이클로이드)·BI(바드림) 로고 SVG/PNG, 앱 아이콘
+- assets/character/: 드림맨·드림걸 캐릭터 (배경 있음/없음)
+- assets/fonts/: Pretendard 폰트 파일(woff2) + LICENSE.txt
+- assets/icons/icons-manifest.json: 전체 아이콘 목록 색인 (UI Default/Filled, Colored, Maker, BSS, Service — 사이즈별)
+
+## 빠른 참조
+
+- 주요 CTA 컬러가 필요하면 → tokens/tokens.css의 --sys-color-brand-primary-default
+- 화면 하나를 새로 만들 때 → docs/SCREEN.md에서 유사 플로우 패턴 확인 후 tokens/tokens.css로 스타일링
+- 아이콘이 필요하면 → assets/icons/icons-manifest.json에서 이름과 사이즈 확인 후 해당 경로 사용

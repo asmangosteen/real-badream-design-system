@@ -1,0 +1,86 @@
+{
+  "$schema": "design-system-spec",
+  "name": "바드림 디자인 시스템",
+  "shortName": "badream-design-system",
+  "version": "1.0.0",
+  "description": "배달라이더를 위한 전기이륜차 구독 플랫폼 바드림의 디자인 시스템. 컬러, 타이포그래피, 스페이싱, 아이콘, 로고 등 UI 구현에 필요한 전체 자산과 원칙을 포함합니다.",
+  "sourceOfTruth": "Figma (이 저장소는 파생본입니다. 값 충돌 시 Figma 우선)",
+
+  "principles": [
+    "색상/타이포/스페이싱/라운드/그림자는 항상 tokens/ 토큰을 참조하고 임의 값을 만들지 않는다",
+    "컬러 역할은 고정: Blue=CTA/활성, Orange=경고, Red=오류/파괴적 액션 전용",
+    "로고/캐릭터/제조사·BSS 아이콘은 원본 그대로 사용, 변형 금지",
+    "UX 카피는 해요체, 사용자 관점, 행동 지향적으로 작성",
+    "주 사용자층(40~50대 배달 라이더)의 가독성을 모든 화면 결정의 기준으로 둔다"
+  ],
+
+  "tokens": {
+    "css": "tokens/tokens.css",
+    "colors": "tokens/colors.json",
+    "typography": "tokens/typography.json",
+    "spacing": "tokens/spacing.json",
+    "radius": "tokens/radius.json",
+    "shadows": "tokens/shadows.json"
+  },
+
+  "colorRoles": {
+    "primary": { "token": "sys-color-brand-primary-default", "hex": "#307EE8", "usage": "CTA, 활성 상태, 링크, 스텝 인디케이터" },
+    "secondary": { "token": "sys-color-brand-secondary-default", "hex": "#3E4F6B", "usage": "보조 CTA, 딥블루 강조" },
+    "warning": { "token": "sys-color-theme-warning-default", "hex": "#FF782C", "usage": "경고 상태 전용 (오류 아님)" },
+    "error": { "token": "sys-color-theme-error-default", "hex": "#E83030", "usage": "오류, 파괴적 액션 전용" },
+    "success": { "token": "sys-color-theme-success-default", "hex": "#139036", "usage": "완료, 성공, 정상 상태" }
+  },
+
+  "typography": {
+    "fontFamily": "Pretendard, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+    "fontFiles": "assets/fonts/",
+    "scaleRef": "tokens/typography.json",
+    "weights": ["regular", "medium", "semibold", "bold"],
+    "rule": "12px 이하 사이즈 사용 지양, Weight는 4종만 사용"
+  },
+
+  "docs": {
+    "designPrinciples": "docs/DESIGN.md",
+    "screenFlows": "docs/SCREEN.md"
+  },
+
+  "assets": {
+    "logo": {
+      "path": "assets/logo/",
+      "note": "CI(사이클로이드)와 BI(바드림) 구분 있음. ci-signature-*=사이클로이드, bi-symbol-*/bi-signature-*=바드림"
+    },
+    "character": {
+      "path": "assets/character/",
+      "items": ["dreamman", "dreamgirl"],
+      "usage": "고객 A/S 및 문의 응대 프로필 전용"
+    },
+    "fonts": {
+      "path": "assets/fonts/",
+      "license": "assets/fonts/LICENSE.txt (SIL OFL 1.1)"
+    },
+    "icons": {
+      "path": "assets/icons/",
+      "manifest": "assets/icons/icons-manifest.json",
+      "categories": {
+        "default/outlined": { "count": 101, "sizes": [12, 16, 20, 24] },
+        "default/filled": { "count": 20, "sizes": [12, 16, 20, 24] },
+        "colored": { "count": 10, "sizes": [12, 16, 20, 24] },
+        "maker": { "count": 20, "sizes": [16, 20, 24, 32], "note": "제조사 브랜드 아이콘, Profile 스타일은 의도적으로 제외" },
+        "bss": { "count": 8, "sizes": [16, 20, 24, 32] },
+        "service": { "count": 3, "sizes": [16, 20, 24, 32] }
+      }
+    }
+  },
+
+  "primaryUsers": {
+    "demographic": "40~50대 남성 배달 라이더",
+    "designImplication": "높은 가독성, 낮은 인지부하, 명확한 CTA 우선"
+  },
+
+  "productLines": [
+    { "name": "착한구독", "description": "전기이륜차 구독 (렌탈/리스)" },
+    { "name": "바이패스", "description": "전기이륜차 신차구매 + 정부 보조금 신청" },
+    { "name": "바드림연구소", "description": "직영 정비센터(Care Shop) 네트워크" },
+    { "name": "대차서비스", "description": "loaner vehicle 파일럿" }
+  ]
+}
