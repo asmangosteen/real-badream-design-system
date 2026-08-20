@@ -1,1 +1,41 @@
-
+{
+  "reference": {
+    "blue": { "50": "#EAF2FD", "100": "#BFD7F8", "200": "#A0C4F4", "300": "#74A9F0", "400": "#5998ED", "500": "#307EE8", "600": "#2C73D3", "700": "#2259A5", "800": "#1A4580", "900": "#143561" },
+    "deepBlue": { "50": "#ECEDF0", "100": "#C3C8D1", "200": "#A6AEBB", "300": "#7E899C", "400": "#657289", "500": "#3E4F6B", "600": "#384861", "700": "#2C384C", "800": "#222B3B", "900": "#1A212D" },
+    "emerald": { "50": "#EAF7F3", "100": "#BFE7DA", "200": "#A0DCC9", "300": "#75CCB0", "400": "#5AC2A1", "500": "#31B389", "600": "#2DA37D", "700": "#237F61", "800": "#1B624B", "900": "#154B3A" },
+    "purple": { "50": "#F7ECFA", "100": "#E7C3EE", "200": "#DBA5E6", "300": "#CB7CDA", "400": "#C163D3", "500": "#B13CC8", "600": "#A137B6", "700": "#7E2B8E", "800": "#61216E", "900": "#4A1954" },
+    "turquoise": { "50": "#E6F9F7", "100": "#B2EBE7", "200": "#8DE2DC", "300": "#5AD4CC", "400": "#39CCC2", "500": "#08BFB3", "600": "#07AEA3", "700": "#06887F", "800": "#046962", "900": "#03504B" },
+    "red": { "50": "#FDEAEA", "100": "#F8BFBF", "200": "#F4A0A0", "300": "#F07474", "400": "#ED5959", "500": "#E83030", "600": "#D32C2C", "700": "#A52222", "800": "#801A1A", "900": "#611414" },
+    "green": { "50": "#E8F7E9", "100": "#B6E7BA", "200": "#93DC98", "300": "#62CB69", "400": "#44C14C", "500": "#15B21F", "600": "#139036", "700": "#0F702A", "800": "#0C5720", "900": "#094219" },
+    "orange": { "50": "#FFF2EA", "100": "#FFD5BE", "200": "#FFC19E", "300": "#FFA572", "400": "#FF9356", "500": "#FF782C", "600": "#E86D28", "700": "#B5551F", "800": "#8C4218", "900": "#6B3212" },
+    "yellow": { "50": "#FFF9E9", "100": "#FFECBA", "200": "#FFE299", "300": "#FFD56B", "400": "#FFCD4E", "500": "#FFC122", "600": "#E8B01F", "700": "#B58918", "800": "#8C6A13", "900": "#6B510E" },
+    "gray": { "0": "#FFFFFF", "50": "#FDFDFD", "100": "#F5F5F6", "200": "#F0F0F1", "300": "#D9DADD", "400": "#C0C2C6", "500": "#8D9199", "600": "#5B606B", "700": "#464D59", "800": "#202837", "900": "#020B1C", "1000": "#000000" },
+    "shadow": { "01": "#464D59 20%", "02": "#464D59 24%", "03": "#464D59 32%" }
+  },
+  "system": {
+    "brand": {
+      "primary": { "lightest": "ref-color-blue-50", "lighter": "ref-color-blue-100", "light": "ref-color-blue-300", "default": "ref-color-blue-500", "dark": "ref-color-blue-700", "darker": "ref-color-blue-900" },
+      "secondary": { "lighter": "ref-color-deepBlue-100", "light": "ref-color-deepBlue-300", "default": "ref-color-deepBlue-500", "dark": "ref-color-deepBlue-700", "darker": "ref-color-deepBlue-900" },
+      "tertiary": { "lighter": "ref-color-emerald-100", "light": "ref-color-emerald-300", "default": "ref-color-emerald-500", "dark": "ref-color-emerald-700", "darker": "ref-color-emerald-900" }
+    },
+    "theme": {
+      "purple": { "bg": "ref-color-purple-50", "default": "ref-color-purple-500" },
+      "turquoise": { "bg": "ref-color-turquoise-50", "default": "ref-color-turquoise-600" },
+      "error": { "bg": "ref-color-red-50", "default": "ref-color-red-500" },
+      "success": { "bg": "ref-color-green-50", "default": "ref-color-green-600" },
+      "warning": { "bg": "ref-color-orange-50", "default": "ref-color-orange-500" },
+      "rating": { "bg": "ref-color-yellow-50", "default": "ref-color-yellow-500" }
+    },
+    "common": {
+      "white": { "default": "ref-color-gray-50", "emphasis": "ref-color-gray-0" },
+      "black": { "default": "ref-color-gray-900", "emphasis": "ref-color-gray-1000" }
+    },
+    "neutral": { "100": "ref-color-gray-100", "200": "ref-color-gray-200", "300": "ref-color-gray-300", "400": "ref-color-gray-400", "500": "ref-color-gray-500", "600": "ref-color-gray-600", "700": "ref-color-gray-700", "800": "ref-color-gray-800" }
+  },
+  "surface": { "mobile": "#FDFDFD", "web": "#FFFFFF" },
+  "brandColor": { "primary": "#307EE8", "secondary": "#3E4F6B", "tertiary": "#31B389" },
+  "gradient": {
+    "whiteUpward": "linear-gradient(0deg, rgba(253,253,253,0) 0%, rgba(253,253,253,0.08) 15%, rgba(253,253,253,0.22) 30%, rgba(253,253,253,0.42) 50%, rgba(253,253,253,0.64) 70%, rgba(253,253,253,0.82) 85%, rgba(253,253,253,1) 100%)",
+    "blueDownwardDiag": "linear-gradient(135deg, #74A9F0 0%, #307EE8 50%, #009DCF 80%)"
+  }
+}
