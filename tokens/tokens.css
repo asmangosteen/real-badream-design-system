@@ -1,96 +1,297 @@
 :root {
-  /* Font */
+  /* ============ Font ============ */
   --font-family-base: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Reference Colors */
-  --ref-color-blue-50: #EAF2FD; --ref-color-blue-100: #BFD7F8; --ref-color-blue-200: #A0C4F4;
-  --ref-color-blue-300: #74A9F0; --ref-color-blue-400: #5998ED; --ref-color-blue-500: #307EE8;
-  --ref-color-blue-600: #2C73D3; --ref-color-blue-700: #2259A5; --ref-color-blue-800: #1A4580; --ref-color-blue-900: #143561;
+  /* ============ Reference Colors ============ */
+  /* Blue */
+  --ref-color-blue-50: #EAF2FD;
+  --ref-color-blue-100: #BFD7F8;
+  --ref-color-blue-200: #A0C4F4;
+  --ref-color-blue-300: #74A9F0;
+  --ref-color-blue-400: #5998ED;
+  --ref-color-blue-500: #307EE8;
+  --ref-color-blue-600: #2C73D3;
+  --ref-color-blue-700: #2259A5;
+  --ref-color-blue-800: #1A4580;
+  --ref-color-blue-900: #143561;
+  /* Deep Blue */
+  --ref-color-deepBlue-50: #ECEDF0;
+  --ref-color-deepBlue-100: #C3C8D1;
+  --ref-color-deepBlue-200: #A6AEBB;
+  --ref-color-deepBlue-300: #7E899C;
+  --ref-color-deepBlue-400: #657289;
+  --ref-color-deepBlue-500: #3E4F6B;
+  --ref-color-deepBlue-600: #384861;
+  --ref-color-deepBlue-700: #2C384C;
+  --ref-color-deepBlue-800: #222B3B;
+  --ref-color-deepBlue-900: #1A212D;
+  /* Emerald */
+  --ref-color-emerald-50: #EAF7F3;
+  --ref-color-emerald-100: #BFE7DA;
+  --ref-color-emerald-200: #A0DCC9;
+  --ref-color-emerald-300: #75CCB0;
+  --ref-color-emerald-400: #5AC2A1;
+  --ref-color-emerald-500: #31B389;
+  --ref-color-emerald-600: #2DA37D;
+  --ref-color-emerald-700: #237F61;
+  --ref-color-emerald-800: #1B624B;
+  --ref-color-emerald-900: #154B3A;
+  /* Purple */
+  --ref-color-purple-50: #F7ECFA;
+  --ref-color-purple-100: #E7C3EE;
+  --ref-color-purple-200: #DBA5E6;
+  --ref-color-purple-300: #CB7CDA;
+  --ref-color-purple-400: #C163D3;
+  --ref-color-purple-500: #B13CC8;
+  --ref-color-purple-600: #A137B6;
+  --ref-color-purple-700: #7E2B8E;
+  --ref-color-purple-800: #61216E;
+  --ref-color-purple-900: #4A1954;
+  /* Turquoise */
+  --ref-color-turquoise-50: #E6F9F7;
+  --ref-color-turquoise-100: #B2EBE7;
+  --ref-color-turquoise-200: #8DE2DC;
+  --ref-color-turquoise-300: #5AD4CC;
+  --ref-color-turquoise-400: #39CCC2;
+  --ref-color-turquoise-500: #08BFB3;
+  --ref-color-turquoise-600: #07AEA3;
+  --ref-color-turquoise-700: #06887F;
+  --ref-color-turquoise-800: #046962;
+  --ref-color-turquoise-900: #03504B;
+  /* Red */
+  --ref-color-red-50: #FDEAEA;
+  --ref-color-red-100: #F8BFBF;
+  --ref-color-red-200: #F4A0A0;
+  --ref-color-red-300: #F07474;
+  --ref-color-red-400: #ED5959;
+  --ref-color-red-500: #E83030;
+  --ref-color-red-600: #D32C2C;
+  --ref-color-red-700: #A52222;
+  --ref-color-red-800: #801A1A;
+  --ref-color-red-900: #611414;
+  /* Green */
+  --ref-color-green-50: #E8F7E9;
+  --ref-color-green-100: #B6E7BA;
+  --ref-color-green-200: #93DC98;
+  --ref-color-green-300: #62CB69;
+  --ref-color-green-400: #44C14C;
+  --ref-color-green-500: #15B21F;
+  --ref-color-green-600: #139036;
+  --ref-color-green-700: #0F702A;
+  --ref-color-green-800: #0C5720;
+  --ref-color-green-900: #094219;
+  /* Orange */
+  --ref-color-orange-50: #FFF2EA;
+  --ref-color-orange-100: #FFD5BE;
+  --ref-color-orange-200: #FFC19E;
+  --ref-color-orange-300: #FFA572;
+  --ref-color-orange-400: #FF9356;
+  --ref-color-orange-500: #FF782C;
+  --ref-color-orange-600: #E86D28;
+  --ref-color-orange-700: #B5551F;
+  --ref-color-orange-800: #8C4218;
+  --ref-color-orange-900: #6B3212;
+  /* Yellow */
+  --ref-color-yellow-50: #FFF9E9;
+  --ref-color-yellow-100: #FFECBA;
+  --ref-color-yellow-200: #FFE299;
+  --ref-color-yellow-300: #FFD56B;
+  --ref-color-yellow-400: #FFCD4E;
+  --ref-color-yellow-500: #FFC122;
+  --ref-color-yellow-600: #E8B01F;
+  --ref-color-yellow-700: #B58918;
+  --ref-color-yellow-800: #8C6A13;
+  --ref-color-yellow-900: #6B510E;
+  /* Gray */
+  --ref-color-gray-0: #FFFFFF;
+  --ref-color-gray-50: #FDFDFD;
+  --ref-color-gray-100: #F5F5F6;
+  --ref-color-gray-200: #F0F0F1;
+  --ref-color-gray-300: #D9DADD;
+  --ref-color-gray-400: #C0C2C6;
+  --ref-color-gray-500: #8D9199;
+  --ref-color-gray-600: #5B606B;
+  --ref-color-gray-700: #464D59;
+  --ref-color-gray-800: #202837;
+  --ref-color-gray-900: #020B1C;
+  --ref-color-gray-1000: #000000;
 
-  --ref-color-deepBlue-50: #ECEDF0; --ref-color-deepBlue-100: #C3C8D1; --ref-color-deepBlue-200: #A6AEBB;
-  --ref-color-deepBlue-300: #7E899C; --ref-color-deepBlue-400: #657289; --ref-color-deepBlue-500: #3E4F6B;
-  --ref-color-deepBlue-600: #384861; --ref-color-deepBlue-700: #2C384C; --ref-color-deepBlue-800: #222B3B; --ref-color-deepBlue-900: #1A212D;
+  /* ============ Transparent / Alpha Color Tokens ============ */
+  --ref-color-blue-500-20: rgb(48 126 232 / 20%);
+  --ref-color-blue-500-40: rgb(48 126 232 / 40%);
+  --ref-color-blue-500-60: rgb(48 126 232 / 60%);
+  --ref-color-blue-500-80: rgb(48 126 232 / 80%);
+  --ref-color-deepBlue-500-20: rgb(62 79 107 / 20%);
+  --ref-color-deepBlue-500-40: rgb(62 79 107 / 40%);
+  --ref-color-deepBlue-500-60: rgb(62 79 107 / 60%);
+  --ref-color-deepBlue-500-80: rgb(62 79 107 / 80%);
+  --ref-color-emerald-500-20: rgb(49 179 137 / 20%);
+  --ref-color-emerald-500-40: rgb(49 179 137 / 40%);
+  --ref-color-emerald-500-60: rgb(49 179 137 / 60%);
+  --ref-color-emerald-500-80: rgb(49 179 137 / 80%);
+  --ref-color-purple-500-20: rgb(177 60 200 / 20%);
+  --ref-color-purple-500-40: rgb(177 60 200 / 40%);
+  --ref-color-purple-500-60: rgb(177 60 200 / 60%);
+  --ref-color-purple-500-80: rgb(177 60 200 / 80%);
+  --ref-color-turquoise-600-20: rgb(7 174 163 / 20%);
+  --ref-color-turquoise-600-40: rgb(7 174 163 / 40%);
+  --ref-color-turquoise-600-60: rgb(7 174 163 / 60%);
+  --ref-color-turquoise-600-80: rgb(7 174 163 / 80%);
+  --ref-color-red-500-20: rgb(232 48 48 / 20%);
+  --ref-color-red-500-40: rgb(232 48 48 / 40%);
+  --ref-color-red-500-60: rgb(232 48 48 / 60%);
+  --ref-color-red-500-80: rgb(232 48 48 / 80%);
+  --ref-color-green-600-20: rgb(19 144 54 / 20%);
+  --ref-color-green-600-40: rgb(19 144 54 / 40%);
+  --ref-color-green-600-60: rgb(19 144 54 / 60%);
+  --ref-color-green-600-80: rgb(19 144 54 / 80%);
+  --ref-color-orange-500-20: rgb(255 120 44 / 20%);
+  --ref-color-orange-500-40: rgb(255 120 44 / 40%);
+  --ref-color-orange-500-60: rgb(255 120 44 / 60%);
+  --ref-color-orange-500-80: rgb(255 120 44 / 80%);
+  --ref-color-yellow-500-20: rgb(255 193 34 / 20%);
+  --ref-color-yellow-500-40: rgb(255 193 34 / 40%);
+  --ref-color-yellow-500-60: rgb(255 193 34 / 60%);
+  --ref-color-yellow-500-80: rgb(255 193 34 / 80%);
+  --ref-color-gray-900-2: rgb(2 11 28 / 2%);
+  --ref-color-gray-900-5: rgb(2 11 28 / 5%);
+  --ref-color-gray-900-10: rgb(2 11 28 / 10%);
+  --ref-color-gray-900-20: rgb(2 11 28 / 20%);
+  --ref-color-gray-900-40: rgb(2 11 28 / 40%);
+  --ref-color-gray-900-60: rgb(2 11 28 / 60%);
+  --ref-color-gray-900-80: rgb(2 11 28 / 80%);
+  --ref-color-gray-50-5: rgb(253 253 253 / 5%);
+  --ref-color-gray-50-10: rgb(253 253 253 / 10%);
+  --ref-color-gray-50-20: rgb(253 253 253 / 20%);
+  --ref-color-gray-50-40: rgb(253 253 253 / 40%);
+  --ref-color-gray-50-60: rgb(253 253 253 / 60%);
+  --ref-color-gray-50-80: rgb(253 253 253 / 80%);
 
-  --ref-color-emerald-50: #EAF7F3; --ref-color-emerald-100: #BFE7DA; --ref-color-emerald-200: #A0DCC9;
-  --ref-color-emerald-300: #75CCB0; --ref-color-emerald-400: #5AC2A1; --ref-color-emerald-500: #31B389;
-  --ref-color-emerald-600: #2DA37D; --ref-color-emerald-700: #237F61; --ref-color-emerald-800: #1B624B; --ref-color-emerald-900: #154B3A;
+  /* Shadow Color Tokens */
+  --ref-color-shadow-01: rgb(70 77 89 / 20%);
+  --ref-color-shadow-02: rgb(70 77 89 / 24%);
+  --ref-color-shadow-03: rgb(70 77 89 / 32%);
 
-  --ref-color-purple-50: #F7ECFA; --ref-color-purple-100: #E7C3EE; --ref-color-purple-200: #DBA5E6;
-  --ref-color-purple-300: #CB7CDA; --ref-color-purple-400: #C163D3; --ref-color-purple-500: #B13CC8;
-  --ref-color-purple-600: #A137B6; --ref-color-purple-700: #7E2B8E; --ref-color-purple-800: #61216E; --ref-color-purple-900: #4A1954;
-
-  --ref-color-turquoise-50: #E6F9F7; --ref-color-turquoise-100: #B2EBE7; --ref-color-turquoise-200: #8DE2DC;
-  --ref-color-turquoise-300: #5AD4CC; --ref-color-turquoise-400: #39CCC2; --ref-color-turquoise-500: #08BFB3;
-  --ref-color-turquoise-600: #07AEA3; --ref-color-turquoise-700: #06887F; --ref-color-turquoise-800: #046962; --ref-color-turquoise-900: #03504B;
-
-  --ref-color-red-50: #FDEAEA; --ref-color-red-100: #F8BFBF; --ref-color-red-200: #F4A0A0;
-  --ref-color-red-300: #F07474; --ref-color-red-400: #ED5959; --ref-color-red-500: #E83030;
-  --ref-color-red-600: #D32C2C; --ref-color-red-700: #A52222; --ref-color-red-800: #801A1A; --ref-color-red-900: #611414;
-
-  --ref-color-green-50: #E8F7E9; --ref-color-green-100: #B6E7BA; --ref-color-green-200: #93DC98;
-  --ref-color-green-300: #62CB69; --ref-color-green-400: #44C14C; --ref-color-green-500: #15B21F;
-  --ref-color-green-600: #139036; --ref-color-green-700: #0F702A; --ref-color-green-800: #0C5720; --ref-color-green-900: #094219;
-
-  --ref-color-orange-50: #FFF2EA; --ref-color-orange-100: #FFD5BE; --ref-color-orange-200: #FFC19E;
-  --ref-color-orange-300: #FFA572; --ref-color-orange-400: #FF9356; --ref-color-orange-500: #FF782C;
-  --ref-color-orange-600: #E86D28; --ref-color-orange-700: #B5551F; --ref-color-orange-800: #8C4218; --ref-color-orange-900: #6B3212;
-
-  --ref-color-yellow-50: #FFF9E9; --ref-color-yellow-100: #FFECBA; --ref-color-yellow-200: #FFE299;
-  --ref-color-yellow-300: #FFD56B; --ref-color-yellow-400: #FFCD4E; --ref-color-yellow-500: #FFC122;
-  --ref-color-yellow-600: #E8B01F; --ref-color-yellow-700: #B58918; --ref-color-yellow-800: #8C6A13; --ref-color-yellow-900: #6B510E;
-
-  --ref-color-gray-0: #FFFFFF; --ref-color-gray-50: #FDFDFD; --ref-color-gray-100: #F5F5F6; --ref-color-gray-200: #F0F0F1;
-  --ref-color-gray-300: #D9DADD; --ref-color-gray-400: #C0C2C6; --ref-color-gray-500: #8D9199; --ref-color-gray-600: #5B606B;
-  --ref-color-gray-700: #464D59; --ref-color-gray-800: #202837; --ref-color-gray-900: #020B1C; --ref-color-gray-1000: #000000;
-
-  /* System Colors */
+  /* ============ System Colors ============ */
   --sys-color-brand-primary-lightest: var(--ref-color-blue-50);
   --sys-color-brand-primary-lighter: var(--ref-color-blue-100);
   --sys-color-brand-primary-light: var(--ref-color-blue-300);
   --sys-color-brand-primary-default: var(--ref-color-blue-500);
   --sys-color-brand-primary-dark: var(--ref-color-blue-700);
   --sys-color-brand-primary-darker: var(--ref-color-blue-900);
+  --sys-color-brand-secondary-lighter: var(--ref-color-deepBlue-100);
+  --sys-color-brand-secondary-light: var(--ref-color-deepBlue-300);
   --sys-color-brand-secondary-default: var(--ref-color-deepBlue-500);
+  --sys-color-brand-secondary-dark: var(--ref-color-deepBlue-700);
+  --sys-color-brand-secondary-darker: var(--ref-color-deepBlue-900);
+  --sys-color-brand-tertiary-lighter: var(--ref-color-emerald-100);
+  --sys-color-brand-tertiary-light: var(--ref-color-emerald-300);
   --sys-color-brand-tertiary-default: var(--ref-color-emerald-500);
+  --sys-color-brand-tertiary-dark: var(--ref-color-emerald-700);
+  --sys-color-brand-tertiary-darker: var(--ref-color-emerald-900);
+  --sys-color-theme-purple-bg: var(--ref-color-purple-50);
   --sys-color-theme-purple-default: var(--ref-color-purple-500);
+  --sys-color-theme-turquoise-bg: var(--ref-color-turquoise-50);
   --sys-color-theme-turquoise-default: var(--ref-color-turquoise-600);
+  --sys-color-theme-error-bg: var(--ref-color-red-50);
   --sys-color-theme-error-default: var(--ref-color-red-500);
+  --sys-color-theme-success-bg: var(--ref-color-green-50);
   --sys-color-theme-success-default: var(--ref-color-green-600);
+  --sys-color-theme-warning-bg: var(--ref-color-orange-50);
   --sys-color-theme-warning-default: var(--ref-color-orange-500);
+  --sys-color-theme-rating-bg: var(--ref-color-yellow-50);
   --sys-color-theme-rating-default: var(--ref-color-yellow-500);
   --sys-color-common-white-default: var(--ref-color-gray-50);
+  --sys-color-common-white-emphasis: var(--ref-color-gray-0);
   --sys-color-common-black-default: var(--ref-color-gray-900);
+  --sys-color-common-black-emphasis: var(--ref-color-gray-1000);
   --sys-color-neutral-100: var(--ref-color-gray-100);
+  --sys-color-neutral-200: var(--ref-color-gray-200);
+  --sys-color-neutral-300: var(--ref-color-gray-300);
   --sys-color-neutral-400: var(--ref-color-gray-400);
+  --sys-color-neutral-500: var(--ref-color-gray-500);
   --sys-color-neutral-600: var(--ref-color-gray-600);
+  --sys-color-neutral-700: var(--ref-color-gray-700);
   --sys-color-neutral-800: var(--ref-color-gray-800);
 
-  /* Spacing */
-  --ref-spacing-00: -2px; --ref-spacing-01: 1px; --ref-spacing-02: 2px; --ref-spacing-03: 3px;
-  --ref-spacing-04: 4px; --ref-spacing-05: 6px; --ref-spacing-06: 8px; --ref-spacing-07: 10px;
-  --ref-spacing-08: 12px; --ref-spacing-09: 14px; --ref-spacing-10: 16px; --ref-spacing-11: 20px;
-  --ref-spacing-12: 24px; --ref-spacing-13: 28px; --ref-spacing-14: 32px; --ref-spacing-15: 36px;
-  --ref-spacing-16: 40px; --ref-spacing-17: 48px; --ref-spacing-18: 56px; --ref-spacing-19: 64px;
-  --ref-spacing-20: 72px; --ref-spacing-21: 80px; --ref-spacing-22: 120px; --ref-spacing-23: 200px;
+  /* ============ Gradients ============ */
+  --gradient-white-upward: linear-gradient(0deg, rgb(253 253 253 / 0%) 0%, rgb(253 253 253 / 8%) 15%, rgb(253 253 253 / 22%) 30%, rgb(253 253 253 / 42%) 50%, rgb(253 253 253 / 64%) 70%, rgb(253 253 253 / 82%) 85%, rgb(253 253 253 / 100%) 100%);
+  --gradient-blue-downward-diag: linear-gradient(135deg, #74A9F0 0%, #307EE8 50%, #009DCF 80%);
 
-  /* Radius */
-  --ref-radius-01: 2px; --ref-radius-02: 4px; --ref-radius-03: 6px; --ref-radius-04: 8px;
-  --ref-radius-05: 10px; --ref-radius-06: 12px; --ref-radius-07: 16px; --ref-radius-08: 20px;
-  --ref-radius-09: 24px; --ref-radius-10: 32px; --ref-radius-11: 40px; --ref-radius-12: 999px;
+  /* ============ Spacing ============ */
+  --ref-spacing-00: -2px;
+  --ref-spacing-01: 1px;
+  --ref-spacing-02: 2px;
+  --ref-spacing-03: 3px;
+  --ref-spacing-04: 4px;
+  --ref-spacing-05: 6px;
+  --ref-spacing-06: 8px;
+  --ref-spacing-07: 10px;
+  --ref-spacing-08: 12px;
+  --ref-spacing-09: 14px;
+  --ref-spacing-10: 16px;
+  --ref-spacing-11: 20px;
+  --ref-spacing-12: 24px;
+  --ref-spacing-13: 28px;
+  --ref-spacing-14: 32px;
+  --ref-spacing-15: 36px;
+  --ref-spacing-16: 40px;
+  --ref-spacing-17: 48px;
+  --ref-spacing-18: 56px;
+  --ref-spacing-19: 64px;
+  --ref-spacing-20: 72px;
+  --ref-spacing-21: 80px;
+  --ref-spacing-22: 120px;
+  --ref-spacing-23: 200px;
 
-  /* Border Width */
-  --ref-borderwidth-01: 0.5px; --ref-borderwidth-02: 1px; --ref-borderwidth-03: 2px; --ref-borderwidth-04: 4px;
-  --ref-borderwidth-05: 6px; --ref-borderwidth-06: 8px; --ref-borderwidth-07: 12px; --ref-borderwidth-08: 16px;
+  /* ============ Radius ============ */
+  --ref-radius-01: 2px;
+  --ref-radius-02: 4px;
+  --ref-radius-03: 6px;
+  --ref-radius-04: 8px;
+  --ref-radius-05: 10px;
+  --ref-radius-06: 12px;
+  --ref-radius-07: 16px;
+  --ref-radius-08: 20px;
+  --ref-radius-09: 24px;
+  --ref-radius-10: 32px;
+  --ref-radius-11: 40px;
+  --ref-radius-12: 999px;
+  --radius-input-option: var(--ref-radius-06);
+  --radius-sheet: var(--ref-radius-07);
+  --radius-popup: var(--ref-radius-08);
 
-  /* Opacity */
+  /* ============ Border Width - V2 official ============ */
+  --ref-borderwidth-01: 0.5px;
+  --ref-borderwidth-02: 1px;
+  --ref-borderwidth-03: 2px;
+  --ref-borderwidth-04: 4px;
+  --ref-borderwidth-05: 6px;
+  --ref-borderwidth-06: 8px;
+  --ref-borderwidth-07: 12px;
+  --ref-borderwidth-08: 16px;
+
+  /* ============ Opacity ============ */
+  --ref-opacity-0: 0%;
+  --ref-opacity-5: 5%;
+  --ref-opacity-10: 10%;
+  --ref-opacity-20: 20%;
+  --ref-opacity-30: 30%;
   --ref-opacity-40: 40%;
+  --ref-opacity-50: 50%;
+  --ref-opacity-60: 60%;
+  --ref-opacity-70: 70%;
+  --ref-opacity-80: 80%;
+  --ref-opacity-90: 90%;
+  --ref-opacity-100: 100%;
+  --dimmed-opacity: var(--ref-opacity-40);
   --dimmed-bg: rgb(0 0 0 / 40%);
 
-  /* Shadows */
+  /* ============ Shadows ============ */
   --shadow-01: 0 2px 4px 0 rgb(70 77 89 / 20%);
   --shadow-02: 0 4px 6px -1px rgb(70 77 89 / 20%);
   --shadow-03: 0 6px 12px -2px rgb(70 77 89 / 20%);
@@ -99,18 +300,45 @@
   --shadow-sh: 0 -6px 12px -2px rgb(70 77 89 / 20%);
   --shadow-toast: 0 6px 16px 0 rgb(0 0 0 / 10%);
 
-  /* Typography */
-  --typography-display-size: 36px; --typography-display-line-height: 48px;
-  --typography-heading-1-size: 28px; --typography-heading-1-line-height: 40px;
-  --typography-heading-2-size: 24px; --typography-heading-2-line-height: 32px;
-  --typography-title-size: 20px; --typography-title-line-height: 28px;
-  --typography-subtitle-size: 18px; --typography-subtitle-line-height: 24px;
-  --typography-body-1-size: 16px; --typography-body-1-line-height: 24px;
-  --typography-body-2-size: 14px; --typography-body-2-line-height: 22px;
-  --typography-caption-1-size: 12px; --typography-caption-1-line-height: 18px;
-  --typography-caption-2-size: 10px; --typography-caption-2-line-height: 16px;
+  /* ============ Typography ============ */
+  --typography-display-size: 36px;
+  --typography-display-line-height: 48px;
+  --typography-display-letter-spacing: -0.36px;
+  --typography-display-paragraph-spacing: 36px;
+  --typography-heading-1-size: 28px;
+  --typography-heading-1-line-height: 40px;
+  --typography-heading-1-letter-spacing: -0.28px;
+  --typography-heading-1-paragraph-spacing: 28px;
+  --typography-heading-2-size: 24px;
+  --typography-heading-2-line-height: 32px;
+  --typography-heading-2-letter-spacing: -0.12px;
+  --typography-heading-2-paragraph-spacing: 24px;
+  --typography-title-size: 20px;
+  --typography-title-line-height: 28px;
+  --typography-title-letter-spacing: -0.1px;
+  --typography-title-paragraph-spacing: 20px;
+  --typography-subtitle-size: 18px;
+  --typography-subtitle-line-height: 24px;
+  --typography-subtitle-letter-spacing: -0.09px;
+  --typography-subtitle-paragraph-spacing: 18px;
+  --typography-body-1-size: 16px;
+  --typography-body-1-line-height: 24px;
+  --typography-body-1-letter-spacing: -0.04px;
+  --typography-body-1-paragraph-spacing: 16px;
+  --typography-body-2-size: 14px;
+  --typography-body-2-line-height: 22px;
+  --typography-body-2-letter-spacing: -0.04px;
+  --typography-body-2-paragraph-spacing: 14px;
+  --typography-caption-1-size: 12px;
+  --typography-caption-1-line-height: 18px;
+  --typography-caption-1-letter-spacing: -0.03px;
+  --typography-caption-1-paragraph-spacing: 12px;
+  --typography-caption-2-size: 10px;
+  --typography-caption-2-line-height: 16px;
+  --typography-caption-2-letter-spacing: -0.03px;
+  --typography-caption-2-paragraph-spacing: 10px;
 
-  /* Grid */
+  /* ============ Grid ============ */
   --grid-mobile-columns: 4;
   --grid-mobile-margin: var(--ref-spacing-11);
   --grid-mobile-gutter: var(--ref-spacing-08);
@@ -118,4 +346,30 @@
   --grid-web-margin: var(--ref-spacing-16);
   --grid-web-gutter: var(--ref-spacing-12);
   --scroll-bottom-padding: var(--ref-spacing-16);
+
+  /* ============ Optional v1 migration aliases. Do not use for new code. ============ */
+  --ref-color-turquiose-50: var(--ref-color-turquoise-50);
+  --ref-color-turquiose-100: var(--ref-color-turquoise-100);
+  --ref-color-turquiose-200: var(--ref-color-turquoise-200);
+  --ref-color-turquiose-300: var(--ref-color-turquoise-300);
+  --ref-color-turquiose-400: var(--ref-color-turquoise-400);
+  --ref-color-turquiose-500: var(--ref-color-turquoise-500);
+  --ref-color-turquiose-600: var(--ref-color-turquoise-600);
+  --ref-color-turquiose-700: var(--ref-color-turquoise-700);
+  --ref-color-turquiose-800: var(--ref-color-turquoise-800);
+  --ref-color-turquiose-900: var(--ref-color-turquoise-900);
+  --ref-color-turquiose-600-20: var(--ref-color-turquoise-600-20);
+  --ref-color-turquiose-600-40: var(--ref-color-turquoise-600-40);
+  --ref-color-turquiose-600-60: var(--ref-color-turquoise-600-60);
+  --ref-color-turquiose-600-80: var(--ref-color-turquoise-600-80);
+  --sys-color-theme-turquiose-bg: var(--sys-color-theme-turquoise-bg);
+  --sys-color-theme-turquiose-default: var(--sys-color-theme-turquoise-default);
+  --ref-boderwidth-01: var(--ref-borderwidth-01);
+  --ref-boderwidth-02: var(--ref-borderwidth-02);
+  --ref-boderwidth-03: var(--ref-borderwidth-03);
+  --ref-boderwidth-04: var(--ref-borderwidth-04);
+  --ref-boderwidth-05: var(--ref-borderwidth-05);
+  --ref-boderwidth-06: var(--ref-borderwidth-06);
+  --ref-boderwidth-07: var(--ref-borderwidth-07);
+  --ref-boderwidth-08: var(--ref-borderwidth-08);
 }
