@@ -10,32 +10,87 @@
     "orange": { "50": "#FFF2EA", "100": "#FFD5BE", "200": "#FFC19E", "300": "#FFA572", "400": "#FF9356", "500": "#FF782C", "600": "#E86D28", "700": "#B5551F", "800": "#8C4218", "900": "#6B3212" },
     "yellow": { "50": "#FFF9E9", "100": "#FFECBA", "200": "#FFE299", "300": "#FFD56B", "400": "#FFCD4E", "500": "#FFC122", "600": "#E8B01F", "700": "#B58918", "800": "#8C6A13", "900": "#6B510E" },
     "gray": { "0": "#FFFFFF", "50": "#FDFDFD", "100": "#F5F5F6", "200": "#F0F0F1", "300": "#D9DADD", "400": "#C0C2C6", "500": "#8D9199", "600": "#5B606B", "700": "#464D59", "800": "#202837", "900": "#020B1C", "1000": "#000000" },
-    "shadow": { "01": "#464D59 20%", "02": "#464D59 24%", "03": "#464D59 32%" }
+    "shadow": { "01": "#464D59 20%", "02": "#464D59 24%", "03": "#464D59 32%" },
+    "alpha": {
+      "blue-500": { "20": "#307EE8 20%", "40": "#307EE8 40%", "60": "#307EE8 60%", "80": "#307EE8 80%" },
+      "deepBlue-500": { "20": "#3E4F6B 20%", "40": "#3E4F6B 40%", "60": "#3E4F6B 60%", "80": "#3E4F6B 80%" },
+      "emerald-500": { "20": "#31B389 20%", "40": "#31B389 40%", "60": "#31B389 60%", "80": "#31B389 80%" },
+      "purple-500": { "20": "#B13CC8 20%", "40": "#B13CC8 40%", "60": "#B13CC8 60%", "80": "#B13CC8 80%" },
+      "turquoise-600": { "20": "#07AEA3 20%", "40": "#07AEA3 40%", "60": "#07AEA3 60%", "80": "#07AEA3 80%" },
+      "red-500": { "20": "#E83030 20%", "40": "#E83030 40%", "60": "#E83030 60%", "80": "#E83030 80%" },
+      "green-600": { "20": "#139036 20%", "40": "#139036 40%", "60": "#139036 60%", "80": "#139036 80%" },
+      "orange-500": { "20": "#FF782C 20%", "40": "#FF782C 40%", "60": "#FF782C 60%", "80": "#FF782C 80%" },
+      "yellow-500": { "20": "#FFC122 20%", "40": "#FFC122 40%", "60": "#FFC122 60%", "80": "#FFC122 80%" },
+      "gray-900": { "2": "#020B1C 2%", "5": "#020B1C 5%", "10": "#020B1C 10%", "20": "#020B1C 20%", "40": "#020B1C 40%", "60": "#020B1C 60%", "80": "#020B1C 80%" },
+      "gray-50": { "5": "#FDFDFD 5%", "10": "#FDFDFD 10%", "20": "#FDFDFD 20%", "40": "#FDFDFD 40%", "60": "#FDFDFD 60%", "80": "#FDFDFD 80%" }
+    }
   },
   "system": {
     "brand": {
-      "primary": { "lightest": "ref-color-blue-50", "lighter": "ref-color-blue-100", "light": "ref-color-blue-300", "default": "ref-color-blue-500", "dark": "ref-color-blue-700", "darker": "ref-color-blue-900" },
+      "primary":   { "lightest": "ref-color-blue-50", "lighter": "ref-color-blue-100", "light": "ref-color-blue-300", "default": "ref-color-blue-500", "dark": "ref-color-blue-700", "darker": "ref-color-blue-900" },
       "secondary": { "lighter": "ref-color-deepBlue-100", "light": "ref-color-deepBlue-300", "default": "ref-color-deepBlue-500", "dark": "ref-color-deepBlue-700", "darker": "ref-color-deepBlue-900" },
-      "tertiary": { "lighter": "ref-color-emerald-100", "light": "ref-color-emerald-300", "default": "ref-color-emerald-500", "dark": "ref-color-emerald-700", "darker": "ref-color-emerald-900" }
+      "tertiary":  { "lighter": "ref-color-emerald-100", "light": "ref-color-emerald-300", "default": "ref-color-emerald-500", "dark": "ref-color-emerald-700", "darker": "ref-color-emerald-900" }
     },
     "theme": {
-      "purple": { "bg": "ref-color-purple-50", "default": "ref-color-purple-500" },
+      "purple":    { "bg": "ref-color-purple-50", "default": "ref-color-purple-500" },
       "turquoise": { "bg": "ref-color-turquoise-50", "default": "ref-color-turquoise-600" },
-      "error": { "bg": "ref-color-red-50", "default": "ref-color-red-500" },
-      "success": { "bg": "ref-color-green-50", "default": "ref-color-green-600" },
-      "warning": { "bg": "ref-color-orange-50", "default": "ref-color-orange-500" },
-      "rating": { "bg": "ref-color-yellow-50", "default": "ref-color-yellow-500" }
+      "error":     { "bg": "ref-color-red-50", "default": "ref-color-red-500" },
+      "success":   { "bg": "ref-color-green-50", "default": "ref-color-green-600" },
+      "warning":   { "bg": "ref-color-orange-50", "default": "ref-color-orange-500" },
+      "rating":    { "bg": "ref-color-yellow-50", "default": "ref-color-yellow-500" }
     },
     "common": {
       "white": { "default": "ref-color-gray-50", "emphasis": "ref-color-gray-0" },
       "black": { "default": "ref-color-gray-900", "emphasis": "ref-color-gray-1000" }
     },
-    "neutral": { "100": "ref-color-gray-100", "200": "ref-color-gray-200", "300": "ref-color-gray-300", "400": "ref-color-gray-400", "500": "ref-color-gray-500", "600": "ref-color-gray-600", "700": "ref-color-gray-700", "800": "ref-color-gray-800" }
+    "neutral": {
+      "100": "ref-color-gray-100", "200": "ref-color-gray-200", "300": "ref-color-gray-300", "400": "ref-color-gray-400",
+      "500": "ref-color-gray-500", "600": "ref-color-gray-600", "700": "ref-color-gray-700", "800": "ref-color-gray-800"
+    }
   },
-  "surface": { "mobile": "#FDFDFD", "web": "#FFFFFF" },
-  "brandColor": { "primary": "#307EE8", "secondary": "#3E4F6B", "tertiary": "#31B389" },
+  "paletteDefaultStep": {
+    "blue": "500", "deepBlue": "500", "emerald": "500", "purple": "500",
+    "turquoise": "600", "red": "500", "green": "600", "orange": "500", "yellow": "500"
+  },
+  "brandColorDetail": {
+    "primary":   { "rgb": "48/126/232", "cmyk": "72/42/0/9",  "hex": "#307EE8" },
+    "secondary": { "rgb": "62/79/107",  "cmyk": "18/11/0/58", "hex": "#3E4F6B" },
+    "tertiary":  { "rgb": "49/179/137", "cmyk": "51/0/16/30", "hex": "#31B389" }
+  },
+  "themeColorDetail": {
+    "purple":    { "rgb": "177/60/200", "cmyk": "12/70/0/22", "hex": "#B13CC8" },
+    "turquoise": { "rgb": "7/174/163",  "cmyk": "96/0/6/32",  "hex": "#07AEA3" },
+    "error":     { "rgb": "232/48/48",  "cmyk": "0/79/79/9",  "hex": "#E83030" },
+    "success":   { "rgb": "19/144/54",  "cmyk": "87/0/63/44", "hex": "#139036" },
+    "warning":   { "rgb": "255/120/44", "cmyk": "0/53/83/0",  "hex": "#FF782C" }
+  },
+  "surface": {
+    "mobile": { "rgb": "253/253/253", "cmyk": "0/0/0/1", "hex": "#FDFDFD" },
+    "web":    { "rgb": "255/255/255", "cmyk": "0/0/0/0", "hex": "#FFFFFF" }
+  },
   "gradient": {
-    "whiteUpward": "linear-gradient(0deg, rgba(253,253,253,0) 0%, rgba(253,253,253,0.08) 15%, rgba(253,253,253,0.22) 30%, rgba(253,253,253,0.42) 50%, rgba(253,253,253,0.64) 70%, rgba(253,253,253,0.82) 85%, rgba(253,253,253,1) 100%)",
-    "blueDownwardDiag": "linear-gradient(135deg, #74A9F0 0%, #307EE8 50%, #009DCF 80%)"
-  }
+    "whiteUpward": {
+      "type": "linear-gradient(0deg, ...)",
+      "stops": [
+        { "at": "0%", "color": "#FDFDFD", "opacity": "0%" },
+        { "at": "15%", "color": "#FDFDFD", "opacity": "8%" },
+        { "at": "30%", "color": "#FDFDFD", "opacity": "22%" },
+        { "at": "50%", "color": "#FDFDFD", "opacity": "42%" },
+        { "at": "70%", "color": "#FDFDFD", "opacity": "64%" },
+        { "at": "85%", "color": "#FDFDFD", "opacity": "82%" },
+        { "at": "100%", "color": "#FDFDFD", "opacity": "100%" }
+      ],
+      "css": "linear-gradient(0deg, rgba(253,253,253,0) 0%, rgba(253,253,253,0.08) 15%, rgba(253,253,253,0.22) 30%, rgba(253,253,253,0.42) 50%, rgba(253,253,253,0.64) 70%, rgba(253,253,253,0.82) 85%, rgba(253,253,253,1) 100%)"
+    },
+    "blueDownwardDiag": {
+      "type": "linear-gradient(135deg, ...)",
+      "stops": [
+        { "at": "0%", "color": "#74A9F0", "opacity": "100%" },
+        { "at": "50%", "color": "#307EE8", "opacity": "100%" },
+        { "at": "80%", "color": "#009DCF", "opacity": "100%" }
+      ],
+      "css": "linear-gradient(135deg, #74A9F0 0%, #307EE8 50%, #009DCF 80%)"
+    }
+  },
+  "wcagNote": "배경 요소 위의 텍스트/아이콘/컴포넌트는 WCAG 명암비 기준을 준수해야 함"
 }
