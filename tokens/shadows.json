@@ -1,1 +1,51 @@
-
+{
+  "shadow_01": {
+    "usage": "1차 Depth - 48px 이내의 작은 컴포넌트의 약한 강조",
+    "x": 0, "y": 2, "blur": 4, "spread": 0,
+    "color": "#464D59 20%", "refColorToken": "ref-color-shadow-01",
+    "css": "0 2px 4px 0 rgb(70 77 89 / 20%)"
+  },
+  "shadow_02": {
+    "usage": "2차 Depth - 적당한 크기의 컴포넌트의 약한 강조 (Pop-Up 적용)",
+    "x": 0, "y": 4, "blur": 6, "spread": -1,
+    "color": "#464D59 20%", "refColorToken": "ref-color-shadow-01",
+    "css": "0 4px 6px -1px rgb(70 77 89 / 20%)"
+  },
+  "shadow_03": {
+    "usage": "3차 Depth - 기본값, 일반적인 강조에 적합",
+    "x": 0, "y": 6, "blur": 12, "spread": -2,
+    "color": "#464D59 20%", "refColorToken": "ref-color-shadow-01",
+    "css": "0 6px 12px -2px rgb(70 77 89 / 20%)"
+  },
+  "shadow_04": {
+    "usage": "4차 Depth - 일반적인 경우보다 조금 더 강한 강조",
+    "x": 0, "y": 8, "blur": 20, "spread": -3,
+    "color": "#464D59 24%", "refColorToken": "ref-color-shadow-02",
+    "css": "0 8px 20px -3px rgb(70 77 89 / 24%)",
+    "note": "V2에서 spread값이 -3px로 수정됨 (v1 문서엔 3px로 잘못 기재되어 있었음)"
+  },
+  "shadow_05": {
+    "usage": "5차 Depth - 깊이감이 필요하거나 가장 강한 강조",
+    "x": 0, "y": 12, "blur": 24, "spread": -4,
+    "color": "#464D59 32%", "refColorToken": "ref-color-shadow-03",
+    "css": "0 12px 24px -4px rgb(70 77 89 / 32%)"
+  },
+  "shadow_sh": {
+    "usage": "화면에 Overlay되는 Bottom Sheet 전용",
+    "x": 0, "y": -6, "blur": 12, "spread": -2,
+    "color": "#464D59 20%", "refColorToken": "ref-color-shadow-01",
+    "css": "0 -6px 12px -2px rgb(70 77 89 / 20%)"
+  },
+  "shadow_toast": {
+    "usage": "Toast 전용",
+    "x": 0, "y": 6, "blur": 16, "spread": 0,
+    "color": "#000000 10%",
+    "css": "0 6px 16px 0 rgb(0 0 0 / 10%)"
+  },
+  "componentMapping": {
+    "popup": "shadow_02",
+    "bottomSheet": "shadow_sh",
+    "toast": "shadow_toast"
+  },
+  "principle": "바드림은 기본적으로 색상 대비로 위계를 만들며, Drop Shadow는 꼭 필요한 곳에만 사용"
+}
