@@ -1,4 +1,4 @@
-# DESIGN3.md - Badream Design System V3
+# DESIGN.md - Badream Design System V3
 
 > Source: `바드림 디자인시스템 V3.pdf` 17 pages + attached interaction token family reference.  
 > Purpose: 바드림 디자인 시스템 V3를 다른 웹/앱/문서/AI 개발 환경에서 바로 적용할 수 있도록 정리한 단일 디자인 기준서입니다.  
