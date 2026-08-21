@@ -13,19 +13,23 @@
 
 | 폴더 | 내용 |
 |---|---|
-| `tokens/` | 컬러·타이포·스페이싱·라운드·그림자 값 (JSON + `tokens.css`) |
+| `tokens/` | 컬러·타이포·스페이싱·라운드·그림자·인터랙션 값 (JSON + `tokens.css`) |
+| `components/` | 컴포넌트별 상세 스펙 (`[name]/[name].md` + `[name].json`). 색인은 `components/README.md` |
 | `assets/logo/` | CI(사이클로이드)·BI(바드림) 로고, 앱 아이콘 |
 | `assets/character/` | 드림맨·드림걸 캐릭터 (고객 응대용) |
 | `assets/fonts/` | Pretendard 폰트 파일 + 라이선스 |
 | `assets/icons/` | UI/Maker/BSS/Service 아이콘 전체 세트 |
-| `docs/` | 디자인 원칙(DESIGN.md), 화면 흐름 및 UX 라이팅 가이드(SCREEN.md) |
+| `docs/` | **DESIGN.md**(현재 기준 V3 디자인 기준서), 화면 흐름·UX 라이팅 가이드(SCREEN.md) |
+
+> **버전 안내**: 현재 토큰/스펙 기준은 **V3**입니다 (`docs/DESIGN.md`, 바드림 디자인시스템 V3.pdf). 값은 항상 `tokens/`와 `docs/DESIGN.md`를 기준으로 삼고, 외부에 캐시된 구버전 색상 수치를 그대로 쓰지 마세요.
 
 ## 사용 원칙
 
 1. 색상은 항상 `tokens/tokens.css`의 CSS 변수로 참조하고, 임의 HEX 값을 새로 만들지 않습니다.
-2. 로고·캐릭터·제조사 아이콘은 원본 그대로 사용하며 변형하지 않습니다.
-3. UX 카피는 `docs/DESIGN.md`의 해요체 원칙을 따릅니다.
-4. 토큰 값이나 원칙이 실제 Figma와 달라졌다면, Figma를 기준으로 이 저장소를 업데이트합니다 (Figma가 우선).
+2. hover/pressed/selected 등 입력 피드백은 `interaction/*` 토큰을 우선 사용합니다.
+3. 로고·캐릭터·제조사 아이콘은 원본 그대로 사용하며 변형하지 않습니다.
+4. UX 카피는 `docs/DESIGN.md`의 해요체 원칙을 따릅니다.
+5. 토큰 값이나 원칙이 실제 Figma와 달라졌다면, Figma를 기준으로 이 저장소를 업데이트합니다 (Figma가 우선).
 
 ## 업데이트 방법
 

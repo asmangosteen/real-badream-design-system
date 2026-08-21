@@ -7,7 +7,7 @@
 
 - 색상/스페이싱/라운드/그림자/타이포그래피는 반드시 tokens/ 폴더의 토큰을 사용합니다. 임의 값 생성 금지.
 - 컬러 역할 고정: Blue(sys-color-brand-primary-default)=CTA/활성/링크, Orange(sys-color-theme-warning-default)=경고, Red(sys-color-theme-destructed-default, 구 명칭 error)=오류/파괴적 액션 전용. 역할을 임의로 바꾸지 않습니다.
-- tokens/ 값은 2026-08-21 V3(docs/DESIGN3.md, 바드림 디자인시스템 V3.pdf) 기준으로 갱신되었습니다. V2(docs/DESIGN.md=DESIGN2.md 원본)와 컬러 팔레트 HEX 값이 다르니 V2 문서의 색상 수치를 그대로 인용하지 마세요.
+- tokens/ 값은 2026-08-21 V3(docs/DESIGN.md, 바드림 디자인시스템 V3.pdf) 기준으로 갱신되었습니다. 외부에 캐시된 구버전(V2) 색상 수치를 그대로 인용하지 말고 항상 tokens/를 기준으로 삼으세요.
 - 로고, 캐릭터, 제조사/BSS 아이콘은 assets/ 안의 원본 파일을 그대로 사용합니다. 재작도, 색상 변경 금지.
 - UX 카피는 해요체, 사용자 관점, 행동 지향적으로 작성합니다. docs/DESIGN.md의 UX Writing 섹션을 따릅니다.
 - 필요한 토큰/에셋이 저장소에 없으면 임의로 만들지 말고, 없다는 것을 명시합니다.
@@ -15,16 +15,16 @@
 ## 디자인 토큰 (tokens/)
 
 - tokens/tokens.css: 전체 토큰의 CSS 변수 버전. 실제 구현 시 이걸 우선 참조합니다.
-- tokens/colors.json: 컬러 팔레트 및 시스템 컬러 역할 매핑
+- tokens/colors.json: 컬러 팔레트, 시스템 컬러 역할 매핑, interaction 토큰 패밀리(hover/pressed/selected/disabled)
 - tokens/typography.json: 폰트 스타일 9종 × weight 4종 조합표
 - tokens/spacing.json: 스페이싱 스케일 및 그리드 값
 - tokens/radius.json: 라운드, 보더 두께, 오퍼시티 값
 - tokens/shadows.json: 그림자 7종 및 컴포넌트별 매핑
+- hover/pressed/selected 등 입력 피드백은 colors.json의 interaction/* 토큰을 우선 사용 (Primary=interaction/blue, Secondary=interaction/light-blue, Tertiary/중립=interaction/gray, Destructed=interaction/red)
 
 ## 원칙 및 가이드 (docs/)
 
-- docs/DESIGN.md: 브랜드 아이덴티티, UX 라이팅 원칙, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (DESIGN2.md 원본, V2 — 브랜드/UX라이팅 내용은 유효하나 색상 팔레트 수치는 구버전이니 참고만)
-- docs/DESIGN3.md: **현재 기준(V3)** 브랜드/UX라이팅/Foundation 토큰 전체 문서 (바드림 디자인시스템 V3.pdf + interaction 토큰 패밀리). tokens/*.json·tokens.css는 이 문서를 소스로 갱신됩니다. 색상/보더width 등 수치를 인용할 땐 DESIGN.md(V2) 대신 이 문서를 우선하세요.
+- docs/DESIGN.md: **현재 기준(V3) 디자인 기준서** — 브랜드 아이덴티티, UX 라이팅 원칙, Foundation 토큰(컬러/스페이싱/라운드/보더/그림자/타이포/opacity), interaction 토큰 패밀리, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (바드림 디자인시스템 V3.pdf 기준). tokens/*.json·tokens.css는 이 문서를 소스로 갱신됩니다.
 - docs/SCREEN.md: 착한구독·신차구매 두 핵심 플로우의 화면 흐름, 상태 머신, UX 패턴 (통합본)
 
 ## 컴포넌트 스펙 (components/)

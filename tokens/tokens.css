@@ -222,6 +222,7 @@
   --sys-color-neutral-800: var(--ref-color-gray-800);
 
   /* ============ Interaction Colors ============ */
+  /* 매핑: Primary=interaction/blue, Secondary=interaction/light-blue, Tertiary=interaction/gray, Destructed=interaction/red */
   --interaction-gray-hover: var(--ref-color-gray-900-5);
   --interaction-gray-pressed: var(--ref-color-gray-900-10);
   --interaction-light-gray-default: var(--ref-color-gray-50);

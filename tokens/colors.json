@@ -1,8 +1,8 @@
 {
-  "sourceVersion": "V3 (바드림 디자인시스템 V3.pdf 기준, DESIGN3.md에서 이식, 2026-08-21 갱신)",
-  "previousVersionNote": "V2(기존 이 파일 / docs/DESIGN.md=DESIGN2.md 원본) 대비 팔레트 HEX가 전면 변경되었습니다. V2 값을 하드코딩해 참조하던 기존 산출물은 재검증이 필요합니다.",
+  "sourceVersion": "V3 (바드림 디자인시스템 V3.pdf 기준, docs/DESIGN.md에서 이식, 2026-08-21 갱신)",
+  "previousVersionNote": "구버전(V2) 팔레트 대비 HEX가 전면 변경되었습니다. 외부에 캐시된 V2 값을 하드코딩해 참조하던 산출물은 재검증이 필요합니다.",
   "interaction": {
-    "note": "DESIGN3.md 12.3절(Interaction 토큰, 'attached interaction token family reference' 출처)에서 신규 이식. 버튼/칩/리스트/카드/탭/아이콘버튼/선택영역의 hover/pressed/selected/disabled 피드백에 사용하는 공식 시스템 토큰. components/button/button.md 5-2절 실측값과 일부 불일치하니(특히 blue/red 계열) 참고.",
+    "note": "docs/DESIGN.md 12.3절(Interaction 토큰, 'attached interaction token family reference' 출처)에서 이식. 버튼/칩/리스트/카드/탭/아이콘버튼/선택영역의 hover/pressed/selected/disabled 피드백에 사용하는 공식 시스템 토큰. Button 컴포넌트(components/button)의 hover/pressed 오버레이도 실제 Figma 화면 확인 결과 이 값과 일치함.",
     "gray":            { "hover": { "ref": "ref-color-gray-900-5",  "value": "#03091A 5%"  }, "pressed": { "ref": "ref-color-gray-900-10", "value": "#03091A 10%" } },
     "light-gray":      { "default": { "ref": "ref-color-gray-50", "value": "#FDFDFD" }, "hover": { "ref": "ref-color-gray-100", "value": "#F6F7F7" }, "pressed": { "ref": "ref-color-gray-200", "value": "#F1F2F3" }, "disabled": { "ref": "ref-color-gray-300", "value": "#DBDCDF" } },
     "blue":            { "hover": { "ref": "ref-color-blue-500-20", "value": "#2C7BE2 20%" }, "pressed": { "ref": "ref-color-blue-500-40", "value": "#2C7BE2 40%" } },
@@ -59,7 +59,7 @@
     "theme": {
       "purple":    { "bg": "ref-color-purple-50", "default": "ref-color-purple-500" },
       "turquoise": { "bg": "ref-color-turquoise-50", "default": "ref-color-turquoise-600" },
-      "destructed": { "bg": "ref-color-red-50", "default": "ref-color-red-500", "note": "V3(DESIGN3.md) 공식 명칭. Figma Variables 패널에도 theme/destructed-bg, theme/destructed-default로 존재." },
+      "destructed": { "bg": "ref-color-red-50", "default": "ref-color-red-500", "note": "V3 공식 명칭. Figma Variables 패널에도 theme/destructed-bg, theme/destructed-default로 존재." },
       "error":     { "bg": "ref-color-red-50", "default": "ref-color-red-500", "note": "V2에서 쓰이던 이름. V3 공식 명칭은 'destructed'이며 값은 동일. 하위 호환용으로만 유지." },
       "success":   { "bg": "ref-color-green-50", "default": "ref-color-green-600" },
       "warning":   { "bg": "ref-color-orange-50", "default": "ref-color-orange-500" },
