@@ -203,22 +203,23 @@
     "Hover": {
       "mechanism": "배경 위에 반투명 오버레이를 블렌드 (플랫 컬러로 사전 합성됨, box-shadow 아님)",
       "overlaysByFamily": {
-        "primary(blue)": { "figmaVariable": "color/interaction/blue/hover", "hex": "#0d2d5726", "rgba": "rgba(13,45,87,0.15)", "verifiedOnNodeIds": ["410:3436", "409:6156"], "tokenMatch": "기존 토큰 파일(colors.json)에 없음 — 컴포넌트 전용 인터랙션 컬러" },
-        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/hover", "hex": "#2c7be214", "rgba": "rgba(44,123,226,0.08)", "verifiedOnNodeIds": ["409:6150"], "tokenMatch": "기존 토큰에 없음" },
-        "tertiaryLight(light-gray)": { "figmaVariable": "color/interaction/light-gray/hover", "hex": "#03091a0d", "rgba": "rgba(3,9,26,0.05)", "verifiedOnNodeIds": ["409:6149"], "tokenMatch": "기존 토큰에 없음" },
-        "tertiaryOnDark(gray)": { "figmaVariable": "color/interaction/gray/hover", "hex": "#03091a26", "rgba": "rgba(3,9,26,0.15) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — get_variable_defs로 변수값만 확인, 개별 노드 렌더링 미검증" },
-        "destructed(red)": { "figmaVariable": "color/interaction/red/hover", "hex": "#5e131426", "rgba": "rgba(94,19,20,0.15)", "verifiedOnNodeIds": ["410:3570"], "tokenMatch": "기존 토큰에 없음" }
+        "primary(blue)": { "figmaVariable": "color/interaction/blue/hover", "hex": "#0d2d5726", "rgba": "rgba(13,45,87,0.15)", "verifiedOnNodeIds": ["410:3436", "409:6156"], "tokenMatch": "불일치 — DESIGN3.md의 interaction/blue/hover 공식값(ref-color-blue-500-20 = blue-500 20%)과 다름. 실측은 blue-900 15%. 같은 변수명인데 문서값과 실제 Figma 해석값이 다름 — 확인 필요" },
+        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/hover", "hex": "#2c7be214", "rgba": "rgba(44,123,226,0.08)", "verifiedOnNodeIds": ["409:6150"], "tokenMatch": "불일치 — DESIGN3.md의 interaction/light-blue는 알파 없는 솔리드 스텝(default=blue-50)만 정의, hover 자체가 없음. 실측은 blue-500 8% 알파 오버레이로 방식이 다름 — 확인 필요" },
+        "tertiaryLight(light-gray)": { "figmaVariable": "color/interaction/light-gray/hover", "hex": "#03091a0d", "rgba": "rgba(3,9,26,0.05)", "verifiedOnNodeIds": ["409:6149"], "tokenMatch": "정확히 일치 — 단 DESIGN3.md 기준으로는 이 값이 'interaction/gray/hover'(gray-900 5%)에 해당하며 'interaction/light-gray' 패밀리(gray-50/100/200 솔리드 스텝)와는 다른 패밀리. figmaVariable 필드명을 gray로 정정 필요" },
+        "tertiaryOnDark(gray)": { "figmaVariable": "color/interaction/gray/hover", "hex": "#03091a26", "rgba": "rgba(3,9,26,0.15) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — get_variable_defs로 변수값만 확인, 개별 노드 렌더링 미검증. interaction/gray 공식(5%)과도 다른 15%로 추정되어 재검증 필요" },
+        "destructed(red)": { "figmaVariable": "color/interaction/red/hover", "hex": "#5e131426", "rgba": "rgba(94,19,20,0.15)", "verifiedOnNodeIds": ["410:3570"], "tokenMatch": "불일치 — DESIGN3.md의 interaction/red/hover 공식값(ref-color-red-500-20 = red-500 20%)과 다름. 실측은 red-900 15%. 같은 변수명인데 문서값과 실제 Figma 해석값이 다름 — 확인 필요" }
       },
-      "otherChanges": "cursor: pointer 스타일 힌트 존재. 텍스트/아이콘 색상·패딩·radius는 Default와 동일."
+      "otherChanges": "cursor: pointer 스타일 힌트 존재. 텍스트/아이콘 색상·패딩·radius는 Default와 동일.",
+      "designDocConflictNote": "2026-08-21: docs/DESIGN3.md 12.3절에 'interaction/*' 토큰 공식 정의가 추가됨(tokens/colors.json의 interaction 섹션에 이식). 그런데 이 Button 컴포넌트 실측값과 대조 시 gray 계열만 일치하고 blue/red 계열은 베이스 색상 스텝(500 vs 900)과 alpha%가 모두 다름. light-blue/light-gray는 아예 방식(솔리드 스텝 vs 알파 오버레이)이 다름. 실제 구현이 구버전이거나, 문서가 아직 구현에 반영 안 된 목표 스펙일 가능성 — 디자이너 확인 필요."
     },
     "Pressed": {
-      "mechanism": "Hover와 동일 메커니즘, 오버레이 alpha 약 2배",
+      "mechanism": "Hover와 동일 메커니즘, 오버레이 alpha 정확히 2배",
       "overlaysByFamily": {
-        "primary(blue)": { "figmaVariable": "color/interaction/blue/pressed", "hex": "#0d2d574d", "rgba": "rgba(13,45,87,0.3)", "verifiedOnNodeIds": ["410:3463"], "tokenMatch": "기존 토큰에 없음" },
-        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/pressed", "hex": "#2c7be226", "rgba": "rgba(44,123,226,0.15) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인" },
-        "tertiaryLight(light-gray)": { "figmaVariable": "color/interaction/light-gray/pressed", "hex": "#03091a1a", "rgba": "rgba(3,9,26,0.1) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인" },
-        "tertiaryOnDark(gray)": { "figmaVariable": "color/interaction/gray/pressed", "hex": "#03091a4d", "rgba": "rgba(3,9,26,0.3) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인" },
-        "destructed(red)": { "figmaVariable": "color/interaction/red/pressed", "hex": "#5e13144d", "rgba": "rgba(94,19,20,0.3) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인" }
+        "primary(blue)": { "figmaVariable": "color/interaction/blue/pressed", "hex": "#0d2d574d", "rgba": "rgba(13,45,87,0.3)", "verifiedOnNodeIds": ["410:3463"], "tokenMatch": "불일치 — DESIGN3.md 공식값(blue-500 40%)과 다름. 실측은 blue-900 30%" },
+        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/pressed", "hex": "#2c7be226", "rgba": "rgba(44,123,226,0.15) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인. DESIGN3.md 공식값(솔리드 blue-100)과도 방식이 다름" },
+        "tertiaryLight(light-gray)": { "figmaVariable": "color/interaction/light-gray/pressed", "hex": "#03091a1a", "rgba": "rgba(3,9,26,0.1) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인. DESIGN3.md 'interaction/gray/pressed'(gray-900 10%) 공식과는 일치 후보, 개별 노드 렌더링으로 미검증" },
+        "tertiaryOnDark(gray)": { "figmaVariable": "color/interaction/gray/pressed", "hex": "#03091a4d", "rgba": "rgba(3,9,26,0.3) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인. DESIGN3.md 공식(10%)과 다른 30%로 추정되어 재검증 필요" },
+        "destructed(red)": { "figmaVariable": "color/interaction/red/pressed", "hex": "#5e13144d", "rgba": "rgba(94,19,20,0.3) 추정", "verifiedOnNodeIds": [], "tokenMatch": "확인 필요 — 변수값만 확인. DESIGN3.md 공식값(red-500 40%)과는 다름(red-900 30% 추정)" }
       }
     },
     "Disabled": {
@@ -279,11 +280,17 @@
       "Tertiary 배경 neutral/100 (#f6f7f7 = ref-color-gray-100, V3 갱신 후)",
       "Tertiary Bold Stroke 보더 neutral/400 (#c2c4c8 = ref-color-gray-400, V3 갱신 후)",
       "Destructed 배경 (#e72f37 = sys-color-theme-destructed-default, V3에서 신설된 전용 롤)",
-      "Stroke 보더 컬러 gray-900 10% 알파 (베이스 #03091a = ref-color-gray-900, V3 갱신 후)"
+      "Stroke 보더 컬러 gray-900 10% 알파 (베이스 #03091a = ref-color-gray-900, V3 갱신 후)",
+      "Tertiary hover/pressed 오버레이 (interaction/gray = gray-900 5%/10%, DESIGN3.md 12.3절 공식과 정확히 일치)"
     ],
     "근접하나확인필요": [],
+    "토큰문서와실측불일치_확인필요": [
+      "interaction/blue(hover/pressed): 문서 공식 blue-500 20%/40% vs 이 버튼 실측 blue-900 15%/30%",
+      "interaction/light-blue: 문서는 솔리드 컬러 스텝(blue-50→blue-100) vs 이 버튼 실측은 blue-500 알파 오버레이(8%→15%)",
+      "interaction/red(hover/pressed): 문서 공식 red-500 20%/40% vs 이 버튼 실측 red-900 15%/30%",
+      "2026-08-21 DESIGN3.md 12.3절(Interaction 토큰, 신규 추가) 반영 후 발견. tokens/colors.json의 interaction 섹션엔 문서값 그대로 보관, 이 버튼 문서엔 실측값 그대로 유지 — 어느 쪽이 최종 기준인지 디자이너 확인 필요"
+    ],
     "기존토큰에없음": [
-      "color/interaction/* 계열 5쌍(hover/pressed) 10개 변수 전체 (V3 문서에도 없음)",
       "Icon-only 정사각형 고정 크기 (26/30/38/48/56px)",
       "Loading 스피너 컨테이너 패딩(3.5px)/아이콘(15px)",
       "opacity/40 변수 (사용처 미확인)"

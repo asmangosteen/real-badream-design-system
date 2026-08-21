@@ -23,7 +23,8 @@
 
 ## 원칙 및 가이드 (docs/)
 
-- docs/DESIGN.md: 브랜드 아이덴티티, UX 라이팅 원칙, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (DESIGN2.md 원본, V2). 브랜드/UX라이팅 내용은 유효하나 색상 팔레트 수치는 V3로 대체되었으니 tokens/colors.json을 우선하세요.
+- docs/DESIGN.md: 브랜드 아이덴티티, UX 라이팅 원칙, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (DESIGN2.md 원본, V2 — 브랜드/UX라이팅 내용은 유효하나 색상 팔레트 수치는 구버전이니 참고만)
+- docs/DESIGN3.md: **현재 기준(V3)** 브랜드/UX라이팅/Foundation 토큰 전체 문서 (바드림 디자인시스템 V3.pdf + interaction 토큰 패밀리). tokens/*.json·tokens.css는 이 문서를 소스로 갱신됩니다. 색상/보더width 등 수치를 인용할 땐 DESIGN.md(V2) 대신 이 문서를 우선하세요.
 - docs/SCREEN.md: 착한구독·신차구매 두 핵심 플로우의 화면 흐름, 상태 머신, UX 패턴 (통합본)
 
 ## 컴포넌트 스펙 (components/)

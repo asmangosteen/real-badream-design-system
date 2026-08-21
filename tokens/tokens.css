@@ -223,6 +223,52 @@
   --sys-color-neutral-700: var(--ref-color-gray-700);
   --sys-color-neutral-800: var(--ref-color-gray-800);
 
+  /* ============ Interaction Colors (DESIGN3.md 12.3, 2026-08-21 신규) ============ */
+  /* 버튼/칩/리스트/카드/탭/아이콘버튼/선택영역의 hover/pressed/selected/disabled 피드백용 시스템 토큰.
+     Button 컴포넌트 실측값(components/button/button.json)과 blue/red 계열은 다를 수 있음 — 5-2절 참고. */
+  --interaction-gray-hover: var(--ref-color-gray-900-5);
+  --interaction-gray-pressed: var(--ref-color-gray-900-10);
+  --interaction-light-gray-default: var(--ref-color-gray-50);
+  --interaction-light-gray-hover: var(--ref-color-gray-100);
+  --interaction-light-gray-pressed: var(--ref-color-gray-200);
+  --interaction-light-gray-disabled: var(--ref-color-gray-300);
+  --interaction-blue-hover: var(--ref-color-blue-500-20);
+  --interaction-blue-pressed: var(--ref-color-blue-500-40);
+  --interaction-light-blue-default: var(--ref-color-blue-50);
+  --interaction-light-blue-pressed: var(--ref-color-blue-100);
+  --interaction-deep-blue-hover: var(--ref-color-deepBlue-500-20);
+  --interaction-deep-blue-pressed: var(--ref-color-deepBlue-500-40);
+  --interaction-light-deep-blue-default: var(--ref-color-deepBlue-50);
+  --interaction-light-deep-blue-pressed: var(--ref-color-deepBlue-100);
+  --interaction-emerald-hover: var(--ref-color-emerald-500-20);
+  --interaction-emerald-pressed: var(--ref-color-emerald-500-40);
+  --interaction-light-emerald-default: var(--ref-color-emerald-50);
+  --interaction-light-emerald-pressed: var(--ref-color-emerald-100);
+  --interaction-purple-hover: var(--ref-color-purple-500-20);
+  --interaction-purple-pressed: var(--ref-color-purple-500-40);
+  --interaction-light-purple-default: var(--ref-color-purple-50);
+  --interaction-light-purple-pressed: var(--ref-color-purple-100);
+  --interaction-turquoise-hover: var(--ref-color-turquoise-600-20);
+  --interaction-turquoise-pressed: var(--ref-color-turquoise-600-40);
+  --interaction-light-turquoise-default: var(--ref-color-turquoise-50);
+  --interaction-light-turquoise-pressed: var(--ref-color-turquoise-100);
+  --interaction-red-hover: var(--ref-color-red-500-20);
+  --interaction-red-pressed: var(--ref-color-red-500-40);
+  --interaction-light-red-default: var(--ref-color-red-50);
+  --interaction-light-red-pressed: var(--ref-color-red-100);
+  --interaction-green-hover: var(--ref-color-green-600-20);
+  --interaction-green-pressed: var(--ref-color-green-600-40);
+  --interaction-light-green-default: var(--ref-color-green-50);
+  --interaction-light-green-pressed: var(--ref-color-green-100);
+  --interaction-orange-hover: var(--ref-color-orange-500-20);
+  --interaction-orange-pressed: var(--ref-color-orange-500-40);
+  --interaction-light-orange-default: var(--ref-color-orange-50);
+  --interaction-light-orange-pressed: var(--ref-color-orange-100);
+  --interaction-yellow-hover: var(--ref-color-yellow-500-20);
+  --interaction-yellow-pressed: var(--ref-color-yellow-500-40);
+  --interaction-light-yellow-default: var(--ref-color-yellow-50);
+  --interaction-light-yellow-pressed: var(--ref-color-yellow-100);
+
   /* ============ Gradients ============ */
   --gradient-white-upward: linear-gradient(0deg, rgb(253 253 253 / 0%) 0%, rgb(253 253 253 / 8%) 15%, rgb(253 253 253 / 22%) 30%, rgb(253 253 253 / 42%) 50%, rgb(253 253 253 / 64%) 70%, rgb(253 253 253 / 82%) 85%, rgb(253 253 253 / 100%) 100%);
   --gradient-blue-downward-diag: linear-gradient(135deg, #84B6FD 0%, #2C7BE2 50%, #009DCF 80%);

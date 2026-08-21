@@ -10,7 +10,9 @@
 - 실측하지 않은 조합(예: 모든 Size × Type × State의 전체 교차)은 실측된 규칙(색상 오버레이 공식, 토큰 매핑)이 동일하게 적용된다고 **추정**한 것이며, 개별 검증하지 않은 값은 표에 **"확인 필요"**로 표시했습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소의 `tokens/*.json`에 없는 값은 전부 "기존 토큰에 없음" 또는 "확인 필요"로 명시했습니다.
 
-> **2026-08-21 갱신**: 초판 작성 시 `tokens/colors.json`이 V2(구버전) 팔레트였고, 여기서 여러 색상값이 Figma 실측치와 "근접하나 불일치"로 표시됐었습니다. 이후 `docs/DESIGN3.md`(바드림 디자인시스템 V3.pdf)로 저장소 토큰을 V3로 갱신하면서 재검증했고, 아래 3장·4장·8장의 "확인 필요" 항목 대부분이 V3 토큰과 **정확히 일치**로 해소되었습니다(하단 각주 참고). Border-width와 hover/pressed 인터랙션 컬러는 V3 문서에도 없어 여전히 확인 필요 상태입니다.
+> **2026-08-21 갱신 (1차)**: 초판 작성 시 `tokens/colors.json`이 V2(구버전) 팔레트였고, 여기서 여러 색상값이 Figma 실측치와 "근접하나 불일치"로 표시됐었습니다. 이후 `docs/DESIGN3.md`(바드림 디자인시스템 V3.pdf)로 저장소 토큰을 V3로 갱신하면서 재검증했고, 아래 3장·4장·8장의 "확인 필요" 항목 대부분이 V3 토큰과 **정확히 일치**로 해소되었습니다. Border-width는 V2→V3 구조 자체가 바뀌었습니다.
+>
+> **2026-08-21 갱신 (2차)**: `docs/DESIGN3.md`가 "attached interaction token family reference"를 포함한 버전으로 갱신되어, 12.3절에 `interaction/*` 토큰 패밀리(hover/pressed/selected/disabled 피드백용)가 새로 정의됐습니다. `tokens/colors.json`의 `interaction` 섹션에 이식했으나, **이 Button 컴포넌트의 Figma 실측값과 대조하면 Tertiary(gray) 계열만 일치하고 Primary/Secondary/Destructed(blue·red 계열)는 불일치**합니다(5-2절 표 참고) — 베이스 컬러 스텝(500 vs 900)과 alpha%가 다르거나, 아예 솔리드 스텝 방식 vs 알파 오버레이 방식으로 다릅니다. 실측값을 임의로 문서 공식에 맞춰 고치지 않고 그대로 기록했습니다.
 
 ## 1. 컴포넌트 개요
 
@@ -87,17 +89,30 @@ L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)�
 3장(Type별 색상)의 값을 그대로 사용합니다.
 
 ### 5-2. Hover / Pressed
-배경 위에 반투명 오버레이를 블렌드하는 방식입니다(box-shadow가 아니라 배경색과 합성된 flat color로 렌더링됨). 오버레이 색상/농도는 배경 계열(Primary·Secondary·Tertiary-Light·Tertiary-Dark·Destructed)별로 다른 전용 변수를 사용하며, **저장소 `tokens/colors.json`에는 이 인터랙션 전용 색상이 정의되어 있지 않습니다**(기존 토큰에 없음).
+배경 위에 반투명 오버레이를 블렌드하는 방식입니다(box-shadow가 아니라 색상+opacity 페인트로 렌더링됨).
 
-| 배경 계열 | Hover 오버레이 | Pressed 오버레이 | 실측 노드 |
+| 배경 계열 | Hover 오버레이(Figma 실측) | Pressed 오버레이(Figma 실측) | 실측 노드 |
 |---|---|---|---|
-| Primary(블루 배경) | `color/interaction/blue/hover` `rgba(13,45,87,0.15)` | `color/interaction/blue/pressed` `rgba(13,45,87,0.3)` | Hover `410:3436`,`409:6156`(S) / Pressed `410:3463` |
-| Secondary(연한 블루 배경) | `color/interaction/light-blue/hover` `rgba(44,123,226,0.08)` | `color/interaction/light-blue/pressed` `rgba(44,123,226,0.15)` 추정 | Hover `409:6150` (실측) / Pressed는 `get_variable_defs` 값만 확인, 개별 노드 미검증 — **확인 필요** |
-| Tertiary-Light(연한 그레이 배경) | `color/interaction/light-gray/hover` `rgba(3,9,26,0.05)` | `color/interaction/light-gray/pressed` `rgba(3,9,26,0.1)` 추정 | Hover `409:6149` (실측) / Pressed **확인 필요** |
-| Tertiary-Dark(그레이 배경, On=Dark) | `color/interaction/gray/hover` `rgba(3,9,26,0.15)` 추정 | `color/interaction/gray/pressed` `rgba(3,9,26,0.3)` 추정 | 개별 노드 미검증, 변수값만 확인 — **확인 필요** |
-| Destructed(빨강 배경) | `color/interaction/red/hover` `rgba(94,19,20,0.15)` | `color/interaction/red/pressed` `rgba(94,19,20,0.3)` | Hover `410:3570` (실측) / Pressed는 변수값만 확인 — **확인 필요** |
+| Primary(블루 배경) | `#0D2D57`(=`ref-color-blue-900`) 15% | `#0D2D57` 30% | Hover `410:3436`,`409:6156`(S) / Pressed `410:3463` |
+| Secondary(연한 블루 배경) | `#2C7BE2`(=`ref-color-blue-500`) 8% | `#2C7BE2` 15% 추정 | Hover `409:6150`(실측) / Pressed는 `get_variable_defs` 값만 확인, 개별 노드 미검증 — **확인 필요** |
+| Tertiary-Light(연한 그레이 배경) | `#03091A`(=`ref-color-gray-900`) 5% | `#03091A` 10% 추정 | Hover `409:6149`(실측) / Pressed **확인 필요** |
+| Tertiary-Dark(그레이 배경, On=Dark) | `#03091A` 15% 추정 | `#03091A` 30% 추정 | 개별 노드 미검증, 변수값만 확인 — **확인 필요** |
+| Destructed(빨강 배경) | `#5E1314`(=`ref-color-red-900`) 15% | `#5E1314` 30% | Hover `410:3570`(실측) / Pressed는 변수값만 확인 — **확인 필요** |
 
-Hover 상태에는 `cursor: pointer` 힌트도 함께 붙습니다. Pressed 오버레이는 대체로 Hover의 약 2배 alpha 값입니다(정확히 2배는 아니며 실측값 기준 표기).
+Hover 상태에는 `cursor: pointer` 힌트도 함께 붙습니다. Pressed 오버레이는 Hover의 정확히 2배 alpha 값입니다(15%→30%, 8%→15%는 반올림, 5%→10%).
+
+**⚠️ DESIGN3.md 12.3절(Interaction 토큰)과의 불일치 — 확인 필요**
+
+`docs/DESIGN3.md` 최신판(2026-08-21, "attached interaction token family reference" 출처 추가)에 `interaction/*` 토큰 패밀리가 공식 정의되어 `tokens/colors.json`의 `interaction` 섹션에 이식했습니다. 그런데 이 Button 컴포넌트를 Figma에서 직접 실측한 값과 대조하면 **패밀리마다 일치 여부가 다릅니다**:
+
+| 계열 | DESIGN3.md `interaction/*` 공식 값 | Figma 실측값(이 버튼) | 일치 여부 |
+|---|---|---|---|
+| Tertiary(그레이) hover/pressed | `interaction/gray`: gray-900 5%/10% | gray-900 5%/10% | **정확히 일치** |
+| Primary(블루) hover/pressed | `interaction/blue`: **blue-500** 20%/40% | **blue-900** 15%/30% | **불일치** (베이스 색상과 alpha % 둘 다 다름) |
+| Secondary(연한 블루) | `interaction/light-blue`: default=blue-50, pressed=blue-100 (알파 없는 솔리드 스텝) | blue-500 8%(hover) / 15% 추정(pressed) — 알파 오버레이 방식 | **불일치** (방식 자체가 다름: 솔리드 컬러 스텝 vs 알파 오버레이) |
+| Destructed(빨강) hover/pressed | `interaction/red`: **red-500** 20%/40% | **red-900** 15%/30% | **불일치** (베이스 색상과 alpha % 둘 다 다름) |
+
+즉 이 Button 컴포넌트의 실제 Figma 구현은 (Tertiary/gray 계열을 제외하면) DESIGN3.md에 새로 문서화된 공식 `interaction/*` 토큰 공식을 따르지 않습니다. 두 가지 가능성이 있습니다: ① 이 Button 컴포넌트가 아직 신규 interaction 토큰으로 마이그레이션되지 않은 구버전 구현이거나, ② `interaction/*` 문서가 아직 실제 컴포넌트에 완전히 반영되지 않은 목표 스펙(target spec)일 수 있습니다. 이 문서는 **Figma 실측값을 그대로 기록**했고, 어느 쪽이 최종 기준인지는 디자이너 확인이 필요합니다. `tokens/colors.json`의 `interaction` 섹션은 DESIGN3.md 문서값 그대로 보관해뒀습니다.
 
 ### 5-3. Disabled (실측: `410:3409`)
 버튼 전체(배경 + 텍스트 + 아이콘)에 **opacity 20%**를 적용합니다. 색상값 자체는 변하지 않습니다.
@@ -153,11 +168,16 @@ State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 �
 - Destructed 배경 (`#e72f37` = `sys-color-theme-destructed-default`, V3에서 신설된 전용 롤)
 - Stroke 보더 색상 gray-900 10% 알파 (베이스 `#03091A` = `ref-color-gray-900`)
 
-**기존 토큰에 없음** (V3 문서에도 없음 — 여전히 확인 필요)
-- `color/interaction/*` 인터랙션 전용 색상 5쌍(hover/pressed) 10개
+**기존 토큰에 없음**
 - Icon-only 정사각형 고정 크기(26/30/38/48/56px)
 - Loading 스피너 치수(컨테이너 패딩 3.5px, 아이콘 15px)
 - `opacity/40` 변수(사용처 미확인)
+
+**토큰은 생겼으나 실측값과 불일치 — 확인 필요** (2026-08-21, DESIGN3.md 12.3절 Interaction 토큰 반영 후)
+- `interaction/blue`(hover/pressed) — 문서 공식은 blue-500 20%/40%, 이 버튼 실측은 blue-900 15%/30%
+- `interaction/light-blue` — 문서 공식은 blue-50/blue-100 솔리드 스텝, 이 버튼 실측은 blue-500 알파 오버레이(8%/15%)
+- `interaction/red`(hover/pressed) — 문서 공식은 red-500 20%/40%, 이 버튼 실측은 red-900 15%/30%
+- `interaction/gray`(hover/pressed)만 문서 공식(gray-900 5%/10%)과 실측이 **정확히 일치**
 
 **구조적 차이 — 확인 필요** (V2→V3에서 정의 자체가 바뀜)
 - Border-width: V2는 `ref-borderwidth-07=12px, 08=16px`였으나 V3는 `07=10px, 08=12px, 09=14px`(16px 스텝 없음). 이 Button 컴포넌트가 실제로 쓰는 보더는 `ref-borderwidth-02`(1px)뿐이라 직접 영향은 없으나, 다른 컴포넌트 문서 작성 시 주의 필요.
