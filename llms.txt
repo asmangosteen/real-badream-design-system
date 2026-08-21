@@ -25,6 +25,10 @@
 - docs/DESIGN.md: 브랜드 아이덴티티, UX 라이팅 원칙, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (DESIGN2.md 원본)
 - docs/SCREEN.md: 착한구독·신차구매 두 핵심 플로우의 화면 흐름, 상태 머신, UX 패턴 (통합본)
 
+## 컴포넌트 스펙 (components/)
+
+- 컴포넌트 스펙은 components/[name]/[name].md 참고 (기계 판독용 값은 같은 폴더의 [name].json). 전체 색인은 components/README.md.
+
 ## 에셋 (assets/)
 
 - assets/logo/: CI(사이클로이드)·BI(바드림) 로고 SVG/PNG, 앱 아이콘
