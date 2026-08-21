@@ -132,25 +132,25 @@
       "sourceNodeId": "409:6750",
       "background": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" },
       "text": { "figmaVariable": "common/white-default", "hex": "#fdfdfd", "token": "sys-color-common-white-default", "tokenMatch": "정확히 일치" },
-      "backgroundTokenCandidate": "sys-color-brand-primary-default (ref-color-blue-500 = #307EE8)",
-      "backgroundTokenMatch": "확인 필요 (Figma 실측 #2c7be2 vs 토큰 #307EE8 — 색상이 근접하지만 서브픽셀 반올림 수준을 넘는 차이. 동일 토큰의 다른 버전이거나 별도 색상일 수 있음)"
+      "backgroundTokenCandidate": "sys-color-brand-primary-default (ref-color-blue-500 = #2C7BE2, V3 갱신)",
+      "backgroundTokenMatch": "정확히 일치 (2026-08-21: tokens/colors.json을 V2(#307EE8)에서 V3(#2C7BE2)로 갱신 후 재검증)"
     },
     "Secondary": {
       "sourceNodeId": "409:6702",
       "background": { "figmaVariable": "brand/primary-lightest", "hex": "#eef4fc" },
       "text": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" },
-      "backgroundTokenCandidate": "sys-color-brand-primary-lightest (ref-color-blue-50 = #EAF2FD)",
-      "backgroundTokenMatch": "확인 필요 (근접하지만 정확히 일치하지 않음)",
-      "textTokenMatch": "확인 필요 (Primary의 배경색과 동일한 불일치 사유)"
+      "backgroundTokenCandidate": "sys-color-brand-primary-lightest (ref-color-blue-50 = #EEF4FC, V3 갱신)",
+      "backgroundTokenMatch": "정확히 일치 (V3 갱신 후 재검증)",
+      "textTokenMatch": "정확히 일치 (Primary의 배경색과 동일 토큰, V3 갱신 후)"
     },
     "TertiaryGray": {
       "sourceNodeId": "409:6666",
       "background": { "figmaVariable": "neutral/100", "hex": "#f6f7f7" },
       "text": { "figmaVariable": "neutral/600", "hex": "#5b616c" },
-      "backgroundTokenCandidate": "sys-color-neutral-100 (ref-color-gray-100 = #F5F5F6)",
-      "backgroundTokenMatch": "확인 필요 (근접하지만 정확히 일치하지 않음)",
-      "textTokenCandidate": "sys-color-neutral-600 (ref-color-gray-600 = #5B606B)",
-      "textTokenMatch": "거의 일치 (1 hex 단위 차이, 반올림 수준)"
+      "backgroundTokenCandidate": "sys-color-neutral-100 (ref-color-gray-100 = #F6F7F7, V3 갱신)",
+      "backgroundTokenMatch": "정확히 일치 (V3 갱신 후 재검증)",
+      "textTokenCandidate": "sys-color-neutral-600 (ref-color-gray-600 = #5B616C, V3 갱신)",
+      "textTokenMatch": "정확히 일치 (V3 갱신 후 재검증)"
     },
     "TertiaryBlue": {
       "sourceNodeId": "409:6231",
@@ -168,8 +168,8 @@
       "sourceNodeId": "409:6448",
       "background": { "figmaVariable": "theme/destructed-default", "hex": "#e72f37" },
       "text": { "figmaVariable": "common/white-default", "hex": "#fdfdfd", "tokenMatch": "정확히 일치" },
-      "backgroundTokenCandidate": "sys-color-theme-error-default (ref-color-red-500 = #E83030)",
-      "backgroundTokenMatch": "확인 필요 (저장소에 'destructed' 전용 색상 롤이 없음. theme-error와 근접하나 정확히 일치하지 않음 — 신규 토큰 필요 여부 확인 필요)"
+      "backgroundTokenCandidate": "sys-color-theme-destructed-default (ref-color-red-500 = #E72F37, V3에서 신설)",
+      "backgroundTokenMatch": "정확히 일치 (2026-08-21: V3(DESIGN3.md)에서 'destructed' 전용 롤이 정식 추가됨. V2 시절엔 이 롤이 없어 error 롤 #E83030과 대조했고 불일치였음. error 롤은 하위호환 alias로 유지되며 값은 destructed와 동일)"
     }
   },
   "strokeRules": {
@@ -180,8 +180,8 @@
       "border": {
         "width": { "figmaVariable": "borderwidth/02", "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
         "color": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)" },
-        "colorTokenCandidate": "ref-color-alpha-gray-900-10 (colors.json: gray-900 alpha 10% = #020B1C 10%)",
-        "colorTokenMatch": "확인 필요 (베이스 색 #020B1C vs 실측 rgb(3,9,26) 근접하나 완전 일치 아님)"
+        "colorTokenCandidate": "ref-color-alpha-gray-900-10 (colors.json: gray-900 alpha 10% = #03091A 10%, V3 갱신)",
+        "colorTokenMatch": "정확히 일치 (V3 gray-900=#03091A=rgb(3,9,26), 실측값과 동일)"
       },
       "appliesTo": "Tertiary(모든 텍스트색), Destructed(Text Color=Blue로 표기되지만 실제 텍스트는 빨강)"
     },
@@ -191,8 +191,8 @@
       "border": {
         "width": { "figmaVariable": "borderwidth/02", "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
         "color": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "solid": true },
-        "colorTokenCandidate": "sys-color-neutral-400 (ref-color-gray-400 = #C0C2C6)",
-        "colorTokenMatch": "확인 필요 (근접하나 완전 일치 아님)"
+        "colorTokenCandidate": "sys-color-neutral-400 (ref-color-gray-400 = #C2C4C8, V3 갱신)",
+        "colorTokenMatch": "정확히 일치 (V3 갱신 후 재검증)"
       },
       "appliesTo": "Tertiary 타입에서만 관측됨 (935개 심볼 목록 기준 Destructed는 Bold Stroke=True 조합이 존재하지 않음)"
     },
@@ -266,6 +266,7 @@
     "ariaLabel": "docs/DESIGN.md 1141번째 줄: \"접근성 라벨이 필요한 버튼형 아이콘에는 aria-label 또는 대체 텍스트를 제공합니다\" — Contents=Icon(아이콘 전용) 변형에 해당.",
     "colorContrast": "docs/DESIGN.md 전반에 '배경 요소 위의 텍스트/아이콘/컴포넌트는 WCAG 기준을 준수해야 함'이라는 원칙만 명시되어 있고, 버튼 전용 명암비 수치 검증은 이 문서에서 별도로 수행하지 않음 — 확인 필요."
   },
+  "tokenMatchSummaryUpdatedAt": "2026-08-21: tokens/colors.json, tokens/radius.json(borderWidth), tokens/tokens.css를 V2(docs/DESIGN.md 원본)에서 V3(docs/DESIGN3.md, 바드림 디자인시스템 V3.pdf)로 갱신 후 재검증. 아래 항목 중 색상 관련 '근접하나확인필요' 5건은 전부 '정확히일치'로 해소됨 — Figma가 항상 옳았고 저장소 토큰이 구버전이었음.",
   "tokenMatchSummary": {
     "정확히일치": [
       "모든 Size의 padding/gap (ref-spacing-02/04/06/08/10)",
@@ -273,17 +274,16 @@
       "모든 Size의 typography (caption1/body2/body1/subtitle, weight 400/500/600 토큰)",
       "border-width 1px (ref-borderwidth-02)",
       "Disabled opacity 20% (ref-opacity-20)",
-      "White 텍스트 컬러 (sys-color-common-white-default)"
+      "White 텍스트 컬러 (sys-color-common-white-default)",
+      "Primary/Secondary 배경·텍스트 브랜드 블루 (#2c7be2 = ref-color-blue-500, V3 갱신 후)",
+      "Tertiary 배경 neutral/100 (#f6f7f7 = ref-color-gray-100, V3 갱신 후)",
+      "Tertiary Bold Stroke 보더 neutral/400 (#c2c4c8 = ref-color-gray-400, V3 갱신 후)",
+      "Destructed 배경 (#e72f37 = sys-color-theme-destructed-default, V3에서 신설된 전용 롤)",
+      "Stroke 보더 컬러 gray-900 10% 알파 (베이스 #03091a = ref-color-gray-900, V3 갱신 후)"
     ],
-    "근접하나확인필요": [
-      "Primary/Secondary 배경·텍스트에 쓰이는 브랜드 블루 (#2c7be2 vs 토큰 #307EE8)",
-      "Tertiary 배경 neutral/100 (#f6f7f7 vs 토큰 #F5F5F6)",
-      "Tertiary Bold Stroke 보더 neutral/400 (#c2c4c8 vs 토큰 #C0C2C6)",
-      "Destructed 배경 (#e72f37 vs 토큰 error #E83030, 저장소에 destructed 전용 롤 없음)",
-      "Stroke 보더 컬러 gray-900 10% 알파 (#03091a1a 추정 vs 토큰 #020B1C10%)"
-    ],
+    "근접하나확인필요": [],
     "기존토큰에없음": [
-      "color/interaction/* 계열 5쌍(hover/pressed) 10개 변수 전체",
+      "color/interaction/* 계열 5쌍(hover/pressed) 10개 변수 전체 (V3 문서에도 없음)",
       "Icon-only 정사각형 고정 크기 (26/30/38/48/56px)",
       "Loading 스피너 컨테이너 패딩(3.5px)/아이콘(15px)",
       "opacity/40 변수 (사용처 미확인)"

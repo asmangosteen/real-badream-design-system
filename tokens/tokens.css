@@ -1,4 +1,7 @@
 :root {
+  /* ============ Source: V3 (바드림 디자인시스템 V3.pdf / DESIGN3.md), 2026-08-21 갱신 ============ */
+  /* V2 대비 컬러 팔레트 HEX가 전면 변경되었습니다. 자세한 내용은 tokens/colors.json 상단 참고. */
+
   /* ============ Font ============ */
   --font-family-base: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-weight-regular: 400;
@@ -8,162 +11,162 @@
 
   /* ============ Reference Colors ============ */
   /* Blue */
-  --ref-color-blue-50: #EAF2FD;
-  --ref-color-blue-100: #BFD7F8;
-  --ref-color-blue-200: #A0C4F4;
-  --ref-color-blue-300: #74A9F0;
-  --ref-color-blue-400: #5998ED;
-  --ref-color-blue-500: #307EE8;
-  --ref-color-blue-600: #2C73D3;
-  --ref-color-blue-700: #2259A5;
-  --ref-color-blue-800: #1A4580;
-  --ref-color-blue-900: #143561;
+  --ref-color-blue-50: #EEF4FC;
+  --ref-color-blue-100: #D0E3FE;
+  --ref-color-blue-200: #B0D0FD;
+  --ref-color-blue-300: #84B6FD;
+  --ref-color-blue-400: #609FF7;
+  --ref-color-blue-500: #2C7BE2;
+  --ref-color-blue-600: #2369C6;
+  --ref-color-blue-700: #1A539E;
+  --ref-color-blue-800: #123E78;
+  --ref-color-blue-900: #0D2D57;
   /* Deep Blue */
-  --ref-color-deepBlue-50: #ECEDF0;
-  --ref-color-deepBlue-100: #C3C8D1;
-  --ref-color-deepBlue-200: #A6AEBB;
-  --ref-color-deepBlue-300: #7E899C;
-  --ref-color-deepBlue-400: #657289;
-  --ref-color-deepBlue-500: #3E4F6B;
-  --ref-color-deepBlue-600: #384861;
-  --ref-color-deepBlue-700: #2C384C;
-  --ref-color-deepBlue-800: #222B3B;
-  --ref-color-deepBlue-900: #1A212D;
+  --ref-color-deepBlue-50: #ECEFF2;
+  --ref-color-deepBlue-100: #CED5DF;
+  --ref-color-deepBlue-200: #ABB7C9;
+  --ref-color-deepBlue-300: #8395B2;
+  --ref-color-deepBlue-400: #5D7499;
+  --ref-color-deepBlue-500: #36517E;
+  --ref-color-deepBlue-600: #2D456D;
+  --ref-color-deepBlue-700: #223555;
+  --ref-color-deepBlue-800: #192840;
+  --ref-color-deepBlue-900: #0E182A;
   /* Emerald */
-  --ref-color-emerald-50: #EAF7F3;
-  --ref-color-emerald-100: #BFE7DA;
-  --ref-color-emerald-200: #A0DCC9;
-  --ref-color-emerald-300: #75CCB0;
-  --ref-color-emerald-400: #5AC2A1;
-  --ref-color-emerald-500: #31B389;
-  --ref-color-emerald-600: #2DA37D;
-  --ref-color-emerald-700: #237F61;
-  --ref-color-emerald-800: #1B624B;
-  --ref-color-emerald-900: #154B3A;
+  --ref-color-emerald-50: #EDF8F3;
+  --ref-color-emerald-100: #C6EBDB;
+  --ref-color-emerald-200: #A6E0C8;
+  --ref-color-emerald-300: #7CD0AF;
+  --ref-color-emerald-400: #5FC49F;
+  --ref-color-emerald-500: #33B289;
+  --ref-color-emerald-600: #2D9F7A;
+  --ref-color-emerald-700: #227C5F;
+  --ref-color-emerald-800: #1B5E48;
+  --ref-color-emerald-900: #174736;
   /* Purple */
-  --ref-color-purple-50: #F7ECFA;
-  --ref-color-purple-100: #E7C3EE;
-  --ref-color-purple-200: #DBA5E6;
-  --ref-color-purple-300: #CB7CDA;
-  --ref-color-purple-400: #C163D3;
-  --ref-color-purple-500: #B13CC8;
-  --ref-color-purple-600: #A137B6;
-  --ref-color-purple-700: #7E2B8E;
-  --ref-color-purple-800: #61216E;
-  --ref-color-purple-900: #4A1954;
+  --ref-color-purple-50: #FAEFFC;
+  --ref-color-purple-100: #EDC9F4;
+  --ref-color-purple-200: #E1AAED;
+  --ref-color-purple-300: #D180E1;
+  --ref-color-purple-400: #C161D5;
+  --ref-color-purple-500: #AF3BC6;
+  --ref-color-purple-600: #9F35B4;
+  --ref-color-purple-700: #7D298D;
+  --ref-color-purple-800: #5F216C;
+  --ref-color-purple-900: #471950;
   /* Turquoise */
-  --ref-color-turquoise-50: #E6F9F7;
-  --ref-color-turquoise-100: #B2EBE7;
-  --ref-color-turquoise-200: #8DE2DC;
-  --ref-color-turquoise-300: #5AD4CC;
-  --ref-color-turquoise-400: #39CCC2;
-  --ref-color-turquoise-500: #08BFB3;
-  --ref-color-turquoise-600: #07AEA3;
-  --ref-color-turquoise-700: #06887F;
-  --ref-color-turquoise-800: #046962;
-  --ref-color-turquoise-900: #03504B;
+  --ref-color-turquoise-50: #E9FBF9;
+  --ref-color-turquoise-100: #B6EEE8;
+  --ref-color-turquoise-200: #90E5DC;
+  --ref-color-turquoise-300: #5ED8CD;
+  --ref-color-turquoise-400: #3ACFC3;
+  --ref-color-turquoise-500: #00BEB3;
+  --ref-color-turquoise-600: #00ACA2;
+  --ref-color-turquoise-700: #00877F;
+  --ref-color-turquoise-800: #046861;
+  --ref-color-turquoise-900: #064F4A;
   /* Red */
-  --ref-color-red-50: #FDEAEA;
-  --ref-color-red-100: #F8BFBF;
-  --ref-color-red-200: #F4A0A0;
-  --ref-color-red-300: #F07474;
-  --ref-color-red-400: #ED5959;
-  --ref-color-red-500: #E83030;
-  --ref-color-red-600: #D32C2C;
-  --ref-color-red-700: #A52222;
-  --ref-color-red-800: #801A1A;
-  --ref-color-red-900: #611414;
+  --ref-color-red-50: #FFEDEB;
+  --ref-color-red-100: #FCC4BF;
+  --ref-color-red-200: #F8A49D;
+  --ref-color-red-300: #F57870;
+  --ref-color-red-400: #F05B57;
+  --ref-color-red-500: #E72F37;
+  --ref-color-red-600: #D12930;
+  --ref-color-red-700: #A32226;
+  --ref-color-red-800: #7E191C;
+  --ref-color-red-900: #5E1314;
   /* Green */
-  --ref-color-green-50: #E8F7E9;
-  --ref-color-green-100: #B6E7BA;
-  --ref-color-green-200: #93DC98;
-  --ref-color-green-300: #62CB69;
-  --ref-color-green-400: #44C14C;
-  --ref-color-green-500: #15B21F;
-  --ref-color-green-600: #139036;
-  --ref-color-green-700: #0F702A;
-  --ref-color-green-800: #0C5720;
-  --ref-color-green-900: #094219;
+  --ref-color-green-50: #EBFAEB;
+  --ref-color-green-100: #C3EFC3;
+  --ref-color-green-200: #98E49A;
+  --ref-color-green-300: #65D46C;
+  --ref-color-green-400: #32BE46;
+  --ref-color-green-500: #24A638;
+  --ref-color-green-600: #1F8F30;
+  --ref-color-green-700: #1B7026;
+  --ref-color-green-800: #15561D;
+  --ref-color-green-900: #104115;
   /* Orange */
-  --ref-color-orange-50: #FFF2EA;
-  --ref-color-orange-100: #FFD5BE;
-  --ref-color-orange-200: #FFC19E;
-  --ref-color-orange-300: #FFA572;
-  --ref-color-orange-400: #FF9356;
-  --ref-color-orange-500: #FF782C;
-  --ref-color-orange-600: #E86D28;
-  --ref-color-orange-700: #B5551F;
-  --ref-color-orange-800: #8C4218;
-  --ref-color-orange-900: #6B3212;
+  --ref-color-orange-50: #FFF3ED;
+  --ref-color-orange-100: #FFD8C3;
+  --ref-color-orange-200: #FFC3A4;
+  --ref-color-orange-300: #FFA678;
+  --ref-color-orange-400: #FF945C;
+  --ref-color-orange-500: #FF792C;
+  --ref-color-orange-600: #E96E27;
+  --ref-color-orange-700: #B65621;
+  --ref-color-orange-800: #8D4219;
+  --ref-color-orange-900: #6C3214;
   /* Yellow */
-  --ref-color-yellow-50: #FFF9E9;
-  --ref-color-yellow-100: #FFECBA;
-  --ref-color-yellow-200: #FFE299;
-  --ref-color-yellow-300: #FFD56B;
-  --ref-color-yellow-400: #FFCD4E;
-  --ref-color-yellow-500: #FFC122;
-  --ref-color-yellow-600: #E8B01F;
-  --ref-color-yellow-700: #B58918;
-  --ref-color-yellow-800: #8C6A13;
-  --ref-color-yellow-900: #6B510E;
+  --ref-color-yellow-50: #FFF9EA;
+  --ref-color-yellow-100: #FFEEBF;
+  --ref-color-yellow-200: #FFE49E;
+  --ref-color-yellow-300: #FFD774;
+  --ref-color-yellow-400: #FFCD54;
+  --ref-color-yellow-500: #FABF21;
+  --ref-color-yellow-600: #E1AD25;
+  --ref-color-yellow-700: #B0871A;
+  --ref-color-yellow-800: #886815;
+  --ref-color-yellow-900: #674E0F;
   /* Gray */
   --ref-color-gray-0: #FFFFFF;
   --ref-color-gray-50: #FDFDFD;
-  --ref-color-gray-100: #F5F5F6;
-  --ref-color-gray-200: #F0F0F1;
-  --ref-color-gray-300: #D9DADD;
-  --ref-color-gray-400: #C0C2C6;
-  --ref-color-gray-500: #8D9199;
-  --ref-color-gray-600: #5B606B;
-  --ref-color-gray-700: #464D59;
+  --ref-color-gray-100: #F6F7F7;
+  --ref-color-gray-200: #F1F2F3;
+  --ref-color-gray-300: #DBDCDF;
+  --ref-color-gray-400: #C2C4C8;
+  --ref-color-gray-500: #8C9199;
+  --ref-color-gray-600: #5B616C;
+  --ref-color-gray-700: #454C58;
   --ref-color-gray-800: #202837;
-  --ref-color-gray-900: #020B1C;
+  --ref-color-gray-900: #03091A;
   --ref-color-gray-1000: #000000;
 
   /* ============ Transparent / Alpha Color Tokens ============ */
-  --ref-color-blue-500-20: rgb(48 126 232 / 20%);
-  --ref-color-blue-500-40: rgb(48 126 232 / 40%);
-  --ref-color-blue-500-60: rgb(48 126 232 / 60%);
-  --ref-color-blue-500-80: rgb(48 126 232 / 80%);
-  --ref-color-deepBlue-500-20: rgb(62 79 107 / 20%);
-  --ref-color-deepBlue-500-40: rgb(62 79 107 / 40%);
-  --ref-color-deepBlue-500-60: rgb(62 79 107 / 60%);
-  --ref-color-deepBlue-500-80: rgb(62 79 107 / 80%);
-  --ref-color-emerald-500-20: rgb(49 179 137 / 20%);
-  --ref-color-emerald-500-40: rgb(49 179 137 / 40%);
-  --ref-color-emerald-500-60: rgb(49 179 137 / 60%);
-  --ref-color-emerald-500-80: rgb(49 179 137 / 80%);
-  --ref-color-purple-500-20: rgb(177 60 200 / 20%);
-  --ref-color-purple-500-40: rgb(177 60 200 / 40%);
-  --ref-color-purple-500-60: rgb(177 60 200 / 60%);
-  --ref-color-purple-500-80: rgb(177 60 200 / 80%);
-  --ref-color-turquoise-600-20: rgb(7 174 163 / 20%);
-  --ref-color-turquoise-600-40: rgb(7 174 163 / 40%);
-  --ref-color-turquoise-600-60: rgb(7 174 163 / 60%);
-  --ref-color-turquoise-600-80: rgb(7 174 163 / 80%);
-  --ref-color-red-500-20: rgb(232 48 48 / 20%);
-  --ref-color-red-500-40: rgb(232 48 48 / 40%);
-  --ref-color-red-500-60: rgb(232 48 48 / 60%);
-  --ref-color-red-500-80: rgb(232 48 48 / 80%);
-  --ref-color-green-600-20: rgb(19 144 54 / 20%);
-  --ref-color-green-600-40: rgb(19 144 54 / 40%);
-  --ref-color-green-600-60: rgb(19 144 54 / 60%);
-  --ref-color-green-600-80: rgb(19 144 54 / 80%);
-  --ref-color-orange-500-20: rgb(255 120 44 / 20%);
-  --ref-color-orange-500-40: rgb(255 120 44 / 40%);
-  --ref-color-orange-500-60: rgb(255 120 44 / 60%);
-  --ref-color-orange-500-80: rgb(255 120 44 / 80%);
-  --ref-color-yellow-500-20: rgb(255 193 34 / 20%);
-  --ref-color-yellow-500-40: rgb(255 193 34 / 40%);
-  --ref-color-yellow-500-60: rgb(255 193 34 / 60%);
-  --ref-color-yellow-500-80: rgb(255 193 34 / 80%);
-  --ref-color-gray-900-2: rgb(2 11 28 / 2%);
-  --ref-color-gray-900-5: rgb(2 11 28 / 5%);
-  --ref-color-gray-900-10: rgb(2 11 28 / 10%);
-  --ref-color-gray-900-20: rgb(2 11 28 / 20%);
-  --ref-color-gray-900-40: rgb(2 11 28 / 40%);
-  --ref-color-gray-900-60: rgb(2 11 28 / 60%);
-  --ref-color-gray-900-80: rgb(2 11 28 / 80%);
+  --ref-color-blue-500-20: rgb(44 123 226 / 20%);
+  --ref-color-blue-500-40: rgb(44 123 226 / 40%);
+  --ref-color-blue-500-60: rgb(44 123 226 / 60%);
+  --ref-color-blue-500-80: rgb(44 123 226 / 80%);
+  --ref-color-deepBlue-500-20: rgb(54 81 126 / 20%);
+  --ref-color-deepBlue-500-40: rgb(54 81 126 / 40%);
+  --ref-color-deepBlue-500-60: rgb(54 81 126 / 60%);
+  --ref-color-deepBlue-500-80: rgb(54 81 126 / 80%);
+  --ref-color-emerald-500-20: rgb(51 178 137 / 20%);
+  --ref-color-emerald-500-40: rgb(51 178 137 / 40%);
+  --ref-color-emerald-500-60: rgb(51 178 137 / 60%);
+  --ref-color-emerald-500-80: rgb(51 178 137 / 80%);
+  --ref-color-purple-500-20: rgb(175 59 198 / 20%);
+  --ref-color-purple-500-40: rgb(175 59 198 / 40%);
+  --ref-color-purple-500-60: rgb(175 59 198 / 60%);
+  --ref-color-purple-500-80: rgb(175 59 198 / 80%);
+  --ref-color-turquoise-600-20: rgb(0 172 162 / 20%);
+  --ref-color-turquoise-600-40: rgb(0 172 162 / 40%);
+  --ref-color-turquoise-600-60: rgb(0 172 162 / 60%);
+  --ref-color-turquoise-600-80: rgb(0 172 162 / 80%);
+  --ref-color-red-500-20: rgb(231 47 55 / 20%);
+  --ref-color-red-500-40: rgb(231 47 55 / 40%);
+  --ref-color-red-500-60: rgb(231 47 55 / 60%);
+  --ref-color-red-500-80: rgb(231 47 55 / 80%);
+  --ref-color-green-600-20: rgb(31 143 48 / 20%);
+  --ref-color-green-600-40: rgb(31 143 48 / 40%);
+  --ref-color-green-600-60: rgb(31 143 48 / 60%);
+  --ref-color-green-600-80: rgb(31 143 48 / 80%);
+  --ref-color-orange-500-20: rgb(255 121 44 / 20%);
+  --ref-color-orange-500-40: rgb(255 121 44 / 40%);
+  --ref-color-orange-500-60: rgb(255 121 44 / 60%);
+  --ref-color-orange-500-80: rgb(255 121 44 / 80%);
+  --ref-color-yellow-500-20: rgb(250 191 33 / 20%);
+  --ref-color-yellow-500-40: rgb(250 191 33 / 40%);
+  --ref-color-yellow-500-60: rgb(250 191 33 / 60%);
+  --ref-color-yellow-500-80: rgb(250 191 33 / 80%);
+  --ref-color-gray-900-2: rgb(3 9 26 / 2%);
+  --ref-color-gray-900-5: rgb(3 9 26 / 5%);
+  --ref-color-gray-900-10: rgb(3 9 26 / 10%);
+  --ref-color-gray-900-20: rgb(3 9 26 / 20%);
+  --ref-color-gray-900-40: rgb(3 9 26 / 40%);
+  --ref-color-gray-900-60: rgb(3 9 26 / 60%);
+  --ref-color-gray-900-80: rgb(3 9 26 / 80%);
   --ref-color-gray-50-5: rgb(253 253 253 / 5%);
   --ref-color-gray-50-10: rgb(253 253 253 / 10%);
   --ref-color-gray-50-20: rgb(253 253 253 / 20%);
@@ -172,9 +175,9 @@
   --ref-color-gray-50-80: rgb(253 253 253 / 80%);
 
   /* Shadow Color Tokens */
-  --ref-color-shadow-01: rgb(70 77 89 / 20%);
-  --ref-color-shadow-02: rgb(70 77 89 / 24%);
-  --ref-color-shadow-03: rgb(70 77 89 / 32%);
+  --ref-color-shadow-01: rgb(69 76 88 / 20%);
+  --ref-color-shadow-02: rgb(69 76 88 / 24%);
+  --ref-color-shadow-03: rgb(69 76 88 / 32%);
 
   /* ============ System Colors ============ */
   --sys-color-brand-primary-lightest: var(--ref-color-blue-50);
@@ -197,7 +200,9 @@
   --sys-color-theme-purple-default: var(--ref-color-purple-500);
   --sys-color-theme-turquoise-bg: var(--ref-color-turquoise-50);
   --sys-color-theme-turquoise-default: var(--ref-color-turquoise-600);
-  --sys-color-theme-error-bg: var(--ref-color-red-50);
+  --sys-color-theme-destructed-bg: var(--ref-color-red-50); /* V3 공식 명칭 */
+  --sys-color-theme-destructed-default: var(--ref-color-red-500);
+  --sys-color-theme-error-bg: var(--ref-color-red-50); /* V2 alias, destructed와 동일값 유지 */
   --sys-color-theme-error-default: var(--ref-color-red-500);
   --sys-color-theme-success-bg: var(--ref-color-green-50);
   --sys-color-theme-success-default: var(--ref-color-green-600);
@@ -220,7 +225,7 @@
 
   /* ============ Gradients ============ */
   --gradient-white-upward: linear-gradient(0deg, rgb(253 253 253 / 0%) 0%, rgb(253 253 253 / 8%) 15%, rgb(253 253 253 / 22%) 30%, rgb(253 253 253 / 42%) 50%, rgb(253 253 253 / 64%) 70%, rgb(253 253 253 / 82%) 85%, rgb(253 253 253 / 100%) 100%);
-  --gradient-blue-downward-diag: linear-gradient(135deg, #74A9F0 0%, #307EE8 50%, #009DCF 80%);
+  --gradient-blue-downward-diag: linear-gradient(135deg, #84B6FD 0%, #2C7BE2 50%, #009DCF 80%);
 
   /* ============ Spacing ============ */
   --ref-spacing-00: -2px;
@@ -265,15 +270,16 @@
   --radius-sheet: var(--ref-radius-07);
   --radius-popup: var(--ref-radius-08);
 
-  /* ============ Border Width - V2 official ============ */
+  /* ============ Border Width - V3 official (2026-08-21 갱신, V2의 07=12px/08=16px에서 재정의됨) ============ */
   --ref-borderwidth-01: 0.5px;
   --ref-borderwidth-02: 1px;
   --ref-borderwidth-03: 2px;
   --ref-borderwidth-04: 4px;
   --ref-borderwidth-05: 6px;
   --ref-borderwidth-06: 8px;
-  --ref-borderwidth-07: 12px;
-  --ref-borderwidth-08: 16px;
+  --ref-borderwidth-07: 10px;
+  --ref-borderwidth-08: 12px;
+  --ref-borderwidth-09: 14px;
 
   /* ============ Opacity ============ */
   --ref-opacity-0: 0%;
@@ -292,12 +298,12 @@
   --dimmed-bg: rgb(0 0 0 / 40%);
 
   /* ============ Shadows ============ */
-  --shadow-01: 0 2px 4px 0 rgb(70 77 89 / 20%);
-  --shadow-02: 0 4px 6px -1px rgb(70 77 89 / 20%);
-  --shadow-03: 0 6px 12px -2px rgb(70 77 89 / 20%);
-  --shadow-04: 0 8px 20px -3px rgb(70 77 89 / 24%);
-  --shadow-05: 0 12px 24px -4px rgb(70 77 89 / 32%);
-  --shadow-sh: 0 -6px 12px -2px rgb(70 77 89 / 20%);
+  --shadow-01: 0 2px 4px 0 rgb(69 76 88 / 20%);
+  --shadow-02: 0 4px 6px -1px rgb(69 76 88 / 20%);
+  --shadow-03: 0 6px 12px -2px rgb(69 76 88 / 20%);
+  --shadow-04: 0 8px 20px -3px rgb(69 76 88 / 24%);
+  --shadow-05: 0 12px 24px -4px rgb(69 76 88 / 32%);
+  --shadow-sh: 0 -6px 12px -2px rgb(69 76 88 / 20%);
   --shadow-toast: 0 6px 16px 0 rgb(0 0 0 / 10%);
 
   /* ============ Typography ============ */
@@ -370,6 +376,10 @@
   --ref-boderwidth-04: var(--ref-borderwidth-04);
   --ref-boderwidth-05: var(--ref-borderwidth-05);
   --ref-boderwidth-06: var(--ref-borderwidth-06);
+  /* 주의: V2에서는 07=12px/08=16px였으나 V3 재정의로 --ref-borderwidth-07/08의 실제 값이 10px/12px로 바뀌었습니다.
+     아래 두 alias는 이름(오탈자)만 맞춰줄 뿐 V2 시절 값을 보존하지 않습니다 — V2의 07(12px)을 쓰던 곳은 --ref-borderwidth-08(12px)을,
+     V2의 08(16px)을 쓰던 곳은 V3에 대응 값이 없으니 디자이너 확인 후 값을 직접 지정하세요. */
   --ref-boderwidth-07: var(--ref-borderwidth-07);
   --ref-boderwidth-08: var(--ref-borderwidth-08);
+  --ref-boderwidth-09: var(--ref-borderwidth-09);
 }

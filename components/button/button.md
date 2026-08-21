@@ -10,6 +10,8 @@
 - 실측하지 않은 조합(예: 모든 Size × Type × State의 전체 교차)은 실측된 규칙(색상 오버레이 공식, 토큰 매핑)이 동일하게 적용된다고 **추정**한 것이며, 개별 검증하지 않은 값은 표에 **"확인 필요"**로 표시했습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소의 `tokens/*.json`에 없는 값은 전부 "기존 토큰에 없음" 또는 "확인 필요"로 명시했습니다.
 
+> **2026-08-21 갱신**: 초판 작성 시 `tokens/colors.json`이 V2(구버전) 팔레트였고, 여기서 여러 색상값이 Figma 실측치와 "근접하나 불일치"로 표시됐었습니다. 이후 `docs/DESIGN3.md`(바드림 디자인시스템 V3.pdf)로 저장소 토큰을 V3로 갱신하면서 재검증했고, 아래 3장·4장·8장의 "확인 필요" 항목 대부분이 V3 토큰과 **정확히 일치**로 해소되었습니다(하단 각주 참고). Border-width와 hover/pressed 인터랙션 컬러는 V3 문서에도 없어 여전히 확인 필요 상태입니다.
+
 ## 1. 컴포넌트 개요
 
 Button은 화면 이동, 확인, 제출 등 사용자의 주요 액션을 유도하는 CTA 컴포넌트입니다. 8개의 변형 축을 조합해 935개의 인스턴스를 구성합니다.
@@ -57,24 +59,24 @@ L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)�
 
 ## 3. Type별 색상 (State=Default 기준, M 사이즈로 실측 · 다른 Size에도 동일 적용 추정)
 
-| Type | 배경 | 텍스트/아이콘 | 저장소 토큰 후보 | 매칭 여부 |
+| Type | 배경 | 텍스트/아이콘 | 저장소 토큰(V3) | 매칭 여부 |
 |---|---|---|---|---|
-| **Primary** | `brand/primary-default` `#2c7be2` | `common/white-default` `#fdfdfd` | 배경: `sys-color-brand-primary-default`(`ref-color-blue-500` `#307EE8`) / 텍스트: `sys-color-common-white-default`(`#FDFDFD`) | 배경 **확인 필요**(근접하나 불일치, Δ최대 6) / 텍스트 **정확히 일치** |
-| **Secondary** | `brand/primary-lightest` `#eef4fc` | `brand/primary-default` `#2c7be2` (Blue) | `sys-color-brand-primary-lightest`(`ref-color-blue-50` `#EAF2FD`) | **확인 필요**(근접하나 불일치) |
-| **Tertiary (Gray 라벨)** | `neutral/100` `#f6f7f7` | `neutral/600` `#5b616c` | 배경: `sys-color-neutral-100`(`#F5F5F6`) / 텍스트: `sys-color-neutral-600`(`#5B606B`) | 배경 **확인 필요** / 텍스트 **거의 일치**(1 hex 단위 차, 반올림 수준) |
+| **Primary** | `brand/primary-default` `#2c7be2` | `common/white-default` `#fdfdfd` | 배경: `sys-color-brand-primary-default`(`ref-color-blue-500` `#2C7BE2`) / 텍스트: `sys-color-common-white-default`(`#FDFDFD`) | 배경 **정확히 일치** / 텍스트 **정확히 일치** |
+| **Secondary** | `brand/primary-lightest` `#eef4fc` | `brand/primary-default` `#2c7be2` (Blue) | `sys-color-brand-primary-lightest`(`ref-color-blue-50` `#EEF4FC`) | **정확히 일치** |
+| **Tertiary (Gray 라벨)** | `neutral/100` `#f6f7f7` | `neutral/600` `#5b616c` | 배경: `sys-color-neutral-100`(`#F6F7F7`) / 텍스트: `sys-color-neutral-600`(`#5B616C`) | 배경 **정확히 일치** / 텍스트 **정확히 일치** |
 | **Tertiary (Blue 라벨)** | `neutral/100` `#f6f7f7` (Gray와 동일 배경) | `brand/primary-default` `#2c7be2` | 위와 동일 | 위와 동일 |
-| **Tertiary (On=Dark, White 라벨)** | `neutral/600` `#5b616c` | `common/white-default` `#fdfdfd` | 배경 후보: `sys-color-neutral-600` / 텍스트: `sys-color-common-white-default` | 배경 **거의 일치** / 텍스트 **정확히 일치** |
-| **Destructed** | `theme/destructed-default` `#e72f37` | `common/white-default` `#fdfdfd` | 배경 후보: `sys-color-theme-error-default`(`ref-color-red-500` `#E83030`). **저장소에 'destructed' 전용 색상 롤이 없음** | 배경 **확인 필요**(가장 근접한 error 롤과도 불일치, B채널 Δ7). 텍스트 **정확히 일치** |
+| **Tertiary (On=Dark, White 라벨)** | `neutral/600` `#5b616c` | `common/white-default` `#fdfdfd` | 배경 후보: `sys-color-neutral-600`(`#5B616C`) / 텍스트: `sys-color-common-white-default` | 배경 **정확히 일치** / 텍스트 **정확히 일치** |
+| **Destructed** | `theme/destructed-default` `#e72f37` | `common/white-default` `#fdfdfd` | 배경: `sys-color-theme-destructed-default`(`ref-color-red-500` `#E72F37`) — V3에서 'destructed' 전용 롤이 정식 추가됨 | 배경 **정확히 일치** / 텍스트 **정확히 일치** |
 
-> 참고: `docs/DESIGN.md` 18.1절은 "주요 CTA는 `sys-color-brand-primary-default` 사용"이라고 규정하지만, Figma 실측값(`#2c7be2`)은 현재 토큰 파일의 `#307EE8`과 정확히 일치하지 않습니다. 두 값이 다른 버전/브랜치를 반영하는지 확인이 필요합니다.
+> **2026-08-21 갱신**: 초판 작성 시엔 저장소 `tokens/colors.json`이 V2 팔레트(`docs/DESIGN.md`/DESIGN2.md 원본 기준)여서 위 항목들이 전부 "근접하나 불일치"로 표시됐었습니다. `docs/DESIGN3.md`(바드림 디자인시스템 V3.pdf)로 토큰을 갱신한 뒤 재검증한 결과, Figma 실측값은 V2가 아니라 **V3와 정확히 일치**하는 것으로 확인됐습니다. 즉 Figma가 항상 최신이었고 저장소 토큰 파일이 구버전이었던 것입니다. 'Destructed' 색상 롤도 V2에는 없었으나(가장 가까운 `error` 롤과도 값이 달랐음) V3에서 `sys-color-theme-destructed-*`로 정식 정의되어 정확히 일치합니다(`error` 롤은 V2 하위호환용 alias로 값은 동일하게 유지).
 
 ## 4. Stroke / Bold Stroke / On=Dark 규칙 (M 사이즈로 실측: `409:6238`, `409:6235`, `409:6642`, `409:6704`)
 
 | 조합 | 배경 | 보더 | 토큰 매칭 |
 |---|---|---|---|
 | **Stroke=False** | Type별 색상(3장 참고) | 없음 | — |
-| **Stroke=True, Bold Stroke=False** | `common/white-default` `#fdfdfd` | 1px(`borderwidth/02`=`ref-borderwidth-02`, **정확히 일치**), 색상 `color/gray/900-10` = `rgba(3,9,26,0.1)` | 보더 색상 후보 `ref-color-alpha-gray-900-10`(`colors.json`의 gray-900 10% alpha, 베이스 `#020B1C`) — **확인 필요**(근접하나 완전 일치 아님) |
-| **Stroke=True, Bold Stroke=True** (Tertiary 전용) | `common/white-default` `#fdfdfd` | 1px, 색상 `neutral/400` `#c2c4c8`(불투명 단색) | 후보 `sys-color-neutral-400`(`ref-color-gray-400` `#C0C2C6`) — **확인 필요**(근접하나 불일치) |
+| **Stroke=True, Bold Stroke=False** | `common/white-default` `#fdfdfd` | 1px(`borderwidth/02`=`ref-borderwidth-02`, **정확히 일치**), 색상 `color/gray/900-10` = `rgba(3,9,26,0.1)` | 보더 색상 `ref-color-alpha-gray-900-10`(`colors.json`의 gray-900 10% alpha, 베이스 `#03091A` = rgb(3,9,26)) — **정확히 일치**(V3 갱신 후) |
+| **Stroke=True, Bold Stroke=True** (Tertiary 전용) | `common/white-default` `#fdfdfd` | 1px, 색상 `neutral/400` `#c2c4c8`(불투명 단색) | `sys-color-neutral-400`(`ref-color-gray-400` `#C2C4C8`) — **정확히 일치**(V3 갱신 후) |
 | **On=Dark** (Tertiary 전용) | `neutral/600` `#5b616c` | 해당 없음 | 3장 참고 |
 
 **명명 불일치 주의**: 935개 심볼 목록과 컴포넌트 프로퍼티상 "Text Color=Blue"로 표기된 Destructed+Stroke 변형(`409:6642` 등)이 실제로는 파란색이 아니라 `theme/destructed-default`(빨강 `#e72f37`) 텍스트로 렌더링됩니다. Figma 변형 축 이름과 실제 렌더링 결과가 일치하지 않는 것으로 실측 확인되었습니다 — 원본 파일에서 명명을 재확인해야 합니다.
@@ -138,26 +140,27 @@ State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 �
 
 ## 8. 토큰 매칭 요약
 
-**정확히 일치**
+**정확히 일치** (V3 토큰 갱신 후, 2026-08-21 기준)
 - 모든 Size의 padding/gap → `ref-spacing-02/04/06/08/10`
 - 모든 Size의 radius → `ref-radius-04/05/06`
 - 모든 Size의 typography(caption1/body2/body1/subtitle, weight 500/600) → `tokens/typography.json`
 - border-width 1px → `ref-borderwidth-02`
 - Disabled opacity 20% → `ref-opacity-20`
 - White 텍스트 → `sys-color-common-white-default`
+- Primary/Secondary 브랜드 블루 계열 색상 (`#2c7be2` = `ref-color-blue-500`/`ref-color-blue-50`)
+- Tertiary 배경 `neutral/100` (`#f6f7f7` = `ref-color-gray-100`)
+- Tertiary Bold Stroke 보더 `neutral/400` (`#c2c4c8` = `ref-color-gray-400`)
+- Destructed 배경 (`#e72f37` = `sys-color-theme-destructed-default`, V3에서 신설된 전용 롤)
+- Stroke 보더 색상 gray-900 10% 알파 (베이스 `#03091A` = `ref-color-gray-900`)
 
-**근접하나 확인 필요** (기존 토큰과 유사하지만 정확히 일치하지 않음 — 임의로 토큰명을 확정하지 않음)
-- Primary/Secondary 브랜드 블루 계열 색상 (`#2c7be2` vs 토큰 `#307EE8`)
-- Tertiary 배경 `neutral/100` (`#f6f7f7` vs 토큰 `#F5F5F6`)
-- Tertiary Bold Stroke 보더 `neutral/400` (`#c2c4c8` vs 토큰 `#C0C2C6`)
-- Destructed 배경 (`#e72f37` vs 가장 근접한 `error` 롤 `#E83030`, 저장소에 destructed 전용 롤 없음)
-- Stroke 보더 색상 gray-900 10% 알파
-
-**기존 토큰에 없음**
+**기존 토큰에 없음** (V3 문서에도 없음 — 여전히 확인 필요)
 - `color/interaction/*` 인터랙션 전용 색상 5쌍(hover/pressed) 10개
 - Icon-only 정사각형 고정 크기(26/30/38/48/56px)
 - Loading 스피너 치수(컨테이너 패딩 3.5px, 아이콘 15px)
 - `opacity/40` 변수(사용처 미확인)
+
+**구조적 차이 — 확인 필요** (V2→V3에서 정의 자체가 바뀜)
+- Border-width: V2는 `ref-borderwidth-07=12px, 08=16px`였으나 V3는 `07=10px, 08=12px, 09=14px`(16px 스텝 없음). 이 Button 컴포넌트가 실제로 쓰는 보더는 `ref-borderwidth-02`(1px)뿐이라 직접 영향은 없으나, 다른 컴포넌트 문서 작성 시 주의 필요.
 
 ## 9. 샘플링에 사용한 대표 노드 (부록)
 

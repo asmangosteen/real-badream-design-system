@@ -15,8 +15,9 @@
   },
   "borderWidth": {
     "ref-borderwidth-01": "0.5px", "ref-borderwidth-02": "1px", "ref-borderwidth-03": "2px", "ref-borderwidth-04": "4px",
-    "ref-borderwidth-05": "6px", "ref-borderwidth-06": "8px", "ref-borderwidth-07": "12px", "ref-borderwidth-08": "16px",
-    "note": "V2 공식 토큰명은 ref-borderwidth-*. 이전 ref-boderwidth-*(오탈자)는 마이그레이션 alias로만 사용."
+    "ref-borderwidth-05": "6px", "ref-borderwidth-06": "8px", "ref-borderwidth-07": "10px", "ref-borderwidth-08": "12px",
+    "ref-borderwidth-09": "14px",
+    "note": "2026-08-21: V3(DESIGN3.md, 바드림 디자인시스템 V3.pdf)로 갱신. V2에서 07=12px/08=16px였던 것이 V3에서는 07=10px/08=12px/09=14px(16px 스텝 없음)로 재정의됨. 01~06(0.5px~8px)은 V2/V3 동일. V2의 07/08 값을 직접 참조하던 컴포넌트는 재검증 필요. ref-boderwidth-*(오탈자)는 하위 호환용 alias로만 유지."
   },
   "opacity": {
     "ref-opacity-0": "0%", "ref-opacity-5": "5%", "ref-opacity-10": "10%", "ref-opacity-20": "20%",
