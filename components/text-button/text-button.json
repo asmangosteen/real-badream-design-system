@@ -1,0 +1,244 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Text Button",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=439-21305",
+    "componentSetNodeId": "439:21305",
+    "componentSetName": "Text Button",
+    "axes": {
+      "Size": ["S", "M", "L", "XL"],
+      "Text Color": ["Blue", "Gray", "Red"],
+      "State": ["Default", "Hover", "Pressed", "Disabled", "Loading"],
+      "Contents": ["Text", "Text + Icon", "Icon + Text"]
+    },
+    "note": "Loading state는 Contents=Default(스피너만, 라벨 없음)로 조합됨. Size 축은 타이포/아이콘 스케일만 다르고 구조 동일하다고 가정하고 샘플링함."
+  },
+  "sampling": {
+    "method": "선택적 샘플링 (get_design_context 15회 + get_variable_defs 1회(컴포넌트 셋 전체) + get_motion_context 1회)",
+    "sampledNodeIds": [
+      "439:21290", "439:21298", "439:21249", "439:21304",
+      "439:21293", "439:21291",
+      "439:21230", "439:21226", "439:21171",
+      "439:21250",
+      "439:21278", "439:21279",
+      "439:21240"
+    ],
+    "notSampledIndividually": "Size × Text Color × State 전체 교차는 전수 검증하지 않음. hover/pressed 합성 메커니즘은 Blue(M·S)에서 확인, Gray/Red 최종 합성 HEX는 미측정. S/L/XL 아이콘 크기 미측정."
+  },
+  "structure": {
+    "wrapper": "flex items-center justify-center",
+    "background": { "value": "none", "note": "전 사이즈·전 상태 배경 채움 없음" },
+    "padding": { "value": "0", "note": "패딩 없음 — 히트 영역이 곧 텍스트 바운드" },
+    "borderRadius": { "value": "none", "token": null },
+    "border": { "value": "none" },
+    "gap": {
+      "figmaVariable": "spacing/02",
+      "value": "2px",
+      "token": "ref-spacing-02",
+      "tokenMatch": "정확히 일치",
+      "appliesWhen": "Contents에 아이콘이 있을 때만 (Text + Icon / Icon + Text)"
+    }
+  },
+  "sizes": {
+    "S": {
+      "sourceNodeId": "439:21290",
+      "background": "none",
+      "padding": "0",
+      "radius": "none",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "iconSize": { "value": null, "tokenMatch": "확인 필요 (S Contents=Icon 조합 미측정)" },
+      "typography": {
+        "styleName": "caption1",
+        "fontSize": "12px",
+        "lineHeight": "18px",
+        "letterSpacing": "-0.03px",
+        "weight": { "figmaVariable": "weight/600", "value": "Semibold", "token": "font-weight-600" },
+        "fontFamily": "font/pretendard (Pretendard)",
+        "token": "typography.caption1 (weight=semibold)",
+        "tokenMatch": "정확히 일치"
+      }
+    },
+    "M": {
+      "sourceNodeId": "439:21298",
+      "background": "none",
+      "padding": "0",
+      "radius": "none",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "iconSize": { "value": "16px", "sourceNodeId": "439:21278", "assetName": "Icon / Default / 16px / plus", "tokenMatch": "실측(고정값)" },
+      "typography": {
+        "styleName": "body2",
+        "fontSize": "14px",
+        "lineHeight": "22px",
+        "letterSpacing": "-0.04px",
+        "weight": { "figmaVariable": "weight/500", "value": "Medium", "token": "font-weight-500" },
+        "fontFamily": "font/pretendard (Pretendard)",
+        "token": "typography.body2 (weight=medium)",
+        "tokenMatch": "정확히 일치"
+      }
+    },
+    "L": {
+      "sourceNodeId": "439:21249",
+      "background": "none",
+      "padding": "0",
+      "radius": "none",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "iconSize": { "value": null, "tokenMatch": "확인 필요 (L Contents=Icon 조합 미측정)" },
+      "typography": {
+        "styleName": "body1",
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.04px",
+        "weight": { "figmaVariable": "weight/500", "value": "Medium", "token": "font-weight-500" },
+        "fontFamily": "font/pretendard (Pretendard)",
+        "token": "typography.body1 (weight=medium)",
+        "tokenMatch": "정확히 일치",
+        "note": "Button과 달리 L이 body2가 아니라 body1(16px)임"
+      }
+    },
+    "XL": {
+      "sourceNodeId": "439:21304",
+      "background": "none",
+      "padding": "0",
+      "radius": "none",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "iconSize": { "value": null, "tokenMatch": "확인 필요 (XL Contents=Icon 조합 미측정)" },
+      "typography": {
+        "styleName": "subtitle",
+        "fontSize": "18px",
+        "lineHeight": "24px",
+        "letterSpacing": "-0.09px",
+        "weight": { "figmaVariable": "weight/500", "value": "Medium", "token": "font-weight-500" },
+        "fontFamily": "font/pretendard (Pretendard)",
+        "token": "typography.subtitle (weight=medium)",
+        "tokenMatch": "정확히 일치"
+      }
+    }
+  },
+  "textColors": {
+    "Blue": {
+      "sourceNodeId": "439:21298",
+      "figmaVariable": "brand/primary-default",
+      "hex": "#2c7be2",
+      "token": "sys-color-brand-primary-default (ref-color-blue-500 = #2C7BE2)",
+      "tokenMatch": "정확히 일치"
+    },
+    "Gray": {
+      "sourceNodeId": "439:21293",
+      "figmaVariable": "neutral/600",
+      "hex": "#5b616c",
+      "token": "sys-color-neutral-600 (ref-color-gray-600 = #5B616C)",
+      "tokenMatch": "정확히 일치"
+    },
+    "Red": {
+      "sourceNodeId": "439:21291",
+      "figmaVariable": "theme/destructed-default",
+      "hex": "#e72f37",
+      "token": "sys-color-theme-destructed-default (ref-color-red-500 = #E72F37)",
+      "tokenMatch": "정확히 일치"
+    },
+    "appliesTo": "텍스트 + 아이콘 공통 (배경 없음)"
+  },
+  "states": {
+    "Default": { "note": "textColors 값을 그대로 사용" },
+    "Hover": {
+      "mechanism": "배경 오버레이가 아니라 텍스트/아이콘 색을 어둡게 직접 합성(플랫 컬러). 합성 오버레이는 바인딩된 color/interaction/{family}/hover 변수.",
+      "measuredBlue": { "sourceNodeId": "439:21230", "hex": "#276fcd", "formula": "blue-500(#2C7BE2) + color/interaction/blue/hover(#0D2D57 15%) 합성 = #276fcd (실측 일치)" },
+      "sizeIndependenceCheck": { "sourceNodeId": "439:21240", "size": "S", "hex": "#276fcd", "result": "M과 동일 → State 색은 Size 독립" },
+      "grayFinalHex": { "value": null, "tokenMatch": "확인 필요 (개별 미측정, 메커니즘은 color/interaction/gray/hover 적용 추정)" },
+      "redFinalHex": { "value": null, "tokenMatch": "확인 필요 (개별 미측정, 메커니즘은 color/interaction/red/hover 적용 추정)" }
+    },
+    "Pressed": {
+      "mechanism": "Hover와 동일 메커니즘, 오버레이 알파가 2배(15%→30%).",
+      "measuredBlue": { "sourceNodeId": "439:21226", "hex": "#2364b8", "formula": "blue-500(#2C7BE2) + color/interaction/blue/pressed(#0D2D57 30%) 합성 = #2364b8 (실측 일치)" },
+      "grayFinalHex": { "value": null, "tokenMatch": "확인 필요 (개별 미측정)" },
+      "redFinalHex": { "value": null, "tokenMatch": "확인 필요 (개별 미측정)" }
+    },
+    "Disabled": {
+      "sourceNodeId": "439:21171",
+      "mechanism": "래퍼 전체(텍스트+아이콘)에 opacity 20% 적용. 색상값 자체는 변경 없음.",
+      "opacity": { "figmaVariable": "opacity/20", "value": "20%", "token": "ref-opacity-20", "tokenMatch": "정확히 일치" }
+    },
+    "Loading": {
+      "sourceNodeId": "439:21250",
+      "structure": "Contents=Default. 라벨 없이 스피너만 중앙 렌더링(Button과 달리 라벨을 스피너로 대체).",
+      "spinner": {
+        "component": "_ButtonSpinner (컴포넌트 셋 439:19645) 의 M 변형",
+        "containerName": "_ButtonSpinner",
+        "containerPadding": "3.5px (모든 방향)",
+        "iconName": "Subtract",
+        "iconSize": "15px x 15px",
+        "assetType": "단일 프레임 래스터(PNG) 이미지",
+        "tokenMatch": "기존 토큰에 없음 — 3.5px/15px는 스페이싱/아이콘 스케일과 불일치(고정값)",
+        "colorCandidates": ["neutral/800 (#202837, sys-color-neutral-800 정확히 일치)", "common/white-default (#FDFDFD, sys-color-common-white-default 정확히 일치)"],
+        "colorMappingNote": "링이 플랫 이미지라 어느 색이 적용되는지 코드에서 분해 불가 — 매핑 확인 필요. 밝은 배경 텍스트 버튼이므로 neutral/800일 가능성 높음.",
+        "reference": "components/button-spinner/button-spinner.md"
+      }
+    }
+  },
+  "interactionOverlayVariables": {
+    "note": "get_variable_defs로 컴포넌트 셋 439:21305에서 실측한 바인딩 변수. hover/pressed 텍스트 색 합성에 사용됨.",
+    "color/interaction/blue/hover": { "value": "#0d2d5726", "base": "#0D2D57 (blue-900)", "alpha": "약 15% (0x26)" },
+    "color/interaction/blue/pressed": { "value": "#0d2d574d", "base": "#0D2D57 (blue-900)", "alpha": "약 30% (0x4d)" },
+    "color/interaction/gray/hover": { "value": "#03091a26", "base": "#03091A (gray-900)", "alpha": "약 15%" },
+    "color/interaction/gray/pressed": { "value": "#03091a4d", "base": "#03091A (gray-900)", "alpha": "약 30%" },
+    "color/interaction/red/hover": { "value": "#5e131426", "base": "#5E1314 (red-900)", "alpha": "약 15%" },
+    "color/interaction/red/pressed": { "value": "#5e13144d", "base": "#5E1314 (red-900)", "alpha": "약 30%" },
+    "color/interaction/light-blue/pressed": { "value": "#2c7be226", "base": "#2C7BE2 (blue-500)", "alpha": "약 15%", "note": "샘플 노드에서 사용처 미확인" },
+    "tokenResolved": "이 변수들의 실측 resolved 값(blue-900/gray-900/red-900 계열 15%/30%)이 정답. 2026-08-26 tokens/colors.json·tokens.css·docs/DESIGN.md 12.3 표를 이 값으로 정정하여 현재 일치함. 초기 불일치 원인은 DESIGN.md 12.3 표의 최초 ref 매핑 오류(base를 [color]-500 20/40로 기재)를 colors.json에 그대로 이식했던 것. base 계열 알파색은 alpha 램프에 없어 직접 색+alpha로 정의(tokens.css)."
+  },
+  "contents": {
+    "Text": { "sourceNodeId": "439:21298", "order": ["label"], "gap": null },
+    "Text + Icon": {
+      "sourceNodeId": "439:21278",
+      "order": ["label", "icon"],
+      "iconPositionNote": "아이콘이 텍스트 뒤(오른쪽)",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "iconSizeMeasured": "16px (M)"
+    },
+    "Icon + Text": {
+      "sourceNodeId": "439:21279",
+      "order": ["icon", "label"],
+      "iconPositionNote": "아이콘이 텍스트 앞(왼쪽)",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "iconSizeMeasured": "16px (M)"
+    },
+    "Default (Loading 전용)": { "order": ["spinner"], "note": "Loading state에서만 사용, 라벨 없이 스피너만" }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context(439:21305, recursive=true)가 빈 배열 반환. Hover/Pressed 색 전환·Loading 스피너 회전에 대한 프로토타입 인터랙션이 정의되어 있지 않음. State 간 색/opacity 값은 states 섹션에 실측되어 있으나 전환 duration/easing은 확인 필요이며 임의 지정하지 않음.",
+  "accessibility": {
+    "minTouchTarget": "확인 필요 — padding이 0이라 히트 영역이 텍스트 바운드(라인 높이 18/22/24/24px)와 동일, 44px 권장 기준보다 작음. 실제 구현 시 히트 영역 확장 필요 여부 확인 필요. Figma에 명시적 정의 없음.",
+    "ariaLabel": "docs/DESIGN.md 규정: 접근성 라벨이 필요한 버튼형 아이콘에는 aria-label 또는 대체 텍스트 제공 — 아이콘 조합에 해당.",
+    "colorContrast": "docs/DESIGN.md의 WCAG 준수 원칙만 존재. Text Button 전용 명암비 수치 검증(배경 대비, Disabled 20% opacity 포함)은 미수행 — 확인 필요."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "아이콘 조합 gap (ref-spacing-02, 2px)",
+      "모든 Size 타이포 (caption1/body2/body1/subtitle, weight font-weight-500/600)",
+      "Disabled opacity 20% (ref-opacity-20)",
+      "Blue 텍스트 (sys-color-brand-primary-default = ref-color-blue-500 #2C7BE2)",
+      "Gray 텍스트 (sys-color-neutral-600 = ref-color-gray-600 #5B616C)",
+      "Red 텍스트 (sys-color-theme-destructed-default = ref-color-red-500 #E72F37)",
+      "Loading 스피너 색 후보 neutral/800(#202837), common/white-default(#FDFDFD) (값 일치, 적용 매핑은 확인 필요)"
+    ],
+    "정정완료_저장소반영": [
+      "hover/pressed 합성 오버레이 color/interaction/blue|gray|red/hover|pressed → blue-900/gray-900/red-900 15%/30% (실측값). 2026-08-26 colors.json·tokens.css·DESIGN.md 12.3 표에 반영, 현재 일치"
+    ],
+    "기존토큰에없음": [
+      "base 계열 알파색(blue-900/red-900 15%/30% 등)은 ref alpha 램프에 없어 tokens.css에서 직접 색+alpha로 정의",
+      "Loading 스피너 치수 (컨테이너 패딩 3.5px, 링 아이콘 15px)"
+    ],
+    "구조적특성_Button과차이": [
+      "배경 채움·패딩·radius 없음(전 사이즈·전 상태)",
+      "Size별 타이포 매핑이 Button과 다름 (L=body1, XL=subtitle)",
+      "hover/pressed가 배경 오버레이가 아니라 텍스트 색 직접 합성",
+      "Loading이 라벨을 유지하지 않고 스피너로 대체 (Contents=Default)"
+    ],
+    "확인필요_미측정": [
+      "S/L/XL 아이콘 크기 (M만 16px 실측)",
+      "Gray/Red hover/pressed 최종 합성 라벨 색 (메커니즘만 Blue에서 확인)",
+      "Loading 스피너 링 색상의 문맥별 적용 매핑"
+    ]
+  }
+}

@@ -10,7 +10,9 @@
 - 실측하지 않은 조합(예: 모든 Size × Type × State의 전체 교차)은 실측된 규칙(색상 오버레이 공식, 토큰 매핑)이 동일하게 적용된다고 **추정**한 것이며, 개별 검증하지 않은 값은 표에 **"확인 필요"**로 표시했습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소의 `tokens/*.json`에 없는 값은 전부 "기존 토큰에 없음" 또는 "확인 필요"로 명시했습니다.
 
-> **2026-08-21 갱신**: 이 문서의 모든 토큰 값은 `docs/DESIGN.md`(바드림 디자인시스템 V3, source of truth)를 기준으로 정렬되어 있습니다. 초판 작성 시 `tokens/colors.json`이 V2(구버전) 팔레트여서 색상값이 "확인 필요"로 표시됐던 항목들은 저장소 토큰을 V3로 갱신한 뒤 전부 **정확히 일치**로 해소되었습니다. hover/pressed 오버레이 색상도 실제 Figma 화면 확인 결과 DESIGN.md 12.3절 `interaction/*` 토큰 패밀리와 **일치**함을 확인하여, 이전 초안에 있던 "불일치/확인 필요" 표기를 모두 정정했습니다(5-2절 참고). Border-width는 V2→V3에서 스케일 정의 자체가 바뀌었습니다.
+> **2026-08-21 갱신**: 이 문서의 모든 토큰 값은 `docs/DESIGN.md`(바드림 디자인시스템 V3, source of truth)와 Figma 실측값을 기준으로 정렬되어 있습니다. 초판 작성 시 `tokens/colors.json`이 V2(구버전) 팔레트여서 색상값이 "확인 필요"로 표시됐던 항목들은 저장소 토큰을 V3로 갱신한 뒤 전부 **정확히 일치**로 해소되었습니다. Border-width는 V2→V3에서 스케일 정의 자체가 바뀌었습니다.
+>
+> **2026-08-26 정정**: hover/pressed 오버레이(5-2절)를 `get_variable_defs`로 재실측한 결과, 실제 `color/interaction/*` 변수 값은 **base=`[color]-900` 15%/30%, light=`[color]-500` 8%/15%, light-gray=`gray-900` 5%/10%** 였습니다. 이전 판에서 `docs/DESIGN.md` 12.3 표의 잘못된 값(blue-500 20%/40% 등)에 맞춰 기재했던 것을 실측값으로 되돌렸고, DESIGN.md 12.3 표와 `tokens/colors.json`·`tokens.css`도 함께 정정했습니다.
 
 ## 1. 컴포넌트 개요
 
@@ -87,20 +89,19 @@ L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)�
 3장(Type별 색상)의 값을 그대로 사용합니다.
 
 ### 5-2. Hover / Pressed
-배경 위에 반투명 오버레이를 블렌드하는 방식입니다(box-shadow가 아니라 색상+opacity 페인트로 렌더링됨). 오버레이 색상은 Type별 배경 계열에 대응하는 `docs/DESIGN.md` 12.3절 `interaction/*` 토큰을 사용합니다. 실제 Figma 화면 확인 결과 아래 값이 스펙과 **일치**합니다.
+배경 위에 반투명 오버레이를 블렌드하는 방식입니다(box-shadow가 아니라 색상+opacity 페인트로 렌더링됨). 오버레이 색상은 Type별 배경 계열에 대응하는 `docs/DESIGN.md` 12.3절 `interaction/*` 토큰을 사용하며, 아래 값은 2026-08-26 Figma 변수맵(`get_variable_defs`)으로 실측 확인한 실제 값입니다.
 
 | Type / 배경 계열 | 사용 토큰 | Hover | Pressed |
 |---|---|---|---|
-| Primary(블루 채움) | `interaction/blue` | `ref-color-blue-500-20` = `#2C7BE2` 20% | `ref-color-blue-500-40` = `#2C7BE2` 40% |
-| Secondary(연한 블루 surface) | `interaction/light-blue` | `ref-color-blue-50` = `#EEF4FC` (default surface) | `ref-color-blue-100` = `#D0E3FE` |
-| Tertiary(그레이/중립) · On=Dark 포함 | `interaction/gray` | `ref-color-gray-900-5` = `#03091A` 5% | `ref-color-gray-900-10` = `#03091A` 10% |
-| Destructed(빨강 채움) | `interaction/red` | `ref-color-red-500-20` = `#E72F37` 20% | `ref-color-red-500-40` = `#E72F37` 40% |
+| Primary(블루 채움) | `interaction/blue` | `blue-900` `#0D2D57` 15% (`#0D2D5726`) | `blue-900` `#0D2D57` 30% (`#0D2D574D`) |
+| Secondary(연한 블루 surface) | `interaction/light-blue` | `blue-500` `#2C7BE2` 8% (`#2C7BE214`) | `blue-500` `#2C7BE2` 15% (`#2C7BE226`) |
+| Tertiary(라이트) | `interaction/light-gray` | `gray-900` `#03091A` 5% (`ref-color-gray-900-5`) | `gray-900` `#03091A` 10% (`ref-color-gray-900-10`) |
+| Tertiary(On=Dark) | `interaction/gray` | `gray-900` `#03091A` 15% (`#03091A26`) | `gray-900` `#03091A` 30% (`#03091A4D`) |
+| Destructed(빨강 채움) | `interaction/red` | `red-900` `#5E1314` 15% (`#5E131426`) | `red-900` `#5E1314` 30% (`#5E13144D`) |
 
 - Hover 상태에는 `cursor: pointer` 힌트도 함께 붙습니다.
-- Primary/Destructed 채움 계열은 배경 색상 위에 같은 계열 alpha 오버레이(hover 20% → pressed 40%)를 얹어 눌림 깊이를 표현합니다.
-- Secondary는 채움이 아니라 연한 surface이므로 alpha 오버레이 대신 `interaction/light-blue`의 솔리드 스텝(default `blue-50` → pressed `blue-100`)으로 진행합니다.
-- Tertiary는 밝은/어두운 배경 모두 `interaction/gray`(gray-900 5%/10%)를 사용합니다.
-- 이 매핑은 DESIGN.md 12.3절의 `interaction` 패밀리 Usage 정의(`interaction/blue`=Primary/blue, `interaction/gray`=중립·검정, `interaction/red`=Destructed/error, `interaction/light-blue`=Primary/blue 밝은 surface)를 그대로 따릅니다. 실제 Figma 화면과 대조하여 불일치 항목이 없음을 확인했습니다.
+- 각 계열은 배경/텍스트 위에 해당 `interaction/*` 오버레이를 합성합니다. 채움 계열(Primary/Destructed)과 On=Dark Tertiary는 **어두운(-900) 오버레이 15% → 30%**, 연한 surface 계열(Secondary/Tertiary-light)은 **연한 오버레이(blue-500 8→15%, gray-900 5→10%)**로 눌림 깊이를 표현합니다.
+- **정정 이력**: 이전 판에서는 이 표가 `docs/DESIGN.md` 12.3 표의 잘못된 값(blue-500 20%/40% 등)을 따라 기재됐었습니다. 실제 Figma 변수(`color/interaction/*`)의 resolved 값은 위 표와 같으며(base=`[color]-900` 15%/30%, light=`[color]-500` 8%/15%, light-gray=`gray-900` 5%/10%), DESIGN.md 12.3 표와 colors.json도 함께 정정했습니다.
 
 ### 5-3. Disabled (실측: `410:3409`)
 버튼 전체(배경 + 텍스트 + 아이콘)에 **opacity 20%**를 적용합니다. 색상값 자체는 변하지 않습니다.
@@ -157,10 +158,11 @@ State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 �
 - Stroke 보더 색상 gray-900 10% 알파 (베이스 `#03091A` = `ref-color-gray-900`)
 
 **정확히 일치** (hover/pressed 인터랙션, DESIGN.md 12.3절 `interaction/*` 기준)
-- Primary hover/pressed → `interaction/blue` (blue-500 20%/40%)
-- Secondary hover/pressed → `interaction/light-blue` (blue-50 → blue-100 솔리드 스텝)
-- Tertiary(라이트/다크) hover/pressed → `interaction/gray` (gray-900 5%/10%)
-- Destructed hover/pressed → `interaction/red` (red-500 20%/40%)
+- Primary hover/pressed → `interaction/blue` (blue-900 15%/30%)
+- Secondary hover/pressed → `interaction/light-blue` (blue-500 8%/15%)
+- Tertiary(라이트) hover/pressed → `interaction/light-gray` (gray-900 5%/10%)
+- Tertiary(On=Dark) hover/pressed → `interaction/gray` (gray-900 15%/30%)
+- Destructed hover/pressed → `interaction/red` (red-900 15%/30%)
 
 **기존 토큰에 없음**
 - Icon-only 정사각형 고정 크기(26/30/38/48/56px)

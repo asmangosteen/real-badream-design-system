@@ -1,0 +1,221 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Icon Button",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2209-2320",
+    "componentSetNodeId": "2209:2320",
+    "componentSetName": "Icon Button",
+    "sizesCovered": ["S", "M", "L"],
+    "note": "아이콘 전용 정사각형 버튼. Size×Type×State×Icon Color×Stroke×Bold Stroke 축 조합. Size는 스케일만 다르고 구조 동일하다고 가정하고 대표 노드를 선택 샘플링함."
+  },
+  "sampling": {
+    "method": "선택적 샘플링 (get_design_context 16회 + get_variable_defs 1회(컴포넌트 셋 전체) + get_motion_context 1회)",
+    "sampledNodeIds": [
+      "2209:2303", "2209:2301", "2209:2299",
+      "2209:2311", "2209:2279", "2209:4312", "2209:2302", "2209:2317", "2209:2288",
+      "2209:2271", "2209:2250", "2209:2232",
+      "2209:2286", "2209:2285",
+      "2209:2268", "2209:2273"
+    ],
+    "notSampledIndividually": "모든 Size×Type×State 전체 교차는 전수 검증하지 않음. hover/pressed 오버레이는 Primary/Destructed/Secondary만 실측했고 Tertiary/Ghost/Destructed-Subtle는 전체 셋 변수맵 기반 추정(확인 필요)."
+  },
+  "sizes": {
+    "S": {
+      "sourceNodeId": "2209:2303",
+      "padding": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "tokenMatch": "정확히 일치", "note": "4방향 동일 패딩" },
+      "radius": { "figmaVariable": "radius/04", "value": "8px", "token": "ref-radius-04", "tokenMatch": "정확히 일치" },
+      "iconSize": "16px",
+      "outerSquare": { "value": "28px", "computedFrom": "6 + 16 + 6", "token": null, "tokenMatch": "기존 토큰에 없음 (패딩+아이콘 합성 결과, 고정 프레임 아님)" }
+    },
+    "M": {
+      "sourceNodeId": "2209:2301",
+      "padding": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치", "note": "4방향 동일 패딩" },
+      "radius": { "figmaVariable": "radius/06", "value": "12px", "token": "ref-radius-06", "tokenMatch": "정확히 일치" },
+      "iconSize": "20px",
+      "outerSquare": { "value": "36px", "computedFrom": "8 + 20 + 8", "token": null, "tokenMatch": "기존 토큰에 없음" }
+    },
+    "L": {
+      "sourceNodeId": "2209:2299",
+      "padding": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치", "note": "4방향 동일 패딩" },
+      "radius": { "figmaVariable": "radius/06", "value": "12px", "token": "ref-radius-06", "tokenMatch": "정확히 일치" },
+      "iconSize": "24px",
+      "outerSquare": { "value": "40px", "computedFrom": "8 + 24 + 8", "token": null, "tokenMatch": "기존 토큰에 없음" }
+    },
+    "sizeNote": "S만 radius 8px(radius/04)·패딩 6px(spacing/05)이고 M/L은 radius 12px(radius/06)·패딩 8px(spacing/06). 치수는 Type과 무관하게 동일(샘플링한 M 타입 노드 전부 패딩8/radius12/아이콘20 확인)."
+  },
+  "types": {
+    "Ghost": {
+      "sourceNodeId": "2209:2311",
+      "background": { "figmaVariable": null, "hex": null, "note": "배경 채움 없음(투명)" },
+      "iconColorVariant": "Black",
+      "border": "none",
+      "note": "Button 컴포넌트에 없는 Icon Button 고유 타입. 투명 배경 + 검정 아이콘."
+    },
+    "Primary": {
+      "sourceNodeId": "2209:2301",
+      "background": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" },
+      "iconColorVariant": "White",
+      "backgroundTokenCandidate": "sys-color-brand-primary-default (ref-color-blue-500 = #2C7BE2)",
+      "backgroundTokenMatch": "정확히 일치"
+    },
+    "Secondary": {
+      "sourceNodeId": "2209:2302",
+      "background": { "figmaVariable": "brand/primary-lightest", "hex": "#eef4fc" },
+      "iconColorVariant": "Blue",
+      "backgroundTokenCandidate": "sys-color-brand-primary-lightest (ref-color-blue-50 = #EEF4FC)",
+      "backgroundTokenMatch": "정확히 일치"
+    },
+    "TertiaryBlack": {
+      "sourceNodeId": "2209:2279",
+      "background": { "figmaVariable": "neutral/100", "hex": "#f6f7f7" },
+      "iconColorVariant": "Black",
+      "backgroundTokenCandidate": "sys-color-neutral-100 (ref-color-gray-100 = #F6F7F7)",
+      "backgroundTokenMatch": "정확히 일치"
+    },
+    "TertiaryOnDark": {
+      "sourceNodeId": "2209:4312",
+      "background": { "figmaVariable": "neutral/600", "hex": "#5b616c" },
+      "iconColorVariant": "White",
+      "backgroundTokenCandidate": "sys-color-neutral-600 (ref-color-gray-600 = #5B616C)",
+      "backgroundTokenMatch": "정확히 일치",
+      "note": "Icon Color=White일 때만 등장. 어두운 배경 위 Tertiary."
+    },
+    "Destructed": {
+      "sourceNodeId": "2209:2317",
+      "background": { "figmaVariable": "theme/destructed-default", "hex": "#e72f37" },
+      "iconColorVariant": "White",
+      "backgroundTokenCandidate": "sys-color-theme-destructed-default (ref-color-red-500 = #E72F37)",
+      "backgroundTokenMatch": "정확히 일치"
+    },
+    "DestructedSubtle": {
+      "sourceNodeId": "2209:2288",
+      "background": { "figmaVariable": "theme/destructed-bg", "hex": "#ffedeb" },
+      "iconColorVariant": "Red",
+      "backgroundTokenCandidate": "sys-color-theme-destructed-bg (ref-color-red-50 = #FFEDEB)",
+      "backgroundTokenMatch": "정확히 일치",
+      "note": "Button 컴포넌트에 없는 Icon Button 고유 타입. 연한 빨강 surface + 빨강 아이콘."
+    }
+  },
+  "iconColors": {
+    "note": "아이콘은 개별 SVG 애셋으로 fill이 baked되어 get_design_context 코드에서 hex를 직접 읽을 수 없음. 아래는 Icon Color 변형명 + 전체 셋 변수맵 기반 매핑.",
+    "White": { "token": "sys-color-common-white-default", "figmaVariable": "common/white-default", "hex": "#fdfdfd", "confidence": "높음" },
+    "Blue": { "token": "sys-color-brand-primary-default", "figmaVariable": "brand/primary-default", "hex": "#2c7be2", "confidence": "높음" },
+    "Red": { "token": "sys-color-theme-destructed-default", "figmaVariable": "theme/destructed-default", "hex": "#e72f37", "confidence": "높음" },
+    "Black": { "token": "sys-color-neutral-800", "figmaVariable": "neutral/800", "hex": "#202837", "confidence": "확인 필요", "note": "변수맵에 neutral/800 #202837 존재하고 어떤 배경에도 미사용이라 Black 아이콘 색으로 추정. SVG baked라 직접 검증 불가." }
+  },
+  "strokeRules": {
+    "strokeFalse": { "border": "none" },
+    "strokeTrue_boldStrokeFalse": {
+      "sourceNodeId": "2209:2286",
+      "appliesTo": "Tertiary",
+      "background": { "figmaVariable": "neutral/100", "hex": "#f6f7f7", "note": "Button과 달리 Tertiary 배경(회색) 유지, 흰색으로 바뀌지 않음" },
+      "border": {
+        "width": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치", "note": "Tailwind 기본 border(1px), 별도 폭 변수 바인딩 없음" },
+        "color": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)" },
+        "colorTokenCandidate": "ref-color-alpha-gray-900-10 (gray-900 10% = #03091A 10%)",
+        "colorTokenMatch": "정확히 일치"
+      }
+    },
+    "strokeTrue_boldStrokeTrue": {
+      "sourceNodeId": "2209:2285",
+      "appliesTo": "Tertiary",
+      "background": { "figmaVariable": "neutral/100", "hex": "#f6f7f7" },
+      "border": {
+        "width": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
+        "color": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "solid": true },
+        "colorTokenCandidate": "sys-color-neutral-400 (ref-color-gray-400 = #C2C4C8)",
+        "colorTokenMatch": "정확히 일치"
+      }
+    },
+    "note": "Stroke/Bold Stroke 조합은 샘플링 범위에서 Tertiary 타입에서만 관측됨."
+  },
+  "states": {
+    "Default": { "note": "types 섹션의 색상을 그대로 사용" },
+    "Hover": {
+      "mechanism": "배경 위에 color/interaction/* 변수 오버레이를 사전 합성(pre-composite)한 플랫 그라디언트(linear-gradient(overlay), linear-gradient(base))로 렌더링. box-shadow 아님. cursor:pointer 힌트 존재.",
+      "overlaysByFamily": {
+        "primary(blue)": { "figmaVariable": "color/interaction/blue/hover", "resolved": "#0d2d5726", "meaning": "blue-900 #0D2D57 15%", "measuredBaseHex": "#2c7be2", "verifiedOnNodeIds": ["2209:2271"], "status": "실측 확인" },
+        "destructed(red)": { "figmaVariable": "color/interaction/red/hover", "resolved": "#5e131426", "meaning": "red-900 #5E1314 15%", "measuredBaseHex": "#e72f37", "verifiedOnNodeIds": ["2209:2268"], "status": "실측 확인" },
+        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/hover", "resolved": "#2c7be214", "meaning": "blue-500 #2C7BE2 8%", "measuredBaseHex": "#eef4fc", "verifiedOnNodeIds": ["2209:2273"], "status": "실측 확인" },
+        "destructedSubtle(light-red)": { "figmaVariable": "color/interaction/light-red/hover", "resolved": "#e72f3714", "meaning": "red-500 8%", "status": "실측 확인 (변수맵)" },
+        "tertiary(gray)": { "figmaVariable": "color/interaction/light-gray/hover", "resolved": "#03091a0d", "meaning": "gray-900 5% (Button의 Tertiary-light와 동일 계열로 추정)", "status": "값 실측 확인(변수맵) / 이 타입이 light-gray인지 gray(15%)인지 바인딩은 확인 필요" },
+        "ghost(transparent)": { "figmaVariable": "color/interaction/light-gray/hover 또는 gray/hover", "resolved": "#03091a0d 또는 #03091a26", "meaning": "gray-900 5% 또는 15%", "status": "값 실측 확인(변수맵) / 어느 토큰을 쓰는지 바인딩은 확인 필요" }
+      }
+    },
+    "Pressed": {
+      "mechanism": "Hover와 동일 메커니즘. base 계열은 alpha가 hover의 약 2배(15%→30%, 8%→15%, 5%→10%). 모든 값 get_variable_defs로 확인됨.",
+      "overlaysByFamily": {
+        "primary(blue)": { "figmaVariable": "color/interaction/blue/pressed", "resolved": "#0d2d574d", "meaning": "blue-900 30%", "verifiedOnNodeIds": ["2209:2250"], "status": "실측 확인" },
+        "destructed(red)": { "figmaVariable": "color/interaction/red/pressed", "resolved": "#5e13144d", "meaning": "red-900 30%", "status": "실측 확인 (변수맵)" },
+        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/pressed", "resolved": "#2c7be226", "meaning": "blue-500 15%", "status": "실측 확인 (변수맵)" },
+        "destructedSubtle(light-red)": { "figmaVariable": "color/interaction/light-red/pressed", "resolved": "#e72f3726", "meaning": "red-500 15%", "status": "실측 확인 (변수맵)" },
+        "tertiary(gray)": { "figmaVariable": "color/interaction/light-gray/pressed", "resolved": "#03091a1a", "meaning": "gray-900 10%", "status": "값 실측 확인(변수맵) / 타입 바인딩은 확인 필요" },
+        "ghost(transparent)": { "figmaVariable": "color/interaction/light-gray/pressed 또는 gray/pressed", "resolved": "#03091a1a 또는 #03091a4d", "meaning": "gray-900 10% 또는 30%", "status": "값 실측 확인(변수맵) / 바인딩은 확인 필요" }
+      }
+    },
+    "Disabled": {
+      "sourceNodeId": "2209:2232",
+      "mechanism": "버튼 전체(배경+아이콘)에 opacity 20% 적용. 색상값 자체는 변경 없음.",
+      "opacity": { "figmaVariable": "opacity/20", "value": "20%", "token": "ref-opacity-20", "tokenMatch": "정확히 일치" },
+      "unusedVariableNote": "get_variable_defs에서 opacity/40(40%) 변수도 발견되었으나 샘플링한 노드 중 사용처를 찾지 못함 — 확인 필요"
+    }
+  },
+  "interactionTokenResolved": {
+    "severity": "resolved",
+    "description": "2026-08-26 정정 완료: Icon Button hover/pressed 오버레이가 사용하는 Figma color/interaction/* 변수의 실측값(figma 컬럼)이 정답이며, tokens/colors.json·tokens.css·docs/DESIGN.md 12.3 표가 이 값으로 정정됨. 아래 colorsJson_before 컬럼은 정정 전(잘못된) 값으로 참고용. 원인: DESIGN.md 12.3 표의 최초 ref 매핑 오류를 colors.json에 그대로 옮겼던 것.",
+    "comparison": {
+      "interaction/blue/hover":    { "figma": "blue-900 #0D2D57 15%", "colorsJson_before": "blue-500 20%",  "nowMatches": true },
+      "interaction/blue/pressed":  { "figma": "blue-900 30%",         "colorsJson_before": "blue-500 40%",  "nowMatches": true },
+      "interaction/red/hover":     { "figma": "red-900 #5E1314 15%",  "colorsJson_before": "red-500 20%",   "nowMatches": true },
+      "interaction/red/pressed":   { "figma": "red-900 30%",          "colorsJson_before": "red-500 40%",   "nowMatches": true },
+      "interaction/light-blue/hover":   { "figma": "blue-500 8%",  "colorsJson_before": "blue-50 solid",  "nowMatches": true },
+      "interaction/light-blue/pressed": { "figma": "blue-500 15%", "colorsJson_before": "blue-100 solid", "nowMatches": true },
+      "interaction/gray/hover":    { "figma": "gray-900 15%",   "colorsJson_before": "gray-900 5%",   "nowMatches": true },
+      "interaction/gray/pressed":  { "figma": "gray-900 30%",   "colorsJson_before": "gray-900 10%",  "nowMatches": true },
+      "interaction/light-gray/hover":   { "figma": "gray-900 5%",  "colorsJson_before": "gray-100 solid",  "nowMatches": true },
+      "interaction/light-gray/pressed": { "figma": "gray-900 10%", "colorsJson_before": "gray-200 solid",  "nowMatches": true },
+      "interaction/light-red/hover":    { "figma": "red-500 8%",  "colorsJson_before": "red-50 solid",  "nowMatches": true },
+      "interaction/light-red/pressed":  { "figma": "red-500 15%", "colorsJson_before": "red-100 solid", "nowMatches": true }
+    },
+    "resolution": "정정 완료. Figma 실측값이 정답으로 확정, 저장소 토큰(colors.json/tokens.css)과 DESIGN.md 12.3 표를 이 값으로 정정함. components/button/button.md도 동일하게 실측값으로 되돌림."
+  },
+  "motion": {
+    "status": "모션 데이터 없음",
+    "detail": "get_motion_context(2209:2320, recursive=true)가 {\"nodes\":[]} 반환. Hover/Pressed 전환의 프로토타입 인터랙션/키프레임이 파일에 정의되어 있지 않음. State 간 색상값은 states 섹션에 실측되어 있으나 duration/easing은 확인 필요이며 임의 지정하지 않음."
+  },
+  "accessibility": {
+    "minTouchTarget": "확인 필요 — 실측 외곽 정사각형 S 28px / M 36px / L 40px로 세 사이즈 모두 44px(WCAG 2.5.5 / Apple 44pt) 및 48dp(Material) 권장 기준 미달. 아이콘 버튼은 라벨이 없어 물리 크기가 곧 히트 영역이므로 투명 히트 영역 확장 필요 여부 확인 필요. Figma에 명시적 최소 터치 영역 정의 없음.",
+    "altText": "라벨 없는 아이콘 전용 버튼이므로 aria-label/대체 텍스트 필수. docs/DESIGN.md: '접근성 라벨이 필요한 버튼형 아이콘에는 aria-label 또는 대체 텍스트를 제공합니다'.",
+    "colorContrast": "docs/DESIGN.md 전반에 WCAG 준수 원칙만 있고 Icon Button 전용 명암비 검증은 미수행 — 확인 필요. 특히 Ghost(투명 위 Black)·Destructed-Subtle(연한 빨강 위 빨강)은 배경 맥락에 따라 대비 변동 주의."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "모든 Size 패딩 (ref-spacing-05 6px S, ref-spacing-06 8px M/L)",
+      "모든 Size radius (ref-radius-04 8px S, ref-radius-06 12px M/L)",
+      "Primary 배경 #2c7be2 (sys-color-brand-primary-default)",
+      "Secondary 배경 #eef4fc (sys-color-brand-primary-lightest)",
+      "Tertiary 배경 #f6f7f7 (sys-color-neutral-100)",
+      "Tertiary On-Dark 배경 #5b616c (sys-color-neutral-600)",
+      "Destructed 배경 #e72f37 (sys-color-theme-destructed-default)",
+      "Destructed-Subtle 배경 #ffedeb (sys-color-theme-destructed-bg / ref-color-red-50)",
+      "Stroke 보더폭 1px (ref-borderwidth-02)",
+      "Stroke(Bold=False) 보더색 gray-900 10% alpha (ref-color-alpha-gray-900-10)",
+      "Stroke(Bold=True) 보더색 #c2c4c8 (sys-color-neutral-400)",
+      "Disabled opacity 20% (ref-opacity-20)",
+      "Icon Color White #fdfdfd (sys-color-common-white-default)"
+    ],
+    "추정_확인필요": [
+      "Icon Color Black → sys-color-neutral-800 (#202837), SVG baked라 직접 검증 불가",
+      "Tertiary/Ghost/Destructed-Subtle hover·pressed 오버레이 계열 매핑(미실측)",
+      "Destructed/Secondary pressed 오버레이(hover만 실측)"
+    ],
+    "불일치_확인필요": [
+      "hover/pressed color/interaction/* 변수 resolved 값(실측)은 2026-08-26 tokens/colors.json·tokens.css·DESIGN.md 12.3 표에 반영되어 현재 일치함 (interactionTokenResolved 참조)"
+    ],
+    "기존토큰에없음": [
+      "외곽 정사각형 치수 (28/36/40px) — 패딩+아이콘 합성 결과",
+      "opacity/40 변수 (사용처 미확인)"
+    ]
+  }
+}
