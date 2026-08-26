@@ -203,22 +203,22 @@
     "Hover": {
       "mechanism": "배경/텍스트 위에 Type별 color/interaction/* 오버레이를 합성(플랫 컬러로 사전 합성, box-shadow 아님). 아래 값은 2026-08-26 get_variable_defs로 실측 확인한 실제 변수값.",
       "overlaysByFamily": {
-        "primary(blue)": { "interactionToken": "color/interaction/blue/hover", "base": "ref-color-blue-900", "value": "#0D2D57 15%", "hex8": "#0D2D5726", "verifiedOnNodeIds": ["410:3436", "409:6156"], "tokenMatch": "실측 확인" },
-        "secondary(light-blue)": { "interactionToken": "color/interaction/light-blue/hover", "base": "ref-color-blue-500", "value": "#2C7BE2 8%", "hex8": "#2C7BE214", "verifiedOnNodeIds": ["409:6150"], "tokenMatch": "실측 확인" },
-        "tertiaryLight(light-gray)": { "interactionToken": "color/interaction/light-gray/hover", "base": "ref-color-gray-900", "value": "#03091A 5%", "hex8": "#03091A0D", "refAlias": "ref-color-gray-900-5", "verifiedOnNodeIds": ["409:6149"], "tokenMatch": "실측 확인" },
-        "tertiaryOnDark(gray)": { "interactionToken": "color/interaction/gray/hover", "base": "ref-color-gray-900", "value": "#03091A 15%", "hex8": "#03091A26", "tokenMatch": "실측 확인 (변수맵)" },
-        "destructed(red)": { "interactionToken": "color/interaction/red/hover", "base": "ref-color-red-900", "value": "#5E1314 15%", "hex8": "#5E131426", "verifiedOnNodeIds": ["410:3570"], "tokenMatch": "실측 확인" }
+        "primary(blue)": { "interactionToken": "color/interaction/blue/hover", "sameHexAs": "ref-color-blue-900", "value": "#0D2D57 15%", "hex8": "#0D2D5726", "verifiedOnNodeIds": ["410:3436", "409:6156"], "tokenMatch": "실측 확인" },
+        "secondary(light-blue)": { "interactionToken": "color/interaction/light-blue/hover", "sameHexAs": "ref-color-blue-500", "value": "#2C7BE2 8%", "hex8": "#2C7BE214", "verifiedOnNodeIds": ["409:6150"], "tokenMatch": "실측 확인" },
+        "tertiaryLight(light-gray)": { "interactionToken": "color/interaction/light-gray/hover", "sameHexAs": "ref-color-gray-900", "value": "#03091A 5%", "hex8": "#03091A0D", "refAlias": "ref-color-gray-900-5", "verifiedOnNodeIds": ["409:6149"], "tokenMatch": "실측 확인" },
+        "tertiaryOnDark(gray)": { "interactionToken": "color/interaction/gray/hover", "sameHexAs": "ref-color-gray-900", "value": "#03091A 15%", "hex8": "#03091A26", "tokenMatch": "실측 확인 (변수맵)" },
+        "destructed(red)": { "interactionToken": "color/interaction/red/hover", "sameHexAs": "ref-color-red-900", "value": "#5E1314 15%", "hex8": "#5E131426", "verifiedOnNodeIds": ["410:3570"], "tokenMatch": "실측 확인" }
       },
       "otherChanges": "cursor: pointer 스타일 힌트 존재. 텍스트/아이콘 색상·패딩·radius는 Default와 동일."
     },
     "Pressed": {
       "mechanism": "Hover와 동일 메커니즘. base 계열(Primary/Destructed/On-Dark)은 hover alpha의 2배(15%→30%), light 계열(Secondary/Tertiary-light)도 약 2배(8→15%, 5→10%).",
       "overlaysByFamily": {
-        "primary(blue)": { "interactionToken": "color/interaction/blue/pressed", "base": "ref-color-blue-900", "value": "#0D2D57 30%", "hex8": "#0D2D574D", "verifiedOnNodeIds": ["410:3463"], "tokenMatch": "실측 확인" },
-        "secondary(light-blue)": { "interactionToken": "color/interaction/light-blue/pressed", "base": "ref-color-blue-500", "value": "#2C7BE2 15%", "hex8": "#2C7BE226", "verifiedOnNodeIds": ["409:6150"], "tokenMatch": "실측 확인" },
-        "tertiaryLight(light-gray)": { "interactionToken": "color/interaction/light-gray/pressed", "base": "ref-color-gray-900", "value": "#03091A 10%", "hex8": "#03091A1A", "refAlias": "ref-color-gray-900-10", "verifiedOnNodeIds": ["409:6149"], "tokenMatch": "실측 확인" },
-        "tertiaryOnDark(gray)": { "interactionToken": "color/interaction/gray/pressed", "base": "ref-color-gray-900", "value": "#03091A 30%", "hex8": "#03091A4D", "tokenMatch": "실측 확인 (변수맵)" },
-        "destructed(red)": { "interactionToken": "color/interaction/red/pressed", "base": "ref-color-red-900", "value": "#5E1314 30%", "hex8": "#5E13144D", "verifiedOnNodeIds": ["410:3570"], "tokenMatch": "실측 확인" }
+        "primary(blue)": { "interactionToken": "color/interaction/blue/pressed", "sameHexAs": "ref-color-blue-900", "value": "#0D2D57 30%", "hex8": "#0D2D574D", "verifiedOnNodeIds": ["410:3463"], "tokenMatch": "실측 확인" },
+        "secondary(light-blue)": { "interactionToken": "color/interaction/light-blue/pressed", "sameHexAs": "ref-color-blue-500", "value": "#2C7BE2 15%", "hex8": "#2C7BE226", "verifiedOnNodeIds": ["409:6150"], "tokenMatch": "실측 확인" },
+        "tertiaryLight(light-gray)": { "interactionToken": "color/interaction/light-gray/pressed", "sameHexAs": "ref-color-gray-900", "value": "#03091A 10%", "hex8": "#03091A1A", "refAlias": "ref-color-gray-900-10", "verifiedOnNodeIds": ["409:6149"], "tokenMatch": "실측 확인" },
+        "tertiaryOnDark(gray)": { "interactionToken": "color/interaction/gray/pressed", "sameHexAs": "ref-color-gray-900", "value": "#03091A 30%", "hex8": "#03091A4D", "tokenMatch": "실측 확인 (변수맵)" },
+        "destructed(red)": { "interactionToken": "color/interaction/red/pressed", "sameHexAs": "ref-color-red-900", "value": "#5E1314 30%", "hex8": "#5E13144D", "verifiedOnNodeIds": ["410:3570"], "tokenMatch": "실측 확인" }
       }
     },
     "Disabled": {

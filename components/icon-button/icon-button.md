@@ -90,43 +90,23 @@ Icon Button은 **고정 width/height 프레임이 아니라**, 정사각형 아�
 ### 5-2. Hover / Pressed
 배경 위에 반투명 오버레이를 **사전 합성(pre-composite)한 플랫 그라디언트**로 렌더링됩니다(box-shadow가 아니라, `linear-gradient(overlay) , linear-gradient(base)`를 겹친 `backgroundImage`). 오버레이 색은 Figma 파일의 `color/interaction/*` 변수를 사용합니다.
 
-**실측 확인된 3개 계열(Primary/Destructed/Secondary):**
-
-| Type / 배경 계열 | Figma 변수 | Hover(실측) | Pressed(실측) |
+| Type / 배경 계열 | Figma 변수 | Hover | Pressed |
 |---|---|---|---|
-| Primary(블루 채움) | `color/interaction/blue/*` | 베이스 `#2c7be2` + `rgba(13,45,87,0.15)` = blue-900 **15%** | 베이스 `#2c7be2` + blue-900 **30%** (`rgba(13,45,87,0.3)`) |
-| Destructed(빨강 채움) | `color/interaction/red/*` | 베이스 `#e72f37` + `rgba(94,19,20,0.15)` = red-900 **15%** | (미실측, 변수맵상 red-900 **30%** 추정 — 확인 필요) |
-| Secondary(연한 블루 surface) | `color/interaction/light-blue/*` | 베이스 `#eef4fc` + `rgba(44,123,226,0.08)` = blue-500 **8%** | (미실측, 변수맵상 blue-500 **15%** 추정 — 확인 필요) |
+| Primary(블루 채움) | `color/interaction/blue/*` | `#0D2D57` 15% (실측: `rgba(13,45,87,0.15)`) | `#0D2D57` 30% |
+| Destructed(빨강 채움) | `color/interaction/red/*` | `#5E1314` 15% (실측: `rgba(94,19,20,0.15)`) | `#5E1314` 30% |
+| Secondary(연한 블루 surface) | `color/interaction/light-blue/*` | `#2C7BE2` 8% (실측: `rgba(44,123,226,0.08)`) | `#2C7BE2` 15% |
+| Tertiary(회색 surface) | `color/interaction/light-gray/*` | `#03091A` 5% | `#03091A` 10% |
+| Ghost(투명) | `color/interaction/light-gray/*` | `#03091A` 5% | `#03091A` 10% |
+| Destructed-Subtle(연한 빨강 surface) | `color/interaction/light-red/*` | `#E72F37` 8% | `#E72F37` 15% |
 
-**미실측 계열(변수맵 기반 추정 — 확인 필요):**
-
-| Type / 배경 계열 | 추정 Figma 변수 | Hover | Pressed |
-|---|---|---|---|
-| Tertiary(회색 surface) | `color/interaction/light-gray/*` 또는 `gray/*` | gray-900 5% 또는 15% — **확인 필요** | gray-900 10% 또는 30% — **확인 필요** |
-| Ghost(투명) | `color/interaction/gray/*` 또는 `light-gray/*` | **확인 필요** | **확인 필요** |
-| Destructed-Subtle(연한 빨강 surface) | `color/interaction/light-red/*` | red-500 8% 추정 | red-500 15% 추정 — **확인 필요** |
+Primary/Destructed/Secondary는 개별 노드(`2209:2271`,`2209:2268`,`2209:2273`)로 직접 실측했습니다. Tertiary/Ghost/Destructed-Subtle의 값은 Figma Variables 패널(`color/interaction` 그룹) 전수 확인으로 확정됐으나, 이 값이 각 Type의 어느 상태(hover 시작 vs pressed 시작)에 실제로 바인딩되는지는 개별 노드로 재검증하지 않았습니다 — **바인딩 확인 필요**(값 자체는 확정).
 
 - Hover 상태에는 `cursor: pointer` 힌트가 함께 붙습니다.
-- 오버레이 메커니즘(사전 합성 그라디언트)과 채움 계열의 hover→pressed 진행(alpha 15%→30%)은 Primary/Destructed에서 실측 확인되었습니다.
+- 오버레이 메커니즘(사전 합성 그라디언트)과 채움 계열의 hover→pressed 진행(alpha 15%→30%, 8%→15%)은 Primary/Destructed/Secondary에서 실측 확인되었습니다.
 
-> **정정 완료(중요)**: 위 Figma `color/interaction/*` 변수의 resolved 값(실측)이 정답이며, 초기에는 저장소 `tokens/colors.json`·`docs/DESIGN.md` 12.3 표가 잘못된 값(blue-500 20% 등)을 담고 있어 불일치했습니다. **2026-08-26 저장소 토큰과 DESIGN.md를 아래 실측값으로 정정하여 현재는 일치**합니다. 아래 표의 `colors.json(정정 전)` 컬럼은 참고용 옛 값입니다.
+> **참고**: `interaction/*`는 `blue-900` 등 메인 컬러 스케일을 참조(alias)하는 토큰이 아니라, Figma 'Reference' 컬렉션의 `color/interaction` 그룹에 고유한 hex+opacity로 정의된 별도 토큰입니다. hex 값이 각 팔레트의 900(채움 계열) 또는 500(surface 계열) 스텝과 우연히 동일할 뿐입니다.
 >
-> | 변수 | Figma 실측(정답) | colors.json (정정 전) | 현재 |
-> |---|---|---|---|
-> | `interaction/blue/hover` | blue-900 `#0D2D57` 15% (`#0D2D5726`) | blue-500 20% | 정정 후 일치 |
-> | `interaction/blue/pressed` | blue-900 30% (`#0D2D574D`) | blue-500 40% | 정정 후 일치 |
-> | `interaction/red/hover` | red-900 `#5E1314` 15% (`#5E131426`) | red-500 20% | 정정 후 일치 |
-> | `interaction/red/pressed` | red-900 30% (`#5E13144D`) | red-500 40% | 정정 후 일치 |
-> | `interaction/light-blue/hover` | blue-500 8% (`#2C7BE214`) | blue-50 solid | 정정 후 일치 |
-> | `interaction/light-blue/pressed` | blue-500 15% (`#2C7BE226`) | blue-100 solid | 정정 후 일치 |
-> | `interaction/gray/hover` | gray-900 15% (`#03091A26`) | gray-900 5% | 정정 후 일치 |
-> | `interaction/gray/pressed` | gray-900 30% (`#03091A4D`) | gray-900 10% | 정정 후 일치 |
-> | `interaction/light-gray/hover` | gray-900 5% (`#03091A0D`) | gray-100 solid | 정정 후 일치 |
-> | `interaction/light-gray/pressed` | gray-900 10% (`#03091A1A`) | gray-200 solid | 정정 후 일치 |
-> | `interaction/light-red/hover` | red-500 8% (`#E72F3714`) | red-50 solid | 정정 후 일치 |
-> | `interaction/light-red/pressed` | red-500 15% (`#E72F3726`) | red-100 solid | 정정 후 일치 |
->
-> **원인**: `docs/DESIGN.md` 12.3 표가 최초 작성될 때 ref 매핑이 잘못 기재되었고(interaction/blue를 blue-500 20%로), 그 잘못된 표값이 `tokens/colors.json`에 그대로 이식되어 있었습니다. 실제 Figma 변수는 base=`[color]-900` 15%/30%, light-chromatic=`[color]-500` 8%/15%, light-gray=`gray-900` 5%/10% 입니다. 세 컴포넌트(Button/Text/Icon)의 반복 실측이 모두 이 값을 가리켜 정정했습니다.
+> **정정 완료**: 초기엔 저장소 `tokens/colors.json`·`docs/DESIGN.md` 12.3 표가 잘못된 값(blue-500 20% 등)을 담고 있어 불일치했습니다. 2026-08-26 Figma Variables 패널(`color/interaction` 그룹, 42개 변수 전수)로 재확인해 저장소 토큰과 DESIGN.md를 실측값으로 정정, 현재 일치합니다. 원인: DESIGN.md 12.3 표의 최초 ref 매핑 오류(interaction/blue를 blue-500 20%로 잘못 기재)가 colors.json에 그대로 이식되어 있었습니다.
 
 ### 5-3. Disabled (실측: `2209:2232`)
 버튼 전체(배경 + 아이콘)에 **opacity 20%**를 적용합니다. 색상값 자체는 변하지 않습니다.
@@ -168,8 +148,8 @@ State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 �
 **추정(SVG baked라 직접 검증 불가) — 확인 필요**
 - Icon Color Black → `sys-color-neutral-800`(`#202837`) (변수맵상 존재로 추정)
 
-**불일치 — 확인 필요 (가장 주목할 항목)**
-- hover/pressed 오버레이의 `color/interaction/*` 변수 resolved 값이 저장소 `tokens/colors.json`의 `interaction` 섹션과 계열 전반에서 다름(5-2절 표 참조). 저장소 토큰 stale 여부 또는 컴포넌트별 오버레이 차이 여부 확인 필요.
+**정정 완료 (2026-08-26)**
+- hover/pressed 오버레이 `color/interaction/*` 변수의 실측값이 정답으로 확정되어 저장소 `tokens/colors.json`·`docs/DESIGN.md`에 반영됨(5-2절 표 참조).
 
 **기존 토큰에 없음**
 - 외곽 정사각형 치수(28/36/40px) — 패딩+아이콘 합성 결과, 전용 크기 토큰 없음

@@ -138,20 +138,20 @@
         "primary(blue)": { "figmaVariable": "color/interaction/blue/hover", "resolved": "#0d2d5726", "meaning": "blue-900 #0D2D57 15%", "measuredBaseHex": "#2c7be2", "verifiedOnNodeIds": ["2209:2271"], "status": "실측 확인" },
         "destructed(red)": { "figmaVariable": "color/interaction/red/hover", "resolved": "#5e131426", "meaning": "red-900 #5E1314 15%", "measuredBaseHex": "#e72f37", "verifiedOnNodeIds": ["2209:2268"], "status": "실측 확인" },
         "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/hover", "resolved": "#2c7be214", "meaning": "blue-500 #2C7BE2 8%", "measuredBaseHex": "#eef4fc", "verifiedOnNodeIds": ["2209:2273"], "status": "실측 확인" },
-        "destructedSubtle(light-red)": { "figmaVariable": "color/interaction/light-red/hover", "resolved": "#e72f3714", "meaning": "red-500 8%", "status": "실측 확인 (변수맵)" },
-        "tertiary(gray)": { "figmaVariable": "color/interaction/light-gray/hover", "resolved": "#03091a0d", "meaning": "gray-900 5% (Button의 Tertiary-light와 동일 계열로 추정)", "status": "값 실측 확인(변수맵) / 이 타입이 light-gray인지 gray(15%)인지 바인딩은 확인 필요" },
-        "ghost(transparent)": { "figmaVariable": "color/interaction/light-gray/hover 또는 gray/hover", "resolved": "#03091a0d 또는 #03091a26", "meaning": "gray-900 5% 또는 15%", "status": "값 실측 확인(변수맵) / 어느 토큰을 쓰는지 바인딩은 확인 필요" }
+        "destructedSubtle(light-red)": { "figmaVariable": "color/interaction/light-red/hover", "resolved": "#e72f3714", "meaning": "#E72F37 8%", "status": "실측 확인 (변수맵)" },
+        "tertiary(gray)": { "figmaVariable": "color/interaction/light-gray/hover", "resolved": "#03091a0d", "meaning": "#03091A 5%", "status": "값 확정(Figma Variables 패널 전수 확인) / 이 Type이 정확히 light-gray를 쓰는지 개별 노드 재검증은 안 함 — 바인딩 확인 필요" },
+        "ghost(transparent)": { "figmaVariable": "color/interaction/light-gray/hover", "resolved": "#03091a0d", "meaning": "#03091A 5%", "status": "값 확정(Figma Variables 패널 전수 확인) / 바인딩 확인 필요" }
       }
     },
     "Pressed": {
-      "mechanism": "Hover와 동일 메커니즘. base 계열은 alpha가 hover의 약 2배(15%→30%, 8%→15%, 5%→10%). 모든 값 get_variable_defs로 확인됨.",
+      "mechanism": "Hover와 동일 메커니즘. base 계열은 alpha가 hover의 약 2배(15%→30%), light 계열은 8%→15% 또는 5%→10%. 모든 값 Figma Variables 패널로 확정됨.",
       "overlaysByFamily": {
-        "primary(blue)": { "figmaVariable": "color/interaction/blue/pressed", "resolved": "#0d2d574d", "meaning": "blue-900 30%", "verifiedOnNodeIds": ["2209:2250"], "status": "실측 확인" },
-        "destructed(red)": { "figmaVariable": "color/interaction/red/pressed", "resolved": "#5e13144d", "meaning": "red-900 30%", "status": "실측 확인 (변수맵)" },
-        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/pressed", "resolved": "#2c7be226", "meaning": "blue-500 15%", "status": "실측 확인 (변수맵)" },
-        "destructedSubtle(light-red)": { "figmaVariable": "color/interaction/light-red/pressed", "resolved": "#e72f3726", "meaning": "red-500 15%", "status": "실측 확인 (변수맵)" },
-        "tertiary(gray)": { "figmaVariable": "color/interaction/light-gray/pressed", "resolved": "#03091a1a", "meaning": "gray-900 10%", "status": "값 실측 확인(변수맵) / 타입 바인딩은 확인 필요" },
-        "ghost(transparent)": { "figmaVariable": "color/interaction/light-gray/pressed 또는 gray/pressed", "resolved": "#03091a1a 또는 #03091a4d", "meaning": "gray-900 10% 또는 30%", "status": "값 실측 확인(변수맵) / 바인딩은 확인 필요" }
+        "primary(blue)": { "figmaVariable": "color/interaction/blue/pressed", "resolved": "#0d2d574d", "meaning": "#0D2D57 30%", "verifiedOnNodeIds": ["2209:2250"], "status": "실측 확인" },
+        "destructed(red)": { "figmaVariable": "color/interaction/red/pressed", "resolved": "#5e13144d", "meaning": "#5E1314 30%", "status": "실측 확인 (변수맵)" },
+        "secondary(light-blue)": { "figmaVariable": "color/interaction/light-blue/pressed", "resolved": "#2c7be226", "meaning": "#2C7BE2 15%", "status": "실측 확인 (변수맵)" },
+        "destructedSubtle(light-red)": { "figmaVariable": "color/interaction/light-red/pressed", "resolved": "#e72f3726", "meaning": "#E72F37 15%", "status": "실측 확인 (변수맵)" },
+        "tertiary(gray)": { "figmaVariable": "color/interaction/light-gray/pressed", "resolved": "#03091a1a", "meaning": "#03091A 10%", "status": "값 확정 / 바인딩 확인 필요" },
+        "ghost(transparent)": { "figmaVariable": "color/interaction/light-gray/pressed", "resolved": "#03091a1a", "meaning": "#03091A 10%", "status": "값 확정 / 바인딩 확인 필요" }
       }
     },
     "Disabled": {

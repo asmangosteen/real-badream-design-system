@@ -828,21 +828,22 @@ Token naming example: `sys-color-brand-primary-default`.
 
 ### 12.3 Design Token - Interaction
 
-Interaction token은 버튼, 칩, 리스트, 카드, 탭, 아이콘 버튼, 선택 영역처럼 사용자 입력에 반응하는 UI의 배경/피드백 색상에 사용합니다. Interaction 계열은 기존 Reference Color를 기반으로 구성하며, 컴포넌트 상태를 HEX 값으로 직접 지정하지 않고 아래 토큰을 참조합니다.
+Interaction token은 버튼, 칩, 리스트, 카드, 탭, 아이콘 버튼, 선택 영역처럼 사용자 입력에 반응하는 UI의 배경/피드백 색상에 사용합니다. Figma의 'Reference' 컬렉션 안에 `color/interaction/*`이라는 별도 그룹(총 42개 변수)으로 존재하며, 컴포넌트 상태를 HEX 값으로 직접 지정하지 않고 아래 토큰을 참조합니다.
 
 - 기본 원칙: 클릭/터치/선택/hover 피드백은 Interaction token을 우선 사용합니다.
 - 강한 색상의 가벼운 피드백은 alpha token을 사용합니다.
 - Light 계열은 밝은 surface, chip, option, selected background에 사용합니다.
-- `light-gray`는 neutral surface의 기본/hover/pressed/disabled 상태까지 포함합니다.
+- `light-gray`는 밝은 배경용 `hover`/`pressed`뿐 아니라 어두운 배경용 `hover-inverse`/`pressed-inverse`까지 포함하는 유일한 4상태 계열입니다.
+- **이 토큰들은 메인 컬러 스케일(예: `ref-color-blue-900`)을 참조(alias)하는 게 아니라, `color/interaction` 그룹 자체에 고유한 hex+opacity 값으로 정의되어 있습니다.** 그 hex 값이 각 팔레트의 900 스텝(base 계열) 또는 500/600 기본 스텝(light 계열)과 우연히 동일할 뿐입니다.
 
-> **⚠️ 2026-08-26 정정**: 아래 "Interaction Token Values" 표의 Reference Token / Value 컬럼은 최초 작성 시 실제 Figma 변수와 다르게 잘못 기재되어 있었습니다. `get_variable_defs`로 실측한 결과 실제 값은 **base 계열 = `[color]-900` 15%/30%**, **light-chromatic 계열 = `[default step]` 8%/15%**, **light-gray = `gray-900` 5%/10%** 입니다 (예: `interaction/blue/hover` = `blue-500 20%`가 아니라 **`blue-900 #0D2D57` 15%**). 아래 표에서 **blue, red, gray, light-blue, light-red, light-gray 6개 계열은 실측값으로 정정**했으며, 나머지 chromatic 계열(deep-blue/emerald/purple/turquoise/green/orange/yellow 및 light 변형)은 버튼에서 사용되지 않아 미실측이므로 **"확인 필요"**로 표시했습니다(관측 패턴상 base=`[color]-900` 15/30, light=`[default step]` 8/15로 추정).
+> **✅ 2026-08-26 확정**: 아래 "Interaction Token Values" 표는 Figma Variables 패널의 `color/interaction` 그룹(42개 변수) 전수 확인을 거쳐 **20개 계열 전체가 확정**되었습니다. 최초 작성 시 표에 잘못 기재됐던 값(예: `interaction/blue/hover`를 `blue-500 20%`로 기재 — 실제는 **`#0D2D57`(blue-900과 동일 hex) 15%**)을 전부 바로잡았습니다. 'default'/'disabled' 상태는 이 그룹에 존재하지 않으며, 모든 계열은 `hover`/`pressed` 2상태만 가집니다(단 `light-gray`는 `hover-inverse`/`pressed-inverse`까지 4상태).
 
 #### Interaction Token Families
 
 |Family|Token Count|Usage|
 |---|---:|---|
 |interaction/gray|2|중립/검정 계열 요소의 hover, pressed 피드백|
-|interaction/light-gray|4|밝은 neutral surface의 default, hover, pressed, disabled 상태|
+|interaction/light-gray|4|밝은 배경용 hover/pressed + 어두운 배경용 hover-inverse/pressed-inverse|
 |interaction/blue|2|Primary/blue 계열 요소의 hover, pressed 피드백|
 |interaction/light-blue|2|Primary/blue 계열의 밝은 surface 상태|
 |interaction/deep-blue|2|Secondary/deep-blue 계열 요소의 hover, pressed 피드백|
@@ -864,34 +865,54 @@ Interaction token은 버튼, 칩, 리스트, 카드, 탭, 아이콘 버튼, 선�
 
 #### Interaction Token Values
 
-|Figma Variable Path|CSS Variable|State|Reference Token|Value|
+색상 컬럼은 각 계열이 정의하는 고유 hex+opacity이며, 괄호 안은 참고용으로 우연히 같은 값을 갖는 메인 컬러 스케일 스텝입니다(alias 아님).
+
+|Figma Variable Path|CSS Variable|State|Value|참고: 동일 hex를 갖는 스텝|
 |---|---|---|---|---|
-|interaction/gray/hover|--interaction-gray-hover|hover|gray-900 @15% (#03091A26)|#03091A 15%|
-|interaction/gray/pressed|--interaction-gray-pressed|pressed|gray-900 @30% (#03091A4D)|#03091A 30%|
-|interaction/light-gray/hover|--interaction-light-gray-hover|hover|ref-color-gray-900-5 (#03091A0D)|#03091A 5%|
-|interaction/light-gray/pressed|--interaction-light-gray-pressed|pressed|ref-color-gray-900-10 (#03091A1A)|#03091A 10%|
-|interaction/blue/hover|--interaction-blue-hover|hover|blue-900 @15% (#0D2D5726)|#0D2D57 15%|
-|interaction/blue/pressed|--interaction-blue-pressed|pressed|blue-900 @30% (#0D2D574D)|#0D2D57 30%|
-|interaction/light-blue/hover|--interaction-light-blue-hover|hover|blue-500 @8% (#2C7BE214)|#2C7BE2 8%|
-|interaction/light-blue/pressed|--interaction-light-blue-pressed|pressed|blue-500 @15% (#2C7BE226)|#2C7BE2 15%|
-|interaction/red/hover|--interaction-red-hover|hover|red-900 @15% (#5E131426)|#5E1314 15%|
-|interaction/red/pressed|--interaction-red-pressed|pressed|red-900 @30% (#5E13144D)|#5E1314 30%|
-|interaction/light-red/hover|--interaction-light-red-hover|hover|red-500 @8% (#E72F3714)|#E72F37 8%|
-|interaction/light-red/pressed|--interaction-light-red-pressed|pressed|red-500 @15% (#E72F3726)|#E72F37 15%|
-|interaction/deep-blue/hover·pressed|--interaction-deep-blue-*|hover/pressed|확인 필요 (추정 deepBlue-900 15%/30%)|확인 필요|
-|interaction/light-deep-blue/hover·pressed|--interaction-light-deep-blue-*|hover/pressed|확인 필요 (추정 deepBlue-500 8%/15%)|확인 필요|
-|interaction/emerald/hover·pressed|--interaction-emerald-*|hover/pressed|확인 필요 (추정 emerald-900 15%/30%)|확인 필요|
-|interaction/light-emerald/hover·pressed|--interaction-light-emerald-*|hover/pressed|확인 필요 (추정 emerald-500 8%/15%)|확인 필요|
-|interaction/purple/hover·pressed|--interaction-purple-*|hover/pressed|확인 필요 (추정 purple-900 15%/30%)|확인 필요|
-|interaction/light-purple/hover·pressed|--interaction-light-purple-*|hover/pressed|확인 필요 (추정 purple-500 8%/15%)|확인 필요|
-|interaction/turquoise/hover·pressed|--interaction-turquoise-*|hover/pressed|확인 필요 (추정 turquoise-900 15%/30%)|확인 필요|
-|interaction/light-turquoise/hover·pressed|--interaction-light-turquoise-*|hover/pressed|확인 필요 (추정 turquoise-600 8%/15%)|확인 필요|
-|interaction/green/hover·pressed|--interaction-green-*|hover/pressed|확인 필요 (추정 green-900 15%/30%)|확인 필요|
-|interaction/light-green/hover·pressed|--interaction-light-green-*|hover/pressed|확인 필요 (추정 green-600 8%/15%)|확인 필요|
-|interaction/orange/hover·pressed|--interaction-orange-*|hover/pressed|확인 필요 (추정 orange-900 15%/30%)|확인 필요|
-|interaction/light-orange/hover·pressed|--interaction-light-orange-*|hover/pressed|확인 필요 (추정 orange-500 8%/15%)|확인 필요|
-|interaction/yellow/hover·pressed|--interaction-yellow-*|hover/pressed|확인 필요 (추정 yellow-900 15%/30%)|확인 필요|
-|interaction/light-yellow/hover·pressed|--interaction-light-yellow-*|hover/pressed|확인 필요 (추정 yellow-500 8%/15%)|확인 필요|
+|interaction/gray/hover|--interaction-gray-hover|hover|#03091A 15%|ref-color-gray-900|
+|interaction/gray/pressed|--interaction-gray-pressed|pressed|#03091A 30%|ref-color-gray-900|
+|interaction/light-gray/hover|--interaction-light-gray-hover|hover|#03091A 5%|ref-color-gray-900|
+|interaction/light-gray/pressed|--interaction-light-gray-pressed|pressed|#03091A 10%|ref-color-gray-900|
+|interaction/light-gray/hover-inverse|--interaction-light-gray-hover-inverse|hover-inverse|#FDFDFD 10%|ref-color-gray-50|
+|interaction/light-gray/pressed-inverse|--interaction-light-gray-pressed-inverse|pressed-inverse|#FDFDFD 20%|ref-color-gray-50|
+|interaction/blue/hover|--interaction-blue-hover|hover|#0D2D57 15%|ref-color-blue-900|
+|interaction/blue/pressed|--interaction-blue-pressed|pressed|#0D2D57 30%|ref-color-blue-900|
+|interaction/light-blue/hover|--interaction-light-blue-hover|hover|#2C7BE2 8%|ref-color-blue-500|
+|interaction/light-blue/pressed|--interaction-light-blue-pressed|pressed|#2C7BE2 15%|ref-color-blue-500|
+|interaction/deep-blue/hover|--interaction-deep-blue-hover|hover|#0E182A 15%|ref-color-deepBlue-900|
+|interaction/deep-blue/pressed|--interaction-deep-blue-pressed|pressed|#0E182A 30%|ref-color-deepBlue-900|
+|interaction/light-deep-blue/hover|--interaction-light-deep-blue-hover|hover|#36517E 8%|ref-color-deepBlue-500|
+|interaction/light-deep-blue/pressed|--interaction-light-deep-blue-pressed|pressed|#36517E 15%|ref-color-deepBlue-500|
+|interaction/emerald/hover|--interaction-emerald-hover|hover|#174736 15%|ref-color-emerald-900|
+|interaction/emerald/pressed|--interaction-emerald-pressed|pressed|#174736 30%|ref-color-emerald-900|
+|interaction/light-emerald/hover|--interaction-light-emerald-hover|hover|#33B289 8%|ref-color-emerald-500|
+|interaction/light-emerald/pressed|--interaction-light-emerald-pressed|pressed|#33B289 15%|ref-color-emerald-500|
+|interaction/purple/hover|--interaction-purple-hover|hover|#471950 15%|ref-color-purple-900|
+|interaction/purple/pressed|--interaction-purple-pressed|pressed|#471950 30%|ref-color-purple-900|
+|interaction/light-purple/hover|--interaction-light-purple-hover|hover|#AF3BC6 8%|ref-color-purple-500|
+|interaction/light-purple/pressed|--interaction-light-purple-pressed|pressed|#AF3BC6 15%|ref-color-purple-500|
+|interaction/turquoise/hover|--interaction-turquoise-hover|hover|#064F4A 15%|ref-color-turquoise-900|
+|interaction/turquoise/pressed|--interaction-turquoise-pressed|pressed|#064F4A 30%|ref-color-turquoise-900|
+|interaction/light-turquoise/hover|--interaction-light-turquoise-hover|hover|#00ACA2 8%|ref-color-turquoise-600|
+|interaction/light-turquoise/pressed|--interaction-light-turquoise-pressed|pressed|#00ACA2 15%|ref-color-turquoise-600|
+|interaction/red/hover|--interaction-red-hover|hover|#5E1314 15%|ref-color-red-900|
+|interaction/red/pressed|--interaction-red-pressed|pressed|#5E1314 30%|ref-color-red-900|
+|interaction/light-red/hover|--interaction-light-red-hover|hover|#E72F37 8%|ref-color-red-500|
+|interaction/light-red/pressed|--interaction-light-red-pressed|pressed|#E72F37 15%|ref-color-red-500|
+|interaction/green/hover|--interaction-green-hover|hover|#104115 15%|ref-color-green-900|
+|interaction/green/pressed|--interaction-green-pressed|pressed|#104115 30%|ref-color-green-900|
+|interaction/light-green/hover|--interaction-light-green-hover|hover|#1F8F30 8%|ref-color-green-600|
+|interaction/light-green/pressed|--interaction-light-green-pressed|pressed|#1F8F30 15%|ref-color-green-600|
+|interaction/orange/hover|--interaction-orange-hover|hover|#6C3214 15%|ref-color-orange-900|
+|interaction/orange/pressed|--interaction-orange-pressed|pressed|#6C3214 30%|ref-color-orange-900|
+|interaction/light-orange/hover|--interaction-light-orange-hover|hover|#FF792C 8%|ref-color-orange-500|
+|interaction/light-orange/pressed|--interaction-light-orange-pressed|pressed|#FF792C 15%|ref-color-orange-500|
+|interaction/yellow/hover|--interaction-yellow-hover|hover|#674E0F 15%|ref-color-yellow-900|
+|interaction/yellow/pressed|--interaction-yellow-pressed|pressed|#674E0F 30%|ref-color-yellow-900|
+|interaction/light-yellow/hover|--interaction-light-yellow-hover|hover|#FABF21 8%|ref-color-yellow-500|
+|interaction/light-yellow/pressed|--interaction-light-yellow-pressed|pressed|#FABF21 15%|ref-color-yellow-500|
+
+총 42개 변수 (20개 계열 × 2상태, light-gray만 +2 = hover-inverse/pressed-inverse). 2026-08-26 Figma Variables 패널(Reference 컬렉션 > interaction 그룹) 스크린샷 전수 확인으로 확정.
 
 ### 12.4 Palette Default Markers & WCAG Rule
 
@@ -1558,49 +1579,52 @@ document document_approved delivery card coin motorcycle party megaphone write t
   --sys-color-neutral-700: var(--ref-color-gray-700);
   --sys-color-neutral-800: var(--ref-color-gray-800);
 
-  /* Interaction Colors — 2026-08-26 Figma 변수맵 실측값으로 정정 (이전엔 [color]-500 20/40 등으로 잘못 기재).
-     실측 6개 계열(blue/red/gray/light-blue/light-red/light-gray)만 확정, 나머지는 확인 필요. */
-  --interaction-blue-hover: rgb(13 45 87 / 15%);   /* blue-900 15% */
-  --interaction-blue-pressed: rgb(13 45 87 / 30%); /* blue-900 30% */
-  --interaction-red-hover: rgb(94 19 20 / 15%);    /* red-900 15% */
-  --interaction-red-pressed: rgb(94 19 20 / 30%);  /* red-900 30% */
-  --interaction-gray-hover: rgb(3 9 26 / 15%);     /* gray-900 15% */
-  --interaction-gray-pressed: rgb(3 9 26 / 30%);   /* gray-900 30% */
-  --interaction-light-blue-hover: rgb(44 123 226 / 8%);    /* blue-500 8% */
-  --interaction-light-blue-pressed: rgb(44 123 226 / 15%); /* blue-500 15% */
-  --interaction-light-red-hover: rgb(231 47 55 / 8%);      /* red-500 8% */
-  --interaction-light-red-pressed: rgb(231 47 55 / 15%);   /* red-500 15% */
-  --interaction-light-gray-hover: var(--ref-color-gray-900-5);    /* gray-900 5% */
-  --interaction-light-gray-pressed: var(--ref-color-gray-900-10); /* gray-900 10% */
-  /* 아래 chromatic 계열은 미실측 — 확인 필요. 관측 패턴(base=[color]-900 15/30, light=[default step] 8/15) 기반 추정. */
-  --interaction-deep-blue-hover: rgb(14 24 42 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-deep-blue-pressed: rgb(14 24 42 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-deep-blue-hover: rgb(54 81 126 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-deep-blue-pressed: rgb(54 81 126 / 15%);/* 추정 — 확인 필요 */
-  --interaction-emerald-hover: rgb(23 71 54 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-emerald-pressed: rgb(23 71 54 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-emerald-hover: rgb(51 178 137 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-emerald-pressed: rgb(51 178 137 / 15%);/* 추정 — 확인 필요 */
-  --interaction-purple-hover: rgb(71 25 80 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-purple-pressed: rgb(71 25 80 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-purple-hover: rgb(175 59 198 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-purple-pressed: rgb(175 59 198 / 15%);/* 추정 — 확인 필요 */
-  --interaction-turquoise-hover: rgb(6 79 74 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-turquoise-pressed: rgb(6 79 74 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-turquoise-hover: rgb(0 172 162 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-turquoise-pressed: rgb(0 172 162 / 15%);/* 추정 — 확인 필요 */
-  --interaction-green-hover: rgb(16 65 21 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-green-pressed: rgb(16 65 21 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-green-hover: rgb(31 143 48 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-green-pressed: rgb(31 143 48 / 15%);/* 추정 — 확인 필요 */
-  --interaction-orange-hover: rgb(108 50 20 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-orange-pressed: rgb(108 50 20 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-orange-hover: rgb(255 121 44 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-orange-pressed: rgb(255 121 44 / 15%);/* 추정 — 확인 필요 */
-  --interaction-yellow-hover: rgb(103 78 15 / 15%);   /* 추정 — 확인 필요 */
-  --interaction-yellow-pressed: rgb(103 78 15 / 30%); /* 추정 — 확인 필요 */
-  --interaction-light-yellow-hover: rgb(250 191 33 / 8%);   /* 추정 — 확인 필요 */
-  --interaction-light-yellow-pressed: rgb(250 191 33 / 15%);/* 추정 — 확인 필요 */
+  /* Interaction Colors — Figma 'Reference' 컬렉션의 별도 그룹 color/interaction/*(총 42개 변수).
+     2026-08-26 Variables 패널 전수 확인으로 20개 계열 모두 확정. blue-900 등 메인 스케일을
+     참조(alias)하는 게 아니라 그 자체로 정의된 hex+opacity이며, hex가 900(base)/500·600(light)
+     스텝과 우연히 동일함. 'default' 상태 없음(light-gray만 예외로 inverse 변형 보유). */
+  --interaction-gray-hover: rgb(3 9 26 / 15%);
+  --interaction-gray-pressed: rgb(3 9 26 / 30%);
+  --interaction-light-gray-hover: rgb(3 9 26 / 5%);
+  --interaction-light-gray-pressed: rgb(3 9 26 / 10%);
+  --interaction-light-gray-hover-inverse: rgb(253 253 253 / 10%);
+  --interaction-light-gray-pressed-inverse: rgb(253 253 253 / 20%);
+  --interaction-blue-hover: rgb(13 45 87 / 15%);
+  --interaction-blue-pressed: rgb(13 45 87 / 30%);
+  --interaction-light-blue-hover: rgb(44 123 226 / 8%);
+  --interaction-light-blue-pressed: rgb(44 123 226 / 15%);
+  --interaction-deep-blue-hover: rgb(14 24 42 / 15%);
+  --interaction-deep-blue-pressed: rgb(14 24 42 / 30%);
+  --interaction-light-deep-blue-hover: rgb(54 81 126 / 8%);
+  --interaction-light-deep-blue-pressed: rgb(54 81 126 / 15%);
+  --interaction-emerald-hover: rgb(23 71 54 / 15%);
+  --interaction-emerald-pressed: rgb(23 71 54 / 30%);
+  --interaction-light-emerald-hover: rgb(51 178 137 / 8%);
+  --interaction-light-emerald-pressed: rgb(51 178 137 / 15%);
+  --interaction-purple-hover: rgb(71 25 80 / 15%);
+  --interaction-purple-pressed: rgb(71 25 80 / 30%);
+  --interaction-light-purple-hover: rgb(175 59 198 / 8%);
+  --interaction-light-purple-pressed: rgb(175 59 198 / 15%);
+  --interaction-turquoise-hover: rgb(6 79 74 / 15%);
+  --interaction-turquoise-pressed: rgb(6 79 74 / 30%);
+  --interaction-light-turquoise-hover: rgb(0 172 162 / 8%);
+  --interaction-light-turquoise-pressed: rgb(0 172 162 / 15%);
+  --interaction-red-hover: rgb(94 19 20 / 15%);
+  --interaction-red-pressed: rgb(94 19 20 / 30%);
+  --interaction-light-red-hover: rgb(231 47 55 / 8%);
+  --interaction-light-red-pressed: rgb(231 47 55 / 15%);
+  --interaction-green-hover: rgb(16 65 21 / 15%);
+  --interaction-green-pressed: rgb(16 65 21 / 30%);
+  --interaction-light-green-hover: rgb(31 143 48 / 8%);
+  --interaction-light-green-pressed: rgb(31 143 48 / 15%);
+  --interaction-orange-hover: rgb(108 50 20 / 15%);
+  --interaction-orange-pressed: rgb(108 50 20 / 30%);
+  --interaction-light-orange-hover: rgb(255 121 44 / 8%);
+  --interaction-light-orange-pressed: rgb(255 121 44 / 15%);
+  --interaction-yellow-hover: rgb(103 78 15 / 15%);
+  --interaction-yellow-pressed: rgb(103 78 15 / 30%);
+  --interaction-light-yellow-hover: rgb(250 191 33 / 8%);
+  --interaction-light-yellow-pressed: rgb(250 191 33 / 15%);
 
   /* Gradients */
   --gradient-white-upward: linear-gradient(0deg, rgb(253 253 253 / 0%) 0%, rgb(253 253 253 / 8%) 15%, rgb(253 253 253 / 22%) 30%, rgb(253 253 253 / 42%) 50%, rgb(253 253 253 / 64%) 70%, rgb(253 253 253 / 82%) 85%, rgb(253 253 253 / 100%) 100%);

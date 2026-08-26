@@ -101,7 +101,8 @@ L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)�
 
 - Hover 상태에는 `cursor: pointer` 힌트도 함께 붙습니다.
 - 각 계열은 배경/텍스트 위에 해당 `interaction/*` 오버레이를 합성합니다. 채움 계열(Primary/Destructed)과 On=Dark Tertiary는 **어두운(-900) 오버레이 15% → 30%**, 연한 surface 계열(Secondary/Tertiary-light)은 **연한 오버레이(blue-500 8→15%, gray-900 5→10%)**로 눌림 깊이를 표현합니다.
-- **정정 이력**: 이전 판에서는 이 표가 `docs/DESIGN.md` 12.3 표의 잘못된 값(blue-500 20%/40% 등)을 따라 기재됐었습니다. 실제 Figma 변수(`color/interaction/*`)의 resolved 값은 위 표와 같으며(base=`[color]-900` 15%/30%, light=`[color]-500` 8%/15%, light-gray=`gray-900` 5%/10%), DESIGN.md 12.3 표와 colors.json도 함께 정정했습니다.
+- **참고**: `interaction/*`는 `blue-900` 등 메인 컬러 스케일을 참조(alias)하는 토큰이 아니라, Figma 'Reference' 컬렉션의 `color/interaction` 그룹에 고유한 hex+opacity로 정의된 별도 토큰입니다. hex 값이 각 팔레트의 900(채움 계열) 또는 500(surface 계열) 스텝과 우연히 동일할 뿐입니다.
+- **정정 이력**: 이전 판에서는 이 표가 `docs/DESIGN.md` 12.3 표의 잘못된 값(blue-500 20%/40% 등)을 따라 기재됐었습니다. 2026-08-26 Figma Variables 패널(`color/interaction` 그룹, 42개 변수 전수)로 재확인해 위 표로 정정했고, DESIGN.md 12.3 표와 `tokens/colors.json`도 함께 정정했습니다.
 
 ### 5-3. Disabled (실측: `410:3409`)
 버튼 전체(배경 + 텍스트 + 아이콘)에 **opacity 20%**를 적용합니다. 색상값 자체는 변하지 않습니다.
