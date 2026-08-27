@@ -80,7 +80,7 @@
           "destructed": { "background": { "figmaVariable": "theme/destructed-default", "hex": "#e72f37" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "sys-color-theme-destructed-default (ref-color-red-500)", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2183" },
           "warning": { "background": { "figmaVariable": "theme/warning-default", "hex": "#ff792c" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "sys-color-theme-warning-default (ref-color-orange-500)", "tokenMatch": "정확히 일치", "sourceNodeIdViaVariableDefs": true },
           "purple": { "background": { "figmaVariable": "theme/purple-default", "hex": "#af3bc6" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "ref-color-purple-500 (V3 system.theme.purple.default)", "tokenMatch": "정확히 일치", "sourceNodeIdViaVariableDefs": true },
-          "turquoise": { "background": { "figmaVariable": "theme/turquiose-default", "hex": "#00aca2", "note": "Figma 변수명 오탈자: turquiose (turquoise 아님)" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "ref-color-turquoise-600 (V3 system.theme.turquoise.default)", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2570" }
+          "turquoise": { "background": { "figmaVariable": "theme/turquoise-default", "hex": "#00aca2" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "ref-color-turquoise-600 (V3 system.theme.turquoise.default)", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2570" }
         }
       },
       "alpha": {
@@ -92,7 +92,7 @@
           "destructed": { "background": { "figmaVariable": "theme/destructed-bg", "hex": "#ffedeb" }, "text": { "hex": "#e72f37" }, "backgroundToken": "ref-color-red-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true },
           "warning": { "background": { "figmaVariable": "theme/warning-bg", "hex": "#fff3ed" }, "text": { "figmaVariable": "theme/warning-default", "hex": "#ff792c" }, "backgroundToken": "ref-color-orange-50", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2312" },
           "purple": { "background": { "figmaVariable": "theme/purple-bg", "hex": "#faeffc" }, "text": { "hex": "#af3bc6" }, "backgroundToken": "ref-color-purple-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true },
-          "turquoise": { "background": { "figmaVariable": "theme/turquiose-bg", "hex": "#e9fbf9" }, "text": { "hex": "#00aca2" }, "backgroundToken": "ref-color-turquoise-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true }
+          "turquoise": { "background": { "figmaVariable": "theme/turquoise-bg", "hex": "#e9fbf9" }, "text": { "hex": "#00aca2" }, "backgroundToken": "ref-color-turquoise-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true }
         }
       },
       "outlined": {
@@ -173,7 +173,6 @@
       "Success/Destructed/Purple/Turquoise Alpha 배경, Success/Destructed/Warning/Turquoise Outlined 테두리 — 값은 변수맵으로 확인했으나 개별 렌더링 미실측",
       "Numeric Badge 10+ M/L 패딩이 Gray 외 5개 색상 Theme에도 동일 적용되는지",
       "아이콘 색상이 실제로 텍스트 색과 동일한지 (SVG fill 미확인)",
-      "Turquoise 변수명 오탈자(turquiose)가 의도적인지",
       "Numeric Badge aria-label 필요 여부",
       "Alpha/Outlined 배경 위 텍스트의 WCAG 명암비 수치"
     ]

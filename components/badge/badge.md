@@ -65,7 +65,7 @@ Badge는 상태·카테고리·개수 등을 짧게 표시하는 비인터랙티
 | **Destructed** | `theme/destructed-default` `#e72f37` | `common/white-default` | `sys-color-theme-destructed-default`(`ref-color-red-500`) | **정확히 일치** |
 | **Warning** | `theme/warning-default` `#ff792c` | `common/white-default` | `sys-color-theme-warning-default`(`ref-color-orange-500`) | **정확히 일치** |
 | **Purple** | `theme/purple-default` `#af3bc6` | `common/white-default` | `ref-color-purple-500`(V3 system.theme.purple.default) | **정확히 일치** |
-| **Turquoise** | `theme/turquiose-default` `#00aca2` | `common/white-default` | `ref-color-turquoise-600`(V3 system.theme.turquoise.default) | **정확히 일치** (Figma 변수명 자체가 `turquiose`로 오탈자 — 아래 5장 참고) |
+| **Turquoise** | `theme/turquoise-default` `#00aca2` | `common/white-default` | `ref-color-turquoise-600`(V3 system.theme.turquoise.default) | **정확히 일치** |
 
 ### 3-2. Alpha (연한 틴트 배경, 텍스트/아이콘은 테마 진한 색)
 
@@ -77,7 +77,7 @@ Badge는 상태·카테고리·개수 등을 짧게 표시하는 비인터랙티
 | **Destructed** | `theme/destructed-bg` `#ffedeb` | `theme/destructed-default` | `ref-color-red-50` | **정확히 일치** (변수맵 확인) |
 | **Warning** | `theme/warning-bg` `#fff3ed` | `theme/warning-default` `#ff792c` | `ref-color-orange-50` | **정확히 일치** (`2107:2312`로 직접 실측) |
 | **Purple** | `theme/purple-bg` `#faeffc` | `theme/purple-default` | `ref-color-purple-50` | **정확히 일치** (변수맵 확인) |
-| **Turquoise** | `theme/turquiose-bg` `#e9fbf9` | `theme/turquiose-default` | `ref-color-turquoise-50` | **정확히 일치** (변수맵 확인) |
+| **Turquoise** | `theme/turquoise-bg` `#e9fbf9` | `theme/turquoise-default` | `ref-color-turquoise-50` | **정확히 일치** (변수맵 확인) |
 
 Success/Destructed/Purple/Turquoise의 Alpha 배경은 `get_variable_defs`로 값 자체는 확인했으나, Warning처럼 개별 노드 렌더링(`get_design_context`)까지 실측 확인한 것은 아닙니다 — 값 존재는 확실하나 **실제 적용 여부는 패턴 추정**입니다.
 
@@ -139,7 +139,7 @@ Numeric Badge는 Content Badge와 달리 **Alpha/Outlined 타입이 없고 Solid
 
 - 아이콘은 모든 Content Badge에서 "+"(plus) 모양의 단일 아이콘(`Icon / Default / 12px / plus`, `16px` 버전 포함) 하나만 사용되며, `showIcon=true`일 때 라벨 뒤(오른쪽)에 붙습니다. Button처럼 여러 아이콘 콘텐츠 축이 있는 게 아니라 "카운트/뱃지에 새 항목 추가됨"을 의미하는 고정 아이콘으로 보입니다.
 - 아이콘 색상은 매 인스턴스마다 별도의 SVG 애셋 URL이 발급되어 있어(각 Theme/Type 조합마다 다른 애셋), 라벨 텍스트와 동일한 색으로 구워져(baked-in) 있는 것으로 추정되나 **SVG 내부 fill 값을 직접 디코딩하지는 않았으므로 색상 매핑 자체는 확인 필요**입니다(Button Spinner 문서의 "Subtract" 애셋과 동일한 한계).
-- **Figma 변수명 오탈자 발견**: Turquoise 테마의 Figma 변수명이 `theme/turquiose-default`, `theme/turquiose-bg`로 등록되어 있습니다("turquoise"의 e가 빠진 오탈자). 값 자체는 정확하므로 기능상 문제는 없으나, 원본 파일에서 변수명 정정 여부를 확인할 필요가 있습니다.
+- Turquoise 테마의 Figma 변수명은 `theme/turquoise-default`, `theme/turquoise-bg`이며, 값·이름 모두 저장소 토큰과 일치합니다.
 - 두 배지 그룹의 컬러/토큰 값(Solid 배경, Alpha 배경/틴트, Outlined 테두리 알파, 텍스트 색)은 전부 `tokens/colors.json`의 V3 팔레트·시스템 롤·alpha 테이블과 **정확히 일치**합니다(3장·4-3절 표 참고). 새로 발견되거나 저장소에 없는 컬러 토큰은 없었습니다.
 
 ## 6. 인터랙션(모션) 및 State 스펙
@@ -175,7 +175,6 @@ Numeric Badge는 Content Badge와 달리 **Alpha/Outlined 타입이 없고 Solid
 - Success/Destructed/Purple/Turquoise의 Alpha 배경, 그리고 Success/Destructed/Warning/Turquoise의 Outlined 테두리는 `get_variable_defs`로 값은 확인했으나 개별 노드 렌더링까지 실측하지 않음(Warning-Alpha, Purple-Outlined만 직접 실측)
 - Numeric Badge 10+ M/L의 정확한 좌우 패딩은 실측했으나(4-2절), 나머지 5개 색상 Theme에서도 동일 패턴이 적용되는지는 개별 확인 안 함
 - 아이콘 색상이 실제로 텍스트 색과 동일한지(SVG fill 값 직접 미확인)
-- Turquoise 변수명 오탈자(`turquiose`)가 의도적인지 단순 오타인지
 - Numeric Badge의 Theme 차이만으로 의미를 구분할 때 필요한 `aria-label` 규정 여부
 - Alpha 배경/Outlined 알파 테두리의 WCAG 명암비 수치 검증
 
