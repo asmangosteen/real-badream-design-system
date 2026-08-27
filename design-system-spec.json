@@ -44,7 +44,8 @@
     "button": { "spec": "components/button/button.md", "machineReadable": "components/button/button.json", "status": "문서화 완료" },
     "textButton": { "spec": "components/text-button/text-button.md", "machineReadable": "components/text-button/text-button.json", "status": "문서화 완료" },
     "iconButton": { "spec": "components/icon-button/icon-button.md", "machineReadable": "components/icon-button/icon-button.json", "status": "문서화 완료" },
-    "buttonSpinner": { "spec": "components/button-spinner/button-spinner.md", "machineReadable": "components/button-spinner/button-spinner.json", "status": "문서화 완료", "note": "Button/Text Button의 Loading 상태에서 쓰이는 스피너 아톰" }
+    "buttonSpinner": { "spec": "components/button-spinner/button-spinner.md", "machineReadable": "components/button-spinner/button-spinner.json", "status": "문서화 완료", "note": "Button/Text Button의 Loading 상태에서 쓰이는 스피너 아톰" },
+    "badge": { "spec": "components/badge/badge.md", "machineReadable": "components/badge/badge.json", "status": "문서화 완료", "note": "Figma상 4개 Component Set(Content/Basic, Content/Theme, Numeric/Basic, Numeric/Theme)으로 분리되어 있음, 총 210개 인스턴스" }
   },
 
   "typography": {

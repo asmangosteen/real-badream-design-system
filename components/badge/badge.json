@@ -1,0 +1,181 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Badge",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2482-1618",
+    "overviewGroupNodeId": "2482:1618",
+    "note": "Badge는 하나의 Component Set이 아니라 4개의 독립된 Component Set으로 구성됨. overviewGroupNodeId는 사용자가 준 URL의 캔버스 그룹(실제 컴포넌트 정의 단위 아님).",
+    "componentSets": {
+      "contentBasic": { "nodeId": "2106:1806", "name": "Badge / Content / Basic", "variantCount": 36, "axes": ["Theme(Gray/Brand)", "Size(S/M/L)", "Type(Solid/Alpha/Outlined)", "Show Icon(True/False)"] },
+      "contentTheme": { "nodeId": "2107:2167", "name": "Badge / Content / Theme", "variantCount": 90, "axes": ["Theme(Success/Purple/Warning/Turquoise/Destructed)", "Size(S/M/L)", "Type(Solid/Alpha/Outlined)", "Show Icon(True/False)"] },
+      "numericBasic": { "nodeId": "2108:1558", "name": "Badge / Numeric / Basic", "variantCount": 24, "axes": ["Theme(Gray/Brand)", "Size(S/M/L)", "Count(0~9/10+)", "Type(Solid/Empty)"] },
+      "numericTheme": { "nodeId": "2108:2211", "name": "Badge / Numeric / Theme", "variantCount": 60, "axes": ["Theme(Success/Destructed/Warning/Purple/Turquoise)", "Size(S/M/L)", "Count(0~9/10+)", "Type(Solid/Empty)"] }
+    },
+    "totalVariantInstances": 210,
+    "totalContentVariants": 126,
+    "totalNumericVariants": 84
+  },
+  "sampling": {
+    "method": "선택적 샘플링 (get_design_context 30회 + get_variable_defs 1회(상위 그룹 전체) + get_motion_context 1회(recursive) + get_metadata 1회 + get_screenshot 4회)",
+    "sampledNodeIds": {
+      "content": ["2106:1939", "2106:2101", "2106:1807", "2106:1861", "2106:1990", "2106:1942", "2106:2113", "2106:2008", "2106:2125", "2106:1999", "2106:2143", "2107:2178", "2107:2183", "2107:2312", "2107:2492", "2107:2570"],
+      "numeric": ["2108:2104", "2108:2140", "2108:2084", "2108:2106", "2108:2108", "2108:2028", "2108:2032", "2108:2036", "2108:2224", "2108:2220", "2108:2286", "2108:2320", "2108:2254", "2108:2356"]
+    },
+    "coverage": "Content/Numeric 각각 7개 Theme 전체(Gray/Brand/Success/Destructed/Warning/Purple/Turquoise), 3개 Size 전체, Type 전 값, Show Icon/Count 양쪽을 모두 최소 1회 포함. 전체 210개 인스턴스의 교차(Theme×Size×Type×ShowIcon/Count)를 전수 검증하지는 않음 — 색상 규칙은 Size 축에, 패딩/타이포 규칙은 Theme 축에 독립적으로 적용된다고 가정(Button 문서와 동일한 가정)."
+  },
+  "content": {
+    "sizes": {
+      "S": {
+        "sourceNodeIdShowIconTrue": "2106:1990",
+        "sourceNodeIdShowIconFalse": "2106:2101",
+        "padding": {
+          "showIconTrue": { "paddingTop": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01" }, "paddingBottom": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02" }, "paddingX": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "symmetric": true } },
+          "showIconFalse": { "note": "S는 Show Icon 여부와 무관하게 패딩 완전 동일(실측 확인)", "sameAsShowIconTrue": true }
+        },
+        "gap": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "tokenMatch": "정확히 일치" },
+        "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" },
+        "iconSize": "12px",
+        "typography": { "styleName": "caption2", "fontSize": "10px", "lineHeight": "16px", "letterSpacing": "-0.03px", "weight": { "figmaVariable": "weight/600", "value": "Semibold" }, "tokenMatch": "정확히 일치" },
+        "measuredTotalHeight": "19px",
+        "verticalPaddingAsymmetryNote": "pt=1px, pb=2px로 비대칭. S에서만 관찰되는 광학 보정으로 보이며 Show Icon 여부와 무관."
+      },
+      "M": {
+        "sourceNodeIdShowIconTrue": "2106:1942",
+        "sourceNodeIdShowIconFalse": "2106:2113",
+        "padding": {
+          "showIconTrue": { "paddingLeft": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06" }, "paddingRight": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05" }, "paddingY": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "symmetric": true } },
+          "showIconFalse": { "paddingX": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "symmetric": true }, "paddingY": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "symmetric": true } }
+        },
+        "gap": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "tokenMatch": "정확히 일치" },
+        "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" },
+        "iconSize": "12px",
+        "typography": { "styleName": "caption1", "fontSize": "12px", "lineHeight": "18px", "letterSpacing": "-0.03px", "weight": { "figmaVariable": "weight/600", "value": "Semibold" }, "tokenMatch": "정확히 일치" },
+        "measuredTotalHeight": "22px",
+        "horizontalPaddingAsymmetryNote": "Show Icon=True일 때만 pl(8px) > pr(6px). Show Icon=False는 좌우 8px로 대칭."
+      },
+      "L": {
+        "sourceNodeIdShowIconTrue": "2106:1999",
+        "sourceNodeIdShowIconFalse": "2106:2143",
+        "padding": {
+          "showIconTrue": { "paddingLeft": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07" }, "paddingRight": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06" }, "paddingY": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "symmetric": true } },
+          "showIconFalse": { "paddingX": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "symmetric": true }, "paddingY": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "symmetric": true } }
+        },
+        "gap": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "tokenMatch": "정확히 일치" },
+        "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" },
+        "iconSize": "16px",
+        "typography": { "styleName": "body2", "fontSize": "14px", "lineHeight": "22px", "letterSpacing": "-0.04px", "weight": { "figmaVariable": "weight/500", "value": "Medium" }, "tokenMatch": "정확히 일치", "note": "S/M은 Semibold(600)인데 L만 Medium(500) — Button과 반대 패턴(Button은 S만 Semibold)" },
+        "measuredTotalHeight": "24px",
+        "horizontalPaddingAsymmetryNote": "Show Icon=True일 때만 pl(10px) > pr(8px). Show Icon=False는 좌우 10px로 대칭."
+      }
+    },
+    "iconSizeScalingNote": "아이콘 크기는 S=12px, M=12px(동일), L=16px로 스케일됨 — S→M 구간은 아이콘이 커지지 않는 것이 실측 확인된 사실.",
+    "typesByTheme": {
+      "solid": {
+        "description": "배경을 테마 진한 색으로 채우고 텍스트/아이콘은 흰색",
+        "themes": {
+          "gray": { "background": { "figmaVariable": "neutral/600", "hex": "#5b616c" }, "text": { "figmaVariable": "common/white-default", "hex": "#fdfdfd" }, "backgroundToken": "sys-color-neutral-600", "tokenMatch": "정확히 일치", "sourceNodeId": "2106:1942" },
+          "brand": { "background": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" }, "text": { "figmaVariable": "common/white-default", "hex": "#fdfdfd" }, "backgroundToken": "sys-color-brand-primary-default (ref-color-blue-500)", "tokenMatch": "정확히 일치", "sourceNodeId": "2106:1990" },
+          "success": { "background": { "figmaVariable": "theme/success-default", "hex": "#1f8f30" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "sys-color-theme-success-default (ref-color-green-600)", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2178" },
+          "destructed": { "background": { "figmaVariable": "theme/destructed-default", "hex": "#e72f37" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "sys-color-theme-destructed-default (ref-color-red-500)", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2183" },
+          "warning": { "background": { "figmaVariable": "theme/warning-default", "hex": "#ff792c" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "sys-color-theme-warning-default (ref-color-orange-500)", "tokenMatch": "정확히 일치", "sourceNodeIdViaVariableDefs": true },
+          "purple": { "background": { "figmaVariable": "theme/purple-default", "hex": "#af3bc6" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "ref-color-purple-500 (V3 system.theme.purple.default)", "tokenMatch": "정확히 일치", "sourceNodeIdViaVariableDefs": true },
+          "turquoise": { "background": { "figmaVariable": "theme/turquiose-default", "hex": "#00aca2", "note": "Figma 변수명 오탈자: turquiose (turquoise 아님)" }, "text": { "hex": "#fdfdfd" }, "backgroundToken": "ref-color-turquoise-600 (V3 system.theme.turquoise.default)", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2570" }
+        }
+      },
+      "alpha": {
+        "description": "연한 틴트 배경, 텍스트/아이콘은 테마 진한 색",
+        "themes": {
+          "gray": { "background": { "figmaVariable": "neutral/100", "hex": "#f6f7f7" }, "text": { "figmaVariable": "neutral/600", "hex": "#5b616c" }, "tokenMatch": "정확히 일치", "sourceNodeId": "2106:1807" },
+          "brand": { "background": { "figmaVariable": "brand/primary-lightest", "hex": "#eef4fc" }, "text": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" }, "backgroundToken": "sys-color-brand-primary-lightest (ref-color-blue-50)", "tokenMatch": "정확히 일치", "sourceNodeId": "2106:1999" },
+          "success": { "background": { "figmaVariable": "theme/success-bg", "hex": "#ebfaeb" }, "text": { "hex": "#1f8f30" }, "backgroundToken": "ref-color-green-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true },
+          "destructed": { "background": { "figmaVariable": "theme/destructed-bg", "hex": "#ffedeb" }, "text": { "hex": "#e72f37" }, "backgroundToken": "ref-color-red-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true },
+          "warning": { "background": { "figmaVariable": "theme/warning-bg", "hex": "#fff3ed" }, "text": { "figmaVariable": "theme/warning-default", "hex": "#ff792c" }, "backgroundToken": "ref-color-orange-50", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2312" },
+          "purple": { "background": { "figmaVariable": "theme/purple-bg", "hex": "#faeffc" }, "text": { "hex": "#af3bc6" }, "backgroundToken": "ref-color-purple-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true },
+          "turquoise": { "background": { "figmaVariable": "theme/turquiose-bg", "hex": "#e9fbf9" }, "text": { "hex": "#00aca2" }, "backgroundToken": "ref-color-turquoise-50", "tokenMatch": "정확히 일치 (변수맵 확인, 개별 렌더링 미실측)", "verifiedViaVariableDefsOnly": true }
+        }
+      },
+      "outlined": {
+        "description": "흰 배경 + 1px 테두리, 텍스트/아이콘은 테마 진한 색",
+        "borderWidth": { "figmaVariable": "borderwidth/02", "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
+        "themes": {
+          "gray": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/gray/900-20", "value": "rgba(3,9,26,0.2)" }, "borderToken": "ref-color-alpha-gray-900-20", "tokenMatch": "정확히 일치", "sourceNodeId": "2106:1861" },
+          "brand": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/blue/500-40", "value": "rgba(44,123,226,0.4)" }, "borderToken": "ref-color-alpha-blue-500-40", "tokenMatch": "정확히 일치", "sourceNodeId": "2106:2008" },
+          "success": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/green/600-40", "value": "rgba(31,143,48,0.4)" }, "borderToken": "ref-color-alpha-green-600-40", "tokenMatch": "정확히 일치 (변수맵 확인)", "verifiedViaVariableDefsOnly": true },
+          "destructed": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/red/500-40", "value": "rgba(231,47,55,0.4)" }, "borderToken": "ref-color-alpha-red-500-40", "tokenMatch": "정확히 일치 (변수맵 확인)", "verifiedViaVariableDefsOnly": true },
+          "warning": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/orange/500-40", "value": "rgba(255,121,44,0.4)" }, "borderToken": "ref-color-alpha-orange-500-40", "tokenMatch": "정확히 일치 (변수맵 확인)", "verifiedViaVariableDefsOnly": true },
+          "purple": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/purple/500-40", "value": "rgba(175,59,198,0.4)" }, "borderToken": "ref-color-alpha-purple-500-40", "tokenMatch": "정확히 일치", "sourceNodeId": "2107:2492" },
+          "turquoise": { "background": "common/white-default", "borderColor": { "figmaVariable": "color/turquoise/600-40", "value": "rgba(0,172,162,0.4)" }, "borderToken": "ref-color-alpha-turquoise-600-40", "tokenMatch": "정확히 일치 (변수맵 확인)", "verifiedViaVariableDefsOnly": true }
+        },
+        "asymmetryNote": "Gray만 알파 20%, 나머지 6개 컬러 Theme는 전부 알파 40%. 컬러 스텝도 Brand/Destructed/Warning/Purple=500, Success/Turquoise=600으로 tokens/colors.json의 paletteDefaultStep과 일치."
+      }
+    },
+    "icon": {
+      "shape": "plus (+)",
+      "figmaComponentName": "Icon / Default / 12px / plus (16px 버전도 존재)",
+      "position": "라벨 뒤(오른쪽), showIcon=true일 때만 표시",
+      "colorMappingNote": "라벨 텍스트와 동일 색으로 렌더링되는 것으로 추정되나 SVG 내부 fill 값 직접 미확인 — 확인 필요",
+      "assetFormat": "인스턴스마다 별도 URL이 발급되는 flat SVG 애셋"
+    }
+  },
+  "numeric": {
+    "count0to9": {
+      "S": { "sourceNodeIdSolid": "2108:2104", "sourceNodeIdEmpty": "2108:2140", "size": "18px (정원)", "verticalPaddingAdjustment": { "figmaVariable": "spacing/01", "value": "1px (pb만)", "note": "S에서만 관찰, Solid/Empty 공통" }, "typography": { "styleName": "caption2", "fontSize": "10px", "lineHeight": "16px", "weight": "Semibold(600)" }, "radius": "ref-radius-12 (999px)" },
+      "M": { "sourceNodeIdSolid": "2108:2106", "size": "22px (정원)", "verticalPaddingAdjustment": "없음", "typography": { "styleName": "caption1", "fontSize": "12px", "lineHeight": "18px", "weight": "Semibold(600)" }, "radius": "ref-radius-12 (999px)" },
+      "L": { "sourceNodeIdSolid": "2108:2108", "sourceNodeIdEmpty": "2108:2254", "size": "24px (정원)", "verticalPaddingAdjustment": "없음", "typography": { "styleName": "body2", "fontSize": "14px", "lineHeight": "22px", "weight": "Medium(500)", "note": "L만 Medium — Content Badge L과 동일 패턴" }, "radius": "ref-radius-12 (999px)" },
+      "diameterTokenMatch": "기존 토큰에 없음 (18/22/24px 고정값)"
+    },
+    "count10plus": {
+      "S": { "sourceNodeId": "2108:2028", "measuredSize": "21x18px (텍스트 '99' 기준)", "height": "18px (고정, py 없음)", "paddingX": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" }, "typography": { "styleName": "caption2", "weight": "Semibold(600)" } },
+      "M": { "sourceNodeId": "2108:2032", "measuredSize": "28x22px", "paddingX": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" }, "typography": { "styleName": "caption1", "weight": "Semibold(600)" } },
+      "L": { "sourceNodeId": "2108:2036", "measuredSize": "34x24px", "paddingX": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "tokenMatch": "정확히 일치" }, "typography": { "styleName": "body2", "weight": "Medium(500)" } },
+      "shapeNote": "10+ 캡슐 높이는 0~9 정원과 동일(S=18/M=22/L=24), 너비만 확장. radius/12(999px) 유지로 양끝은 계속 반원.",
+      "otherThemesNote": "M/L의 정확한 패딩은 Gray 테마로만 실측. 다른 5개 색상 Theme에서도 동일 값이 적용되는지는 개별 확인하지 않음 — 확인 필요."
+    },
+    "typesByTheme": {
+      "solid": {
+        "description": "배경을 테마 진한 색으로 채우고 텍스트는 흰색. Content Badge의 Solid 컬러 세트와 동일.",
+        "colorSetRef": "content.typesByTheme.solid.themes 와 동일 hex 값 사용 (gray/brand/success/destructed/warning/purple/turquoise)"
+      },
+      "empty": {
+        "description": "배경 없음(투명), 텍스트는 Solid의 배경색과 동일 hex를 사용. 컨테이너 크기(원/캡슐 치수)는 Solid와 완전히 동일하게 유지됨.",
+        "verifiedNodeIds": ["2108:2140 (Gray S)", "2108:2286 (Warning S)", "2108:2254 (Destructed L)"],
+        "sizeUnchangedConfirmed": true
+      },
+      "axisDifferenceFromContent": "Numeric Badge는 Alpha/Outlined 타입이 없고 Solid/Empty 2종뿐 — Content Badge(Solid/Alpha/Outlined)와 Type 축의 열거값 자체가 다름."
+    }
+  },
+  "states": {
+    "note": "Badge에는 State 축 자체가 존재하지 않음. 4개 Component Set 어디에도 Hover/Pressed/Focused/Disabled variant가 없음. Badge는 클릭 불가능한 순수 표시용 컴포넌트로 설계된 것으로 판단됨."
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 상위 그룹(2482:1618, recursive=true)에 호출했으나 빈 배열을 반환함. 프로토타입 인터랙션(스마트 애니메이트, 트랜지션)도 정의되어 있지 않음. State 축 자체가 없으므로 이는 '확인 필요'가 아니라 '해당 사항 없음'.",
+  "accessibility": {
+    "colorOnlyMeaningWarning": "Content Badge는 라벨 텍스트가 필수라 문제없으나, Numeric Badge에서 Theme 차이만으로 서로 다른 의미를 표현하는 경우 별도 aria-label이 필요할 수 있음 — 확인 필요.",
+    "colorContrast": "docs/DESIGN.md의 일반 원칙(WCAG 준수) 외에 Badge 전용 명암비 수치 검증(Alpha 배경, Outlined 40% 알파 테두리)은 수행하지 않음 — 확인 필요.",
+    "minTouchTarget": "Badge는 비인터랙티브 표시자이므로 Button과 달리 별도 최소 터치 영역 요건은 없는 것으로 판단됨."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "Content Badge 모든 Size의 padding/gap (ref-spacing-01/02/05/06/07)",
+      "Content/Numeric Badge 공통 radius (ref-radius-12, 999px)",
+      "모든 typography (caption2/caption1/body2, weight 500/600 토큰)",
+      "Outlined 테두리 두께 1px (ref-borderwidth-02)",
+      "Solid/Alpha/Outlined 7개 Theme 전체의 배경·텍스트 컬러 (tokens/colors.json system 롤·reference 팔레트)",
+      "Outlined 테두리 알파 7종 (gray-900-20, blue-500-40, green-600-40, red-500-40, orange-500-40, purple-500-40, turquoise-600-40) → tokens/colors.json reference.alpha 테이블과 정확히 일치",
+      "Numeric Badge 10+ 캡슐의 padding (ref-spacing-01/02/04/05/06)"
+    ],
+    "기존토큰에없음": [
+      "Numeric Badge 원형 고정 지름 (18/22/24px)",
+      "Content/Numeric Badge S 사이즈 세로 광학 보정의 존재 이유(토큰 자체는 ref-spacing-01/02로 정확히 매칭되나 '왜 S에만' 붙는지는 스케일 공식으로 설명 안 됨)"
+    ],
+    "확인필요": [
+      "Success/Destructed/Purple/Turquoise Alpha 배경, Success/Destructed/Warning/Turquoise Outlined 테두리 — 값은 변수맵으로 확인했으나 개별 렌더링 미실측",
+      "Numeric Badge 10+ M/L 패딩이 Gray 외 5개 색상 Theme에도 동일 적용되는지",
+      "아이콘 색상이 실제로 텍스트 색과 동일한지 (SVG fill 미확인)",
+      "Turquoise 변수명 오탈자(turquiose)가 의도적인지",
+      "Numeric Badge aria-label 필요 여부",
+      "Alpha/Outlined 배경 위 텍스트의 WCAG 명암비 수치"
+    ]
+  }
+}

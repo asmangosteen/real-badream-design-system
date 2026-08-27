@@ -12,6 +12,7 @@
 | Text Button | [components/text-button/text-button.md](./text-button/text-button.md) | 완료 | ~156 (Size 4 × Text Color 3 × State 5 × Contents 3) |
 | Icon Button | [components/icon-button/icon-button.md](./icon-button/icon-button.md) | 완료 | ~108 (Size 3 × Type 6 × State 4 + Stroke/Icon Color 변형) |
 | Button Spinner | [components/button-spinner/button-spinner.md](./button-spinner/button-spinner.md) | 완료 | 4 (Size S/M/L/XL). 버튼 Loading 상태의 스피너 아톰 |
+| Badge | [components/badge/badge.md](./badge/badge.md) | 완료 | 210개 인스턴스 (Content 126 + Numeric 84). Figma상 4개 Component Set으로 분리됨 |
 
 ## 문서화 상태 범례
 
