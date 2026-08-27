@@ -49,6 +49,8 @@ Dropdown은 텍스트 입력 필드(Input) 형태를 하고 있지만 클릭 시
 
 **핵심 확인**: Label/TypeBox/Supporting Text의 Size별 타이포·패딩 값은 각 서브컴포넌트 문서([label.md](../global/label/label.md) 2장, [type-box.md](../global/type-box/type-box.md) 2장, [supporting-text.md](../global/supporting-text/supporting-text.md) 3장)에 실측된 값과 **정확히 일치**합니다 — Dropdown은 이 세 아톰을 Size만 맞춰 그대로 인스턴스로 가져다 쓰고 있습니다.
 
+**너비**: 컴포넌트 루트에 `w-[280px]`가 걸려 있지만, 이는 Figma 진열 프레임에서 샘플링할 때 찍힌 고정폭일 뿐 실제 의도는 **화면 폭에 따른 가변(fluid) 너비**입니다(확인 완료). 구현 시 `width: 100%`(또는 부모 컨테이너 기준 fluid)로 처리합니다.
+
 ## 3. State별 스펙 (5개 + Destructed 실측, Size=M 기준)
 
 | State | Input 배경 | Input 테두리 | Button 배경 | TypeBox 표시 | Chevron | 기타 |
@@ -61,7 +63,7 @@ Dropdown은 텍스트 입력 필드(Input) 형태를 하고 있지만 클릭 시
 | **Done**(닫힘, 값 선택됨) | `common/white-default` | `color/gray/900-10`(Default와 동일) | `brand/primary-default` | 값 채워짐(`neutral/800`) | `chevron_down`(**반전 없음** — 닫힌 상태이므로) | — |
 
 **핵심 발견**:
-1. **Destructed는 Selected 상태 전용 변형입니다.** `get_metadata` 전수 조사 결과 288개 인스턴스 중 Destructed=True는 정확히 48개(Size 3 × 토글 4축 2⁴=16)이며, 전부 State=Selected였습니다. Default/Hover/Disabled/Done 상태에는 Destructed=True 조합 자체가 Figma 컴포넌트에 존재하지 않습니다 — 즉 이 디자인 시스템은 "드롭다운이 열려있는 동안"만 에러 스타일을 노출하도록 의도된 것으로 보이며, 닫힌 상태(Done)에서의 에러 표시는 아마도 하단 [Supporting Text](../global/supporting-text/supporting-text.md)의 `Theme=Destructed`만으로 처리하는 구조로 추정됩니다 — **확인 필요**.
+1. **Destructed는 Selected 상태 전용 변형입니다(확인 완료).** `get_metadata` 전수 조사 결과 288개 인스턴스 중 Destructed=True는 정확히 48개(Size 3 × 토글 4축 2⁴=16)이며, 전부 State=Selected였습니다. Default/Hover/Disabled/Done 상태에는 Destructed=True 조합 자체가 Figma 컴포넌트에 존재하지 않습니다 — 이 디자인 시스템은 "드롭다운이 열려있는 동안"만 필드 테두리·버튼 색으로 에러 스타일을 노출하도록 의도되어 있으며, **Done(닫힌) 상태에는 에러 변형이 없다는 것이 확정된 현재 스펙**입니다. 닫힌 상태에서 유효성 오류를 알려야 한다면 하단 [Supporting Text](../global/supporting-text/supporting-text.md)의 `Theme=Destructed`만으로 처리하는 것이 현재 컴포넌트가 제공하는 유일한 경로이며, 이 문서는 그 현재 상태를 그대로 반영합니다(별도 Done+Destructed 필드 변형을 새로 만들 계획은 없음).
 2. **Selected와 Done의 차이는 "열려 있는지"입니다.** 둘 다 TypeBox에 값이 채워진(`neutral/800`) 상태를 보여주지만, Selected만 테두리가 파란색+Chevron이 위를 향하고, Done은 기본 회색 테두리+Chevron이 아래를 향합니다.
 3. **Hover는 테두리 색상만 바뀝니다.** 배경·아이콘·버튼 등 다른 요소는 Default와 동일합니다.
 4. **Disabled는 테두리를 아예 없애고 옅은 회색 채움으로 대체**합니다(다른 State들이 테두리 유지 방식인 것과 다른 처리 방식). Button은 색은 유지한 채 `opacity/20`(20%)만 적용됩니다.
@@ -91,9 +93,9 @@ Dropdown은 텍스트 입력 필드(Input) 형태를 하고 있지만 클릭 시
 
 **모션 데이터 없음.**
 
-`get_motion_context`를 최상위 프레임(`2292:6651`)에 호출했으나 `motionSummary: null`, `codeSnippets: {}`인 빈 결과를 반환했습니다. Default→Hover, Default→Selected(열림) 등 State 전환 시 실제 애니메이션(예: 드롭다운 목록 펼침 트랜지션)이 있을 가능성이 높지만 Figma 파일 자체에는 정의되어 있지 않습니다 — 실제 구현 시 임의로 duration/easing을 정하지 말고 확인 필요.
+`get_motion_context`를 최상위 프레임(`2292:6651`)에 호출했으나 `motionSummary: null`, `codeSnippets: {}`인 빈 결과를 반환했습니다. **열림/닫힘을 포함해 State 전환에 별도 트랜지션 모션이 없다는 것이 확인된 사항입니다** — Default↔Hover↔Selected↔Done 전환은 모션 없이 즉시(instant) 전환되는 것이 현재 스펙입니다.
 
-또한 이번 조사는 Dropdown "닫힌 상태"의 필드 UI만 다룹니다. **클릭 시 펼쳐지는 옵션 목록(리스트) 자체는 이 Frame(`2292:6651`)에 포함되어 있지 않아 조사 범위 밖입니다** — 확인 필요.
+또한 이번 조사는 Dropdown "닫힌 상태"의 필드 UI만 다룹니다. **클릭 시 펼쳐지는 옵션 목록(리스트) UI는 별도 컴포넌트로 추후 문서화될 예정이며, 이 Frame(`2292:6651`)의 조사 범위에 포함되지 않습니다.**
 
 ## 7. 접근성
 
@@ -117,11 +119,13 @@ Dropdown은 텍스트 입력 필드(Input) 형태를 하고 있지만 클릭 시
 - Size(S/M/L)별로 "Dropdown엔 이 padding+radius+아이콘크기 조합을 쓴다"는 시맨틱 토큰 자체는 저장소에 없음(개별 값은 토큰과 일치)
 - Destructed가 Selected 상태에서만 노출되는 규칙을 명시하는 토큰/문서 없음
 
+**확인 완료(작업지시 반영)**
+- 컴포넌트 너비: 고정 280px가 아니라 **화면 폭에 따른 가변(fluid)** — `w-[280px]`는 Figma 진열 프레임의 표시값일 뿐
+- Done(닫힌) 상태의 에러 표시: 별도 필드 변형 없음 — 현재 스펙 그대로(Destructed는 Selected 전용) 반영, 추가 변형 계획 없음
+- 옵션 목록(펼침 리스트) UI: 이 컴포넌트 범위 밖, **별도 컴포넌트로 추후 문서화 예정**
+- 열림/닫힘 트랜지션 모션: 없음 — 즉시 전환이 현재 스펙
+
 **확인 필요**
-- 컴포넌트 루트 `w-[280px]` 고정폭이 실제 의도인지, 부모 폭에 맞춰 늘어나야 하는지(Label·Supporting Text 문서와 동일한 이슈)
-- Done 상태 등 닫힌 상태에서의 에러(Destructed) 표시 방식 — Supporting Text의 Theme만으로 처리되는지
-- 옵션 목록(펼침 리스트) UI — 이 Frame에 포함되지 않아 별도 조사 필요
-- 열림/닫힘 트랜지션 모션 값
 - 접근성 마크업(`aria-expanded`, `disabled`, `<label for>`) 연결 규정
 
 ## 9. 샘플링에 사용한 13개 노드 (부록)
