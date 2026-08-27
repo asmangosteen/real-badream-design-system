@@ -1,0 +1,122 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Text Count",
+  "location": "components/global/ — Input/TextField/TextArea 등 상위 컴포넌트 내부에서 재사용되는 공용 서브 아톰. 단독 컴포넌트 아님.",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2114-3929",
+    "componentSetNodeId": "2114:3929",
+    "componentSetName": "Text Count",
+    "totalVariantInstances": 6,
+    "axes": ["Size(Small/Default)", "State(Default/Typing/Destructed)"],
+    "note": "글자 수 카운터('12/50' 형태) 아톰. Figma 소스에서 Default(Size) 그룹의 State가 State6/State5/State4로 미정리된 이름을 갖고 있음 — namingInconsistency 필드 참고."
+  },
+  "sampling": {
+    "method": "전수 실측 (get_design_context 6회 + get_variable_defs 1회(사전 확보값 재사용) + get_motion_context 1회(recursive))",
+    "coverage": "6개 Size×State 조합 전체 개별 실측함. 추정/외삽 없음."
+  },
+  "namingInconsistency": {
+    "issue": "Small 그룹 State는 Default/Typing/Destructed로 의미가 드러나는 이름이지만, Default(Size) 그룹 State는 State6/State5/State4로 자동 생성된 이름 그대로 남아있음.",
+    "resolutionMethod": "get_design_context로 각 State6/5/4 노드의 실제 렌더링 색상(분자/슬래시/분모 각각)을 실측하고, Small 그룹의 Default/Typing/Destructed 색상 패턴과 대조하여 매칭. 추측이 아닌 색상 실측 기반 확정.",
+    "resolvedMapping": { "State6": "Default", "State5": "Typing", "State4": "Destructed" },
+    "confidence": "확정 — 세 State 모두 '분자만 색상 override, 슬래시/분모는 항상 neutral/500 고정'이라는 동일 구조가 두 Size 그룹에서 정확히 일치함(State6↔Default: 분자도 neutral/500 그대로, State5↔Typing: 분자만 neutral/700, State4↔Destructed: 분자만 theme/destructed-default)."
+  },
+  "variables": {
+    "neutral/500": "#8c9199",
+    "letterSpacing/Caption": "-0.03",
+    "size/Caption2": "10",
+    "weight/500": "Medium",
+    "font/pretendard": "Pretendard",
+    "paragraphSpacing/Caption2": "10",
+    "lineHeight/Caption2": "16",
+    "size/Caption1": "12",
+    "weight/400": "Regular",
+    "paragraphSpacing/Caption1": "12",
+    "lineHeight/Caption1": "18",
+    "neutral/700": "#454c58",
+    "theme/destructed-default": "#e72f37",
+    "common/white-emphasis": "#ffffff"
+  },
+  "variants": {
+    "Small,Default": {
+      "sourceNodeId": "2114:3928",
+      "figmaStateNameInSource": "Default",
+      "size": "42x16px",
+      "typography": { "style": "Caption2 10px Medium(500)", "figmaStyle": "Caption 2/10 M", "lineHeight": "16px" },
+      "numeratorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "token": "sys-color-neutral-500", "tokenMatch": "정확히 일치" },
+      "slashAndDenominatorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+    },
+    "Small,Typing": {
+      "sourceNodeId": "2114:3927",
+      "figmaStateNameInSource": "Typing",
+      "size": "42x16px",
+      "typography": { "style": "Caption2 10px Medium(500)", "figmaStyle": "Caption 2/10 M" },
+      "numeratorColor": { "figmaVariable": "neutral/700", "value": "#454c58", "token": "sys-color-neutral-700", "tokenMatch": "정확히 일치" },
+      "slashAndDenominatorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+    },
+    "Small,Destructed": {
+      "sourceNodeId": "2114:3926",
+      "figmaStateNameInSource": "Destructed",
+      "size": "42x16px",
+      "typography": { "style": "Caption2 10px Medium(500)", "figmaStyle": "Caption 2/10 M" },
+      "numeratorColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "token": "sys-color-theme-destructed-default", "tokenMatch": "정확히 일치" },
+      "slashAndDenominatorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+    },
+    "Default,Default": {
+      "sourceNodeId": "2114:4251",
+      "figmaStateNameInSource": "State6",
+      "resolvedState": "Default",
+      "size": "49x18px",
+      "typography": { "style": "Caption1 12px Regular(400)", "figmaStyle": "Caption 1/12 R", "lineHeight": "18px" },
+      "numeratorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" },
+      "slashAndDenominatorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+    },
+    "Default,Typing": {
+      "sourceNodeId": "2114:4255",
+      "figmaStateNameInSource": "State5",
+      "resolvedState": "Typing",
+      "size": "49x18px",
+      "typography": { "style": "Caption1 12px Regular(400)", "figmaStyle": "Caption 1/12 R" },
+      "numeratorColor": { "figmaVariable": "neutral/700", "value": "#454c58", "tokenMatch": "정확히 일치" },
+      "slashAndDenominatorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+    },
+    "Default,Destructed": {
+      "sourceNodeId": "2114:4259",
+      "figmaStateNameInSource": "State4",
+      "resolvedState": "Destructed",
+      "size": "49x18px",
+      "typography": { "style": "Caption1 12px Regular(400)", "figmaStyle": "Caption 1/12 R" },
+      "numeratorColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" },
+      "slashAndDenominatorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+    }
+  },
+  "sizeAxisFinding": "Small과 Default(Size)는 폰트 크기뿐 아니라 weight도 다름 — Small은 Caption2(10px) Medium(500), Default(Size)는 Caption1(12px) Regular(400). 노드 높이(16px/18px)는 각 lineHeight와 일치.",
+  "layout": {
+    "gap": "flex items-center, 별도 gap 클래스 없음 — 분자/슬래시/분모가 바로 붙어 표시됨(토큰화된 간격 없음)",
+    "width": "42px(Small)/49px(Default) — placeholder '000/000'(7글자) 기준 실측값, content-hugging 요소로 추정(고정폭 아님)"
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2114:3929, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. State 전환 시 색상 트랜지션이 있을 것으로 추정되나 duration/easing 값이 Figma에 정의되어 있지 않음 — 확인 필요.",
+  "accessibility": {
+    "ariaLive": "글자 수 초과(Destructed)가 색상 변화만으로 표시되어 스크린리더용 aria-live 안내 필요 여부 확인 필요.",
+    "colorOnlyIndication": "색상만으로 상태 구분(WCAG 1.4.1 색상 단독 사용 금지 원칙) — 아이콘/텍스트 보강 필요 여부 확인 필요."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "Small 타이포 Caption2 Medium(10px/16px) → Caption 2/10 M",
+      "Default(Size) 타이포 Caption1 Regular(12px/18px) → Caption 1/12 R",
+      "Default(State) 분자 색상 neutral/500(#8c9199) → sys-color-neutral-500 (두 Size 공통, 슬래시/분모도 항상 이 색)",
+      "Typing 분자 색상 neutral/700(#454c58) → sys-color-neutral-700",
+      "Destructed 분자 색상 theme/destructed-default(#e72f37) → sys-color-theme-destructed-default"
+    ],
+    "기존토큰에없음": [
+      "Small/Default(Size) 조합 자체를 'Text Count 크기'로 지정하는 시맨틱 토큰 (개별 타이포 값은 토큰과 일치)"
+    ],
+    "확인필요": [
+      "Figma 소스의 State6/State5/State4 네이밍을 실제 의미 있는 이름으로 정정할지 여부(디자이너 확인 필요)",
+      "State 전환 색상 트랜지션 duration/easing (모션 데이터 없음)",
+      "aria-live 안내 필요 여부, 색상 단독 사용 보강 필요 여부"
+    ]
+  },
+  "sampledNodeIds": ["2114:3928", "2114:3927", "2114:3926", "2114:4251", "2114:4255", "2114:4259"]
+}

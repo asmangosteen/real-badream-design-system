@@ -1,0 +1,62 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Text Blinker",
+  "location": "components/global/ — Input/TextField/TextArea 등 상위 컴포넌트 내부에서 재사용되는 공용 서브 아톰. 단독 컴포넌트 아님.",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2111-7483",
+    "componentSetNodeId": "2111:7483",
+    "componentSetName": "Text Blinker",
+    "totalVariantInstances": 2,
+    "axes": ["State(On/Off)"],
+    "note": "Size/Type/Theme 축 없음. 텍스트 입력 필드 내부 커서(caret) 표시용 아톰으로 추정."
+  },
+  "sampling": {
+    "method": "전수 실측 (get_design_context 2회 + get_variable_defs 1회(사전 확보값 재사용) + get_motion_context 1회(recursive))",
+    "coverage": "2개 State 전체 개별 실측함. 추정/외삽 없음."
+  },
+  "variables": {
+    "brand/primary-default": "#2c7be2",
+    "radius/01": "2",
+    "common/white-emphasis": "#ffffff"
+  },
+  "states": {
+    "On": {
+      "sourceNodeId": "2111:7482",
+      "width": "1.5px",
+      "height": "20px",
+      "radius": { "figmaVariable": "radius/01", "value": "2px", "token": "ref-radius-01", "tokenMatch": "정확히 일치" },
+      "fill": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "alpha": "100%", "token": "sys-color-brand-primary-default", "tokenMatch": "정확히 일치" }
+    },
+    "Off": {
+      "sourceNodeId": "2111:7481",
+      "width": "1.5px",
+      "height": "20px",
+      "radius": { "figmaVariable": "radius/01", "value": "2px", "token": "ref-radius-01", "tokenMatch": "정확히 일치" },
+      "fill": { "value": "rgba(44, 123, 226, 0)", "note": "On과 동일한 brand/primary-default(#2c7be2) 색상에서 alpha만 0%로 낮춘 것. 별도의 회색/연한 색이 아니라 완전 투명.", "tokenMatch": "정확히 일치 (alpha 0%)" }
+    }
+  },
+  "onOffColorRule": "Off는 On과 다른 색상 토큰을 쓰는 것이 아니라, 동일한 brand/primary-default 색상값에서 alpha 0%로 설정된 것. 구현 시 opacity:0 또는 transparent 배경 둘 다 동일한 시각 결과.",
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2111:7483, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. 이름과 On/Off 구조로 미루어 실제로는 blink 애니메이션이 구현될 것으로 추정되나 duration/easing/반복 주기는 Figma에 정의되어 있지 않음 — 확인 필요. 임의의 타이밍 값을 만들지 않음.",
+  "accessibility": {
+    "ariaHidden": "순수 시각 장식(입력 커서 표시)로 추정되어 aria-hidden 처리 고려 가능하나 Figma에 규정 없음 — 확인 필요.",
+    "nativeCaretConflict": "네이티브 <input>/<textarea> 캐럿과 병행 시 중복 표시 방지 처리 필요 — 확인 필요."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "Radius 2px → ref-radius-01",
+      "On 채우기 색상 brand/primary-default(#2c7be2) → sys-color-brand-primary-default",
+      "Off는 On과 동일 색상 토큰 + alpha 0%"
+    ],
+    "기존토큰에없음": [
+      "크기 1.5 × 20px 자체를 지정하는 별도 'Text Blinker 크기' 토큰 없음(고정값)"
+    ],
+    "확인필요": [
+      "실제 깜빡임 애니메이션의 duration/easing/반복 주기 (Figma에 모션 데이터 없음)",
+      "aria-hidden 등 접근성 규정",
+      "네이티브 브라우저 캐럿과의 중복 방지 처리 방식"
+    ]
+  },
+  "sampledNodeIds": ["2111:7482", "2111:7481"]
+}

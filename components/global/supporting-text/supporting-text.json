@@ -1,0 +1,144 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Supporting Text",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2114-4182",
+    "componentSetNodeId": "2114:4182",
+    "componentSetName": "Supporting Text",
+    "totalVariantInstances": 36,
+    "axes": ["Size(S/M/L)", "Theme(Gray/Black/Brand/Destructed/Success/Warning)", "Text Count(True/False)"],
+    "note": "Input/TextField 계열 하단에 쓰이는 헬퍼·에러·성공 텍스트 글로벌 아톰. State 축 없는 순수 표시용 컴포넌트. showIcon은 36개 변형 축과 별개인 boolean prop."
+  },
+  "sampling": {
+    "method": "선택 샘플링 (get_design_context 10회 + get_variable_defs 1회 + get_motion_context 1회(recursive) + get_screenshot 6회)",
+    "coverage": "36개 중 10개 개별 실측. Theme 6종 전수(Size=S,TextCount=True 고정) + Size 3종 전수(Theme=Gray,TextCount=True 고정) + TextCount 2종 전수(Theme=Gray,Size=S 고정) + 교차검증 1건(M,Destructed,True). 나머지 26개는 세 축의 독립성(실측으로 확인)에 따른 패턴 기반 추정이며 개별 미실측.",
+    "axisIndependenceVerified": "Theme은 텍스트/아이콘 색상만, Size는 타이포·패딩·아이콘 크기만, Text Count는 카운터 요소 유무만 변경. 세 축이 서로 간섭하지 않음을 10개 샘플에서 확인."
+  },
+  "sizes": {
+    "S": {
+      "sourceNodeId": "2114:4181",
+      "container": { "width": "280px", "height": "20px" },
+      "paddingTop": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
+      "paddingX": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "tokenMatch": "정확히 일치" },
+      "innerGapIconText": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
+      "outerGapContentCounter": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치" },
+      "typography": { "style": "caption2", "size": "10px", "lineHeight": "16px", "weight": "500 (Medium)", "letterSpacing": "-0.03px", "tokenMatch": "정확히 일치 (tokens/typography.json styles.caption2)" },
+      "iconSize": "12px"
+    },
+    "M": {
+      "sourceNodeId": "2114:4164",
+      "container": { "width": "280px", "height": "22px" },
+      "paddingTop": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
+      "paddingX": { "figmaVariable": "spacing/08", "value": "12px", "token": "ref-spacing-08", "tokenMatch": "정확히 일치" },
+      "innerGapIconText": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
+      "outerGapContentCounter": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "typography": { "style": "caption1", "size": "12px", "lineHeight": "18px", "weight": "400 (Regular)", "letterSpacing": "-0.03px", "tokenMatch": "정확히 일치 (tokens/typography.json styles.caption1)" },
+      "iconSize": "16px",
+      "note": "L과 타이포그래피·아이콘 크기 동일, 패딩만 다름"
+    },
+    "L": {
+      "sourceNodeId": "2114:4175",
+      "container": { "width": "280px", "height": "24px" },
+      "paddingTop": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "tokenMatch": "정확히 일치" },
+      "paddingX": { "figmaVariable": "spacing/09", "value": "14px", "token": "ref-spacing-09", "tokenMatch": "정확히 일치" },
+      "innerGapIconText": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
+      "outerGapContentCounter": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "typography": { "style": "caption1", "size": "12px", "lineHeight": "18px", "weight": "400 (Regular)", "letterSpacing": "-0.03px", "tokenMatch": "정확히 일치 (M과 동일)" },
+      "iconSize": "16px",
+      "note": "M과 타이포그래피·아이콘 크기 동일, 패딩만 다름"
+    }
+  },
+  "containerHeightRule": "height = paddingTop + text lineHeight (S: 4+16=20, M: 4+18=22, L: 6+18=24). 실측 3개 전부 이 공식과 정확히 일치.",
+  "themes": {
+    "Gray":       { "sourceNodeId": "2114:4181", "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "token": "sys-color-neutral-500 (ref-color-gray-500)", "tokenMatch": "정확히 일치" }, "iconColor": "textColor와 동일 (아이콘 애셋 자체가 테마 색상으로 사전 컬러링됨)" },
+    "Black":      { "sourceNodeId": "2114:4170", "textColor": { "figmaVariable": "neutral/700", "value": "#454c58", "token": "sys-color-neutral-700 (ref-color-gray-700)", "tokenMatch": "정확히 일치" }, "note": "이름과 달리 완전한 검정(gray-900/1000)이 아니라 진회색(gray-700)" },
+    "Brand":      { "sourceNodeId": "2114:4163", "textColor": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "token": "sys-color-brand-primary-default (ref-color-blue-500)", "tokenMatch": "정확히 일치" } },
+    "Destructed": { "sourceNodeId": "2114:4158", "textColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "token": "sys-color-theme-destructed-default (ref-color-red-500)", "tokenMatch": "정확히 일치" } },
+    "Success":    { "sourceNodeId": "2114:4173", "textColor": { "figmaVariable": "theme/success-default", "value": "#1f8f30", "token": "sys-color-theme-success-default (ref-color-green-600)", "tokenMatch": "정확히 일치" } },
+    "Warning":    { "sourceNodeId": "2114:4150", "textColor": { "figmaVariable": "theme/warning-default", "value": "#ff792c", "token": "sys-color-theme-warning-default (ref-color-orange-500)", "tokenMatch": "정확히 일치" } }
+  },
+  "crossVerification": {
+    "nodeId": "2114:4161",
+    "combo": "M, Destructed, True",
+    "result": "Theme=Destructed 색상(#e72f37)과 Size=M 타이포(Caption1/12 Regular, 패딩 12px)가 S,Gray 샘플과 동일한 축 독립 규칙으로 결합됨을 확인. 축 독립성 가정을 뒷받침."
+  },
+  "textCount": {
+    "trueBehavior": "Content(아이콘+본문) 그룹과 완전히 별개인 data-name=\"Text Count\" 요소가 우측에 추가됨. \"000\" + \"/\" + \"000\" 세 개의 개별 텍스트 런으로 구성된 자리표시자 — 실제 구현 시 {count}/{max} 포맷 문자열로 바인딩.",
+    "falseBehavior": "\"Text Count\" 노드 자체가 트리에서 사라짐(실측 2114:4178). 숨김 처리가 아니라 요소 부재. Content 그룹이 flex-[1_0_0]로 남은 폭을 전부 차지.",
+    "counterColorRule": "카운터 텍스트 색상은 본문 Theme과 무관하게 항상 neutral/500(Gray) 고정 — S,Gray / M,Destructed 두 샘플 모두에서 확인.",
+    "counterTypographyRule": "카운터도 각 Size의 본문과 동일한 타이포 스타일 사용(S=Caption2/10 Medium, M/L=Caption1/12 Regular). Figma 내부적으로 \"State6\"라는 이름의 변형으로 명명되어 있으나 실제로는 Size 종속 카운터 스케일일 뿐.",
+    "heightIndependence": "컨테이너 높이는 Text Count True/False와 무관하게 Size별 공식(3장/containerHeightRule)만 따름."
+  },
+  "width": {
+    "measuredValue": "280px (10개 노드 전부 동일, 실측값)",
+    "structuralNote": "컨테이너 자체가 w-[280px] 고정 Tailwind 클래스로 명시됨 (Divider처럼 부모 flex-1로 늘어나는 내부 rectangle 패턴이 아님). Content 그룹만 내부적으로 flex-[1_0_0].",
+    "actualBehavior": "확인 필요 — 실제 Input/TextField 폭에 맞춰 늘어나야 하는지, 280px 고정폭이 의도인지 이 조사에서 판단 불가",
+    "tokenMatch": "기존 토큰에 없음"
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2114:4182, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. State 축 자체가 없는 순수 표시용 컴포넌트.",
+  "showIconProp": {
+    "description": "아이콘 표시 여부는 36개 변형 축에 포함되지 않는 별도 boolean prop(showIcon, 기본값 true)으로 토글 가능. iconS/iconM 슬롯으로 아이콘 자체 교체도 가능.",
+    "iconIdentityIssue": "6개 Theme 샘플 전부 Figma 레이어명이 동일하게 \"Icon / Default / 12px / warning_filled\"로 되어 있으나, 실제로는 Theme마다 서로 다른 SVG 애셋(URL 상이)을 가리킴. 스크린샷 실측으로 Theme별 아이콘 형태가 다름을 육안 확인했으나, 레이어명이 갱신되지 않아 정확한 아이콘 식별자는 확인 필요."
+  },
+  "accessibility": {
+    "iconAsSecondSignal": "색상 외 아이콘이 두 번째 신호로 존재하는 것으로 스크린샷상 확인되나, 레이어명이 신뢰할 수 없어(위 iconIdentityIssue) Theme-아이콘 의미 대응의 정확한 목록은 확인 필요.",
+    "showIconFalseRisk": "showIcon=false로 아이콘을 끄면 Destructed/Success/Warning 구분이 색상에만 의존하게 되어 WCAG 1.4.1(색에만 의존하지 않기) 위반 소지 있음. 아이콘 항상 표시를 강제하는 Figma 규정 존재 여부는 확인 필요.",
+    "colorContrast": "6개 Theme 텍스트 색상의 흰 배경 대비 WCAG AA(4.5:1) 명암비를 이 조사에서 계산하지 않음 — 특히 neutral/500(#8c9199, Gray)은 밝은 회색이라 명암비가 낮을 가능성 있어 확인 필요.",
+    "counterScreenReaderLabel": "\"000/000\" 카운터에 스크린리더용 레이블이 필요한지 Figma 파일에 규정 없음 — 확인 필요."
+  },
+  "grayBlackUsageDistinction": {
+    "note": "Gray/Black 두 톤이 정확히 어떤 상태(Default vs Focus 등)에 대응하는지 Figma 파일에 문서화되어 있지 않음 — 확인 필요. design-system-spec.json의 colorRoles 원칙에 대입한 추정만 1장에 기재."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "Theme 6종 텍스트/아이콘 색상 → sys-color-neutral-500, sys-color-neutral-700, sys-color-brand-primary-default, sys-color-theme-destructed-default, sys-color-theme-success-default, sys-color-theme-warning-default",
+      "Size 3종 padding/gap → ref-spacing-02/04/05/06/07/08/09",
+      "Size 3종 타이포그래피 → tokens/typography.json의 caption1(Regular)/caption2(Medium)와 정확히 일치",
+      "카운터 텍스트 색상(Theme 무관 고정) → sys-color-neutral-500"
+    ],
+    "추정(패턴기반)": [
+      "미실측 26개 조합의 색상·타이포·패딩 값 — 축 독립성 규칙 적용 추정, 개별 실측 아님 (samplingAppendix.unsampled 참고)"
+    ],
+    "기존토큰에없음": [
+      "컨테이너 고정폭 280px",
+      "Text Count의 {count}/{max} 포맷 문자열 (토큰이 아닌 컴포넌트 로직)"
+    ],
+    "확인필요": [
+      "Gray/Black 두 톤의 정확한 사용 구분 기준",
+      "Theme별 아이콘의 정확한 식별자(레이어명 신뢰 불가)",
+      "showIcon=false 시 색상 단독 의존에 대한 WCAG 대응 규정",
+      "각 Theme 색상의 명암비(AA) 수치 검증",
+      "카운터 텍스트의 스크린리더 접근성 규정",
+      "280px 고정폭의 실제 구현 시 늘어남 여부"
+    ]
+  },
+  "samplingAppendix": {
+    "sampledNodeIds": [
+      "2114:4181", "2114:4170", "2114:4163", "2114:4158", "2114:4173", "2114:4150",
+      "2114:4164", "2114:4175", "2114:4178", "2114:4161"
+    ],
+    "sampledDescription": {
+      "2114:4181": "S,Gray,True", "2114:4170": "S,Black,True", "2114:4163": "S,Brand,True",
+      "2114:4158": "S,Destructed,True", "2114:4173": "S,Success,True", "2114:4150": "S,Warning,True",
+      "2114:4164": "M,Gray,True", "2114:4175": "L,Gray,True", "2114:4178": "S,Gray,False",
+      "2114:4161": "M,Destructed,True (교차검증)"
+    },
+    "unsampledNodeIds": [
+      "2114:4177", "2114:4167", "2114:4166", "2114:4172", "2114:4165", "2114:4168", "2114:4180",
+      "2114:4174", "2114:4176", "2114:4162", "2114:4160", "2114:4159",
+      "2114:4156", "2114:4179", "2114:4155", "2114:4171",
+      "2114:4154", "2114:4153", "2114:4169", "2114:4151", "2114:4152",
+      "2114:4149", "2114:4148", "2114:4147", "2114:4146", "2114:4157"
+    ],
+    "unsampledDescription": {
+      "2114:4177": "M,Gray,False", "2114:4167": "L,Gray,False",
+      "2114:4166": "S,Black,False", "2114:4172": "M,Black,True", "2114:4165": "M,Black,False", "2114:4168": "L,Black,True", "2114:4180": "L,Black,False",
+      "2114:4174": "S,Brand,False", "2114:4176": "M,Brand,True", "2114:4162": "M,Brand,False", "2114:4160": "L,Brand,True", "2114:4159": "L,Brand,False",
+      "2114:4156": "S,Destructed,False", "2114:4179": "M,Destructed,False", "2114:4155": "L,Destructed,True", "2114:4171": "L,Destructed,False",
+      "2114:4154": "S,Success,False", "2114:4153": "M,Success,True", "2114:4169": "M,Success,False", "2114:4151": "L,Success,True", "2114:4152": "L,Success,False",
+      "2114:4149": "S,Warning,False", "2114:4148": "M,Warning,True", "2114:4147": "M,Warning,False", "2114:4146": "L,Warning,True", "2114:4157": "L,Warning,False"
+    }
+  }
+}
