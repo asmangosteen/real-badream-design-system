@@ -45,7 +45,8 @@
     "textButton": { "spec": "components/button/text-button/text-button.md", "machineReadable": "components/button/text-button/text-button.json", "status": "문서화 완료" },
     "iconButton": { "spec": "components/button/icon-button/icon-button.md", "machineReadable": "components/button/icon-button/icon-button.json", "status": "문서화 완료" },
     "buttonSpinner": { "spec": "components/button/button-spinner/button-spinner.md", "machineReadable": "components/button/button-spinner/button-spinner.json", "status": "문서화 완료", "note": "Button/Text Button의 Loading 상태에서 쓰이는 스피너 아톰" },
-    "badge": { "spec": "components/badge/badge.md", "machineReadable": "components/badge/badge.json", "status": "문서화 완료", "note": "Figma상 4개 Component Set(Content/Basic, Content/Theme, Numeric/Basic, Numeric/Theme)으로 분리되어 있음, 총 210개 인스턴스" }
+    "badge": { "spec": "components/badge/badge.md", "machineReadable": "components/badge/badge.json", "status": "문서화 완료", "note": "Figma상 4개 Component Set(Content/Basic, Content/Theme, Numeric/Basic, Numeric/Theme)으로 분리되어 있음, 총 210개 인스턴스" },
+    "checkbox": { "spec": "components/checkbox/checkbox.md", "machineReadable": "components/checkbox/checkbox.json", "status": "문서화 완료", "note": "Figma상 2개 Component Set(Angular, Rounded)으로 분리되어 있음, 총 24개 인스턴스, Size 축 없음" }
   },
 
   "typography": {

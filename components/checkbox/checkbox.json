@@ -1,0 +1,120 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Checkbox",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2483-12499",
+    "overviewGroupNodeId": "2483:12499",
+    "note": "Checkbox는 하나의 Component Set이 아니라 2개의 독립된 Component Set으로 구성됨.",
+    "componentSets": {
+      "angular": { "nodeId": "2173:6696", "name": "Checkbox / Angular", "variantCount": 12, "axes": ["Checked(False/True)", "Indeterminate(Off/On, Checked=True에서만 의미)", "State(Default/Hover/Pressed/Disabled)"] },
+      "rounded": { "nodeId": "2173:6709", "name": "Checkbox / Rounded", "variantCount": 12, "axes": ["Checked(False/True)", "Outlined(True/False, Checked=False에서만 의미)", "State(Default/Hover/Pressed/Disabled)"] }
+    },
+    "totalVariantInstances": 24
+  },
+  "sampling": {
+    "method": "전수 실측 (get_design_context 24회 + get_variable_defs 1회 + get_motion_context 1회(recursive) + get_metadata 1회, 모두 상위 그룹 2483:12499 기준)",
+    "coverage": "24개 변형 전체를 개별 실측함. 추정/외삽 없음.",
+    "figmaNamingTypos": {
+      "angularCheckedHover": "Angular의 Checked=True 계열 Hover 변형들은 Checked 속성값이 'True'가 아니라 리터럴 'Hover'로 등록됨(예: Checked=Hover, Indeterminate=Off, State=Hover). Checked=False Hover는 정상 표기.",
+      "roundedDisabledTypo": "Rounded의 모든 Disabled 변형은 State 속성값이 'Deisabled'(오탈자)로 등록됨. Angular의 Disabled는 정상 표기."
+    }
+  },
+  "common": {
+    "totalSize": "16x16px (고정, Size 축 없음)",
+    "angular": { "radius": { "figmaVariable": "radius/02", "value": "4px", "token": "ref-radius-02", "tokenMatch": "정확히 일치" }, "iconSize": "16px (컨테이너 전체를 채움)" },
+    "rounded": { "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" }, "iconSize": "12px (컨테이너보다 작게, 중앙 정렬)" }
+  },
+  "angular": {
+    "uncheckedFalse": {
+      "sourceNodeIds": { "default": "2173:6695", "hover": "2173:6691", "pressed": "2173:6693", "disabled": "2173:6690" },
+      "default": { "background": { "figmaVariable": "common/white-default", "hex": "#fdfdfd" }, "border": { "width": "1px", "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "token": "ref-color-alpha-gray-900-10", "tokenMatch": "정확히 일치" } },
+      "hover": { "note": "Default와 완전히 동일. cursor:pointer만 추가되고 색상 변화 없음.", "sameAsDefault": true },
+      "pressed": { "note": "Default와 완전히 동일. 시각적 피드백 전혀 없음.", "sameAsDefault": true },
+      "disabled": { "background": "변화 없음(흰색 유지)", "border": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "token": "ref-color-alpha-gray-900-5", "tokenMatch": "정확히 일치", "note": "10%→5%로 알파가 옅어지는 방식. Button의 opacity 20% 일괄 적용 방식과 다름" } }
+    },
+    "checkedTrueIndeterminateOff": {
+      "sourceNodeIds": { "default": "2173:6688", "hover": "2173:6692", "pressed": "2173:6694", "disabled": "2173:6689" },
+      "icon": "Icon / Default / 16px / check",
+      "default": { "background": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" }, "backgroundToken": "sys-color-brand-primary-default (ref-color-blue-500)", "tokenMatch": "정확히 일치" },
+      "hover": { "mechanism": "brand/primary-default 베이스 위에 color/interaction/blue/hover 오버레이(이중 linear-gradient 합성)", "overlay": { "figmaVariable": "color/interaction/blue/hover", "value": "#0D2D57 15% (rgba(13,45,87,0.15))" }, "tokenMatch": "정확히 일치 (interaction/blue, Button Primary Hover와 동일 메커니즘)" },
+      "pressed": { "overlay": { "figmaVariable": "color/interaction/blue/pressed", "value": "#0D2D57 30% (rgba(13,45,87,0.3))" }, "tokenMatch": "정확히 일치" },
+      "disabled": { "background": { "figmaVariable": "neutral/400", "hex": "#c2c4c8" }, "backgroundToken": "sys-color-neutral-400 (ref-color-gray-400)", "tokenMatch": "정확히 일치", "mechanism": "오버레이가 아니라 배경색 자체를 단색으로 교체" }
+    },
+    "checkedTrueIndeterminateOn": {
+      "sourceNodeIds": { "default": "2173:6687", "hover": "2173:6685", "pressed": "2173:6686", "disabled": "2173:6684" },
+      "icon": "Icon / Default / 16px / minus",
+      "note": "색상/오버레이 메커니즘은 checkedTrueIndeterminateOff와 완전히 동일. 아이콘만 check → minus로 교체됨."
+    }
+  },
+  "rounded": {
+    "uncheckedOutlinedTrue": {
+      "sourceNodeIds": { "default": "2173:6708", "hover": "2173:6706", "pressed": "2173:6698", "disabled": "2173:6705" },
+      "iconSlot": "Icon / Default / 12px / check (구조적으로 항상 존재하나 미선택 상태에서는 육안으로 보이지 않음, 6장 참고)",
+      "default": { "background": { "figmaVariable": "common/white-default", "hex": "#fdfdfd" }, "border": { "width": "1px", "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "tokenMatch": "정확히 일치" } },
+      "hover": { "overlay": { "figmaVariable": "color/interaction/light-gray/hover", "value": "gray-900 5% (rgba(3,9,26,0.05))" }, "tokenMatch": "정확히 일치 (Button Tertiary-라이트 Hover와 동일 토큰)" },
+      "pressed": { "overlay": { "figmaVariable": "color/interaction/light-gray/pressed", "value": "gray-900 10% (rgba(3,9,26,0.1))" }, "tokenMatch": "정확히 일치" },
+      "disabled": { "background": "변화 없음(흰색 유지)", "border": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치", "note": "Angular 미선택 Disabled와 동일 패턴. 내부 아이콘 애셋도 다른 파일로 교체됨" } }
+    },
+    "uncheckedOutlinedFalse": {
+      "sourceNodeIds": { "default": "2173:6707", "hover": "2173:6703", "pressed": "2173:6704", "disabled": "2173:6702" },
+      "default": { "background": { "figmaVariable": "neutral/100", "hex": "#f6f7f7" }, "backgroundToken": "sys-color-neutral-100 (ref-color-gray-100)", "tokenMatch": "정확히 일치", "border": "없음" },
+      "hover": { "overlay": { "figmaVariable": "color/interaction/light-gray/hover", "value": "gray-900 5%" } },
+      "pressed": { "overlay": { "figmaVariable": "color/interaction/light-gray/pressed", "value": "gray-900 10%" } },
+      "disabled": { "background": "Default와 완전히 동일(neutral/100, 변화 없음)", "note": "Outlined=True와 달리 배경/테두리 변화가 전혀 없음 — 실측 확인된 사실, 의도적인지 확인 필요. 내부 아이콘 애셋만 교체됨." }
+    },
+    "checkedTrue": {
+      "note": "Rounded는 Checked=True에서 Outlined=True 조합이 존재하지 않음(12개 전수 확인). 항상 Outlined=False 구조.",
+      "sourceNodeIds": { "default": "2173:6700", "hover": "2173:6699", "pressed": "2173:6701", "disabled": "2173:6697" },
+      "icon": "Icon / Default / 12px / check (선택 시 실제로 보이는 체크)",
+      "default": { "background": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" }, "tokenMatch": "정확히 일치" },
+      "hover": { "overlay": { "figmaVariable": "color/interaction/blue/hover", "value": "#0D2D57 15%" }, "tokenMatch": "정확히 일치 (Angular Checked=True Hover와 동일)" },
+      "pressed": { "overlay": { "figmaVariable": "color/interaction/blue/pressed", "value": "#0D2D57 30%" } },
+      "disabled": { "background": { "figmaVariable": "neutral/400", "hex": "#c2c4c8" }, "tokenMatch": "정확히 일치", "mechanism": "단색 교체 (Angular Checked=True Disabled와 동일 패턴)" }
+    }
+  },
+  "interactionTokenSummary": {
+    "filledBlue": { "family": "color/interaction/blue", "hover": "#0D2D57 15%", "pressed": "#0D2D57 30%", "appliesTo": "Checked=True (Angular 전체, Rounded Checked=True)" },
+    "whiteOrLightGray": { "family": "color/interaction/light-gray", "hover": "#03091A 5%", "pressed": "#03091A 10%", "appliesTo": "Rounded Checked=False (Outlined=True/False 둘 다)" },
+    "tokenMatch": "정확히 일치 (tokens/colors.json interaction.blue / interaction.light-gray, Button 문서 5-2절과 동일 패밀리)"
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 상위 그룹(2483:12499, recursive=true)에 호출했으나 빈 배열 반환. 프로토타입 인터랙션(체크 애니메이션 포함) 정의 없음.",
+  "iconAssetObservation": {
+    "note": "Rounded의 모든 변형에 'Icon / Default / 12px / check'라는 자식 레이어가 구조적으로 항상 존재하나, Checked=False 상태에서는 스크린샷상 보이지 않음. 각 State/변형마다 다른 SVG 애셋 URL이 발급되는 것으로 보아 '보이는 체크' / '투명·배경색과 동일하게 구워진 고스트 아이콘' 두 종류가 상태별로 교체되는 구조로 추정됨.",
+    "verified": false,
+    "verificationLimitation": "SVG 내부 fill 값을 직접 디코딩하지 않았음 — 확인 필요. Angular는 이런 구조 없이 Checked=False에서 아이콘 레이어 자체가 존재하지 않음."
+  },
+  "accessibility": {
+    "noFocusedState": "Figma의 State 축에 Default/Hover/Pressed/Disabled 4종만 있고 Focused(키보드 포커스) 상태가 정의되어 있지 않음 — 구현 시 별도 접근성 포커스 스타일 필요, 확인 필요.",
+    "angularUncheckedPressedNoFeedback": "Angular Checked=False Pressed가 Default와 완전히 동일해 시각적 피드백이 없음 — 의도적인지 확인 필요.",
+    "indeterminateAriaMapping": "Indeterminate=On은 구현 시 HTML input의 indeterminate DOM 프로퍼티 및 aria-checked=mixed로 매핑 권장. Figma 파일 자체에는 이 규정이 없음.",
+    "minTouchTarget": "16x16px는 44px 권장 기준보다 훨씬 작음. 라벨 포함 히트 영역 확장 필요 여부는 Figma에 명시되지 않음 — 확인 필요."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "Angular radius 4px → ref-radius-02",
+      "Rounded radius 999px → ref-radius-12",
+      "미선택 테두리 color/gray/900-10(10%), Disabled 시 color/gray/900-5(5%) → ref-color-alpha-gray-900-10/-5",
+      "선택 시 배경 brand/primary-default(#2c7be2) → sys-color-brand-primary-default(ref-color-blue-500)",
+      "Disabled 선택 상태 배경 neutral/400(#c2c4c8) → sys-color-neutral-400(ref-color-gray-400)",
+      "Rounded 미선택(Outlined=False) 배경 neutral/100(#f6f7f7) → sys-color-neutral-100(ref-color-gray-100)",
+      "Hover/Pressed 오버레이 → interaction/blue(15%/30%), interaction/light-gray(5%/10%) — tokens/colors.json과 정확히 일치"
+    ],
+    "기존토큰에없음": [
+      "전체 크기 16x16px 고정값 (Size 축 자체가 없음)",
+      "Rounded 내부 아이콘 12px (Angular의 16px과 다른 고정값)"
+    ],
+    "확인필요": [
+      "Rounded 미선택 상태의 '항상 존재하는 숨겨진 체크 아이콘 레이어' 구조와 실제 fill/visibility 값",
+      "Focused 상태가 정의되지 않은 것에 대한 접근성 대응 방안",
+      "Angular 미선택 Pressed에 시각 피드백이 없는 것이 의도적인지",
+      "Rounded Outlined=False Disabled가 Default와 완전히 동일한 배경을 유지하는 것이 의도적인지",
+      "최소 터치 영역 확장 규정 여부"
+    ]
+  },
+  "sampledNodeIds": {
+    "angular": ["2173:6695", "2173:6691", "2173:6693", "2173:6690", "2173:6688", "2173:6692", "2173:6694", "2173:6689", "2173:6687", "2173:6685", "2173:6686", "2173:6684"],
+    "rounded": ["2173:6708", "2173:6706", "2173:6698", "2173:6705", "2173:6707", "2173:6703", "2173:6704", "2173:6702", "2173:6700", "2173:6699", "2173:6701", "2173:6697"]
+  }
+}
