@@ -25,7 +25,7 @@
 | Type Box | [components/global/type-box/type-box.md](./global/type-box/type-box.md) | 완료 | 12개 인스턴스 (Size S/M/L × State Selected/Placeholder/Typing/Done). `components/global/` 소속 — Input/TextField 서브 아톰(입력값 타이포·캐럿 미리보기) |
 | Dropdown | [components/dropdown/dropdown.md](./dropdown/dropdown.md) | 완료 | 288개 인스턴스 (Size S/M/L × State 5종 × Destructed(Selected 전용) × Show Button/Show Label/Supporting Text/Left Icon 각 2종). Label/Type Box/Supporting Text를 서브 아톰으로 재사용. 13개 노드 전략적 샘플링(0장 참고) |
 | Segmented Control Item(`_Item`) | [components/global/segmented-control-item/segmented-control-item.md](./global/segmented-control-item/segmented-control-item.md) | 완료 | 10개 인스턴스 (Size XS/S/M/L/XL × Selected True/False). `components/global/` 소속 — Segmented Control 전용 서브 아톰(디자이너가 아토믹 디자인 목적으로 분리). 전수 실측 |
-| Segmented Control | [components/segmented-control/segmented-control.md](./segmented-control/segmented-control.md) | 완료 | 20개 인스턴스 (Size S/M/L/XL × Count 2~5, Size=S만 구/신 2벌 존재). `_Item`을 조합해 만들어짐. Size=S 구/신버전 불일치 발견(4장, 확인 필요) — 10개 노드 전략적 샘플링 |
+| Segmented Control | [components/segmented-control/segmented-control.md](./segmented-control/segmented-control.md) | 완료 | 20개 인스턴스 (Size XS/S/M/L/XL × Count 2~5). `_Item`을 조합해 만들어짐, 5개 Size 전부 `_Item`과 1:1 대응. 10개 노드 전략적 샘플링. (초기 조사 시 Size=S 노드 일부의 라벨-내용 불일치를 발견했고, 이후 Figma에서 Size=XS로 정정되어 해소됨 — 0-1장 참고) |
 
 ## components/global/이란
 

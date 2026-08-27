@@ -7,48 +7,94 @@
     "frameNodeId": "2197:8777",
     "frameName": "Segmented Control",
     "totalVariantInstances": 20,
-    "axes": ["Size(S/M/L/XL)", "Count(2/3/4/5)"],
-    "note": "Size=S에서만 구버전(2197:87xx)/신버전(2215:135xx) 두 벌의 노드가 존재해 4x4=16이 아니라 20개 인스턴스임. Segmented Control 레벨에는 Size=XS 조합이 존재하지 않음(관찰 사실)."
+    "axes": ["Size(XS/S/M/L/XL)", "Count(2/3/4/5)"],
+    "note": "2026-08-27 Figma 수정: 이전에 'Size=S'로 잘못 라벨링되어 있던 노드(2215:135xx 계열)가 'Size=XS'로 올바르게 재라벨링됨(사용자 확인 완료). 이제 Size 축이 XS/S/M/L/XL 5종 × Count 4종 = 20개로 완전히 orthogonal함(과거 문서에 있던 'S 구/신버전 불일치' 이슈는 해소됨 — history 필드 참고)."
   },
   "sampling": {
-    "method": "축별 전략적 샘플링. get_metadata 사전 확보(오케스트레이터, 20개 전수) + get_design_context 10회 + get_variable_defs 2회 + get_motion_context 1회(최상위 프레임)",
-    "coverage": "Size 4종(S구/S신/M/L/XL, Count=2 고정) + Count 축 3종(Size=M 고정, Count 3/4/5) + S신버전 Count 축 일관성 2종(Count 3/4) 실측. 미실측 9개(S구버전 Count3/4/5, L/XL Count3/4/5)는 M의 Count축 독립성 패턴을 근거로 추정하되 개별 실측 없음, 새 토큰명 생성 없음.",
+    "method": "축별 전략적 샘플링. get_metadata 사전 확보(20개 전수) + get_design_context 12회(재라벨링 확인 2회 포함) + get_variable_defs 2회 + get_motion_context 1회(최상위 프레임)",
+    "coverage": "Size 5종(Count=2 고정) + Count 축 3종(Size=M 고정, Count 3/4/5) + XS의 Count 축 일관성 2종(Count 3/4) 실측. 미실측 9개(XS Count5, S Count3/4/5, L/XL Count3/4/5)는 M의 Count축 독립성 패턴을 근거로 추정하되 개별 실측 없음, 새 토큰명 생성 없음.",
     "sampledNodeIds": {
-      "sizeAxis_count2": { "S_old": "2197:8776", "S_new": "2215:13505", "M": "2197:8774", "L": "2197:8772", "XL": "2197:8773" },
+      "sizeAxis_count2": { "XS": "2215:13505", "S": "2197:8776", "M": "2197:8774", "L": "2197:8772", "XL": "2197:8773" },
       "countAxis_sizeM": { "3": "2197:8767", "4": "2197:8763", "5": "2197:8769" },
-      "sNewCountAxis": { "3": "2215:13508", "4": "2215:13512" }
+      "xsCountAxis": { "3": "2215:13508", "4": "2215:13512" }
     },
-    "unsampledEstimated": ["2197:8771", "2197:8775", "2197:8761", "2197:8770", "2197:8764", "2197:8768", "2197:8766", "2197:8762", "2197:8765"]
+    "unsampledEstimated": ["2215:13517", "2197:8771", "2197:8775", "2197:8761", "2197:8770", "2197:8764", "2197:8768", "2197:8766", "2197:8762", "2197:8765"]
   },
-  "containerSpecs": {
-    "S_old": { "sourceNodeId": "2197:8776", "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" }, "padding": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" }, "gap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" }, "measuredHeight": "30px", "innerItemSize": "S (_Item 문서 S행과 완전 일치: px8/py4/radius03/Caption1·12 SB)", "heightFormula": "_Item(S) 26px + padding 2px×2 = 30px" },
-    "S_new": { "sourceNodeId": "2215:13505", "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" }, "padding": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" }, "gap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" }, "measuredHeight": "26px", "innerItemSize": "XS (_Item 문서 XS행과 완전 일치: px8/py3/radius03/Caption2·10 SB — S행과는 불일치)", "heightFormula": "_Item(XS) 22px + padding 2px×2 = 26px", "note": "라벨은 'S'이지만 내부 아이템은 _Item Size=XS. 26px가 _Item(S) 단독 실측값과 숫자만 우연히 같음 — 4장/discrepancy 필드 참고" },
-    "M": { "sourceNodeId": "2197:8774", "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" }, "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" }, "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "measuredHeight": "42px", "innerItemSize": "M (_Item 문서 M행과 완전 일치)", "heightFormula": "_Item(M) 34px + padding 4px×2 = 42px", "countAxisConfirmed": ["2 (2197:8774)", "3 (2197:8767)", "4 (2197:8763)", "5 (2197:8769)"], "countAxisNote": "Count 2/3/4/5 전부 컨테이너 padding/gap/radius/높이 42px 불변 확인" },
-    "L": { "sourceNodeId": "2197:8772", "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/07", "value": "16px", "tokenMatch": "정확히 일치" }, "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" }, "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "measuredHeight": "48px", "innerItemSize": "L (_Item 문서 L행과 완전 일치)", "heightFormula": "_Item(L) 40px + padding 4px×2 = 48px" },
-    "XL": { "sourceNodeId": "2197:8773", "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/07", "value": "16px", "tokenMatch": "정확히 일치" }, "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" }, "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "measuredHeight": "56px", "innerItemSize": "XL (_Item 문서 XL행과 완전 일치)", "heightFormula": "_Item(XL) 48px + padding 4px×2 = 56px" }
+  "history": {
+    "previousFinding": "이 문서의 이전 버전은 Size=S에 두 벌의 노드(2197:87xx 30px / 2215:135xx 26px)가 존재하며, 2215:135xx 쪽은 라벨이 'S'인데 실제로는 _Item Size=XS를 담고 있어 26px라는 숫자만 _Item S 단독값과 우연히 같다는 점을 '확인 필요'로 남겼음.",
+    "resolution": "사용자가 Figma에서 해당 계열(2215:135xx)의 variant 속성값을 'S'에서 'XS'로 정정함(Edit variant property 패널에서 Size 값이 XS/S/M/L/XL 5개로 확인됨). 노드의 실제 레이아웃·크기·내부 _Item 구성은 변경되지 않았고, 라벨만 실제 내용물과 일치하도록 수정됨.",
+    "verifiedVia": "get_metadata(2197:8777) 재조회로 2215:13505/13508/13512/13517이 모두 'Size=XS'로 표시됨을 확인. get_design_context(2215:13505)로 컴포넌트 prop 타입이 size?: \"S\"에서 size?: \"XS\"로 바뀐 것도 코드 레벨에서 재확인."
+  },
+  "sizes": {
+    "XS": {
+      "sourceNodeId": "2215:13505",
+      "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" },
+      "padding": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" },
+      "measuredHeight": "26px",
+      "innerItemSize": "XS (_Item 문서 XS행과 완전 일치: px8/py3/radius03/Caption2·10 SB)",
+      "heightFormula": "_Item(XS) 22px + padding 2px×2 = 26px",
+      "countAxisConfirmed": ["2 (2215:13505)", "3 (2215:13508)", "4 (2215:13512)"]
+    },
+    "S": {
+      "sourceNodeId": "2197:8776",
+      "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" },
+      "padding": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" },
+      "measuredHeight": "30px",
+      "innerItemSize": "S (_Item 문서 S행과 완전 일치: px8/py4/radius03/Caption1·12 SB)",
+      "heightFormula": "_Item(S) 26px + padding 2px×2 = 30px"
+    },
+    "M": {
+      "sourceNodeId": "2197:8774",
+      "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" },
+      "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "measuredHeight": "42px",
+      "innerItemSize": "M (_Item 문서 M행과 완전 일치)",
+      "heightFormula": "_Item(M) 34px + padding 4px×2 = 42px",
+      "countAxisConfirmed": ["2 (2197:8774)", "3 (2197:8767)", "4 (2197:8763)", "5 (2197:8769)"],
+      "countAxisNote": "Count 2/3/4/5 전부 컨테이너 padding/gap/radius/높이 42px 불변 확인"
+    },
+    "L": {
+      "sourceNodeId": "2197:8772",
+      "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/07", "value": "16px", "tokenMatch": "정확히 일치" },
+      "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "measuredHeight": "48px",
+      "innerItemSize": "L (_Item 문서 L행과 완전 일치)",
+      "heightFormula": "_Item(L) 40px + padding 4px×2 = 48px"
+    },
+    "XL": {
+      "sourceNodeId": "2197:8773",
+      "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/07", "value": "16px", "tokenMatch": "정확히 일치" },
+      "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "measuredHeight": "56px",
+      "innerItemSize": "XL (_Item 문서 XL행과 완전 일치)",
+      "heightFormula": "_Item(XL) 48px + padding 4px×2 = 56px"
+    }
   },
   "containerFindings": [
-    "컨테이너 높이 = 내부 _Item 표준 높이 + 컨테이너 padding×2 공식이 S구버전/M/L/XL 전부에서 정확히 성립",
-    "M의 컨테이너 radius(12px)가 L/XL(16px)보다 작음 — S(8px)→M(12px)→L·XL(16px) 3단 계단, _Item 자체의 radius 계단과는 다른 별도 체계",
-    "컨테이너 padding/gap은 S만 2px/6px이고 M/L/XL은 전부 4px/8px로 동일",
+    "컨테이너 높이 = 내부 _Item 표준 높이 + 컨테이너 padding×2 공식이 5개 Size 전부에서 정확히 성립함(XS/S/M/L/XL 모두 확인)",
+    "컨테이너 radius는 3단 계단: XS·S 공유 radius/04(8px) → M 단독 radius/06(12px) → L·XL 공유 radius/07(16px). _Item 자체의 radius 계단(XS·S 공유 radius/03 → M 단독 radius/04 → L·XL 공유 radius/06)과 값은 다르지만 그룹핑 패턴(XS+S / M / L+XL)은 동일함",
+    "컨테이너 padding/gap은 XS·S만 2px/6px이고 M/L/XL은 전부 4px/8px로 동일 — Size 축 전체가 이제 _Item의 5단 스케일과 1:1로 정확히 대응함",
     "너비 390px가 화면 폭 가변인지는 Segmented Control 자체에서 명시적으로 확인되지 않음 — 확인 필요(Dropdown과 달리)"
   ],
   "countAxisFindings": {
     "sizeM_count2345": "Count가 2→5로 늘어도 컨테이너 padding/gap/radius/높이(42px) 전혀 변하지 않음. 유일한 변화는 _Item 자식 개수. 각 _Item은 flex-[1_0_0] min-w-px로 컨테이너 폭을 균등 분할함(코드에서 확인).",
     "widthFormula": "개별 세그먼트 폭 = (컨테이너폭 - 컨테이너padding×2 - gap×(Count-1)) / Count. Figma 노드의 개별 폭 숫자는 390px 진열 프레임을 이 공식대로 나눈 결과일 뿐 별도 고정폭 아님.",
-    "sNewConsistency": "S신버전도 Count=2/3/4/5(3/4는 실측, 2/5는 미실측이나 패턴 추정)에서 컨테이너(padding2/gap6/radius8)와 내부 _Item(XS-sized) 구성이 Count와 무관하게 일관됨을 Count=3(2215:13508)·Count=4(2215:13512)에서 확인"
-  },
-  "sizeS_discrepancy": {
-    "priorHypothesis": "작업 지시 단계 가설: 신버전(26px)이 _Item의 실제 S 사이즈(26px)와 일치하므로 신버전이 맞고 구버전(30px)이 레거시.",
-    "actualFinding": "숫자(26px)만 우연히 일치. 실제로는: 구버전=진짜 _Item Size=S를 담고 있고 컨테이너 padding(4px)이 더해져 30px가 되는, M/L/XL과 동일한 합성 패턴을 따름. 신버전=라벨이 'S'이지만 실제로 담긴 것은 _Item Size=XS(padding-y 4→3px, 타이포 Caption1/12→Caption2/10)이며, XS아이템 22px+padding4px=26px로 우연히 같은 숫자가 나온 것.",
-    "openQuestion": "Segmented Control 'Size=S'의 현재 유효 스펙이 구버전(라벨-내용 일치, 숫자는 비표준)인지 신버전(라벨-내용 불일치, 최종 숫자만 그럴듯)인지 Figma 파일만으로 확정 불가. 신버전이 의도라면 '_Item의 XS 사이즈가 Segmented Control에서는 S라는 이름으로 노출된다'는 재정의일 수 있으나 확정 아님.",
-    "additionalObservation": "_Item에는 별도 XS 사이즈가 존재하지만 Segmented Control에는 'Size=XS' Count 조합 자체가 없음 — XS _Item은 오직 이 'S(신버전)' 노드를 통해서만 Segmented Control에 등장함.",
-    "recommendation": "신규 구현 전 디자이너와 함께 Figma에서 구/신버전 중 하나를 정리(삭제/유지)하도록 확인 필요."
+    "xsConsistency": "XS도 Count=2/3/4(2215:13505/13508/13512 실측, 5는 미실측이나 패턴 추정)에서 컨테이너(padding2/gap6/radius8)와 내부 _Item(XS-sized) 구성이 Count와 무관하게 일관됨을 확인"
   },
   "subcomponentReuse": {
     "ref": "components/global/segmented-control-item/segmented-control-item.md",
-    "S_old": "_Item Size=S와 100% 일치",
-    "S_new": "_Item Size=XS와 100% 일치 (라벨은 S — sizeS_discrepancy 참고)",
+    "XS": "_Item Size=XS와 100% 일치(라벨-내용 일치, 재라벨링 후 확인)",
+    "S": "_Item Size=S와 100% 일치",
     "M": "_Item Size=M과 100% 일치",
     "L": "_Item Size=L과 100% 일치",
     "XL": "_Item Size=XL과 100% 일치",
@@ -67,18 +113,17 @@
       "배경 color/gray/200(#f1f2f3) → tokens/colors.json reference.gray.200(#F1F2F3)",
       "Radius: radius/04(8px) → ref-radius-04, radius/06(12px) → ref-radius-06, radius/07(16px) → ref-radius-07",
       "Spacing(padding/gap): spacing/02,04,05,06 전부 ref-spacing-02~06과 일치",
-      "내부 _Item 스펙은 segmented-control-item.md와 정확히 일치(S구버전=S행, M/L/XL=해당행, S신버전=XS행)"
+      "내부 _Item 스펙은 segmented-control-item.md의 XS/S/M/L/XL 각 행과 정확히 1:1 일치(재라벨링 후 5개 Size 전부 라벨-내용 일치 확인됨)"
     ],
     "기존토큰에없음": [
       "Size별 '컨테이너 padding+gap+radius 조합' 시맨틱 토큰",
       "컨테이너 높이=_Item 표준높이+padding×2 합성 규칙을 지정하는 토큰/문서"
     ],
     "확인필요": [
-      "Size=S 구/신버전 중 현재 유효 스펙 (가장 중요, sizeS_discrepancy 참고)",
       "컨테이너 너비 390px의 화면 폭 가변 여부",
       "role/aria/키보드 네비게이션 등 접근성 마크업 연결 규정",
       "Disabled 상태 축 부재가 의도인지"
     ]
   },
-  "sampledNodeIds": ["2197:8776", "2215:13505", "2197:8774", "2197:8772", "2197:8773", "2197:8767", "2197:8763", "2197:8769", "2215:13508", "2215:13512"]
+  "sampledNodeIds": ["2215:13505", "2197:8776", "2197:8774", "2197:8772", "2197:8773", "2197:8767", "2197:8763", "2197:8769", "2215:13508", "2215:13512"]
 }

@@ -8,7 +8,7 @@
 
 `_Item`은 **Size(XS/S/M/L/XL) × Selected(True/False) 두 축, 10-변형 컴포넌트**입니다. 10개뿐이므로 **전수 실측**했습니다 — `get_design_context`를 10개 노드 전부에 개별 호출했습니다.
 
-- `get_variable_defs`는 대표 노드 2개(M,Selected=True `2196:8564` / XL,Count=2 Segmented Control 조합 확인용 `2215:13505`)에서 호출해 변수 맵을 확보했습니다.
+- `get_variable_defs`는 대표 노드 2개(M,Selected=True `2196:8564` / Segmented Control Size=XS,Count=2 조합 확인용 `2215:13505`)에서 호출해 변수 맵을 확보했습니다.
 - `get_motion_context`는 컴포넌트 최상위(`2196:8568`, recursive=true)에 1회 호출했습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소 `tokens/*.json`에 없는 값은 "확인 필요" 또는 "기존 토큰에 없음"으로 명시합니다.
 
@@ -97,4 +97,4 @@
 | L | `2196:8563` | `2196:8562` |
 | XL | `2196:8561` | `2196:8560` |
 
-`get_variable_defs`는 `2196:8564`(M,True)와 `2215:13505`(Segmented Control S,Count=2 신버전 — `_Item` XS 변형이 내부에 쓰이는지 교차 확인용, [segmented-control.md](../../segmented-control/segmented-control.md) 4장 참고)에서 호출했습니다. `get_motion_context`는 컴포넌트 최상위(`2196:8568`, recursive=true)에 1회 호출해 빈 결과를 확인했습니다.
+`get_variable_defs`는 `2196:8564`(M,True)와 `2215:13505`(Segmented Control Size=XS, Count=2 — `_Item` XS 변형이 내부에 쓰이는지 교차 확인용, [segmented-control.md](../../segmented-control/segmented-control.md) 2장 참고. 실측 당시 이 노드는 Figma에서 "Size=S"로 잘못 라벨링되어 있었으나 이후 "Size=XS"로 정정됨 — segmented-control.md 0-1장 참고)에서 호출했습니다. `get_motion_context`는 컴포넌트 최상위(`2196:8568`, recursive=true)에 1회 호출해 빈 결과를 확인했습니다.
