@@ -100,7 +100,7 @@ Gray/Red의 hover/pressed 최종 라벨 색은 개별 노드로 실측하지 않
 Loading 변형은 **Contents=Default**로, 라벨 텍스트를 표시하지 않고 **스피너만** 중앙에 렌더링합니다(Button의 Loading이 라벨을 유지한 것과 다름 — Text Button은 라벨을 스피너로 대체).
 
 - 스피너는 내부용 아톰 `_ButtonSpinner`(컴포넌트 셋 `439:19645`)의 인스턴스입니다. 실측된 M 변형 구조: 컨테이너 프레임 `_ButtonSpinner`에 **패딩 3.5px(4방향)**, 내부 링 아이콘 **15px × 15px**, 이름 `Subtract`의 **단일 프레임 래스터(PNG) 이미지**.
-- 3.5px/15px는 저장소 스페이싱·아이콘 스케일과 일치하지 않는 고정값입니다 → **기존 토큰에 없음**. (자세한 Size별 스피너 스펙은 `components/button-spinner/button-spinner.md` 참고.)
+- 3.5px/15px는 저장소 스페이싱·아이콘 스케일과 일치하지 않는 고정값입니다 → **기존 토큰에 없음**. (자세한 Size별 스피너 스펙은 `components/button/button-spinner/button-spinner.md` 참고.)
 - 스피너 링 색상은 `_ButtonSpinner`에 바인딩된 `neutral/800`(`#202837`) 또는 `common/white-default`(`#fdfdfd`) 중 하나이나(둘 다 저장소 토큰과 정확히 일치), 링이 플랫 이미지라 어느 색이 이 Text Button 문맥에 적용되는지는 코드에서 분해되지 않습니다 → **매핑 확인 필요**(밝은 배경 위 텍스트 버튼이므로 `neutral/800`일 가능성이 높음).
 
 ## 5. Contents별 gap·아이콘 규칙 (Size=M 기준 실측)

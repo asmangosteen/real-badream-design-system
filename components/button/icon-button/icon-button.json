@@ -178,7 +178,7 @@
       "interaction/light-red/hover":    { "figma": "red-500 8%",  "colorsJson_before": "red-50 solid",  "nowMatches": true },
       "interaction/light-red/pressed":  { "figma": "red-500 15%", "colorsJson_before": "red-100 solid", "nowMatches": true }
     },
-    "resolution": "정정 완료. Figma 실측값이 정답으로 확정, 저장소 토큰(colors.json/tokens.css)과 DESIGN.md 12.3 표를 이 값으로 정정함. components/button/button.md도 동일하게 실측값으로 되돌림."
+    "resolution": "정정 완료. Figma 실측값이 정답으로 확정, 저장소 토큰(colors.json/tokens.css)과 DESIGN.md 12.3 표를 이 값으로 정정함. components/button/button/button.md도 동일하게 실측값으로 되돌림."
   },
   "motion": {
     "status": "모션 데이터 없음",
