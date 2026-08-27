@@ -22,6 +22,7 @@
 | Text Count | [components/global/text-count/text-count.md](./global/text-count/text-count.md) | 완료 | 6개 인스턴스 (Size Small/Default × State 3종). `components/global/` 소속 — Input/TextField/TextArea 서브 아톰(글자 수 카운터) |
 | Supporting Text | [components/global/supporting-text/supporting-text.md](./global/supporting-text/supporting-text.md) | 완료 | 36개 인스턴스 (Size S/M/L × Theme 6종 × Text Count True/False). `components/global/` 소속 — Input/TextField 하단 헬퍼·에러·성공 텍스트 서브 아톰. 10개 노드 선택 샘플링(0장 참고) |
 | Type Box | [components/global/type-box/type-box.md](./global/type-box/type-box.md) | 완료 | 12개 인스턴스 (Size S/M/L × State Selected/Placeholder/Typing/Done). `components/global/` 소속 — Input/TextField 서브 아톰(입력값 타이포·캐럿 미리보기) |
+| Dropdown | [components/dropdown/dropdown.md](./dropdown/dropdown.md) | 완료 | 288개 인스턴스 (Size S/M/L × State 5종 × Destructed(Selected 전용) × Show Button/Show Label/Supporting Text/Left Icon 각 2종). Label/Type Box/Supporting Text를 서브 아톰으로 재사용. 13개 노드 전략적 샘플링(0장 참고) |
 
 ## components/global/이란
 
