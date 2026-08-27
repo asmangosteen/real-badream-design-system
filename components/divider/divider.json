@@ -26,10 +26,11 @@
   },
   "heightToTokenRule": "Height 값과 ref-borderwidth-0N 토큰이 1:1 대응 (1px→02, 2px→03, 4px→04, 6px→05, 8px→06, 10px→07, 12px→08, 14px→09). ref-borderwidth-01(0.5px)은 이 컴포넌트 셋에 존재하지 않음 — Divider 최솟값은 1px부터.",
   "width": {
-    "measuredValue": "390px (고정, 8개 노드 전부 동일)",
-    "innerRectangle": "flex-[1_0_0]로 부모를 꽉 채우도록 설정되어 있으나 부모 컨테이너 자체가 390px 고정",
-    "context": "이 390px는 Figma 컴포넌트 셋 진열 프레임(2041:2838, 전체 폭 430px, 좌우 20px 여백)의 폭과 일치",
-    "tokenMatch": "확인 필요 — 실제 디자인 의도가 고정 390px인지, 컨테이너에 맞춰 늘어나는 100%인지 Figma 파일만으로 판단 불가. 임의로 단정하지 않음."
+    "measuredValue": "390px (8개 노드 전부 동일, 실측값)",
+    "innerRectangle": "flex-[1_0_0]로 부모를 꽉 채우도록 설정",
+    "context": "390px는 Figma 컴포넌트 셋 진열 프레임(2041:2838, 전체 폭 430px, 좌우 20px 여백)의 크기를 그대로 보여준 것일 뿐, 컴포넌트 자체의 고정값이 아님",
+    "actualBehavior": "100% — 부모 컨테이너(화면) 폭에 맞춰 늘어남",
+    "tokenMatch": "정확히 일치 (100% width로 확정)"
   },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2041:2838, recursive)에 호출했으나 motionSummary: null, codeSnippets: {}인 빈 결과 반환. State 축 자체가 없는 순수 표시용 컴포넌트.",
@@ -40,13 +41,13 @@
   "tokenMatchSummary": {
     "정확히일치": [
       "Height 8단계 전부 → ref-borderwidth-02~ref-borderwidth-09",
-      "배경색 neutral/100(#f6f7f7) → sys-color-neutral-100(ref-color-gray-100), 8단계 전부 공통"
+      "배경색 neutral/100(#f6f7f7) → sys-color-neutral-100(ref-color-gray-100), 8단계 전부 공통",
+      "너비 100% (부모 컨테이너/화면 폭에 맞춰 늘어남)"
     ],
     "기존토큰에없음": [
       "Height 8단계 스케일 자체를 'Divider 두께'로 지정하는 시맨틱 토큰 (각 값은 ref-borderwidth-*와 일치하나 '이 스텝들을 쓴다'는 규칙 자체는 문서화 안 됨)"
     ],
     "확인필요": [
-      "너비가 고정값인지 컨테이너에 맞춰 늘어나는지",
       "접근성 role/aria 규정",
       "WCAG 명암비 수치 검증"
     ]
