@@ -24,10 +24,14 @@
 | Supporting Text | [components/global/supporting-text/supporting-text.md](./global/supporting-text/supporting-text.md) | 완료 | 36개 인스턴스 (Size S/M/L × Theme 6종 × Text Count True/False). `components/global/` 소속 — Input/TextField 하단 헬퍼·에러·성공 텍스트 서브 아톰. 10개 노드 선택 샘플링(0장 참고) |
 | Type Box | [components/global/type-box/type-box.md](./global/type-box/type-box.md) | 완료 | 12개 인스턴스 (Size S/M/L × State Selected/Placeholder/Typing/Done). `components/global/` 소속 — Input/TextField 서브 아톰(입력값 타이포·캐럿 미리보기) |
 | Dropdown | [components/dropdown/dropdown.md](./dropdown/dropdown.md) | 완료 | 288개 인스턴스 (Size S/M/L × State 5종 × Destructed(Selected 전용) × Show Button/Show Label/Supporting Text/Left Icon 각 2종). Label/Type Box/Supporting Text를 서브 아톰으로 재사용. 13개 노드 전략적 샘플링(0장 참고) |
+| Segmented Control Item(`_Item`) | [components/global/segmented-control-item/segmented-control-item.md](./global/segmented-control-item/segmented-control-item.md) | 완료 | 10개 인스턴스 (Size XS/S/M/L/XL × Selected True/False). `components/global/` 소속 — Segmented Control 전용 서브 아톰(디자이너가 아토믹 디자인 목적으로 분리). 전수 실측 |
+| Segmented Control | [components/segmented-control/segmented-control.md](./segmented-control/segmented-control.md) | 완료 | 20개 인스턴스 (Size S/M/L/XL × Count 2~5, Size=S만 구/신 2벌 존재). `_Item`을 조합해 만들어짐. Size=S 구/신버전 불일치 발견(4장, 확인 필요) — 10개 노드 전략적 샘플링 |
 
 ## components/global/이란
 
 `components/global/` 폴더는 Input, TextField, TextArea 등 **여러 상위 컴포넌트에서 공통으로 재사용되는 작은 서브 아톰**을 모아두는 곳입니다. Avatar가 Chip의 서브컴포넌트로 쓰이는 것과 비슷하게, 이 폴더의 컴포넌트들은 단독으로 화면에 배치되는 완성형 컴포넌트가 아니라 다른 컴포넌트 내부의 한 조각(텍스트 커서, 필드 라벨, 글자 수 카운터 등)입니다. 문서 구조와 실측 원칙은 다른 컴포넌트와 동일합니다.
+
+예외적으로 `Segmented Control Item`(`_Item`)은 실제로는 [Segmented Control](./segmented-control/segmented-control.md) **단 하나**에서만 쓰이지만, Figma 파일 안에서 디자이너가 이를 독립된 별도 컴포넌트로 명시적으로 분리해둔 아토믹 디자인 의도를 존중해 같은 `components/global/` 패턴으로 문서화했습니다.
 
 ## 문서화 상태 범례
 

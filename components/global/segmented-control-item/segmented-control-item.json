@@ -1,0 +1,102 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Segmented Control Item (_Item)",
+  "location": "components/global/ — Segmented Control 하나에서만 재사용되지만, Figma에서 디자이너가 독립된 별도 Frame으로 명시적으로 분리해둔 서브 아톰이라 다른 global 서브 아톰과 동일한 패턴으로 문서화함. 단독 컴포넌트 아님.",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2196-8568",
+    "componentNodeId": "2196:8568",
+    "componentName": "_Item",
+    "totalVariantInstances": 10,
+    "axes": ["Size(XS/S/M/L/XL)", "Selected(True/False)"],
+    "note": "Segmented Control의 세그먼트(탭) 하나를 나타내는 서브 아톰. Hover/Pressed/Disabled 등 다른 State 축은 Figma에 존재하지 않음."
+  },
+  "sampling": {
+    "method": "전수 실측 (get_design_context 10회 + get_variable_defs 2회 + get_motion_context 1회(recursive))",
+    "coverage": "10개 Size×Selected 조합 전체 개별 실측함. 추정/외삽 없음."
+  },
+  "variables": {
+    "neutral/800": "#202837",
+    "neutral/500": "#8c9199",
+    "common/white-default": "#fdfdfd",
+    "color/gray/900-5": "#03091a0d",
+    "shadow_unit/0": "0",
+    "shadow_unit/2": "2",
+    "shadow_unit/4": "4",
+    "spacing/03": "3",
+    "spacing/04": "4",
+    "spacing/05": "6",
+    "spacing/06": "8",
+    "spacing/07": "10",
+    "spacing/08": "12",
+    "spacing/10": "16",
+    "radius/03": "6",
+    "radius/04": "8",
+    "radius/06": "12",
+    "font/pretendard": "Pretendard",
+    "weight/500": "Medium",
+    "weight/600": "Semibold",
+    "letterSpacing/Caption": "-0.03",
+    "letterSpacing/Body": "-0.04",
+    "letterSpacing/Subtitle": "-0.09",
+    "size/Caption2": "10",
+    "size/Caption1": "12",
+    "size/Body2": "14",
+    "size/Body1": "16",
+    "size/Subtitle": "18",
+    "lineHeight/Caption2": "16",
+    "lineHeight/Caption1": "18",
+    "lineHeight/Body2": "22",
+    "lineHeight/Body1": "24",
+    "lineHeight/Subtitle": "24"
+  },
+  "variants": {
+    "XS,True":  { "sourceNodeId": "2217:13546", "size": "41x22px", "paddingX": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/03", "value": "3px", "token": "ref-spacing-03", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/03", "value": "6px", "token": "ref-radius-03", "tokenMatch": "정확히 일치" }, "typography": "Caption2/10 SemiBold(600)", "figmaStyle": "Caption 2/10 SB", "lineHeight": "16px", "letterSpacing": "-0.03px", "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" }, "shadow": { "offsetY": "2px", "blur": "2px", "colorVariable": "color/gray/900-5", "colorValue": "rgba(3,9,26,0.05)" }, "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "token": "sys-color-neutral-800", "tokenMatch": "정확히 일치" } },
+    "XS,False": { "sourceNodeId": "2217:13548", "size": "41x22px", "paddingX": "동일(8px)", "paddingY": "동일(3px)", "radius": "동일(6px)", "typography": "Caption2/10 SemiBold(600) — True와 동일", "background": null, "shadow": null, "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "token": "sys-color-neutral-500", "tokenMatch": "정확히 일치" } },
+    "S,True":   { "sourceNodeId": "2196:8567", "size": "46x26px", "paddingX": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/03", "value": "6px", "tokenMatch": "정확히 일치" }, "typography": "Caption1/12 SemiBold(600)", "figmaStyle": "Caption 1/12 SB", "lineHeight": "18px", "letterSpacing": "-0.03px", "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" }, "shadow": { "offsetY": "2px", "blur": "2px", "colorVariable": "color/gray/900-5", "colorValue": "rgba(3,9,26,0.05)" }, "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" } },
+    "S,False":  { "sourceNodeId": "2196:8565", "size": "46x26px", "paddingX": "동일(8px)", "paddingY": "동일(4px)", "radius": "동일(6px)", "typography": "Caption1/12 SemiBold(600) — True와 동일", "background": null, "shadow": null, "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" } },
+    "M,True":   { "sourceNodeId": "2196:8564", "size": "55x34px", "paddingX": { "figmaVariable": "spacing/07", "value": "10px", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" }, "typography": "Body2/14 Medium(500)", "figmaStyle": "Body 2/14 M", "lineHeight": "22px", "letterSpacing": "-0.04px", "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" }, "shadow": { "offsetY": "2px", "blur": "2px", "colorVariable": "color/gray/900-5", "colorValue": "rgba(3,9,26,0.05)" }, "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" } },
+    "M,False":  { "sourceNodeId": "2196:8566", "size": "55x34px", "paddingX": "동일(10px)", "paddingY": "동일(6px)", "radius": "동일(8px)", "typography": "Body2/14 Medium(500) — True와 동일", "background": null, "shadow": null, "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" } },
+    "L,True":   { "sourceNodeId": "2196:8563", "size": "64x40px", "paddingX": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" }, "typography": "Body1/16 Medium(500)", "figmaStyle": "Body 1/16 M", "lineHeight": "24px", "letterSpacing": "-0.04px", "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" }, "shadow": { "offsetY": "2px", "blur": "2px", "colorVariable": "color/gray/900-5", "colorValue": "rgba(3,9,26,0.05)" }, "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" } },
+    "L,False":  { "sourceNodeId": "2196:8562", "size": "64x40px", "paddingX": "동일(12px)", "paddingY": "동일(8px)", "radius": "동일(12px)", "typography": "Body1/16 Medium(500) — True와 동일", "background": null, "shadow": null, "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" } },
+    "XL,True":  { "sourceNodeId": "2196:8561", "size": "77x48px", "paddingX": { "figmaVariable": "spacing/10", "value": "16px", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" }, "typography": "Subtitle/18 Medium(500)", "figmaStyle": "SubTitle/18 M", "lineHeight": "24px", "letterSpacing": "-0.09px", "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" }, "shadow": { "offsetY": "2px", "blur": "2px", "colorVariable": "color/gray/900-5", "colorValue": "rgba(3,9,26,0.05)" }, "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" } },
+    "XL,False": { "sourceNodeId": "2196:8560", "size": "77x48px", "paddingX": "동일(16px)", "paddingY": "동일(12px)", "radius": "동일(12px)", "typography": "Subtitle/18 Medium(500) — True와 동일", "background": null, "shadow": null, "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" } }
+  },
+  "sizeAxisFinding": "높이는 lineHeight + 세로padding×2와 정확히 일치(5개 Size 전부 확인). 타이포 weight가 S→M 사이에서 SemiBold(600, XS/S)→Medium(500, M/L/XL)로 전환됨. 가로padding: XS=S=8px(spacing/06)→M=10px(spacing/07)→L=12px(spacing/08)→XL=16px(spacing/10, spacing/09=14px 건너뜀). 세로padding: XS=3(spacing/03)→S=4(spacing/04)→M=6(spacing/05)→L=8(spacing/06)→XL=12(spacing/08, spacing/07=10px 건너뜀). radius는 3단계(XS·S=radius/03=6px, M=radius/04=8px, L·XL=radius/06=12px)로만 나뉘며 radius/05(10px)는 쓰이지 않음.",
+  "selectedAxisFinding": "Selected 축은 배경(common/white-default)·그림자(offsetY 2px, blur 2px, color/gray/900-5)·텍스트 색상(neutral/800 vs neutral/500) 3가지만 바꾸고, padding·radius·타이포(family/size/weight/lineHeight/letterSpacing)는 5개 Size 전부에서 True/False 동일함(10개 노드 전수 실측으로 예외 없음 확정).",
+  "shadowTokenNote": "그림자 색상이 저장소 tokens/colors.json의 shadow.01/02/03(#454C58 20/24/32%) 시맨틱 토큰이 아니라 color/gray/900-5(alpha.gray-900.5 = rgba(3,9,26,0.05))라는 별개의 alpha 토큰을 직접 참조함 — 확인 필요.",
+  "width": {
+    "measuredValue": "41~77px (Size별 상이, 독립 진열 프레임 기준)",
+    "context": "Segmented Control 내부에 실제로 조합된 형태에서는 각 _Item 인스턴스가 flex-[1_0_0] min-w-px로 지정되어 컨테이너 폭을 세그먼트 개수만큼 균등 분할함이 확인됨(get_design_context 코드에서 직접 확인).",
+    "recommendation": "고정 너비 아님. 부모 컨테이너를 세그먼트 개수로 균등 분할(flex: 1 1 0%)하는 것이 올바른 구현.",
+    "tokenMatch": "확인 완료 — 고정폭 아님, flex 균등분할"
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 최상위(2196:8568, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. Selected 전환 시 트랜지션 정의 없음.",
+  "accessibility": {
+    "roleTab": "role=\"tab\" aria-selected={Selected} 부여가 적절해 보이나 Figma에 규정 없음 — 확인 필요.",
+    "stateFeedback": "Hover/Focus/Pressed 등 다른 상태 축 자체가 Figma 컴포넌트에 없음 — 구현 시 별도 설계 필요, 확인 필요.",
+    "contrast": "Selected=False 텍스트(neutral/500 #8c9199, 흰 배경 위) 명암비가 WCAG 기준을 충족하는지 확인 필요.",
+    "keyboardNav": "좌우 화살표 등 세그먼트 간 키보드 이동 규정은 상위 Segmented Control 문서(../../segmented-control/segmented-control.md) 범위."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "배경 common/white-default(#fdfdfd) → sys-color-common-white-default",
+      "텍스트 색상 neutral/800(#202837) → sys-color-neutral-800, neutral/500(#8c9199) → sys-color-neutral-500",
+      "Radius: radius/03(6px) → ref-radius-03, radius/04(8px) → ref-radius-04, radius/06(12px) → ref-radius-06",
+      "Spacing(padding): spacing/03,04,05,06,07,08,10 전부 ref-spacing-03~10과 일치",
+      "타이포: Caption2/10 SB, Caption1/12 SB, Body2/14 M, Body1/16 M, Subtitle/18 M 전부 tokens/typography.json과 정확히 일치"
+    ],
+    "기존토큰에없음": [
+      "Size별 'padding+radius+타이포 조합' 규칙 자체를 지정하는 시맨틱 토큰 (개별 값은 토큰과 일치)",
+      "그림자의 color/gray/900-5 + shadow_unit/0,2,4 조합을 shadow/01~03 시맨틱 토큰으로 매핑하는 규정"
+    ],
+    "확인필요": [
+      "그림자 색상이 shadow/01~03이 아닌 alpha 토큰을 직접 참조하는 것이 의도인지",
+      "Hover/Focus/Pressed 상태 시각 피드백 규정",
+      "role=\"tab\"/aria-selected 등 접근성 마크업 연결 규정",
+      "Selected=False 텍스트 명암비의 WCAG 충족 여부"
+    ]
+  },
+  "sampledNodeIds": ["2217:13546", "2217:13548", "2196:8567", "2196:8565", "2196:8564", "2196:8566", "2196:8563", "2196:8562", "2196:8561", "2196:8560"]
+}
