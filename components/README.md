@@ -14,6 +14,7 @@
 | Button Spinner | [components/button/button-spinner/button-spinner.md](./button/button-spinner/button-spinner.md) | 완료 | 4 (Size S/M/L/XL). 버튼 Loading 상태의 스피너 아톰 |
 | Badge | [components/badge/badge.md](./badge/badge.md) | 완료 | 210개 인스턴스 (Content 126 + Numeric 84). Figma상 4개 Component Set으로 분리됨 |
 | Checkbox | [components/checkbox/checkbox.md](./checkbox/checkbox.md) | 완료 | 24개 인스턴스 (Angular 12 + Rounded 12). Figma상 2개 Component Set으로 분리됨 |
+| Chip | [components/chip/chip.md](./chip/chip.md) | 완료 | 190개 인스턴스 (Selection 150 + Filter 40). Figma상 2개 Component Set으로 분리됨 |
 
 ## 문서화 상태 범례
 

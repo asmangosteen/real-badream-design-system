@@ -1,0 +1,109 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Chip",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2483-12764",
+    "overviewGroupNodeId": "2483:12764",
+    "note": "Chip은 하나의 Component Set이 아니라 2개의 독립된 Component Set으로 구성됨.",
+    "componentSets": {
+      "selection": { "nodeId": "2270:842", "name": "Chip / Selection", "variantCount": 150, "axes": ["Size(S/M/L)", "Type(Outlined/Filled)", "State(Default/Hover/Pressed/Disabled/Selected)", "Contents(Text/Avatar+Text/Avatar+Text+Icon/Icon+Text/Text+Icon)"] },
+      "filter": { "nodeId": "2275:3087", "name": "Chip / Filter", "variantCount": 40, "axes": ["Type(Outlined/Filled)", "State(Default/Hover/Pressed/Disabled/Selected)", "Contents(Avatar+Icon/Icon/Avatar+Text+Icon/Text+Icon)"] }
+    },
+    "totalVariantInstances": 190
+  },
+  "sampling": {
+    "method": "선택적 샘플링 (get_design_context 25회 + get_variable_defs 1회(상위 그룹 전체) + get_motion_context 1회(recursive) + get_metadata 1회)",
+    "coverage": "Selection은 3개 Size, 2개 Type, 5개 State, 5개 Contents를 모두 최소 1회 포함. Filter는 2개 Type, 5개 State, 4개 Contents를 모두 최소 1회 포함. 190개 전체 교차는 전수 검증하지 않음 — 색상 규칙은 Size에 독립적, 패딩/구조 규칙은 State에 독립적이라고 가정(Badge/Button 문서와 동일한 가정)."
+  },
+  "selection": {
+    "sizes": {
+      "S": { "sourceNodeId": "2273:2741", "padding": { "x": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06" }, "y": { "figmaVariable": "spacing/03", "value": "3px", "token": "ref-spacing-03" } }, "radius": { "figmaVariable": "radius/03", "value": "6px", "token": "ref-radius-03" }, "typography": { "styleName": "caption1", "fontSize": "12px", "lineHeight": "18px", "weight": "Medium(500)" }, "tokenMatch": "정확히 일치" },
+      "M": { "sourceNodeId": "2270:841", "padding": { "x": { "figmaVariable": "spacing/08", "value": "12px", "token": "ref-spacing-08" }, "y": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05" } }, "radius": { "figmaVariable": "radius/05", "value": "10px", "token": "ref-radius-05" }, "typography": { "styleName": "body2", "fontSize": "14px", "lineHeight": "22px", "weight": "Medium(500)" }, "tokenMatch": "정확히 일치" },
+      "L": { "sourceNodeId": "2270:827", "padding": { "x": { "figmaVariable": "spacing/08", "value": "12px", "token": "ref-spacing-08", "note": "M과 동일" }, "y": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06" } }, "radius": { "figmaVariable": "radius/06", "value": "12px", "token": "ref-radius-06" }, "typography": { "styleName": "body1", "fontSize": "16px", "lineHeight": "24px", "weight": "Medium(500)" }, "tokenMatch": "정확히 일치" },
+      "weightNote": "3개 Size 전부 Weight Medium(500) 고정 — Button/Badge와 달리 사이즈별 weight 변화 없음"
+    },
+    "typeState": {
+      "sourceNodeIds": { "outlinedDefault": "2270:841", "outlinedHover": "2270:836", "outlinedPressed": "2270:824", "outlinedDisabled": "2270:761", "outlinedSelected": "2270:798", "filledDefault": "2270:793", "filledHover": "2270:837", "filledPressed": "2270:835", "filledDisabled": "2270:829", "filledSelected": "2270:833" },
+      "outlined": {
+        "default": { "background": "common/white-default", "border": { "width": "1px", "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "tokenMatch": "정확히 일치" }, "text": "neutral/600" },
+        "hover": { "overlay": { "figmaVariable": "color/gray/900-2", "value": "rgba(3,9,26,0.02)", "token": "ref-color-alpha-gray-900-2", "tokenMatch": "정확히 일치" }, "note": "Button/Checkbox의 interaction/light-gray(5%) 패밀리가 아니라 raw alpha 2% 스텝 사용" },
+        "pressed": { "overlay": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "token": "ref-color-alpha-gray-900-5", "tokenMatch": "정확히 일치" } },
+        "disabled": { "mechanism": "배경/테두리 불변 + 전체 opacity 40%", "opacity": { "figmaVariable": "opacity/40", "value": "40%", "token": "ref-opacity-40", "tokenMatch": "정확히 일치", "note": "Button 문서에서 사용처 미확인으로 남겼던 토큰의 실사용처" } },
+        "selected": { "background": { "figmaVariable": "brand/primary-lightest", "hex": "#eef4fc" }, "border": { "figmaVariable": "color/blue/500-60", "value": "rgba(44,123,226,0.6)", "token": "ref-color-alpha-blue-500-60", "tokenMatch": "정확히 일치" }, "text": { "figmaVariable": "brand/primary-default", "hex": "#2c7be2" } }
+      },
+      "filled": {
+        "default": { "background": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치" }, "border": "없음", "text": "neutral/600" },
+        "hover": { "value": "rgba(3,9,26,0.05) (Default와 동일)", "note": "실측상 Default와 값이 완전히 같아 시각적 피드백이 없음 — 의도적인지 확인 필요" },
+        "pressed": { "mechanism": "Default 배경(5%) 위에 추가 10% 오버레이 합성(2겹 gradient)", "overlay": { "figmaVariable": "color/gray/900-10(추가 레이어)", "value": "rgba(3,9,26,0.1) over rgba(3,9,26,0.05)" } },
+        "disabled": { "mechanism": "배경(gray-900-5%) 불변 + 전체 opacity 40%", "opacity": { "figmaVariable": "opacity/40", "tokenMatch": "정확히 일치" } },
+        "selected": { "background": { "figmaVariable": "neutral/800", "hex": "#202837" }, "backgroundToken": "sys-color-neutral-800 (ref-color-gray-800)", "tokenMatch": "정확히 일치", "text": { "figmaVariable": "common/white-default", "hex": "#fdfdfd" }, "note": "Outlined Selected(연한 파란 배경+파란 테두리)와 완전히 다른 전략 — 진한 남색 단색으로 전환" }
+      }
+    },
+    "contents": {
+      "note": "M, Outlined, Default 기준 실측. S/L에서도 동일 비율 적용된다고 추정 — 개별 검증 안 함, 확인 필요.",
+      "text": { "structure": "라벨만", "padding": "2장 Size별 스펙과 동일" },
+      "avatarText": { "sourceNodeId": "2270:819", "structure": "Avatar Container(내부 px=4px,py=3px, 16px 원형 Avatar) + 라벨", "padding": { "left": { "figmaVariable": "spacing/06", "value": "8px" }, "right": { "figmaVariable": "spacing/08", "value": "12px" } }, "asymmetryNote": "왼쪽(아바타 쪽)이 더 작음" },
+      "avatarTextIcon": { "sourceNodeId": "2270:821", "structure": "Avatar Container + 라벨 + Icon Container(내부 px=2px,py=3px, 16px 아이콘)", "padding": { "x": { "figmaVariable": "spacing/06", "value": "8px", "symmetric": true } } },
+      "iconText": { "sourceNodeId": "2270:755", "structure": "Icon Container(왼쪽) + 라벨", "padding": { "left": { "figmaVariable": "spacing/06", "value": "8px" }, "right": { "figmaVariable": "spacing/08", "value": "12px" } } },
+      "textIcon": { "sourceNodeId": "2270:757", "structure": "라벨 + Icon Container(오른쪽)", "padding": { "left": { "figmaVariable": "spacing/08", "value": "12px" }, "right": { "figmaVariable": "spacing/06", "value": "8px" } } },
+      "avatarSubcomponent": { "size": "16px (Chip에서 항상 이 크기만 사용)", "border": { "width": { "figmaVariable": "borderwidth/02", "value": "1px" }, "color": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)" } }, "radius": "radius/12 (999px, 원형)", "imageFit": "object-cover", "tokenMatch": "정확히 일치" },
+      "icon": { "asset": "Icon / Default / 16px / plus", "swappable": true, "propName": "iconM" }
+    }
+  },
+  "filter": {
+    "sourceNodeIds": { "default": "2275:3568", "hover": "2275:3576", "pressed": "2275:3584", "disabled": "2275:3592", "selected": "2275:3632", "filledDefault": "2275:3600", "contentsIcon": "2275:4023", "contentsAvatarIcon": "2275:3893", "contentsAvatarTextIcon": "2275:3268" },
+    "noSizeAxis": true,
+    "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" },
+    "typography": { "styleName": "body2", "fontSize": "14px", "lineHeight": "22px", "weight": "Medium(500)", "note": "Size 축이 없어 고정" },
+    "padding": {
+      "textIcon": { "left": { "figmaVariable": "spacing/08", "value": "12px" }, "right": { "figmaVariable": "spacing/06", "value": "8px" }, "y": { "figmaVariable": "spacing/05", "value": "6px" } },
+      "iconOnly": { "all": { "figmaVariable": "spacing/05", "value": "6px" }, "innerIconContainer": { "figmaVariable": "spacing/03", "value": "3px" } },
+      "avatarIcon": { "left": { "figmaVariable": "spacing/05", "value": "6px", "note": "Selection의 Avatar+Text pl(8px)보다 작음" }, "right": { "figmaVariable": "spacing/06", "value": "8px" }, "y": { "figmaVariable": "spacing/05", "value": "6px" } }
+    },
+    "icon": { "asset": "Icon / Default / 16px / chevron_down", "swappable": false, "note": "Selection과 달리 항상 고정된 chevron_down 아이콘. Selected 상태에서 다른 SVG 애셋으로 교체됨(색상 변경 추정, SVG fill 미확인)" },
+    "colorStateMechanism": "Selection의 typeState와 완전히 동일 (Default/Hover=gray-900-2%/Pressed=gray-900-5%/Disabled=opacity-40%/Selected=Outlined는 brand-lightest+blue-500-60% 테두리, Filled는 neutral-800)"
+  },
+  "interactionTokenSummary": {
+    "outlinedHover": { "figmaVariable": "color/gray/900-2", "value": "rgba(3,9,26,0.02)" },
+    "pressed": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)" },
+    "disabled": { "figmaVariable": "opacity/40", "value": "40%" },
+    "selectedBorderOutlined": { "figmaVariable": "color/blue/500-60", "value": "rgba(44,123,226,0.6)" },
+    "selectedBackgroundFilled": { "figmaVariable": "neutral/800", "value": "#202837" },
+    "note": "모두 tokens/colors.json의 reference.alpha/시스템 롤 테이블과 정확히 일치하지만, Button/Checkbox의 interaction/* 시맨틱 패밀리와는 다른 raw 토큰 경로를 사용함."
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 상위 그룹(2483:12764, recursive=true)에 호출했으나 빈 배열 반환.",
+  "accessibility": {
+    "selectedStateSemantics": "Outlined/Filled의 Selected가 서로 다른 시각 전략(연한 파랑 vs 진한 남색)을 쓰므로 aria-pressed/aria-selected 등 명시적 속성 필요 — Figma에 규정 없음.",
+    "disabledOpacityDifference": "Chip Disabled는 opacity 40%(Button은 20%) — 의도적 차이인지 확인 필요.",
+    "filterChipDropdownSemantics": "chevron_down이 항상 붙는 구조상 aria-haspopup/aria-expanded 필요할 것으로 보이나 Figma에 명시 없음.",
+    "minTouchTarget": "S 사이즈 전체 높이 24px로 44px 권장 기준보다 작음."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "Selection 모든 Size의 padding/radius → ref-spacing-03/05/06/08, ref-radius-03/05/06",
+      "모든 typography (caption1/body2/body1, weight 500) → tokens/typography.json",
+      "Outlined 테두리 1px gray-900-10% → ref-color-alpha-gray-900-10",
+      "Filled 배경 gray-900-5% → ref-color-alpha-gray-900-5",
+      "Hover gray-900-2% → ref-color-alpha-gray-900-2",
+      "Selected(Outlined) 테두리 blue-500-60% → ref-color-alpha-blue-500-60",
+      "Selected(Filled) 배경 neutral/800(#202837) → sys-color-neutral-800(ref-color-gray-800)",
+      "Disabled opacity/40 → ref-opacity-40 (Button 문서의 미사용 토큰이 Chip에서 실사용됨을 확인)",
+      "Filter Radius 999px → ref-radius-12",
+      "Avatar 서브컴포넌트 테두리 gray-900-5%, borderwidth/02(1px)"
+    ],
+    "기존토큰에없음": [],
+    "확인필요": [
+      "Filled Hover가 Default와 값이 동일해 시각적 피드백이 없는 것이 의도적인지",
+      "Contents 구조의 패딩 비대칭이 S/L 사이즈에도 동일 비율로 적용되는지(M만 실측)",
+      "Filter Chip Selected 시 아이콘 애셋 교체의 정확한 색상 값(SVG fill 미확인)",
+      "Chip Disabled 40%와 Button 20%의 차이가 의도적인지",
+      "Selected/Filter의 ARIA 속성 규정 여부"
+    ]
+  },
+  "sampledNodeIds": {
+    "selection": ["2270:841", "2270:836", "2270:824", "2270:761", "2270:798", "2270:793", "2270:837", "2270:835", "2270:829", "2270:833", "2273:2741", "2270:827", "2270:782", "2270:819", "2270:821", "2270:755", "2270:757"],
+    "filter": ["2275:3568", "2275:3576", "2275:3584", "2275:3592", "2275:3632", "2275:3600", "2275:4023", "2275:3893", "2275:3268"]
+  }
+}
