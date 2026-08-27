@@ -80,10 +80,10 @@
   "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2114:4182, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. State 축 자체가 없는 순수 표시용 컴포넌트.",
   "showIconProp": {
     "description": "아이콘 표시 여부는 36개 변형 축에 포함되지 않는 별도 boolean prop(showIcon, 기본값 true)으로 토글 가능. iconS/iconM 슬롯으로 아이콘 자체 교체도 가능.",
-    "iconIdentityIssue": "6개 Theme 샘플 전부 Figma 레이어명이 동일하게 \"Icon / Default / 12px / warning_filled\"로 되어 있으나, 실제로는 Theme마다 서로 다른 SVG 애셋(URL 상이)을 가리킴. 스크린샷 실측으로 Theme별 아이콘 형태가 다름을 육안 확인했으나, 레이어명이 갱신되지 않아 정확한 아이콘 식별자는 확인 필요."
+    "iconPlaceholderNote": "6개 Theme 샘플 전부 Figma 레이어명이 동일하게 \"Icon / Default / 12px / warning_filled\"로 되어 있음 — 이는 네이밍 오류가 아니라 의도된 상태(사용자 확인). 현재는 임시로 하나의 아이콘 글리프로 통일해둔 placeholder이며, Theme·문맥별 고정 아이콘 매핑은 없음. 실제 구현 시 자유롭게 교체 가능한 슬롯."
   },
   "accessibility": {
-    "iconAsSecondSignal": "색상 외 아이콘이 두 번째 신호로 존재하는 것으로 스크린샷상 확인되나, 레이어명이 신뢰할 수 없어(위 iconIdentityIssue) Theme-아이콘 의미 대응의 정확한 목록은 확인 필요.",
+    "iconAsSecondSignal": "색상 외 아이콘이 두 번째 신호로 존재. 아이콘 글리프 자체는 자유 교체 가능한 placeholder이므로(위 iconPlaceholderNote) Theme별 고정 의미 대응표는 없음 — 구현 시 문맥에 맞는 아이콘 선택은 구현체 재량.",
     "showIconFalseRisk": "showIcon=false로 아이콘을 끄면 Destructed/Success/Warning 구분이 색상에만 의존하게 되어 WCAG 1.4.1(색에만 의존하지 않기) 위반 소지 있음. 아이콘 항상 표시를 강제하는 Figma 규정 존재 여부는 확인 필요.",
     "colorContrast": "6개 Theme 텍스트 색상의 흰 배경 대비 WCAG AA(4.5:1) 명암비를 이 조사에서 계산하지 않음 — 특히 neutral/500(#8c9199, Gray)은 밝은 회색이라 명암비가 낮을 가능성 있어 확인 필요.",
     "counterScreenReaderLabel": "\"000/000\" 카운터에 스크린리더용 레이블이 필요한지 Figma 파일에 규정 없음 — 확인 필요."
@@ -107,7 +107,6 @@
     ],
     "확인필요": [
       "Gray/Black 두 톤의 정확한 사용 구분 기준",
-      "Theme별 아이콘의 정확한 식별자(레이어명 신뢰 불가)",
       "showIcon=false 시 색상 단독 의존에 대한 WCAG 대응 규정",
       "각 Theme 색상의 명암비(AA) 수치 검증",
       "카운터 텍스트의 스크린리더 접근성 규정",
