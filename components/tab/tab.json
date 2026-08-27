@@ -1,0 +1,118 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Tab",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2262-2251",
+    "frameNodeId": "2262:2251",
+    "frameName": "Tab",
+    "totalVariantInstances": 10,
+    "axes": ["Size(S/L)", "Type(Hug/Fill)", "Tailing Icon(True/False)", "Side Padding(True/False)"],
+    "note": "Type=Fill에는 Tailing Icon/Side Padding 축이 없음(항상 False 조합 1개만 존재). Count(탭 개수) 축은 Figma variant property로 노출되어 있지 않음 — Type=Hug는 showTab1~8 불리언 prop, Type=Fill은 showTab1~5 불리언 prop으로 대체 제어됨(5장 참고)."
+  },
+  "sampling": {
+    "method": "전수 실측 (get_metadata 1회 + get_design_context 10회 + get_variable_defs 2회 + get_motion_context 1회(recursive))",
+    "coverage": "10개 Size×Type×TailingIcon×SidePadding 조합 전체 개별 실측함. Fill이 Size당 1개뿐이라 다른 토글 조합 자체가 Figma에 존재하지 않으므로 미실측 조합 없음."
+  },
+  "sizes": {
+    "S": {
+      "hugBaseNodeId": "2262:2248",
+      "measuredHeight": "42px",
+      "innerItemSize": "S (tab-item.md S행과 완전 일치: py10/Body2·14 SB)",
+      "heightFormula": "탭 바 높이 = 내부 _Item(S) 높이 42px 그대로(컨테이너 자체 padding 없음)",
+      "bottomDivider": { "height": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "color": { "figmaVariable": "neutral/100", "value": "#f6f7f7", "tokenMatch": "정확히 일치" } },
+      "itemGap_sidePaddingFalse": { "figmaVariable": "spacing/12", "value": "24px", "tokenMatch": "정확히 일치" },
+      "itemGap_sidePaddingTrue": { "figmaVariable": "spacing/11", "value": "20px", "tokenMatch": "정확히 일치", "note": "S에서는 Side Padding=True 시 gap이 24→20px로 축소됨" },
+      "trailingIconSlot": { "size": "42x42px", "iconSize": "20px", "padding": { "figmaVariable": "spacing/06", "value": "8px" }, "radius": { "figmaVariable": "radius/06", "value": "12px" } }
+    },
+    "L": {
+      "hugBaseNodeId": "2262:2564",
+      "measuredHeight": "48px",
+      "innerItemSize": "L (tab-item.md L행과 완전 일치: py12/Body1·16 SB)",
+      "heightFormula": "탭 바 높이 = 내부 _Item(L) 높이 48px 그대로(컨테이너 자체 padding 없음)",
+      "bottomDivider": { "height": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "color": { "figmaVariable": "neutral/100", "value": "#f6f7f7", "tokenMatch": "정확히 일치" } },
+      "itemGap_sidePaddingFalse": { "figmaVariable": "spacing/12", "value": "24px", "tokenMatch": "정확히 일치" },
+      "itemGap_sidePaddingTrue": { "figmaVariable": "spacing/12", "value": "24px", "tokenMatch": "정확히 일치", "note": "확인 필요: L은 Side Padding=True여도 gap이 24px로 유지되어 S(20px로 축소)와 다른 패턴을 보임" },
+      "trailingIconSlot": { "size": "48x48px", "iconSize": "24px", "padding": { "figmaVariable": "spacing/06", "value": "8px" }, "radius": { "figmaVariable": "radius/06", "value": "12px" } }
+    }
+  },
+  "variants": {
+    "S,Hug,TailingIcon=True,SidePadding=False":  { "sourceNodeId": "2262:2250", "size": "390x42px", "containerPaddingX": "0", "itemGap": "24px(spacing/12)", "trailingIcon": true },
+    "S,Hug,TailingIcon=False,SidePadding=False": { "sourceNodeId": "2262:2248", "size": "390x42px", "containerPaddingX": "0", "itemGap": "24px(spacing/12)", "trailingIcon": false },
+    "S,Hug,TailingIcon=True,SidePadding=True":   { "sourceNodeId": "2262:2246", "size": "390x42px", "containerPaddingX": "좌 20px(spacing/11) / 우 12px(하드코딩, 변수 미바인딩 — 확인 필요)", "itemGap": "20px(spacing/11)", "trailingIcon": true },
+    "S,Hug,TailingIcon=False,SidePadding=True":  { "sourceNodeId": "2262:2249", "size": "390x42px", "containerPaddingX": "좌우 20px(spacing/11, 대칭)", "itemGap": "20px(spacing/11)", "trailingIcon": false },
+    "S,Fill":                                    { "sourceNodeId": "2262:2247", "size": "390x42px", "containerPaddingX": "0", "itemGap": "없음(gap 클래스 자체 없음)", "trailingIcon": false, "structureNote": "_Item 컴포넌트 인스턴스 아님 — 내부 구조를 인라인 복제한 'Tab 1'~'Tab 5' 5개, flex-[1_0_0]로 균등분할" },
+    "L,Hug,TailingIcon=False,SidePadding=False": { "sourceNodeId": "2262:2564", "size": "390x48px", "containerPaddingX": "0", "itemGap": "24px(spacing/12)", "trailingIcon": false },
+    "L,Hug,TailingIcon=True,SidePadding=False":  { "sourceNodeId": "2262:2801", "size": "390x48px", "containerPaddingX": "0", "itemGap": "24px(spacing/12)", "trailingIcon": true },
+    "L,Hug,TailingIcon=False,SidePadding=True":  { "sourceNodeId": "2262:2929", "size": "390x48px", "containerPaddingX": "좌우 20px(spacing/11, 대칭)", "itemGap": "24px(spacing/12, 확인 필요 — S와 다름)", "trailingIcon": false },
+    "L,Hug,TailingIcon=True,SidePadding=True":   { "sourceNodeId": "2262:2948", "size": "390x48px", "containerPaddingX": "좌 20px(spacing/11) / 우 12px(하드코딩, 변수 미바인딩 — 확인 필요)", "itemGap": "24px(spacing/12, 확인 필요 — S와 다름)", "trailingIcon": true },
+    "L,Fill":                                    { "sourceNodeId": "2262:3123", "size": "390x48px", "containerPaddingX": "0", "itemGap": "없음(gap 클래스 자체 없음)", "trailingIcon": false, "structureNote": "_Item 컴포넌트 인스턴스 아님 — 내부 구조를 인라인 복제한 'Tab 1'~'Tab 5' 5개, flex-[1_0_0]로 균등분할" }
+  },
+  "typeAxisFinding": {
+    "hug": "_Item(tab-item) 컴포넌트 인스턴스를 <Item active={...} label={...} /> 형태로 그대로 재사용. 탭 너비는 콘텐츠 hug(min-w-32px). 오버플로우 마스크(SVG mask-image)로 가로 스크롤을 암시하는 페이드 효과 있음.",
+    "fill": "_Item을 컴포넌트 인스턴스로 호출하지 않고 내부 구조(Container/텍스트/밑줄)를 'Tab 1'~'Tab 5' 5개 named div로 인라인 복제. 각 탭 flex-[1_0_0]로 균등폭 분할. 탭 간 gap 없음. Trailing 아이콘 슬롯 없음. 오버플로우 마스크 없음(5개 고정이라 넘칠 수 없음)."
+  },
+  "itemReuse": {
+    "ref": "components/global/tab-item/tab-item.md",
+    "hugMaxSlots": "8 (showTab1~showTab8 불리언 prop, 컴포넌트 정의 기준)",
+    "fillFixedSlots": "5 (showTab1~showTab5 불리언 prop, 컴포넌트 정의 기준)",
+    "countAxisNote": "Segmented Control의 Count(2~5)처럼 별도 variant 축으로 노출되지 않고, prop 토글 방식으로 탭 개수를 제어함. 10개 진열 인스턴스는 각기 다른 개수를 true로 켜서 진열했고 나머지는 오버플로우 마스크로 가려짐.",
+    "sizeCorrespondence": "Tab Size=S/L과 내부 _Item Size=S/L이 10개 샘플 전체에서 예외 없이 1:1 대응",
+    "activePatternInSamples": "실측 샘플 전부에서 Tab1만 Active=On, 나머지는 Active=Off로 진열됨 — Figma 진열 기본값일 뿐 실제로는 어느 탭이든 활성화 가능해야 함",
+    "disabledEmphasizeUsage": "10개 샘플 전부 Disabled=False, Emphasize=Off인 _Item만 사용됨 — Tab 조합 안에서 개별 탭에 Disabled/Emphasize를 적용한 실사용 예시는 Figma에 없음"
+  },
+  "overflowMask": {
+    "observed": "Type=Hug의 Tabs 행에는 항상 SVG mask-image가 씌워져 있으며, mask-size는 가용 폭(예: S/TailingIcon=True/SidePadding=False는 336x42px)에 맞춰 계산됨. 스크린샷에서 마지막 탭 1~2개가 옅게 페이드아웃되며 잘리는 것이 확인됨.",
+    "interpretation": "가로 스크롤 가능한 탭 목록임을 시사하는 시각적 힌트로 추정되나, 실제 overflow-x/스크롤 인터랙션은 Figma 스펙에 명시되어 있지 않음 — 확인 필요.",
+    "sourceAsset": {
+      "figmaNodeId": "2262:1908",
+      "figmaNodeName": "Alpha Gradient Mask",
+      "measuredSize": "336x42px (S,TailingIcon=True,SidePadding=False 케이스와 정확히 일치)",
+      "structure": "Front Gradient(고정 42px) + Rectangle(완전 불투명, flex-[1_0_0] 가변폭) + Back Gradient(고정 42px)",
+      "alphaStops": [
+        { "position": "0%", "edgePx": "0.0px", "alpha": 0.00 },
+        { "position": "15%", "edgePx": "6.3px", "alpha": 0.08 },
+        { "position": "30%", "edgePx": "12.6px", "alpha": 0.22 },
+        { "position": "50%", "edgePx": "21.0px", "alpha": 0.42 },
+        { "position": "70%", "edgePx": "29.4px", "alpha": 0.64 },
+        { "position": "85%", "edgePx": "35.7px", "alpha": 0.82 },
+        { "position": "100%", "edgePx": "42.0px", "alpha": 1.00 }
+      ],
+      "curveNote": "정지점 간격이 균등하지 않은 이징(ease) 곡선 — 가장자리 근처는 느리게, 중간 구간에서 빠르게 변화. 단순 선형(linear) 페이드가 아님.",
+      "cssImplementationNote": "실제 구현 시 페이드 폭이 컨테이너 폭과 무관하게 항상 42px 고정이어야 하므로 정지점을 %가 아니라 px/calc(100% - Npx)로 지정해야 함. Figma가 내보내는 rgba(0,0,0,alpha)(검정+알파)를 그대로 쓰면 브라우저의 luminance 기반 mask 계산에서 깨질 수 있어 rgba(255,255,255,alpha)(흰색+알파)로 변환해서 사용해야 함(alpha와 luminance가 항상 같은 방향으로 움직이도록).",
+      "sampledVia": "get_metadata(2262:1908) + get_design_context(2262:1908)로 직접 실측. Tab 문서화 작업과는 별도 세션에서 실측한 값을 이 필드에 통합함."
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 최상위 프레임(2262:2251, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. Active 탭 전환 시 밑줄 인디케이터가 슬라이딩하는 애니메이션 유무를 특히 주의 깊게 확인했으나 Figma에 그런 트랜지션 정의 없음.",
+  "accessibility": {
+    "tablist": "컨테이너 role=\"tablist\", 각 탭 role=\"tab\" aria-selected aria-disabled 부여가 WAI-ARIA Tabs 패턴에 부합해 보이나 Figma에 규정 없음 — 확인 필요.",
+    "keyboardNav": "좌우 화살표/Home/End 등 키보드 네비게이션은 WAI-ARIA Tabs 일반 관례이나 Figma로 확인 불가 — 확인 필요.",
+    "colorOnlyActive": "Active 상태가 밑줄 인디케이터+텍스트 명도 차이로만 표현되어 aria-selected 등 프로그램적 상태 전달 필요.",
+    "scrollAffordance": "오버플로우 마스크가 시사하는 가로 스크롤에 대한 키보드/스크린리더 접근성 설계가 Figma 스펙 범위 밖 — 확인 필요.",
+    "trailingButtonLabel": "Trailing '+' 아이콘 버튼에 대한 접근 가능한 이름(aria-label)이 Figma에 지정되어 있지 않음 — 확인 필요.",
+    "disabledAxis": "Tab 컨테이너 자체에는 Disabled 축이 없음(개별 _Item에만 존재) — Segmented Control과 동일한 패턴, 관찰 사실."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "하단 구분선 색상 neutral/100(#f6f7f7) → tokens/colors.json reference.gray.100(#F6F7F7)",
+      "하단 구분선 두께 borderwidth/02(1px) → tokens/radius.json borderWidth.ref-borderwidth-02(1px)",
+      "Trailing 아이콘 버튼 radius/06(12px) → ref-radius-06",
+      "Spacing: spacing/06,07,08,11,12 전부 ref-spacing-06~12와 일치",
+      "내부 _Item의 padding·타이포는 tab-item.md의 S/L 각 행과 정확히 1:1 일치"
+    ],
+    "기존토큰에없음": [
+      "Size별 '탭 바 높이=내부 _Item 높이' 합성 규칙을 지정하는 토큰/문서",
+      "오버플로우 마스크(페이드 그라디언트)의 그라디언트 폭/정지점을 지정하는 시맨틱 토큰(SVG 애셋으로만 존재)"
+    ],
+    "확인필요": [
+      "Tailing Icon=True+Side Padding=True 조합에서 우측 padding 12px이 변수 미바인딩(하드코딩)인 이유",
+      "Size=L에서 Side Padding=True여도 아이템 gap이 24px로 유지되어 S(20px로 축소)와 다른 패턴을 보이는 이유",
+      "컨테이너 너비 390px의 화면 폭 가변 여부",
+      "Type=Hug 최대 8개/Fill 고정 5개가 실제 프로덕트 제약인지 진열 편의상 값인지",
+      "가로 스크롤 마스크가 시사하는 실제 스크롤 인터랙션의 존재 여부",
+      "role/aria/키보드 네비게이션/Trailing 버튼 aria-label 등 접근성 마크업 연결 규정"
+    ]
+  },
+  "sampledNodeIds": ["2262:2250", "2262:2248", "2262:2246", "2262:2249", "2262:2247", "2262:2564", "2262:2801", "2262:2929", "2262:2948", "2262:3123"]
+}

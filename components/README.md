@@ -26,12 +26,14 @@
 | Dropdown | [components/dropdown/dropdown.md](./dropdown/dropdown.md) | 완료 | 288개 인스턴스 (Size S/M/L × State 5종 × Destructed(Selected 전용) × Show Button/Show Label/Supporting Text/Left Icon 각 2종). Label/Type Box/Supporting Text를 서브 아톰으로 재사용. 13개 노드 전략적 샘플링(0장 참고) |
 | Segmented Control Item(`_Item`) | [components/global/segmented-control-item/segmented-control-item.md](./global/segmented-control-item/segmented-control-item.md) | 완료 | 10개 인스턴스 (Size XS/S/M/L/XL × Selected True/False). `components/global/` 소속 — Segmented Control 전용 서브 아톰(디자이너가 아토믹 디자인 목적으로 분리). 전수 실측 |
 | Segmented Control | [components/segmented-control/segmented-control.md](./segmented-control/segmented-control.md) | 완료 | 20개 인스턴스 (Size XS/S/M/L/XL × Count 2~5). `_Item`을 조합해 만들어짐, 5개 Size 전부 `_Item`과 1:1 대응. 10개 노드 전략적 샘플링. (초기 조사 시 Size=S 노드 일부의 라벨-내용 불일치를 발견했고, 이후 Figma에서 Size=XS로 정정되어 해소됨 — 0-1장 참고) |
+| Tab Item(`_Item`) | [components/global/tab-item/tab-item.md](./global/tab-item/tab-item.md) | 완료 | 12개 인스턴스 (Size S/L × Active On/Off × Disabled False/True × Emphasize Off/On, 축 비직교). `components/global/` 소속 — Tab 전용 서브 아톰(디자이너가 아토믹 디자인 목적으로 분리, Segmented Control Item과 동명이나 별개 컴포넌트). 전수 실측 |
+| Tab | [components/tab/tab.md](./tab/tab.md) | 완료 | 10개 인스턴스 (Size S/L × Type Hug/Fill × Tailing Icon × Side Padding, 축 비직교). `_Item`(Tab Item)을 조합해 만들어짐 — Hug는 인스턴스 재사용(최대 8슬롯), Fill은 내부 구조를 5슬롯으로 인라인 복제. 오버플로우 마스크(`Alpha Gradient Mask`, node 2262:1908)로 가로 스크롤 페이드 구현. 전수 실측 |
 
 ## components/global/이란
 
 `components/global/` 폴더는 Input, TextField, TextArea 등 **여러 상위 컴포넌트에서 공통으로 재사용되는 작은 서브 아톰**을 모아두는 곳입니다. Avatar가 Chip의 서브컴포넌트로 쓰이는 것과 비슷하게, 이 폴더의 컴포넌트들은 단독으로 화면에 배치되는 완성형 컴포넌트가 아니라 다른 컴포넌트 내부의 한 조각(텍스트 커서, 필드 라벨, 글자 수 카운터 등)입니다. 문서 구조와 실측 원칙은 다른 컴포넌트와 동일합니다.
 
-예외적으로 `Segmented Control Item`(`_Item`)은 실제로는 [Segmented Control](./segmented-control/segmented-control.md) **단 하나**에서만 쓰이지만, Figma 파일 안에서 디자이너가 이를 독립된 별도 컴포넌트로 명시적으로 분리해둔 아토믹 디자인 의도를 존중해 같은 `components/global/` 패턴으로 문서화했습니다.
+예외적으로 `Segmented Control Item`(`_Item`)과 `Tab Item`(`_Item`)은 실제로는 각각 [Segmented Control](./segmented-control/segmented-control.md), [Tab](./tab/tab.md) **단 하나**에서만 쓰이지만, Figma 파일 안에서 디자이너가 이를 독립된 별도 컴포넌트로 명시적으로 분리해둔 아토믹 디자인 의도를 존중해 같은 `components/global/` 패턴으로 문서화했습니다. 두 컴포넌트 모두 Figma 레이어명은 동일하게 `_Item`이지만 서로 다른 컴포넌트이므로, 폴더명은 `segmented-control-item`/`tab-item`으로 구분했습니다.
 
 ## 문서화 상태 범례
 

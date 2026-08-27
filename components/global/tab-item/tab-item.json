@@ -1,0 +1,85 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Tab Item (_Item)",
+  "location": "components/global/ — Tab 하나에서만 재사용되지만, Figma에서 디자이너가 독립된 별도 Frame으로 명시적으로 분리해둔 서브 아톰이라 다른 global 서브 아톰과 동일한 패턴으로 문서화함. 단독 컴포넌트 아님. Figma 레이어명은 Segmented Control Item과 동일한 '_Item'이지만 서로 다른 컴포넌트이며, 폴더 충돌을 피하기 위해 'tab-item'으로 명명함.",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2262-1461",
+    "componentNodeId": "2262:1461",
+    "componentName": "_Item",
+    "totalVariantInstances": 12,
+    "axes": ["Size(S/L)", "Active(On/Off)", "Disabled(False/True)", "Emphasize(Off/On)"],
+    "note": "Tab의 탭 하나(레이블 + 활성 밑줄)를 나타내는 서브 아톰. Hover/Pressed 등 다른 State 축은 Figma에 존재하지 않음. Disabled(True)×Emphasize(On) 조합은 Figma에 존재하지 않음(3가지 상태 그룹만 존재)."
+  },
+  "sampling": {
+    "method": "전수 실측 (get_design_context 12회 + get_variable_defs 3회 + get_motion_context 1회(recursive))",
+    "coverage": "12개 Size×Active×Disabled×Emphasize 조합 전체 개별 실측함. 추정/외삽 없음."
+  },
+  "variables": {
+    "neutral/800": "#202837",
+    "neutral/500": "#8c9199",
+    "neutral/400": "#c2c4c8",
+    "theme/destructed-default": "#e72f37",
+    "spacing/07": "10",
+    "spacing/08": "12",
+    "font/pretendard": "Pretendard",
+    "weight/600": "Semibold",
+    "letterSpacing/Body": "-0.04",
+    "size/Body2": "14",
+    "size/Body1": "16",
+    "lineHeight/Body2": "22",
+    "lineHeight/Body1": "24"
+  },
+  "axisConstraint": {
+    "observed": "Disabled(True)는 항상 Emphasize(Off)와만 짝지어지고, Emphasize(On)는 항상 Disabled(False)와만 짝지어짐. Disabled(True)+Emphasize(On) 조합은 Figma에 없음(12개 = Size2×Active2×[Disabled/Emphasize 3조합]).",
+    "interpretation": "비활성화된 탭에는 강조(빨강) 스타일을 적용하지 않는다는 의도된 축 제약으로 추정되나, 우선순위 규칙 등은 확인 필요."
+  },
+  "variants": {
+    "S,On,False,Off":  { "sourceNodeId": "2262:1460", "size": "32x42px", "paddingY": { "figmaVariable": "spacing/07", "value": "10px", "tokenMatch": "정확히 일치" }, "minWidth": "32px", "typography": "Body2/14 SemiBold(600)", "figmaStyle": "Body 2/14 SB", "lineHeight": "22px", "letterSpacing": "-0.04px", "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" }, "divider": { "present": true, "height": "2px", "width": "100%", "colorVariable": "neutral/800", "colorValue": "#202837" } },
+    "S,On,False,On":   { "sourceNodeId": "2262:3855", "size": "32x42px", "paddingY": "동일(10px)", "minWidth": "32px", "typography": "Body2/14 SemiBold(600) — 동일", "textColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치(system.theme.destructed.default)" }, "divider": { "present": true, "height": "2px", "width": "100%", "colorVariable": "theme/destructed-default", "colorValue": "#e72f37" } },
+    "S,Off,False,Off": { "sourceNodeId": "2262:1458", "size": "32x42px", "paddingY": "동일(10px)", "minWidth": "32px", "typography": "Body2/14 SemiBold(600) — 동일", "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }, "divider": { "present": false } },
+    "S,Off,False,On":  { "sourceNodeId": "2262:3863", "size": "32x42px", "paddingY": "동일(10px)", "minWidth": "32px", "typography": "Body2/14 SemiBold(600) — 동일", "textColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" }, "divider": { "present": false } },
+    "S,On,True,Off":   { "sourceNodeId": "2262:1456", "size": "32x42px", "paddingY": "동일(10px)", "minWidth": "32px", "typography": "Body2/14 SemiBold(600) — 동일", "textColor": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "tokenMatch": "정확히 일치" }, "divider": { "present": true, "height": "2px", "width": "100%", "colorVariable": "neutral/400", "colorValue": "#c2c4c8" } },
+    "S,Off,True,Off":  { "sourceNodeId": "2262:1455", "size": "32x42px", "paddingY": "동일(10px)", "minWidth": "32px", "typography": "Body2/14 SemiBold(600) — 동일", "textColor": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "tokenMatch": "정확히 일치" }, "divider": { "present": false } },
+    "L,On,False,Off":  { "sourceNodeId": "2262:1457", "size": "33x48px", "paddingY": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" }, "minWidth": "32px", "typography": "Body1/16 SemiBold(600)", "figmaStyle": "Body 1/16 SB", "lineHeight": "24px", "letterSpacing": "-0.04px", "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" }, "divider": { "present": true, "height": "2px", "width": "100%", "colorVariable": "neutral/800", "colorValue": "#202837" } },
+    "L,On,False,On":   { "sourceNodeId": "2262:3871", "size": "33x48px", "paddingY": "동일(12px)", "minWidth": "32px", "typography": "Body1/16 SemiBold(600) — 동일", "textColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" }, "divider": { "present": true, "height": "2px", "width": "100%", "colorVariable": "theme/destructed-default", "colorValue": "#e72f37" } },
+    "L,Off,False,Off": { "sourceNodeId": "2262:1459", "size": "33x48px", "paddingY": "동일(12px)", "minWidth": "32px", "typography": "Body1/16 SemiBold(600) — 동일", "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }, "divider": { "present": false } },
+    "L,Off,False,On":  { "sourceNodeId": "2262:3879", "size": "33x48px", "paddingY": "동일(12px)", "minWidth": "32px", "typography": "Body1/16 SemiBold(600) — 동일", "textColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" }, "divider": { "present": false } },
+    "L,On,True,Off":   { "sourceNodeId": "2262:1454", "size": "33x48px", "paddingY": "동일(12px)", "minWidth": "32px", "typography": "Body1/16 SemiBold(600) — 동일", "textColor": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "tokenMatch": "정확히 일치" }, "divider": { "present": true, "height": "2px", "width": "100%", "colorVariable": "neutral/400", "colorValue": "#c2c4c8" } },
+    "L,Off,True,Off":  { "sourceNodeId": "2262:1453", "size": "33x48px", "paddingY": "동일(12px)", "minWidth": "32px", "typography": "Body1/16 SemiBold(600) — 동일", "textColor": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "tokenMatch": "정확히 일치" }, "divider": { "present": false } }
+  },
+  "sizeAxisFinding": "높이는 lineHeight + 세로padding×2와 정확히 일치(S=22+10×2=42, L=24+12×2=48). 타이포 weight는 Size와 무관하게 항상 SemiBold(600)(Segmented Control Item과 달리 전환 지점 없음, Size가 2단계뿐). letterSpacing은 두 Size 모두 -0.04px(Body 계열)로 동일. 가로 padding이 전혀 없고 min-w-[32px]만 지정됨 — Segmented Control Item과 달리 paddingX 토큰 자체가 존재하지 않음.",
+  "activeAxisFinding": "Active 축은 밑줄(2px, width 100%, 텍스트 색상과 동일) 유무와 기본 텍스트 색상(neutral/800 On vs neutral/500 Off)만 바꾸고 padding·min-width·타이포는 동일. 배경/그림자 변화 없음(Segmented Control Item과 대비되는 지점).",
+  "disabledAxisFinding": "Disabled=True는 Active On/Off와 무관하게 텍스트(및 밑줄 존재 시) 색상을 neutral/400으로 고정. 밑줄 유무 자체는 여전히 Active 축이 결정. Emphasize=On과는 조합되지 않음(Figma에 없음).",
+  "emphasizeAxisFinding": "Emphasize=On은 Active On/Off와 무관하게 텍스트(및 밑줄 존재 시) 색상을 theme/destructed-default(#e72f37)로 고정. Active=Off+Emphasize=On(비활성인데 강조색) 조합이 실제로 존재함(2262:3863) — 의미는 확인 필요. Disabled=True와는 조합되지 않음(Figma에 없음).",
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 최상위(2262:1461, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. Active 전환 시 밑줄 슬라이딩 애니메이션 정의 없음.",
+  "accessibility": {
+    "roleTab": "role=\"tab\" aria-selected={Active} aria-disabled={Disabled} 부여가 적절해 보이나 Figma에 규정 없음 — 확인 필요.",
+    "stateFeedback": "Hover/Focus/Pressed 등 다른 상태 축 자체가 Figma 컴포넌트에 없음 — 구현 시 별도 설계 필요, 확인 필요.",
+    "contrast": "neutral/500(#8c9199)·neutral/400(#c2c4c8) 텍스트의 명암비가 WCAG 기준을 충족하는지 확인 필요.",
+    "colorOnlyEmphasize": "Emphasize=On이 색상(빨강)만으로 의미를 전달함 — 색상 외 보조 표시 필요 여부 확인 필요.",
+    "keyboardNav": "좌우 화살표 등 탭 간 키보드 이동 규정은 상위 Tab 문서(../../tab/tab.md) 범위."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "텍스트/밑줄 색상 neutral/800(#202837) → sys-color-neutral-800, neutral/500(#8c9199) → sys-color-neutral-500, neutral/400(#c2c4c8) → sys-color-neutral-400",
+      "강조 색상 theme/destructed-default(#e72f37) → tokens/colors.json system.theme.destructed.default(ref-color-red-500) 와 정확히 일치",
+      "Spacing(세로 padding): spacing/07(10px), spacing/08(12px) → ref-spacing-07, ref-spacing-08과 일치",
+      "타이포: Body2/14 SB, Body1/16 SB 모두 tokens/typography.json body2/body1과 정확히 일치(letterSpacing -0.04px 포함)"
+    ],
+    "기존토큰에없음": [
+      "Size(S/L)별 'padding+타이포 조합' 규칙 자체를 지정하는 시맨틱 토큰 (개별 값은 토큰과 일치)",
+      "최소 너비 32px(min-w-[32px])를 지정하는 시맨틱 토큰"
+    ],
+    "확인필요": [
+      "가로 padding 없음 + min-w-32px만 있는 구조가 긴 레이블에서 어떻게 동작하는지",
+      "Disabled(True)+Emphasize(On) 조합이 Figma에 없는 것이 의도된 제약인지, 있다면 우선순위 규칙",
+      "Active=Off+Emphasize=On 조합의 실제 사용 의미",
+      "Hover/Focus/Pressed 상태 시각 피드백 규정",
+      "role=\"tab\"/aria-selected/aria-disabled 등 접근성 마크업 연결 규정",
+      "비활성/Disabled 텍스트 명암비의 WCAG 충족 여부"
+    ]
+  },
+  "sampledNodeIds": ["2262:1460", "2262:3855", "2262:1458", "2262:3863", "2262:1456", "2262:1455", "2262:1457", "2262:3871", "2262:1459", "2262:3879", "2262:1454", "2262:1453"]
+}
