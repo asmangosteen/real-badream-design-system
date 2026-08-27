@@ -31,10 +31,6 @@ Checkbox는 폼 요소에서 다중 선택·동의·전체선택 등에 쓰이�
 | **Outlined** (Rounded만) | — | True / False | Checked=False일 때만 의미 있음. True=테두리 있는 흰 배경, False=테두리 없는 연한 회색 배경 |
 | **State** | Default / Hover / Pressed / Disabled | Default / Hover / Pressed / Disabled | 상호작용 피드백. **Focused 상태가 정의되어 있지 않음**(7장 참고) |
 
-**Figma 명명 오탈자 2건 발견** (기능에는 영향 없음, 문서에는 실측값 그대로 기재):
-- Angular의 Hover 상태 변형들은 `Checked` 속성값이 `True`가 아니라 리터럴 `"Hover"`로 등록되어 있습니다(예: `Checked=Hover, Indeterminate=Off, State=Hover`). Checked=False Hover는 정상적으로 `Checked=False`로 등록되어 있어, True 계열에서만 발생한 오탈자로 보입니다.
-- Rounded의 모든 `Disabled` 상태 변형은 `State` 속성값이 `Deisabled`(오탈자)로 등록되어 있습니다. Angular의 Disabled는 정상 표기(`Disabled`)입니다.
-
 ## 2. 공통 스펙 (Angular/Rounded 동일)
 
 | 항목 | 값 | 토큰 | 매칭 여부 |

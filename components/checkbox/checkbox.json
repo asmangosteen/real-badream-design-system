@@ -14,11 +14,7 @@
   },
   "sampling": {
     "method": "전수 실측 (get_design_context 24회 + get_variable_defs 1회 + get_motion_context 1회(recursive) + get_metadata 1회, 모두 상위 그룹 2483:12499 기준)",
-    "coverage": "24개 변형 전체를 개별 실측함. 추정/외삽 없음.",
-    "figmaNamingTypos": {
-      "angularCheckedHover": "Angular의 Checked=True 계열 Hover 변형들은 Checked 속성값이 'True'가 아니라 리터럴 'Hover'로 등록됨(예: Checked=Hover, Indeterminate=Off, State=Hover). Checked=False Hover는 정상 표기.",
-      "roundedDisabledTypo": "Rounded의 모든 Disabled 변형은 State 속성값이 'Deisabled'(오탈자)로 등록됨. Angular의 Disabled는 정상 표기."
-    }
+    "coverage": "24개 변형 전체를 개별 실측함. 추정/외삽 없음."
   },
   "common": {
     "totalSize": "16x16px (고정, Size 축 없음)",
