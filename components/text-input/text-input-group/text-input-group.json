@@ -11,7 +11,7 @@
       "Size(S/M/L)",
       "Field(2/3)"
     ],
-    "note": "Text Input(components/text-input/text-input.md)을 세로로 2개 또는 3개 쌓아 만든 조합형 컴포넌트. 사용자 제공 배경: 주소 1줄/2줄 같은 연속 필드 그룹을 컴포넌트화한 것으로 추정, 정확한 사용 맥락은 Figma에 별도 주석 없음."
+    "note": "Text Input(components/text-input/text-input/text-input.md)을 세로로 2개 또는 3개 쌓아 만든 조합형 컴포넌트. 사용자 제공 배경: 주소 1줄/2줄 같은 연속 필드 그룹을 컴포넌트화한 것으로 추정, 정확한 사용 맥락은 Figma에 별도 주석 없음."
   },
   "sampling": {
     "method": "6개 인스턴스 전수 실측(get_design_context 6회 + get_metadata 1회 + get_motion_context 1회, recursive)",
@@ -57,7 +57,7 @@
   },
   "subcomponentReuse": {
     "textInput": {
-      "ref": "components/text-input/text-input.md",
+      "ref": "components/text-input/text-input/text-input.md",
       "sizeMapping": "그룹 Size와 내부 Text Input Size가 1:1 대응(S→S, M→M, L→L)",
       "toggleFixedValues": {
         "showLabel": "첫 번째 필드만 True, 나머지 False",

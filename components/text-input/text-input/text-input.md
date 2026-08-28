@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2114-8709) — Frame `2114:8709` ("Text Input")
 > 기계 판독용 값은 [`text-input.json`](./text-input.json)을 함께 참고합니다. 이 문서와 text-input.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> Text Input은 `components/global/`의 [Label](../global/label/label.md), [Type Box](../global/type-box/type-box.md), [Text Blinker](../global/text-blinker/text-blinker.md), [Supporting Text](../global/supporting-text/supporting-text.md)를 실제로 조합해서 만들어진 **상위 컴포넌트**입니다 — 이 문서가 그 4개 서브 아톰의 "실 사용처"를 확정합니다(5장).
+> Text Input은 `components/global/`의 [Label](../../global/label/label.md), [Type Box](../../global/type-box/type-box.md), [Text Blinker](../../global/text-blinker/text-blinker.md), [Supporting Text](../../global/supporting-text/supporting-text.md)를 실제로 조합해서 만들어진 **상위 컴포넌트**입니다 — 이 문서가 그 4개 서브 아톰의 "실 사용처"를 확정합니다(5장).
 
 ## 0. 문서 범위와 샘플링 방법
 
@@ -25,7 +25,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 
 1. **Right Icon이 독립된 토글 축으로 존재**합니다(Dropdown은 우측 아이콘이 축 없이 항상 켜져 있는 chevron 고정 슬롯이었음). 기본 아이콘도 Dropdown의 `chevron_down`이 아니라 **`arrowhead_down`**입니다.
 2. **Destructed가 Selected뿐 아니라 Typing에서도 분기**합니다(Dropdown은 Selected 전용).
-3. **[Type Box](../global/type-box/type-box.md)의 `Selected`/`Typing`(캐럿) 상태가 실제로 그대로 쓰입니다.** Dropdown 문서 5장에서 "캐럿이 Dropdown 안에서는 쓰이지 않는 것으로 보인다"고 확인 필요로 남겼던 것과 정반대로, Text Input은 State=Selected일 때 TypeBox의 `Selected` 변형(빈 값+캐럿)을, State=Typing일 때 TypeBox의 `Typing` 변형(값+캐럿)을 그대로 인스턴스로 사용합니다 — **직접 실측으로 확인 완료**(5장 상세).
+3. **[Type Box](../../global/type-box/type-box.md)의 `Selected`/`Typing`(캐럿) 상태가 실제로 그대로 쓰입니다.** Dropdown 문서 5장에서 "캐럿이 Dropdown 안에서는 쓰이지 않는 것으로 보인다"고 확인 필요로 남겼던 것과 정반대로, Text Input은 State=Selected일 때 TypeBox의 `Selected` 변형(빈 값+캐럿)을, State=Typing일 때 TypeBox의 `Typing` 변형(값+캐럿)을 그대로 인스턴스로 사용합니다 — **직접 실측으로 확인 완료**(5장 상세).
 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
@@ -33,8 +33,8 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **State** | Default / Hover / Disabled / Done / Selected / Typing | 상호작용 상태. Selected=포커스+값 없음, Typing=포커스+입력 중, Done=입력 완료+비포커스(3장) |
 | **Destructed** | False / True | 에러 상태 표시. **실측 결과 Selected·Typing 두 State에서만 별도 Figma 변형으로 존재**(Default/Hover/Disabled/Done에는 Destructed=True 조합 자체가 없음 — Dropdown의 "Selected 전용" 패턴과 유사하지만 대상 State가 2개로 늘어난 점이 다름) |
 | **Show Button** | False / True | 우측 확정 버튼(파란 배경 "Text" 버튼) 표시 여부 |
-| **Show Label** | False / True | 상단 [Label](../global/label/label.md) 표시 여부 |
-| **Supporting Text** | False / True | 하단 [Supporting Text](../global/supporting-text/supporting-text.md) 표시 여부 |
+| **Show Label** | False / True | 상단 [Label](../../global/label/label.md) 표시 여부 |
+| **Supporting Text** | False / True | 하단 [Supporting Text](../../global/supporting-text/supporting-text.md) 표시 여부 |
 | **Left Icon** | False / True | Input 왼쪽 아이콘(기본 `profile_filled`, 자유 교체 슬롯) 표시 여부 |
 | **Right Icon** | False / True | Input 오른쪽 아이콘(기본 `arrowhead_down`, 자유 교체 슬롯) 표시 여부. **단, State=Typing에서는 이 슬롯이 강제로 `close_in_circle`(지우기 버튼)로 대체됨 — 4장 참고** |
 
@@ -54,7 +54,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **TypeBox(Placeholder) 타이포** | Caption1/12 Medium | Body2/14 Regular | Body1/16 Regular |
 | **Supporting Text 아이콘/타이포** | 12px 아이콘, Caption2/10 Medium | 16px 아이콘, Caption1/12 Regular | 16px 아이콘, Caption1/12 Regular |
 
-**핵심 확인**: Label/TypeBox/Supporting Text의 Size별 타이포·패딩 값은 각 서브컴포넌트 문서([label.md](../global/label/label.md) 2장, [type-box.md](../global/type-box/type-box.md) 2장, [supporting-text.md](../global/supporting-text/supporting-text.md) 3장)에 실측된 값과 **정확히 일치**합니다 — [Dropdown](../../dropdown/dropdown.md)과 마찬가지로 Text Input도 이 세 아톰을 Size만 맞춰 그대로 인스턴스로 가져다 씁니다.
+**핵심 확인**: Label/TypeBox/Supporting Text의 Size별 타이포·패딩 값은 각 서브컴포넌트 문서([label.md](../../global/label/label.md) 2장, [type-box.md](../../global/type-box/type-box.md) 2장, [supporting-text.md](../../global/supporting-text/supporting-text.md) 3장)에 실측된 값과 **정확히 일치**합니다 — [Dropdown](../../dropdown/dropdown.md)과 마찬가지로 Text Input도 이 세 아톰을 Size만 맞춰 그대로 인스턴스로 가져다 씁니다.
 
 **너비**: 컴포넌트 루트에 `w-[280px]`가 걸려 있지만, Dropdown 문서에서 이미 확인 완료한 것과 동일하게 이는 Figma 진열 프레임에서 샘플링할 때 찍힌 표시값일 뿐이며 실제 의도는 **화면 폭에 따른 가변(fluid) 너비**로 추정됩니다. 이번 조사에서 Text Input 자체에 대해 별도로 재확인하지는 않았으나 Dropdown·Text Input Group(본 문서 계열)이 동일한 Figma 진열 컨벤션을 쓰는 것으로 보여 동일하게 처리하는 것이 합리적입니다 — **확인 필요**(Dropdown만큼 명시적으로 재검증하지 않음).
 
@@ -74,9 +74,9 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **Typing + Destructed=True** | `common/white-default` | `theme/destructed-default` | **`theme/destructed-default`** | `Typing`(값 있음 + 캐럿, 캐럿 색상 `theme/destructed-default`로 오버라이드) | `close_in_circle`(강제, 변화 없음) | — |
 
 **핵심 발견**:
-1. **Destructed는 Selected·Typing 두 State에서만 노출되는 변형입니다(직접 실측으로 확인 완료).** Default/Hover/Disabled/Done 상태에는 Destructed=True 조합 자체가 Figma 컴포넌트에 존재하지 않습니다(0장 축 계산 근거). Dropdown이 "Selected 하나"였던 것과 달리 Text Input은 "포커스가 가 있는 두 State(Selected·Typing) 모두"에서 에러를 노출한다는 것이 이 컴포넌트의 확정 스펙입니다. 비포커스 상태(Default/Hover/Disabled/Done)에서 에러를 알려야 한다면, 현재 컴포넌트가 제공하는 유일한 경로는 하단 [Supporting Text](../global/supporting-text/supporting-text.md)의 `Theme=Destructed`뿐입니다.
+1. **Destructed는 Selected·Typing 두 State에서만 노출되는 변형입니다(직접 실측으로 확인 완료).** Default/Hover/Disabled/Done 상태에는 Destructed=True 조합 자체가 Figma 컴포넌트에 존재하지 않습니다(0장 축 계산 근거). Dropdown이 "Selected 하나"였던 것과 달리 Text Input은 "포커스가 가 있는 두 State(Selected·Typing) 모두"에서 에러를 노출한다는 것이 이 컴포넌트의 확정 스펙입니다. 비포커스 상태(Default/Hover/Disabled/Done)에서 에러를 알려야 한다면, 현재 컴포넌트가 제공하는 유일한 경로는 하단 [Supporting Text](../../global/supporting-text/supporting-text.md)의 `Theme=Destructed`뿐입니다.
 2. **TypeBox의 캐럿 상태가 실제로 쓰입니다.** Selected=`Selected`(캐럿+빈 placeholder), Typing=`Typing`(캐럿+값), 나머지(Default/Hover/Disabled/Done)=`Placeholder` 또는 `Done`. 이는 작업 지시에서 제기한 가설(Dropdown과 달리 Text Input은 실제 텍스트 타이핑 필드이므로 캐럿이 쓰일 것)을 그대로 확인시켜 줍니다.
-3. **캐럿(Text Blinker) 색상이 Destructed에 따라 오버라이드됩니다.** [text-blinker.md](../global/text-blinker/text-blinker.md)는 On 상태의 채우기 색상을 `brand/primary-default` 고정으로 문서화했지만, Text Input 안에서는 Destructed=True일 때 캐럿 색상이 `theme/destructed-default`로 바뀝니다 — Text Blinker 자체의 문서화된 스펙을 벗어나는 것이 아니라, **상위 컴포넌트가 인스턴스 프로퍼티/색상 오버라이드로 캐럿 색을 상황에 맞게 바꿔 쓰는 사례**입니다.
+3. **캐럿(Text Blinker) 색상이 Destructed에 따라 오버라이드됩니다.** [text-blinker.md](../../global/text-blinker/text-blinker.md)는 On 상태의 채우기 색상을 `brand/primary-default` 고정으로 문서화했지만, Text Input 안에서는 Destructed=True일 때 캐럿 색상이 `theme/destructed-default`로 바뀝니다 — Text Blinker 자체의 문서화된 스펙을 벗어나는 것이 아니라, **상위 컴포넌트가 인스턴스 프로퍼티/색상 오버라이드로 캐럿 색을 상황에 맞게 바꿔 쓰는 사례**입니다.
 4. **Disabled의 Placeholder 색상이 Default보다 한 단계 더 옅습니다**(`neutral/400` vs `neutral/500`). Dropdown 문서에서도 동일하게 관찰된 패턴입니다.
 5. **Done 상태에서 관찰된 단위(unit) 텍스트 슬롯("km")은 8개 공식 축 밖의 요소입니다.** 실측 노드(`2119:10054`)에서 우측 아이콘 뒤에 `showUnit` prop과 "km" 텍스트가 추가로 붙어 있었으나, 이 문서가 확인한 축 구조(Size×State×Destructed×5토글=768개)로는 설명되지 않는 요소이므로 이 노드에 한정된 자유 슬롯이거나 별도 서브 변형일 가능성이 있습니다 — **확인 필요**(다른 State 샘플에서는 관찰되지 않음).
 
@@ -87,8 +87,8 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | 토글 | False일 때 |
 |---|---|
 | **Show Button** | 우측 Button 요소가 사라지고, Input이 `Input Box`(Input+Button을 감싸던 flex row) 래퍼 없이 그 자체로 전체 너비(`w-full`)를 차지(Dropdown과 동일 패턴) |
-| **Show Label** | 상단 [Label](../global/label/label.md) 요소가 사라지고 컨테이너가 바로 Input Box로 시작 |
-| **Supporting Text** | 하단 [Supporting Text](../global/supporting-text/supporting-text.md) 요소가 사라짐 |
+| **Show Label** | 상단 [Label](../../global/label/label.md) 요소가 사라지고 컨테이너가 바로 Input Box로 시작 |
+| **Supporting Text** | 하단 [Supporting Text](../../global/supporting-text/supporting-text.md) 요소가 사라짐 |
 | **Left Icon** | Input 내부 왼쪽 아이콘(`profile_filled`)이 완전히 사라짐(코드상 `leftM` prop 자체가 타입에서 빠짐). TypeBox·우측 아이콘 위치·gap은 변화 없음 |
 | **Right Icon** | Input 내부 오른쪽 아이콘(`arrowhead_down`)이 완전히 사라짐(`rightM` prop 자체가 타입에서 빠짐). TypeBox가 `flex-[1_0_0]`로 남은 공간을 차지 |
 
@@ -98,31 +98,31 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 
 ## 5. 서브컴포넌트 재사용 관계
 
-- **Label**: [`components/global/label/label.md`](../global/label/label.md)의 Size S/M/L, **Essential=Off** 스펙을 그대로 인스턴스로 사용. 타이포·하단 padding 전부 정확히 일치. Text Input의 8개 공식 축에는 Essential 토글이 없으므로(768개 계산에 포함되지 않음), 이 컴포넌트 안에서 Label은 항상 Essential=Off로 고정되어 쓰이는 것으로 확인됩니다.
-- **Type Box**: [`components/global/type-box/type-box.md`](../global/type-box/type-box.md)의 Size S/M/L을 사용하며, **State 4종(Placeholder/Selected/Typing/Done)이 전부 실제로 쓰입니다** — Dropdown과 가장 크게 갈리는 지점입니다.
+- **Label**: [`components/global/label/label.md`](../../global/label/label.md)의 Size S/M/L, **Essential=Off** 스펙을 그대로 인스턴스로 사용. 타이포·하단 padding 전부 정확히 일치. Text Input의 8개 공식 축에는 Essential 토글이 없으므로(768개 계산에 포함되지 않음), 이 컴포넌트 안에서 Label은 항상 Essential=Off로 고정되어 쓰이는 것으로 확인됩니다.
+- **Type Box**: [`components/global/type-box/type-box.md`](../../global/type-box/type-box.md)의 Size S/M/L을 사용하며, **State 4종(Placeholder/Selected/Typing/Done)이 전부 실제로 쓰입니다** — Dropdown과 가장 크게 갈리는 지점입니다.
   - Default/Hover/Disabled → TypeBox `Placeholder`
   - Selected → TypeBox `Selected`(캐럿+빈 값)
   - Typing → TypeBox `Typing`(캐럿+값)
   - Done → TypeBox `Done`(값, 캐럿 없음)
   이는 Type Box 문서가 "확인 필요"로 남겨둔 "캐럿 상태가 실제로 어디서 쓰이는지"에 대한 답을 제공합니다: **Text Input이 바로 그 사용처입니다.**
-- **Text Blinker**: [`components/global/text-blinker/text-blinker.md`](../global/text-blinker/text-blinker.md)의 `On` 변형이 TypeBox의 Selected/Typing 상태를 통해 간접적으로 인스턴스화됩니다. 크기(1.5×20px)·radius(2px)는 문서 스펙과 일치하지만, **채우기 색상은 Destructed 여부에 따라 `brand/primary-default`↔`theme/destructed-default`로 오버라이드**됩니다(3장 핵심 발견 3 참고) — text-blinker.md 자체에는 없는, 상위 컴포넌트 레벨의 활용 사례입니다.
-- **Supporting Text**: [`components/global/supporting-text/supporting-text.md`](../global/supporting-text/supporting-text.md)의 Size S/M/L, **Theme=Gray**(기본), **Text Count=False** 조합을 그대로 사용. 아이콘은 `warning_filled`로, Supporting Text 문서에서 이미 확인된 "자유 교체 placeholder" 패턴과 동일합니다. Destructed 상태에서도 Supporting Text의 Theme이 자동으로 바뀌는 모습은 관찰되지 않았습니다(Input 테두리·Button만 색이 바뀌고 하단 Supporting Text는 계속 Gray 그대로) — Dropdown 문서에서 지적된 것과 동일한 WCAG 1.4.1 관련 우려가 그대로 적용됩니다(7장 참고).
+- **Text Blinker**: [`components/global/text-blinker/text-blinker.md`](../../global/text-blinker/text-blinker.md)의 `On` 변형이 TypeBox의 Selected/Typing 상태를 통해 간접적으로 인스턴스화됩니다. 크기(1.5×20px)·radius(2px)는 문서 스펙과 일치하지만, **채우기 색상은 Destructed 여부에 따라 `brand/primary-default`↔`theme/destructed-default`로 오버라이드**됩니다(3장 핵심 발견 3 참고) — text-blinker.md 자체에는 없는, 상위 컴포넌트 레벨의 활용 사례입니다.
+- **Supporting Text**: [`components/global/supporting-text/supporting-text.md`](../../global/supporting-text/supporting-text.md)의 Size S/M/L, **Theme=Gray**(기본), **Text Count=False** 조합을 그대로 사용. 아이콘은 `warning_filled`로, Supporting Text 문서에서 이미 확인된 "자유 교체 placeholder" 패턴과 동일합니다. Destructed 상태에서도 Supporting Text의 Theme이 자동으로 바뀌는 모습은 관찰되지 않았습니다(Input 테두리·Button만 색이 바뀌고 하단 Supporting Text는 계속 Gray 그대로) — Dropdown 문서에서 지적된 것과 동일한 WCAG 1.4.1 관련 우려가 그대로 적용됩니다(7장 참고).
 
 ## 6. 인터랙션(모션) 스펙
 
 **모션 데이터 없음.**
 
-`get_motion_context`를 최상위 프레임(`2114:8709`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Default↔Hover↔Selected↔Typing↔Done 전환, 그리고 캐럿의 깜빡임(blink) 자체에 대해서도 Figma 파일에 duration·easing 등 모션 값이 정의되어 있지 않습니다 — [text-blinker.md](../global/text-blinker/text-blinker.md) 3장·[type-box.md](../global/type-box/type-box.md) 5장에서 이미 확인 필요로 남긴 것과 동일하게, 실제 캐럿 깜빡임 주기는 구현 시 별도 결정이 필요합니다.
+`get_motion_context`를 최상위 프레임(`2114:8709`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Default↔Hover↔Selected↔Typing↔Done 전환, 그리고 캐럿의 깜빡임(blink) 자체에 대해서도 Figma 파일에 duration·easing 등 모션 값이 정의되어 있지 않습니다 — [text-blinker.md](../../global/text-blinker/text-blinker.md) 3장·[type-box.md](../../global/type-box/type-box.md) 5장에서 이미 확인 필요로 남긴 것과 동일하게, 실제 캐럿 깜빡임 주기는 구현 시 별도 결정이 필요합니다.
 
 3장에서 관찰된 "Done 상태의 단위(unit) 텍스트 슬롯"에 대해서도 별도 모션은 없습니다.
 
 ## 7. 접근성
 
-- **캐럿(Text Blinker) 접근성**: [text-blinker.md](../global/text-blinker/text-blinker.md) 4장에서 이미 확인 필요로 명시된 `aria-hidden` 처리, 네이티브 브라우저 캐럿과의 중복 방지가 Text Input에도 그대로 적용됩니다. 실제 구현 시 이 캐럿이 네이티브 `<input>`의 진짜 캐럿을 대체하는 커스텀 UI라면 네이티브 캐럿은 투명 처리(`caret-color: transparent`)하는 등의 처리가 필요할 수 있습니다 — 확인 필요.
+- **캐럿(Text Blinker) 접근성**: [text-blinker.md](../../global/text-blinker/text-blinker.md) 4장에서 이미 확인 필요로 명시된 `aria-hidden` 처리, 네이티브 브라우저 캐럿과의 중복 방지가 Text Input에도 그대로 적용됩니다. 실제 구현 시 이 캐럿이 네이티브 `<input>`의 진짜 캐럿을 대체하는 커스텀 UI라면 네이티브 캐럿은 투명 처리(`caret-color: transparent`)하는 등의 처리가 필요할 수 있습니다 — 확인 필요.
 - **Typing 상태의 지우기 버튼(`close_in_circle`)**: 4장에서 확인한 대로 이 아이콘은 자유 교체 슬롯이 아니라 상태에 따라 강제로 나타나는 액션 버튼으로 보입니다. 스크린리더 사용자를 위한 `aria-label="입력값 지우기"` 등의 레이블 연결 규정이 Figma 파일에 없어 확인 필요입니다.
 - **Disabled 상태**: `pointer-events`/`aria-disabled`/`disabled` 속성 부여는 Figma 디자인만으로 확인 불가 — Dropdown 문서와 동일하게 확인 필요.
 - **Destructed(에러) 상태**: 테두리·버튼·캐럿 색상 변화로만 표현되며, 하단 Supporting Text는 Destructed와 무관하게 항상 Gray 톤으로 남습니다(5장). 색상에만 의존하지 않기(WCAG 1.4.1) 원칙에서, 실제 구현 시 Supporting Text의 Theme을 Destructed와 함께 전환하거나 최소한 텍스트 문구로 에러 내용을 명시하는 처리가 필요해 보입니다 — 확인 필요.
-- **Label 연결**(`<label for>`), 필수 입력 여부 등은 [Label 문서](../global/label/label.md) 5장의 확인 필요 사항과 동일하게 적용됩니다. Text Input에는 Essential 토글 자체가 없으므로(5장), 필수 입력 표시가 필요하다면 별도 처리 방식이 필요합니다 — 확인 필요.
+- **Label 연결**(`<label for>`), 필수 입력 여부 등은 [Label 문서](../../global/label/label.md) 5장의 확인 필요 사항과 동일하게 적용됩니다. Text Input에는 Essential 토글 자체가 없으므로(5장), 필수 입력 표시가 필요하다면 별도 처리 방식이 필요합니다 — 확인 필요.
 - **단위(unit) 텍스트 슬롯**(3장 핵심 발견 5): 값과 단위(예: "12 km")가 스크린리더에 하나의 의미 단위로 읽히도록 구현할 필요가 있어 보이나, Figma 파일에 규정이 없어 확인 필요입니다.
 
 ## 8. 토큰 매칭 요약

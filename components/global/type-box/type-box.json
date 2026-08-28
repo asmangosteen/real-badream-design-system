@@ -16,7 +16,7 @@
     "coverage": "12개 Size×State 조합 전체 개별 실측함. 추정/외삽 없음."
   },
   "usedByParentComponent": {
-    "ref": "components/text-input/text-input.md",
+    "ref": "components/text-input/text-input/text-input.md",
     "note": "Text Input이 상위 컴포넌트로 확인됨. Selected/Typing(캐럿 포함) 상태가 Text Input의 State=Selected/Typing에서 실제로 쓰임. Dropdown에서는 이 두 상태가 쓰이지 않음(대조 확인됨)."
   },
   "variables": {

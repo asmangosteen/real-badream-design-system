@@ -18,7 +18,7 @@ Type Box는 텍스트 입력 필드(Input/TextField 등) 안에서 **사용자�
 
 같은 Figma "global" 그룹에 `Label`, `Text Blinker`, `Text Count`, `Supporting Text` 4개의 형제 아톰이 더 있습니다(다른 에이전트가 병행 조사). 컴포넌트 이름과 배치로 미루어 Type Box는 이들과 함께 실제 Input 컴포넌트 내부에 조합되어 쓰일 것으로 추정되나, **상위 Input 컴포넌트 자체는 이번 조사 범위에 포함되지 않아 정확한 조합 규칙(레이아웃 순서, 위계 등)은 확인하지 않았습니다** — 확인 필요.
 
-> **후속 확인 완료(추가 조사)**: 상위 컴포넌트는 [Text Input](../../text-input/text-input.md)으로 확인되었습니다. `Selected`/`Typing`(캐럿 포함) 상태가 실제로 어디서 쓰이는지도 이때 확인되었습니다 — Text Input의 State가 `Selected`(포커스+값 없음)일 때 Type Box `Selected`를, `Typing`(포커스+입력 중)일 때 Type Box `Typing`을 그대로 사용합니다. 상세는 [text-input.md](../../text-input/text-input.md) 5장 참고. Dropdown([dropdown.md](../../dropdown/dropdown.md))에서는 이 두 캐럿 상태가 쓰이지 않는다는 것도 대조 확인되었습니다.
+> **후속 확인 완료(추가 조사)**: 상위 컴포넌트는 [Text Input](../../text-input/text-input/text-input.md)으로 확인되었습니다. `Selected`/`Typing`(캐럿 포함) 상태가 실제로 어디서 쓰이는지도 이때 확인되었습니다 — Text Input의 State가 `Selected`(포커스+값 없음)일 때 Type Box `Selected`를, `Typing`(포커스+입력 중)일 때 Type Box `Typing`을 그대로 사용합니다. 상세는 [text-input.md](../../text-input/text-input/text-input.md) 5장 참고. Dropdown([dropdown.md](../../dropdown/dropdown.md))에서는 이 두 캐럿 상태가 쓰이지 않는다는 것도 대조 확인되었습니다.
 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
@@ -112,7 +112,7 @@ Type Box 자체에는 배경·테두리·선택 하이라이트 같은 별도의
 - 12개 변형의 실측 너비/높이(예: 67.5×18px)는 hug-content 결과값이며 고정 토큰이 아닙니다(1절 참고).
 
 **확인 완료(추가 조사)**
-- 상위 Input 컴포넌트는 [Text Input](../../text-input/text-input.md)으로 확인됨. `Selected`/`Typing` 캐럿 상태가 실제로 쓰이는 사용처도 확인됨(위 1장 후속 확인 참고)
+- 상위 Input 컴포넌트는 [Text Input](../../text-input/text-input/text-input.md)으로 확인됨. `Selected`/`Typing` 캐럿 상태가 실제로 쓰이는 사용처도 확인됨(위 1장 후속 확인 참고)
 
 **확인 필요**
 - Type Box 레이어의 접근성 역할(네이티브 `<input>`과의 관계)

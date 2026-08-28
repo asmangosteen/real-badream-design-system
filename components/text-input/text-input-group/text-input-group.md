@@ -73,7 +73,7 @@ Text Input Group은 [Text Input](../text-input/text-input.md) 인스턴스를 �
 ## 6. 접근성
 
 - **필드 간 시각적 그룹핑**: 첫 번째 필드에만 Label이 붙는 구조상, 스크린리더 사용자가 두 번째·세 번째 필드도 같은 그룹(예: "주소")에 속한다는 것을 인지하려면 `fieldset`+`legend` 또는 `role="group"`+`aria-labelledby` 같은 시맨틱 그룹핑이 실제 구현에서 필요해 보입니다. Figma 파일에 이 마크업 규정은 없어 **확인 필요**입니다.
-- 개별 필드의 접근성 이슈(Label 연결, `aria-required` 등)는 [text-input.md](../text-input/text-input.md) 7장 및 [label.md](../global/label/label.md) 5장의 확인 필요 사항이 그대로 적용됩니다.
+- 개별 필드의 접근성 이슈(Label 연결, `aria-required` 등)는 [text-input.md](../text-input/text-input.md) 7장 및 [label.md](../../global/label/label.md) 5장의 확인 필요 사항이 그대로 적용됩니다.
 - Field=2/3 각각에서 어떤 필드가 어떤 의미(예: "주소1"/"주소2"/"상세주소")를 갖는지는 Figma 컴포넌트 자체에 문서화되어 있지 않아 실제 사용 맥락은 확인 필요입니다.
 
 ## 7. 토큰 매칭 요약

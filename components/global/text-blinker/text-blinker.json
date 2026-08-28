@@ -16,7 +16,7 @@
     "coverage": "2개 State 전체 개별 실측함. 추정/외삽 없음."
   },
   "colorOverrideInParentComponent": {
-    "ref": "components/text-input/text-input.md",
+    "ref": "components/text-input/text-input/text-input.md",
     "note": "이 문서는 On 채우기 색상을 brand/primary-default 고정으로 실측했으나, 실사용처인 Text Input에서는 State=Selected/Typing + Destructed=True(에러)일 때 캐럿 색상이 theme/destructed-default(#e72f37)로 오버라이드됨. Text Blinker 자체의 변형 축에는 없는 값이며 상위 컴포넌트의 인스턴스 색상 오버라이드 사례."
   },
   "variables": {
