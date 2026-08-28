@@ -28,6 +28,8 @@ Text Blinker는 텍스트 입력 필드(Input/TextField/TextArea 등) 안에서 
 
 **핵심 확인 사항 (Off가 "다른 색"인지 "투명"인지)**: `get_design_context` 실측 결과, Off 상태는 별도의 회색·연한 색이 **아니라** On과 정확히 동일한 `brand/primary-default`(#2c7be2) 색상에서 **alpha 값만 0%로 낮춘 것**입니다(`rgba(44,123,226,0)`). 즉 Off는 완전히 투명하여 눈에 보이지 않습니다 — 이는 Figma 컴포넌트 구조 자체가 "커서가 꺼진 프레임"을 색상으로 표현한 것으로, 실제 구현 시 `opacity: 0` 또는 `background: transparent` 두 방식 모두 동일한 시각 결과를 냅니다.
 
+**후속 확인(추가 조사): 채우기 색상이 상위 컴포넌트에서 오버라이드됨**. 이 문서는 On 채우기 색상을 `brand/primary-default` 고정으로 실측했지만, 실제 사용처인 [Text Input](../../text-input/text-input.md)에서는 State=Selected/Typing이면서 Destructed=True(에러)일 때 캐럿 색상이 `theme/destructed-default`(#e72f37)로 바뀝니다. Text Blinker 컴포넌트 자체의 변형 축에는 없는 값이며, 상위 컴포넌트가 인스턴스 색상을 상황에 맞게 오버라이드해 쓰는 사례입니다 — [text-input.md](../../text-input/text-input.md) 3장·5장 참고.
+
 크기(1.5×20px)와 radius(2px)는 On/Off 공통이며 State에 따라 변하지 않습니다.
 
 ## 3. 인터랙션(모션) 스펙

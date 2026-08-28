@@ -18,6 +18,8 @@ Type Box는 텍스트 입력 필드(Input/TextField 등) 안에서 **사용자�
 
 같은 Figma "global" 그룹에 `Label`, `Text Blinker`, `Text Count`, `Supporting Text` 4개의 형제 아톰이 더 있습니다(다른 에이전트가 병행 조사). 컴포넌트 이름과 배치로 미루어 Type Box는 이들과 함께 실제 Input 컴포넌트 내부에 조합되어 쓰일 것으로 추정되나, **상위 Input 컴포넌트 자체는 이번 조사 범위에 포함되지 않아 정확한 조합 규칙(레이아웃 순서, 위계 등)은 확인하지 않았습니다** — 확인 필요.
 
+> **후속 확인 완료(추가 조사)**: 상위 컴포넌트는 [Text Input](../../text-input/text-input.md)으로 확인되었습니다. `Selected`/`Typing`(캐럿 포함) 상태가 실제로 어디서 쓰이는지도 이때 확인되었습니다 — Text Input의 State가 `Selected`(포커스+값 없음)일 때 Type Box `Selected`를, `Typing`(포커스+입력 중)일 때 Type Box `Typing`을 그대로 사용합니다. 상세는 [text-input.md](../../text-input/text-input.md) 5장 참고. Dropdown([dropdown.md](../../dropdown/dropdown.md))에서는 이 두 캐럿 상태가 쓰이지 않는다는 것도 대조 확인되었습니다.
+
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
 | **Size** | S / M / L | 타이포그래피 스케일(Caption 1 → Body 2 → Body 1). Input 필드의 크기 변형에 대응하는 것으로 추정 |
@@ -109,8 +111,10 @@ Type Box 자체에는 배경·테두리·선택 하이라이트 같은 별도의
 - Size(S/M/L)를 특정 타이포 스타일(Caption1/Body2/Body1)에 매핑하는 "Type Box 전용 Size 스케일" 자체는 저장소에 별도 시맨틱 토큰으로 존재하지 않습니다(각 스타일 값 자체는 토큰과 일치하나, "Input Size S=Caption1을 쓴다"는 매핑 규칙은 문서화되어 있지 않음).
 - 12개 변형의 실측 너비/높이(예: 67.5×18px)는 hug-content 결과값이며 고정 토큰이 아닙니다(1절 참고).
 
+**확인 완료(추가 조사)**
+- 상위 Input 컴포넌트는 [Text Input](../../text-input/text-input.md)으로 확인됨. `Selected`/`Typing` 캐럿 상태가 실제로 쓰이는 사용처도 확인됨(위 1장 후속 확인 참고)
+
 **확인 필요**
-- 상위 Input 컴포넌트와의 정확한 조합/레이아웃 규칙 (이번 조사 범위 밖)
 - Type Box 레이어의 접근성 역할(네이티브 `<input>`과의 관계)
 - `Placeholder`/`Selected` 회색 텍스트의 WCAG 명암비 수치
 - 캐럿 깜빡임 애니메이션의 duration/easing/반복 주기 (Figma에 모션 데이터 없음, `text-blinker.md`와 동일)

@@ -1,0 +1,245 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Text Input",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2114-8709",
+    "frameNodeId": "2114:8709",
+    "frameName": "Text Input",
+    "totalVariantInstances": 768,
+    "axes": [
+      "Size(S/M/L)",
+      "State(Default/Hover/Disabled/Done/Selected/Typing)",
+      "Destructed(False/True, Selected·Typing 전용)",
+      "ShowButton(False/True)",
+      "ShowLabel(False/True)",
+      "SupportingText(False/True)",
+      "LeftIcon(False/True)",
+      "RightIcon(False/True)"
+    ],
+    "note": "768 = Size(3) × [State-Destructed 조합(8) × 토글(2^5=32)]. State-Destructed 조합 8가지 = Default/Hover/Disabled/Done(각 1, Destructed 축 없음) + Selected/Typing(각 2, Destructed False/True). Dropdown은 Destructed가 Selected 1개 State에서만 분기했으나 Text Input은 Selected·Typing 2개 State에서 분기함."
+  },
+  "sampling": {
+    "method": "축별 전략적 샘플링. get_metadata 전수(768개 축 구조 파악, 오케스트레이터 사전 확보) + get_design_context 15회 + get_variable_defs 4회 + get_motion_context 1회(최상위 프레임)",
+    "coverage": "Size 3종, State 6종+Destructed(Selected·Typing 각 2), 토글 5종(Show Button/Show Label/Supporting Text/Left Icon/Right Icon)을 각각 다른 축 고정 후 개별 실측. 753개 미실측 조합은 축 독립성 규칙으로 예측 가능하나 개별 실측하지 않음 — 새 토큰명은 만들지 않음.",
+    "sampledNodeIds": {
+      "baseline": "2119:10041",
+      "size": { "S": "2119:9843", "M": "2119:10041", "L": "2119:10245" },
+      "state_sizeM": {
+        "Default": "2119:10041",
+        "Hover": "2119:10082",
+        "Disabled": "2119:10069",
+        "Done": "2119:10054",
+        "Selected": "2119:10095",
+        "SelectedDestructed": "2119:18801",
+        "Typing": "2119:10121",
+        "TypingDestructed": "2119:18818"
+      },
+      "toggles_sizeM_stateDefault": {
+        "showButtonFalse": "2114:8648",
+        "showLabelFalse": "2119:10903",
+        "supportingTextFalse": "2119:11203",
+        "leftIconFalse": "2119:10149",
+        "rightIconFalse": "2119:10048",
+        "allFiveFalse": "2115:9089"
+      }
+    }
+  },
+  "sizes": {
+    "S": {
+      "inputRadius": { "figmaVariable": "radius/05", "value": "10px", "token": "ref-radius-05", "tokenMatch": "정확히 일치" },
+      "inputBorderWidth": { "figmaVariable": "borderwidth/02", "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
+      "inputPaddingX": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "tokenMatch": "정확히 일치" },
+      "inputPaddingY": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "tokenMatch": "정확히 일치" },
+      "inputInnerGap": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치" },
+      "inputButtonGap": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
+      "leftIconSize": "16px",
+      "rightIconSize": "16px",
+      "buttonPaddingX": { "figmaVariable": "spacing/06", "value": "8px" },
+      "buttonPaddingY": { "figmaVariable": "spacing/04", "value": "4px" },
+      "buttonRadius": { "figmaVariable": "radius/05", "value": "10px" },
+      "buttonTypography": "Body 2/14 M",
+      "labelPaddingBottom": { "figmaVariable": "spacing/02", "value": "2px" },
+      "labelTypography": "Caption 1/12 SB",
+      "typeBoxTypography": "Caption 1/12 M",
+      "supportingTextIconSize": "12px",
+      "supportingTextTypography": "Caption 2/10 M",
+      "sourceNodeId": "2119:9843"
+    },
+    "M": {
+      "inputRadius": { "figmaVariable": "radius/05", "value": "10px", "tokenMatch": "정확히 일치" },
+      "inputBorderWidth": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" },
+      "inputPaddingX": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" },
+      "inputPaddingY": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "inputInnerGap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "inputButtonGap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" },
+      "leftIconSize": "16px",
+      "rightIconSize": "16px",
+      "buttonPaddingX": { "figmaVariable": "spacing/08", "value": "12px" },
+      "buttonPaddingY": { "figmaVariable": "spacing/06", "value": "8px" },
+      "buttonRadius": { "figmaVariable": "radius/05", "value": "10px" },
+      "buttonTypography": "Body 2/14 M",
+      "labelPaddingBottom": { "figmaVariable": "spacing/04", "value": "4px" },
+      "labelTypography": "Caption 1/12 SB",
+      "typeBoxTypography": "Body 2/14 R",
+      "supportingTextIconSize": "16px",
+      "supportingTextTypography": "Caption 1/12 R",
+      "sourceNodeId": "2119:10041"
+    },
+    "L": {
+      "inputRadius": { "figmaVariable": "radius/06", "value": "12px", "token": "ref-radius-06", "tokenMatch": "정확히 일치" },
+      "inputBorderWidth": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" },
+      "inputPaddingX": { "figmaVariable": "spacing/09", "value": "14px", "tokenMatch": "정확히 일치" },
+      "inputPaddingY": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" },
+      "inputInnerGap": { "figmaVariable": "spacing/07", "value": "10px", "tokenMatch": "정확히 일치" },
+      "inputButtonGap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "leftIconSize": "20px",
+      "rightIconSize": "20px",
+      "buttonPaddingX": { "figmaVariable": "spacing/10", "value": "16px" },
+      "buttonPaddingY": { "figmaVariable": "spacing/08", "value": "12px" },
+      "buttonRadius": { "figmaVariable": "radius/06", "value": "12px" },
+      "buttonTypography": "Body 1/16 M",
+      "labelPaddingBottom": { "figmaVariable": "spacing/05", "value": "6px" },
+      "labelTypography": "Body 2/14 M",
+      "typeBoxTypography": "Body 1/16 R",
+      "supportingTextIconSize": "16px",
+      "supportingTextTypography": "Caption 1/12 R",
+      "sourceNodeId": "2119:10245"
+    }
+  },
+  "states": {
+    "Default": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "inputBorderColor": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "tokenMatch": "정확히 일치" },
+      "typeBoxState": "Placeholder",
+      "rightIcon": "arrowhead_down"
+    },
+    "Hover": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
+      "inputBorderColor": { "figmaVariable": "color/gray/900-20", "value": "rgba(3,9,26,0.2)", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
+      "typeBoxState": "Placeholder",
+      "rightIcon": "arrowhead_down",
+      "note": "루트 요소에 cursor-pointer 클래스 추가됨 외 Default와 동일"
+    },
+    "Disabled": {
+      "inputBackground": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치" },
+      "inputBorderColor": null,
+      "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
+      "buttonOpacity": { "figmaVariable": "opacity/20", "value": "0.2", "token": "ref-opacity-20", "tokenMatch": "정확히 일치" },
+      "typeBoxState": "Placeholder(색상 neutral/400, Default의 neutral/500보다 옅음)",
+      "labelColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "note": "Default 상태 Label 색상(neutral/700)보다 옅음" },
+      "rightIcon": "arrowhead_down",
+      "note": "테두리 없음 — 배경 채움으로만 표현"
+    },
+    "Done": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
+      "inputBorderColor": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
+      "typeBoxState": "Done(값 채워짐, neutral/800, 캐럿 없음)",
+      "rightIcon": "arrowhead_down",
+      "note": "실측 노드(2119:10054)에 한해 우측 아이콘 뒤 단위 텍스트('km') 슬롯이 추가로 관찰됨 — 8개 공식 축 밖의 요소, 확인 필요"
+    },
+    "Selected": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
+      "inputBorderColor": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
+      "typeBoxState": "Selected(값 없음, neutral/500 placeholder + 캐럿이 텍스트 앞에 표시, 캐럿색 brand/primary-default)",
+      "rightIcon": "arrowhead_down(변화 없음)",
+      "note": "포커스 + 값 없음으로 추정"
+    },
+    "SelectedDestructed": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
+      "inputBorderColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" },
+      "typeBoxState": "Selected(값 없음 + 캐럿, 캐럿색이 theme/destructed-default로 오버라이드됨)",
+      "rightIcon": "arrowhead_down(변화 없음)",
+      "note": "Destructed=True는 State=Selected·Typing 두 곳에서만 존재함"
+    },
+    "Typing": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
+      "inputBorderColor": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
+      "typeBoxState": "Typing(값 'Input Text', neutral/800 + 캐럿이 텍스트 뒤에 표시, 캐럿색 brand/primary-default)",
+      "rightIcon": "close_in_circle(강제 대체 — rightM 자유 슬롯 prop 자체가 코드에서 사라짐)",
+      "note": "포커스 + 값 있음(입력 중)으로 추정. Right Icon 토글이 이 State에서는 자유 아이콘 슬롯이 아니라 지우기 버튼 스위치로 의미가 바뀌는 것으로 보임"
+    },
+    "TypingDestructed": {
+      "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
+      "inputBorderColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" },
+      "buttonBackground": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "tokenMatch": "정확히 일치" },
+      "typeBoxState": "Typing(값 있음 + 캐럿, 캐럿색이 theme/destructed-default로 오버라이드됨)",
+      "rightIcon": "close_in_circle(강제, 변화 없음)",
+      "note": "Destructed=True는 State=Selected·Typing 두 곳에서만 존재함"
+    }
+  },
+  "toggles": {
+    "showButton": { "falseEffect": "우측 Button 요소가 트리에서 완전히 사라지고 Input이 w-full로 확장" },
+    "showLabel": { "falseEffect": "상단 Label 요소가 트리에서 완전히 사라짐" },
+    "supportingText": { "falseEffect": "하단 Supporting Text 요소가 트리에서 완전히 사라짐" },
+    "leftIcon": { "falseEffect": "Input 내부 좌측 아이콘만 사라짐(leftM prop 자체가 타입에서 빠짐), 나머지 레이아웃 불변" },
+    "rightIcon": {
+      "falseEffect": "Input 내부 우측 아이콘만 사라짐(rightM prop 자체가 타입에서 빠짐), TypeBox가 flex-[1_0_0]로 확장",
+      "typingStateCaveat": "State=Typing에서는 rightM 자유 슬롯 prop 자체가 없고 close_in_circle 아이콘이 하드코딩됨. Right Icon=False인 Typing 노드는 미샘플링 — 그 경우 지우기 버튼이 사라지는지 확인 필요"
+    },
+    "allFiveFalseNode": "2115:9089 — Label/Button/Supporting Text/좌우 아이콘 전부 사라지고 TypeBox 하나만 담긴 Input 한 줄만 남음"
+  },
+  "subcomponentReuse": {
+    "label": {
+      "ref": "components/global/label/label.md",
+      "essential": "Off 고정(Text Input의 8개 공식 축에 Essential 토글 없음)",
+      "tokenMatch": "Size S/M/L 전부 정확히 일치"
+    },
+    "typeBox": {
+      "ref": "components/global/type-box/type-box.md",
+      "statesObserved": ["Placeholder", "Selected", "Typing", "Done"],
+      "note": "Dropdown과 달리 4개 State 전부 실제로 쓰임 — Default/Hover/Disabled→Placeholder, Selected→Selected(캐럿+빈값), Typing→Typing(캐럿+값), Done→Done. Type Box 문서가 확인 필요로 남긴 '캐럿이 실제로 어디서 쓰이는지'에 대한 답을 제공함.",
+      "tokenMatch": "정확히 일치"
+    },
+    "textBlinker": {
+      "ref": "components/global/text-blinker/text-blinker.md",
+      "usedVia": "TypeBox의 Selected/Typing State 내부에 On 변형으로 인스턴스화됨",
+      "note": "크기(1.5×20px)·radius(2px)는 문서 스펙과 일치하지만, 채우기 색상이 Destructed 여부에 따라 brand/primary-default ↔ theme/destructed-default로 오버라이드됨 — text-blinker.md 자체 범위 밖의 상위 컴포넌트 레벨 활용 사례",
+      "tokenMatch": "정확히 일치(색상 오버라이드도 기존 토큰 값 사용)"
+    },
+    "supportingText": {
+      "ref": "components/global/supporting-text/supporting-text.md",
+      "theme": "Gray",
+      "textCount": false,
+      "icon": "warning_filled",
+      "note": "Destructed 상태에서도 Theme이 자동으로 Destructed로 바뀌지 않고 Gray 그대로 유지됨 — Dropdown과 동일한 WCAG 1.4.1 우려 지점",
+      "tokenMatch": "정확히 일치"
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 최상위 프레임(2114:8709, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. State 전환, 캐럿 깜빡임 모두 Figma 파일에 모션 값이 정의되어 있지 않음.",
+  "containerWidth": {
+    "figmaSampleValue": "w-[280px]",
+    "actualBehavior": "Dropdown과 동일한 Figma 진열 프레임 컨벤션으로 보이며 화면 폭에 따른 가변(fluid) 너비일 가능성이 높음",
+    "confirmed": false,
+    "note": "Text Input 자체로는 재검증하지 않음 — 확인 필요"
+  },
+  "accessibility": {
+    "textBlinkerAriaHidden": "text-blinker.md 4장과 동일 — aria-hidden, 네이티브 캐럿과의 중복 방지 확인 필요",
+    "clearButtonLabel": "Typing 상태의 close_in_circle 지우기 버튼에 aria-label 연결 규정 없음 — 확인 필요",
+    "disabledMarkup": "disabled/aria-disabled 연결 여부는 Figma로 확인 불가 — 확인 필요",
+    "colorOnlyDestructed": "에러 상태가 테두리·버튼·캐럿 색상 변화 위주로 표현되고 Supporting Text Theme은 전환되지 않음 — WCAG 1.4.1 관점에서 확인 필요",
+    "labelFor": "label.md 5장과 동일한 확인 필요 사항 적용. Essential 토글이 없어 필수 표시 방식은 별도 확인 필요",
+    "unitSuffixA11y": "Done 상태에서 관찰된 단위 텍스트('km')가 값과 함께 스크린리더에 하나의 의미로 읽히도록 하는 처리 규정 없음 — 확인 필요"
+  },
+  "resolvedQuestions": [
+    "TypeBox의 Selected/Typing(캐럿) 상태가 Text Input 안에서 실제로 쓰이는지 — 확인 완료, 실제로 쓰임(Dropdown과 대조되는 지점)",
+    "Destructed가 어느 State에서 분기하는지 — Selected·Typing 두 State 모두에서 분기함을 확인 완료(Dropdown은 Selected 1개)",
+    "Right Icon 기본 아이콘명 — arrowhead_down으로 확인(Dropdown의 chevron_down과 다름)",
+    "State=Typing에서 Right Icon 슬롯이 close_in_circle로 강제 대체됨을 확인 완료"
+  ],
+  "openQuestions": [
+    "컴포넌트 너비가 실제로 fluid인지(Dropdown처럼 재검증 안 함)",
+    "캐럿 깜빡임 애니메이션 duration/easing/반복 주기",
+    "Done 상태의 단위(unit) 텍스트 슬롯이 8개 공식 축 밖의 별도 요소인지 여부",
+    "Typing 상태에서 Right Icon=False일 때 지우기 버튼 표시 여부",
+    "aria-hidden, aria-label, disabled, <label for> 등 접근성 마크업 연결 규정",
+    "Destructed 상태에서 Supporting Text Theme 전환 필요 여부"
+  ]
+}

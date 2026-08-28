@@ -29,6 +29,8 @@
 | Segmented Control | [components/segmented-control/segmented-control.md](./segmented-control/segmented-control.md) | 완료 | 20개 인스턴스 (Size XS/S/M/L/XL × Count 2~5). `_Item`을 조합해 만들어짐, 5개 Size 전부 `_Item`과 1:1 대응. 10개 노드 전략적 샘플링. (초기 조사 시 Size=S 노드 일부의 라벨-내용 불일치를 발견했고, 이후 Figma에서 Size=XS로 정정되어 해소됨 — 0-1장 참고) |
 | Tab Item(`_Item`) | [components/global/tab-item/tab-item.md](./global/tab-item/tab-item.md) | 완료 | 12개 인스턴스 (Size S/L × Active On/Off × Disabled False/True × Emphasize Off/On, 축 비직교). `components/global/` 소속 — Tab 전용 서브 아톰(디자이너가 아토믹 디자인 목적으로 분리, Segmented Control Item과 동명이나 별개 컴포넌트). 전수 실측 |
 | Tab | [components/tab/tab.md](./tab/tab.md) | 완료 | 10개 인스턴스 (Size S/L × Type Hug/Fill × Tailing Icon × Side Padding, 축 비직교). `_Item`(Tab Item)을 조합해 만들어짐 — Hug는 인스턴스 재사용(최대 8슬롯), Fill은 내부 구조를 5슬롯으로 인라인 복제. 오버플로우 마스크(`Alpha Gradient Mask`, node 2262:1908)로 가로 스크롤 페이드 구현. 전수 실측 |
+| Text Input | [components/text-input/text-input.md](./text-input/text-input.md) | 완료 | 768개 인스턴스 (Size S/M/L × State 6종 × Destructed(Selected·Typing 전용) × Show Button/Show Label/Supporting Text/Left Icon/Right Icon 각 2종). Label/Type Box/Text Blinker/Supporting Text 4개 서브 아톰의 실 사용처. Type Box의 캐럿(Selected/Typing) 상태가 실제로 쓰임을 확인. 15개 노드 전략적 샘플링(0장 참고) |
+| Text Input Group | [components/text-input-group/text-input-group.md](./text-input-group/text-input-group.md) | 완료 | 6개 인스턴스 (Size S/M/L × Field 2/3). Text Input 2~3개를 수직 정렬해 조합한 컴포넌트, 첫 번째 필드만 Label 표시. 전수 실측 |
 
 ## components/global/이란
 

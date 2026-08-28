@@ -15,6 +15,10 @@
     "method": "전수 실측 (get_design_context 12회 + get_variable_defs 1회(사전 확보값 재사용) + get_motion_context 1회(recursive))",
     "coverage": "12개 Size×State 조합 전체 개별 실측함. 추정/외삽 없음."
   },
+  "usedByParentComponent": {
+    "ref": "components/text-input/text-input.md",
+    "note": "Text Input이 상위 컴포넌트로 확인됨. Selected/Typing(캐럿 포함) 상태가 Text Input의 State=Selected/Typing에서 실제로 쓰임. Dropdown에서는 이 두 상태가 쓰이지 않음(대조 확인됨)."
+  },
   "variables": {
     "brand/primary-default": "#2c7be2",
     "radius/01": "2",
