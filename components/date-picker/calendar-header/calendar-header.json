@@ -1,0 +1,120 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Calendar Header",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2212-2712",
+    "frameNodeId": "2212:2712",
+    "frameName": "Calendar Header",
+    "familyGroupNodeId": "2497:13877",
+    "totalVariantInstances": 6,
+    "variantFrameSize": { "width": "352px", "height": "56px" },
+    "axes": [
+      "Title(Left/Center)",
+      "With(Arrows/Close/Nothing)"
+    ],
+    "nonVariantProperty": {
+      "name": "showDropdown",
+      "type": "boolean(추정)",
+      "default": true,
+      "note": "제목 옆 화살표 아이콘(20px) 표시 여부. 6개 공식 variant 축과 별개로 코드에 prop으로 존재. Text Input의 Show Unit과 유사한 패턴으로 보이나 이번 조사에서는 Figma 프로퍼티 패널로 사용자 확인을 거치지 않음 — 정식 boolean 컴포넌트 프로퍼티인지 확인 필요."
+    }
+  },
+  "sampling": {
+    "method": "get_design_context 1회 호출(2212:2712)로 6개 변형 전체가 조건부 prop(title/propWith/showDropdown)으로 병합된 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2497:13877)에서 패밀리 공용으로 확보한 값을 재사용.",
+    "coverage": "6개 변형 전수. 병합 코드의 id={...} 조건부 분기에 박힌 data-node-id를 작업 지시의 노드 ID 목록과 대조해 정확히 일치함을 확인.",
+    "sampledNodeIds": {
+      "Left_Arrows": "2212:2711",
+      "Left_Close": "2224:3073",
+      "Left_Nothing": "2212:2710",
+      "Center_Nothing": "2212:2709",
+      "Center_Arrows": "2224:3104",
+      "Center_Close": "2224:3126"
+    }
+  },
+  "layout": {
+    "root": { "display": "flex-row", "width": "352px", "height": "56px", "alignItems": "center", "gap": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" } },
+    "paddingByCombo": {
+      "Center_Close": {
+        "paddingLeft": { "value": "60px", "note": "하드코딩, 저장소 spacing 토큰에 해당 값 없음(가장 가까운 값 ref-spacing-18=56px, ref-spacing-19=64px). justify-center와 함께 비대칭 패딩으로 우측 닫기 버튼의 시각적 무게를 상쇄하는 보정값으로 추정" },
+        "paddingRight": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+        "paddingY": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+        "justifyContent": "center"
+      },
+      "Center_ArrowsOrNothing": {
+        "paddingAll": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+        "justifyContent": "center"
+      },
+      "Left_Nothing": {
+        "paddingX": { "figmaVariable": "spacing/11", "value": "20px", "tokenMatch": "정확히 일치" },
+        "paddingY": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }
+      },
+      "Left_ArrowsOrClose": {
+        "paddingLeft": { "figmaVariable": "spacing/11", "value": "20px", "tokenMatch": "정확히 일치" },
+        "paddingRight": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+        "paddingY": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }
+      }
+    },
+    "yearAndMonthBlock": {
+      "display": "flex-row",
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
+      "alignItems": "center",
+      "grow": "flex-[1_0_0]",
+      "note": "Center+Arrows를 제외한 5개 조합에서 공용. Center+Arrows만 별도 인스턴스로 분리되어 좌우 화살표 버튼 사이(3분할)에 배치됨 — 레이아웃 골격 자체가 갈라지는 유일한 조합"
+    },
+    "iconButton": {
+      "padding": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" },
+      "iconSize": "24px"
+    }
+  },
+  "titleTypography": {
+    "Left": { "style": "SubTitle/18 SB", "figmaVariable": "font/pretendard + weight/600", "size": "18px", "lineHeight": "24px", "letterSpacing": "-0.09px", "color": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" }, "tokenMatch": "정확히 일치" },
+    "Center": { "style": "Body 1/16 SB", "figmaVariable": "font/pretendard + weight/600", "size": "16px", "lineHeight": "24px", "letterSpacing": "-0.04px", "textAlign": "center", "color": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" }, "tokenMatch": "정확히 일치" },
+    "sampleText": "2000년 1월",
+    "note": "Left/Center는 정렬뿐 아니라 타이포 크기 자체가 다름(SubTitle18 vs Body1/16) — 실측으로 확인, 작업 지시의 가설보다 구체적",
+    "sampleTextCorrectionNote": "최초 초안에 '2000월 1월'로 오기됨 — date-picker.md/date-picker-group.md 작성 과정에서 동일 노드 재조회로 '2000년 1월'이 맞음을 확인, 정정함"
+  },
+  "titleAdjacentIcon": {
+    "size": "20px",
+    "condition": "showDropdown=true일 때만",
+    "byWith": {
+      "Arrows": "arrowhead_down",
+      "Nothing": "arrowhead_down",
+      "Close": "arrowhead_up"
+    },
+    "note": "With=Close에서만 위쪽 화살표(arrowhead_up)로 반전됨 — 펼쳐진/열린 상태를 암시"
+  },
+  "controlsByWith": {
+    "Arrows": {
+      "Left": {
+        "structure": "Year+Month 블록 뒤(flex-1로 밀림)에 gap 없는 'Arrow Box'로 chevron_left, chevron_right 버튼 2개가 붙어서 배치",
+        "icons": ["chevron_left(24px)", "chevron_right(24px)"]
+      },
+      "Center": {
+        "structure": "3분할 레이아웃: [chevron_left 버튼] [Year+Month 블록, flex-1, 중앙] [chevron_right 버튼]",
+        "icons": ["chevron_left(24px)", "chevron_right(24px)"]
+      }
+    },
+    "Close": {
+      "structure": "Year+Month 블록(with arrowhead_up) 뒤에 닫기(X) Icon Button 1개. Left/Center 공통 구조",
+      "icons": ["close(24px)"]
+    },
+    "Nothing": {
+      "structure": "Year+Month 블록만 전체 폭 차지, 부가 컨트롤 없음. Left/Center 공통",
+      "icons": []
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체(11개 컴포넌트) 공용 확인.",
+  "accessibility": {
+    "iconOnlyButtonLabels": "이전/다음 달, 닫기 아이콘 전용 버튼의 aria-label 연결 규정 없음 — 확인 필요",
+    "dropdownTriggerSemantics": "제목+화살표가 드롭다운 트리거일 가능성, aria-expanded/aria-haspopup 연결 규정 없음 — 확인 필요",
+    "arrowDirectionOnlyState": "펼침/접힘 상태를 화살표 방향 반전만으로 표현 — 스크린리더 전달 수단 없음, 확인 필요"
+  },
+  "openQuestions": [
+    "showDropdown이 정식 boolean 컴포넌트 프로퍼티인지(사용자 확인 미실시)",
+    "Center+Close의 pl-60px 정확한 산출 근거",
+    "아이콘 전용 버튼의 aria-label/aria-expanded 등 접근성 마크업 연결 규정"
+  ]
+}

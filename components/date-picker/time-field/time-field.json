@@ -1,0 +1,107 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Time Field",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2229-8789",
+    "frameNodeId": "2229:8789",
+    "frameName": "Time Field",
+    "familyGroupNodeId": "2497:13877",
+    "totalVariantInstances": 3,
+    "variantFrameSize": { "width": "56px", "height": "40px", "note": "hug-content로 산출됨(padding + content), 고정 크기 토큰 없음" },
+    "axes": ["State(Default/Hover/Typing)"]
+  },
+  "sampling": {
+    "method": "get_design_context 1회 호출(2229:8789)로 3개 변형 전체가 조건부 prop(state)으로 병합된 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2497:13877)에서 패밀리 공용으로 확보한 값을 재사용.",
+    "coverage": "3개 변형 전수. 병합 코드의 id={...} 조건부 분기에 박힌 data-node-id를 작업 지시의 노드 ID 목록과 대조해 정확히 일치함을 확인.",
+    "sampledNodeIds": {
+      "Default": "2229:8788",
+      "Hover": "2229:8787",
+      "Typing": "2229:8786"
+    }
+  },
+  "layout": {
+    "root": {
+      "display": "flex-row",
+      "alignItems": "center",
+      "gap": { "figmaVariable": "spacing/07", "value": "10px", "tokenMatch": "정확히 일치" },
+      "paddingX": { "figmaVariable": "spacing/07", "value": "10px", "tokenMatch": "정확히 일치" },
+      "paddingY": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" }
+    },
+    "numberInputWrapper": {
+      "width": { "value": "36px", "note": "고정, 하드코딩(w-[36px]). 값은 ref-spacing-15(36px)와 우연히 일치하나 변수 미바인딩" },
+      "paddingX": { "value": "8px", "note": "하드코딩(px-[8px]). 값은 spacing/06(8px)과 일치하나 CSS 변수로 바인딩되지 않음" },
+      "display": "flex-row items-center justify-center"
+    },
+    "sizeDerivation": {
+      "width": "spacing/07*2(20px) + numberInputWrapper 36px = 56px",
+      "height": "spacing/06*2(16px) + Body1 lineHeight(24px) = 40px"
+    }
+  },
+  "states": {
+    "Default": {
+      "background": { "figmaVariable": "neutral/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "border": null,
+      "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" },
+      "typography": "Body 1/16 R",
+      "sampleText": "00"
+    },
+    "Hover": {
+      "background": { "base": { "figmaVariable": "neutral/200", "value": "#f1f2f3" }, "overlay": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치(ref-color-alpha-gray-900-5)" } },
+      "border": null,
+      "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "note": "Default와 동일, 변화 없음" },
+      "cursor": "pointer",
+      "note": "Date 컴포넌트의 Hover 오버레이(color/gray/900-2)와는 다른 강도(5%)를 사용 — Date는 Hover 2%/Pressed 5%였던 것과 달리 Time Field는 Hover 자체에 5%를 씀"
+    },
+    "Typing": {
+      "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "border": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "width": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "tokenMatch": "정확히 일치" },
+      "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "note": "변화 없음" },
+      "caret": {
+        "ref": "components/global/text-blinker/text-blinker.md",
+        "variant": "On",
+        "size": { "width": "1.5px", "height": "20px" },
+        "radius": { "figmaVariable": "radius/01", "value": "2px", "tokenMatch": "정확히 일치" },
+        "fill": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "tokenMatch": "정확히 일치" },
+        "position": "텍스트 뒤(오른쪽)",
+        "gapToText": { "figmaVariable": "spacing/01", "value": "1px", "tokenMatch": "정확히 일치" },
+        "note": "색상 오버라이드 없음 — Time Field에는 Destructed/에러 축 자체가 없어 Text Input과 달리 캐럿 색이 항상 brand/primary-default 고정"
+      }
+    }
+  },
+  "keyFindings": [
+    "Size 축, Label, Supporting Text, 좌우 아이콘 없음 — 순수 최소 단위 숫자 필드",
+    "3개 State 전부 텍스트 색이 neutral/800로 동일 — 값 없음(placeholder) 상태 표현이 Figma 컴포넌트에 없음",
+    "Hover 오버레이가 Date 컴포넌트와 동일한 color/gray/900-* 패턴을 재사용하나 강도(5%)는 다름",
+    "Disabled 상태가 Figma 컴포넌트 자체에 존재하지 않음(Default/Hover/Typing 3종뿐)"
+  ],
+  "subcomponentReuse": {
+    "textBlinker": {
+      "ref": "components/global/text-blinker/text-blinker.md",
+      "usedVia": "Typing State에서 On 변형 직접 인스턴스화, 오버라이드 없음",
+      "tokenMatch": "정확히 일치"
+    },
+    "usedBy": {
+      "timePicker": {
+        "ref": "components/date-picker/time-picker/time-picker.md",
+        "note": "Time Picker가 Time Field를 그대로 인스턴스로 재사용하나, Time Picker 자신의 병합 변형 코드 안에서는 내장 Time Field가 State=Default로 고정되어 있어 Hover/Typing이 Time Picker 내부에서 어떻게 나타나는지는 미확인"
+      }
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체(11개 컴포넌트) 공용 확인.",
+  "accessibility": {
+    "textBlinkerAriaHidden": "text-blinker.md 4장과 동일 — aria-hidden, 네이티브 캐럿과의 중복 방지 확인 필요",
+    "inputConstraints": "값 범위 제약(예: 분 0~59)이나 자동 포맷팅 규칙은 Figma로 확인 불가 — 확인 필요",
+    "hoverClickTarget": "Hover의 cursor-pointer가 전체 박스에 적용되는데 실제 input 포커스 영역과 일치하는지 확인 필요",
+    "noDisabledVariant": "Disabled 변형이 없어 비활성화 필요 시 대체 처리 방식 확인 필요"
+  },
+  "openQuestions": [
+    "Number Input 래퍼 36px/8px 값이 실제로 spacing 토큰을 의도한 것인지, 순수 하드코딩인지",
+    "값이 없을 때(빈 필드) 어떻게 표현되는지 — Figma 컴포넌트에 별도 변형 없음",
+    "Time Picker 내부에서 Time Field의 Hover/Typing 상태가 실제로 작동하는지",
+    "Disabled 상태가 필요한 화면에서의 대체 처리 방식",
+    "입력값 범위 제약 및 포맷팅 규칙"
+  ]
+}

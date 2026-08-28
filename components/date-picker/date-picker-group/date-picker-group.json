@@ -1,0 +1,62 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Date Picker Group",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2215-12847",
+    "frameNodeId": "2215:12847",
+    "frameName": "Date Picker Group",
+    "familyGroupNodeId": "2497:13877",
+    "totalVariantInstances": 2,
+    "axes": ["Type(Horizontal/Vertical)"],
+    "note": "Date Picker 2개 + Divider 1개, 3자식 고정 구조."
+  },
+  "sampling": {
+    "method": "get_metadata로 두 변형 자식 구조 확인(각 3자식 고정) + get_design_context 2회",
+    "coverage": "2개 변형 전수",
+    "sampledNodeIds": {
+      "Horizontal": { "root": "2215:12845", "datePickerA": "2224:3350", "datePickerB": "2224:3449", "divider": "2215:11760" },
+      "Vertical": { "root": "2215:12846", "datePickerA": "2224:3700", "datePickerB": "2224:3803", "divider": "2215:11757" }
+    }
+  },
+  "types": {
+    "Horizontal": {
+      "size": "721x342px",
+      "dividerOrientation": "세로(90도 회전, container-type:size 기법)",
+      "datePickerInstanceWidth": "360px(단독 Date Picker 기본 352px보다 확장)",
+      "headerA": { "content": "제목 텍스트 + arrowhead_down 드롭다운만", "arrowBox": false, "note": "Arrow Box(월 이동) 없음" },
+      "headerB": { "content": "제목 텍스트만(드롭다운 없음)", "arrowBox": true, "note": "Arrow Box(chevron_left/right) 있음, 드롭다운 없음 — A와 비대칭" },
+      "calendarContentPadding": { "figmaVariable": "spacing/10", "value": "16px", "note": "균등 패딩, 단독 Date Picker(12px)보다 큼" },
+      "monthVariant": "Week Number=5",
+      "asymmetricHeaderConfirmNeeded": true
+    },
+    "Vertical": {
+      "size": "352x661px",
+      "dividerOrientation": "가로",
+      "outerGap": { "figmaVariable": "spacing/04", "value": "4px" },
+      "totalSeparation": "4px + 1px(divider) + 4px = 9px",
+      "datePickerInstanceWidth": "352px(기본, 확장 없음)",
+      "header": { "content": "월(月)만 표시(연도 생략), 예: '1월'/'2월'", "arrowBox": false, "dropdown": false, "note": "Arrow Box·드롭다운 둘 다 없음, Calendar Header 'Title=Left, With=Nothing'에 대응하나 텍스트가 연+월이 아닌 월만" },
+      "calendarContentPadding": { "paddingX": { "figmaVariable": "spacing/08", "value": "12px" }, "paddingY": { "figmaVariable": "spacing/06", "value": "8px" }, "note": "비대칭 패딩" },
+      "monthVariant": "Week Number=5"
+    }
+  },
+  "bothDatePickersUse": "State=Default, Time Picker=Off (Group 자체에서 Time Picker 통합 조합은 관찰되지 않음)",
+  "subcomponentReuse": {
+    "datePicker": { "ref": "components/date-picker/date-picker/date-picker.md" },
+    "divider": { "ref": "components/divider/divider.md", "tokenMatch": "정확히 일치(neutral/200)" }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체 공용 확인.",
+  "accessibility": {
+    "roleGroup": "두 패널이 범위 시작/끝을 나타낸다면 role=group + aria-label 구분 마크업 필요 — 확인 필요",
+    "syncBehavior": "Horizontal 비대칭 헤더 구조에서 두 패널 날짜 동기화 여부 확인 불가",
+    "dateCellA11y": "Date 셀의 접근성 이슈가 동일 적용됨(date.json accessibility 참고)"
+  },
+  "openQuestions": [
+    "Horizontal 비대칭 헤더 구조(A=드롭다운만, B=Arrow Box만)의 실제 상호작용 의도",
+    "두 Date Picker 패널의 날짜 동기화 여부",
+    "Date Picker Group에서 Time Picker 통합 조합이 실제로 쓰이는지(샘플에는 Off만 존재)",
+    "접근성 마크업(role=group, aria-label) 연결 규정"
+  ]
+}

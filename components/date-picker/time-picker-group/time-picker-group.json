@@ -1,0 +1,71 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Time Picker Group",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2229-8932",
+    "frameNodeId": "2229:8932",
+    "frameName": "Time Picker Group",
+    "familyGroupNodeId": "2497:13877",
+    "totalVariantInstances": 2,
+    "axes": ["PickerCount(2/3)"]
+  },
+  "sampling": {
+    "method": "get_design_context 1회 호출(2229:8932)로 2개 변형 전체가 조건부 prop(pickerCount)으로 병합된 코드로 반환됨. 병합 코드에 Time Picker 및 그 내부 Time Field 축약 정의가 포함되어 있어 서브컴포넌트 재사용 관계를 코드 레벨에서 직접 확인. get_variable_defs·get_motion_context는 상위 그룹(2497:13877)에서 패밀리 공용으로 확보한 값을 재사용.",
+    "coverage": "2개 변형 전수. 병합 코드의 id={...} 조건부 분기에 박힌 data-node-id를 작업 지시의 노드 ID 목록과 대조해 정확히 일치함을 확인.",
+    "sampledNodeIds": {
+      "Count2": "2229:8931",
+      "Count3": "2229:8930"
+    }
+  },
+  "pickerCounts": {
+    "2": { "nodeId": "2229:8931", "width": "132px", "height": "116px", "structure": "[TimePicker][Colon][TimePicker]" },
+    "3": { "nodeId": "2229:8930", "width": "208px", "height": "116px", "structure": "[TimePicker][Colon][TimePicker][Colon][TimePicker]" }
+  },
+  "layout": {
+    "root": { "display": "flex-row", "alignItems": "center", "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" } },
+    "colon": {
+      "type": "고정 이미지 에셋(SVG)",
+      "size": { "width": "4px", "height": "14px" },
+      "note": "값 자체는 ref-spacing-04(4px)/ref-spacing-09(14px)와 우연히 일치하나 레이아웃 토큰이 아니라 이미지 에셋 크기 — 토큰 매칭 대상 아님"
+    },
+    "sizeVerification": {
+      "count2": "56(TimePicker) + 8(gap) + 4(Colon) + 8(gap) + 56(TimePicker) = 132px — 실측값과 일치",
+      "count3": "56+8+4+8+56+8+4+8+56 = 208px — 실측값과 일치",
+      "note": "이 산술이 정확히 일치해 gap 값이 spacing/06(8px)임을 교차 검증함"
+    }
+  },
+  "keyFindings": [
+    "Time Picker Group은 Time Picker를 실제로 인스턴스로 조합함 — 병합 코드에 Time Picker(및 내부 Time Field) 축약 정의가 포함되어 코드 레벨에서 확인",
+    "이 컴포넌트의 병합 변형 안에서는 내장 Time Picker가 Direction=Down Only로 고정됨 — Up Only/Both 옵션이 코드 타입에 없음, 실제 제품에서 다른 Direction 조합 가능 여부는 확인 필요",
+    "Colon 구분자는 텍스트가 아니라 고정 이미지 에셋(SVG)",
+    "콜론 앞뒤 gap이 모두 컨테이너 공통 spacing/06(8px)로 동일 — 별도 콜론 전용 gap 토큰 없음"
+  ],
+  "subcomponentReuse": {
+    "timePicker": {
+      "ref": "components/date-picker/time-picker/time-picker.md",
+      "instanceCount": "2 또는 3 (Picker Count에 따름)",
+      "directionFixed": "Down Only",
+      "note": "Group 자신의 병합 변형에서는 Direction 축이 Down Only 하나로 고정됨",
+      "tokenMatch": "정확히 일치(time-picker.md 8장 참고)"
+    },
+    "timeField": {
+      "ref": "components/date-picker/time-field/time-field.md",
+      "usedVia": "Time Picker를 통해 간접 인스턴스화, State=Default 고정",
+      "tokenMatch": "정확히 일치(time-field.md 8장 참고)"
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체(11개 컴포넌트) 공용 확인. Picker Count 2↔3 전환 애니메이션 정의 없음(고정된 두 변형일 뿐).",
+  "accessibility": {
+    "groupSemantics": "fieldset/legend 또는 aria-labelledby로 전체를 하나의 논리적 그룹으로 묶는 처리 필요해 보이나 Figma에 규정 없음 — 확인 필요",
+    "colonDecorative": "Colon 구분자는 aria-hidden=\"true\" 처리가 적절해 보이나 확인 필요",
+    "perFieldLabel": "각 Time Picker(시/분/초)를 구분하는 aria-label 연결 규정 없음 — 확인 필요",
+    "innerComponentA11y": "time-picker.md 7장, time-field.md 7장의 접근성 요구사항이 그대로 적용됨"
+  },
+  "openQuestions": [
+    "Group 내부 Time Picker가 실제로 Down Only 외 다른 Direction으로 교체되어 쓰이는지",
+    "Colon을 실제 구현에서 텍스트 문자로 대체할지, 이미지 그대로 쓸지",
+    "그룹 전체 및 개별 필드의 접근성 마크업(fieldset/aria-label/aria-hidden) 연결 규정"
+  ]
+}

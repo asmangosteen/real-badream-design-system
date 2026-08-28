@@ -1,0 +1,92 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Date Picker",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2224-3250",
+    "frameNodeId": "2224:3250",
+    "frameName": "Date Picker",
+    "familyGroupNodeId": "2497:13877",
+    "totalVariantInstances": 4,
+    "axes": [
+      "State(Default/Wheel)",
+      "TimePicker(Off/On)"
+    ],
+    "note": "완전 직교(orthogonal) 2×2=4. 패밀리 플래그십 컴포넌트 — Date/Week/Month/CalendarHeader/YearMonthWheel/TimeField/TimePicker/TimePickerGroup을 전부 조합."
+  },
+  "sampling": {
+    "method": "get_metadata로 4개 변형 자식 구조 확인 + get_design_context 2회(2224:3248=State Default/Wheel 병합 코드, 2229:9303=Time Picker=On 섹션 단독)",
+    "coverage": "4개 변형 전수",
+    "sampledNodeIds": {
+      "Default_Off": "2224:3249",
+      "Wheel_Off": "2224:3248",
+      "Default_On": "2229:9130",
+      "Wheel_On": "2229:9135"
+    }
+  },
+  "layout": {
+    "width": "352px 고정(전 변형 공통)",
+    "heights": { "Default_Off": "334px", "Wheel_Off": "334px", "Default_On": "482px", "Wheel_On": "482px" },
+    "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+    "structure": "Calendar Header(56px 고정) → Calendar 콘텐츠 영역(278px) → (TimePicker=On일 때만) Time Picker 섹션(148px)"
+  },
+  "calendarHeader": {
+    "ref": "components/date-picker/calendar-header/calendar-header.md",
+    "container": { "height": "56px", "paddingLeft": { "figmaVariable": "spacing/11", "value": "20px" }, "paddingRight": { "figmaVariable": "spacing/06", "value": "8px" }, "paddingY": { "figmaVariable": "spacing/06", "value": "8px" }, "gap": { "figmaVariable": "spacing/08", "value": "12px" } },
+    "Default": {
+      "title": "Year and Month 텍스트(예: '2000년 1월'), SubTitle/18 SB, neutral/800",
+      "toggleIcon": "arrowhead_down 20px",
+      "rightControl": "Arrow Box: Icon Button 2개(chevron_left/chevron_right 24px, p=spacing/06=8px, radius=radius/06=12px)",
+      "matchesCalendarHeaderVariant": "Title=Left, With=Arrows"
+    },
+    "Wheel": {
+      "title": "동일 텍스트, 동일 타이포",
+      "toggleIcon": "arrowhead_up 20px(방향만 반전)",
+      "rightControl": "Icon Button 1개(close/X 아이콘, 동일 패딩/radius)",
+      "matchesCalendarHeaderVariant": "Title=Left, With=Close(Arrow Box 없이 단일 닫기 버튼)"
+    },
+    "layerNameMismatchNote": "Arrow Box·Wheel 닫기 버튼 내부 아이콘 레이어명이 전부 'Icon / Default / 24px / plus'로 표기되어 있으나 실제 렌더링 asset은 chevron_left/chevron_right/close — 레이어 이름이 갱신 안 된 것으로 추정, 확인 필요"
+  },
+  "calendarContent": {
+    "container": { "padding": { "figmaVariable": "spacing/08", "value": "12px" }, "height": "278px 고정" },
+    "Default": { "content": "Week Header + Month(Week Number=5)", "background": null, "border": null, "width": "w-full" },
+    "Wheel": {
+      "content": "Year and Month Wheel 단독(328×254px)",
+      "background": { "figmaVariable": "neutral/100", "value": "#f6f7f7", "tokenMatch": "정확히 일치" },
+      "borderTop": { "figmaVariable": "neutral/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
+      "width": "352px 고정"
+    }
+  },
+  "timePickerSection": {
+    "condition": "TimePicker=On",
+    "container": { "borderTop": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "note": "neutral/200과 동일 값" }, "padding": { "figmaVariable": "spacing/10", "value": "16px" }, "alignment": "flex flex-col items-center justify-center", "height": "148px" },
+    "content": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variant": "Picker Count=2(시:분, Colon 구분자)", "note": "Picker Count=3 조합은 이 컴포넌트에서 관찰되지 않음 — 확인 필요" }
+  },
+  "subcomponentReuse": {
+    "date": { "ref": "components/date-picker/date/date.md" },
+    "week": { "ref": "components/date-picker/week/week.md" },
+    "weekHeader": { "ref": "components/date-picker/week-header/week-header.md" },
+    "month": { "ref": "components/date-picker/month/month.md", "variantUsed": "Week Number=5" },
+    "calendarHeader": { "ref": "components/date-picker/calendar-header/calendar-header.md" },
+    "yearMonthWheel": { "ref": "components/date-picker/year-month-wheel/year-month-wheel.md" },
+    "timeField": { "ref": "components/date-picker/time-field/time-field.md", "stateObserved": "Default만" },
+    "timePicker": { "ref": "components/date-picker/time-picker/time-picker.md" },
+    "timePickerGroup": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variantUsed": "Picker Count=2" },
+    "iconButton": { "ref": "components/button/icon-button/icon-button.md", "note": "Arrow Box·Wheel 닫기 버튼·Time Picker 스테퍼 버튼 전부 동일 Icon Button 패턴(p=spacing/06=8px, radius=radius/06=12px)" }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체 공용 확인.",
+  "accessibility": {
+    "toggleAriaExpanded": "Default↔Wheel 토글 아이콘에 aria-expanded/aria-label 연결 규정 없음 — 확인 필요",
+    "wheelCloseLabel": "Wheel 모드 닫기 버튼 aria-label 규정 없음 — 확인 필요",
+    "arrowBoxLabel": "이전/다음 달 버튼 aria-label 규정 없음 — 확인 필요",
+    "wheelKeyboardAlt": "Year and Month Wheel의 키보드 전용 대체 조작 규정 없음 — 확인 필요",
+    "timePickerSpinbutton": "Time Picker 스테퍼 버튼 aria-label/role=spinbutton/aria-live 규정 없음 — 확인 필요"
+  },
+  "openQuestions": [
+    "Arrow Box·Wheel 닫기 버튼 아이콘 레이어명(plus)과 실제 asset(chevron/close) 불일치 원인",
+    "Default↔Wheel 토글의 정확한 클릭 트리거 영역",
+    "Time Picker Group Picker Count=3 조합이 Date Picker에서 실제로 쓰이는지",
+    "접근성 마크업(aria-expanded, aria-label, role=spinbutton) 연결 규정 전반"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Date",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10687",
+    "frameNodeId": "2208:10687",
+    "frameName": "Date",
+    "familyGroupNodeId": "2497:13877",
+    "totalVariantInstances": 11,
+    "axes": [
+      "Type(Default/Current/Selected/Pinned/Null)",
+      "Status(Default/Hover/Pressed/Disabled, Type=Default·Current 한정)"
+    ],
+    "note": "11 = Type=Default(4 Status) + Type=Current(4 Status) + Type=Selected/Pinned/Null(각 Status=Default 1개). 비직교(non-orthogonal) 축."
+  },
+  "sampling": {
+    "method": "get_design_context 1회 호출(2208:10687)로 11개 변형 전체가 병합 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2497:13877)에서 패밀리 공용으로 확보.",
+    "coverage": "11개 변형 전수",
+    "sampledNodeIds": {
+      "Default_Default": "2208:10681",
+      "Default_Hover": "2208:10678",
+      "Default_Pressed": "2208:10676",
+      "Default_Disabled": "2208:10684",
+      "Current_Default": "2208:10685",
+      "Current_Hover": "2208:10677",
+      "Current_Pressed": "2208:10675",
+      "Current_Disabled": "2208:10682",
+      "Selected_Default": "2208:10680",
+      "Pinned_Default": "2208:10683",
+      "Null_Default": "2208:10679"
+    }
+  },
+  "size": { "width": "40px", "height": "40px", "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" } },
+  "types": {
+    "Default": {
+      "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "border": null,
+      "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" },
+      "typography": "Body 1/16 R"
+    },
+    "Current": {
+      "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "border": { "figmaVariable": "neutral/600", "value": "#5b616c", "width": { "figmaVariable": "borderwidth/02", "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" }, "tokenMatch": "정확히 일치" },
+      "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" },
+      "typography": "Body 1/16 R",
+      "note": "오늘. Default와 배경·텍스트 색은 동일, 테두리로만 구분"
+    },
+    "Selected": {
+      "background": { "figmaVariable": "brand/primary-lightest", "value": "#eef4fc", "token": "ref-color-blue-50", "tokenMatch": "정확히 일치" },
+      "border": null,
+      "textColor": { "figmaVariable": "neutral/800", "value": "#202837", "tokenMatch": "정확히 일치" },
+      "typography": "Body 1/16 R",
+      "note": "Status=Default만 존재. 테두리 없이 배경색만으로 표현 — WCAG 1.4.1 색상 단독 의존 우려(6장)"
+    },
+    "Pinned": {
+      "background": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "tokenMatch": "정확히 일치" },
+      "border": null,
+      "textColor": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "typography": "SubTitle/18 M",
+      "note": "Status=Default만 존재. 유일하게 타이포가 다름(다른 Type은 Body1/16R). 정확한 의미(오늘+선택 복합 상태 추정) 확인 필요"
+    },
+    "Null": {
+      "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "border": null,
+      "textColor": null,
+      "typography": null,
+      "note": "Status=Default만 존재. 텍스트 없는 빈 원 — 달력 그리드 앞뒤 여백 placeholder로 추정, 확인 필요"
+    }
+  },
+  "statuses": {
+    "note": "Type=Default·Current 한정 4종 전수 실측",
+    "Default": { "backgroundOverlay": null, "textColor": "베이스와 동일" },
+    "Hover": {
+      "backgroundOverlay": { "figmaVariable": "color/gray/900-2", "value": "rgba(3,9,26,0.02)", "tokenMatch": "정확히 일치(ref-color-alpha-gray-900-2)" },
+      "textColor": "베이스와 동일(neutral/800)",
+      "note": "cursor-pointer 클래스 추가"
+    },
+    "Pressed": {
+      "backgroundOverlay": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치(ref-color-alpha-gray-900-5)", "note": "Figma 변수명 color/interaction/light-gray/hover와 값 동일(#03091a0d)이나 이 컴포넌트에서는 Pressed에 쓰임" },
+      "textColor": "베이스와 동일(neutral/800)"
+    },
+    "Disabled": {
+      "backgroundOverlay": null,
+      "textColor": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "tokenMatch": "정확히 일치" },
+      "currentBorderOverride": { "figmaVariable": "neutral/300", "value": "#dbdcdf", "tokenMatch": "정확히 일치", "note": "Type=Current+Disabled 한정, 기본 border neutral/600보다 옅음" }
+    }
+  },
+  "typography": {
+    "Body 1/16 R": { "figmaVariable": "font/pretendard", "weight": "weight/400 Regular", "size": "16px", "lineHeight": "24px", "letterSpacing": "-0.04px", "appliesTo": ["Default", "Current", "Selected"] },
+    "SubTitle/18 M": { "figmaVariable": "font/pretendard", "weight": "weight/500 Medium", "size": "18px", "lineHeight": "24px", "letterSpacing": "-0.09px", "appliesTo": ["Pinned"] }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체(11개 컴포넌트) 공용 확인.",
+  "accessibility": {
+    "disabledMarkup": "disabled/aria-disabled 연결 여부 Figma로 확인 불가 — 확인 필요",
+    "selectedCurrentState": "aria-selected/aria-current=date 등 상태 전달 마크업 규정 없음 — 확인 필요",
+    "colorOnlySelected": "Selected가 배경색(연한 파랑)만으로 표현되어 WCAG 1.4.1 색상 단독 의존 우려 — Current(테두리)와 달리 형태적 구분 없음",
+    "nullCellA11y": "Null(빈 셀) 포커스 트랩 방지 처리(aria-hidden 등) 규정 없음 — 확인 필요"
+  },
+  "openQuestions": [
+    "Pinned Type의 정확한 의미(오늘+선택 복합 상태 추정)",
+    "Null Type의 정확한 용도와 접근성 처리 방식",
+    "Selected/Pinned/Null에 Hover/Pressed/Disabled가 실제로 없는지, Figma 미등록인지",
+    "접근성 마크업(aria-selected, aria-current, disabled) 연결 규정"
+  ]
+}
