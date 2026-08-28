@@ -67,7 +67,9 @@ Month는 한 달의 날짜를 담는 **달력 그리드 본체**입니다. [Week
 
 **모션 데이터 없음.**
 
-`get_motion_context`가 Date/Time Picker 패밀리 최상위 그룹(`2497:13877`, recursive=true)에서 이미 호출되어 `{"nodes":[]}`(빈 결과)로 확인되었습니다 — 패밀리 전체 공용으로 재사용합니다. Week Number=5→6 전환(예: 월 이동 시 그리드 높이가 바뀌는 애니메이션) 같은 레이아웃 변화에 대한 duration/easing 등 모션 값도 Figma 파일에 정의되어 있지 않습니다 — 실제 구현 시 높이 변화를 어떻게 처리할지(즉시 리사이즈 vs 애니메이션)는 별도 결정이 필요합니다.
+`get_motion_context`가 Date/Time Picker 패밀리 최상위 그룹(`2497:13877`, recursive=true)에서 이미 호출되어 `{"nodes":[]}`(빈 결과)로 확인되었습니다 — 패밀리 전체 공용으로 재사용합니다.
+
+> **사용자 확인 완료**: Week Number=5↔6 전환(월 이동 시 그리드 행 수 변화) 시 그리드 높이는 **즉시(애니메이션 없이) 변경**됩니다. 별도의 리사이즈 트랜지션은 없습니다.
 
 ## 6. 접근성
 
@@ -91,9 +93,9 @@ Month는 한 달의 날짜를 담는 **달력 그리드 본체**입니다. [Week
 - "Week Number=5/6"가 진짜 Figma COMPONENT_SET variant인지, 이름만 같은 규칙을 따른 별개 컴포넌트인지(1장 — 정황상 variant로 추정되나 100% 확정은 아님)
 - Month와 Week Header가 실제로 함께(세로 정렬) 쓰이는 조합 인스턴스 확인(3장)
 - 각 Week 행의 Date 셀에 실제 날짜·Type이 매핑되는 규칙(이 샘플은 전부 Default 플레이스홀더)
-- Week Number=5↔6 전환 시 레이아웃 높이 변화의 모션 처리(5장)
 - 접근성 마크업(`role="grid"`, `aria-rowcount` 등) 연결 규정
 - ~~Month와 Week Header가 실제로 함께 쓰이는지~~ — **해소됨**(3장 후속 확인 참고, [Date Picker](../date-picker/date-picker.md)에서 확인)
+- ~~Week Number=5↔6 전환 시 모션 처리~~ — **해소됨**(사용자 확인, 즉시 변경/애니메이션 없음, 5장 참고)
 
 ## 8. 샘플링에 사용한 노드 (부록)
 

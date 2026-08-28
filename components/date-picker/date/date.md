@@ -20,7 +20,7 @@ Date는 달력에서 날짜 하나(예: "14")를 나타내는 **40×40px 원형 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
 | **Type** | Default / Current / Selected / Pinned / Null | 날짜의 의미론적 종류. Default=일반 날짜, Current=오늘, **Pinned=사용자가 직접 선택한 날짜(범위 선택의 시작/끝 앵커)**, **Selected=두 Pinned 날짜 사이의 기간(범위)이 잡혔을 때 그 사이 날짜들에 쓰이는 하이라이트**, **Null=문자 그대로 빈 칸**(사용자 확인 완료 — 4장) |
-| **Status** | Default / Hover / Pressed / Disabled | 상호작용 상태. **Type=Default·Current에서만 4종 전부 존재**하고, Selected/Pinned/Null은 Status=Default 고정(확인 필요 — 3장 참고) |
+| **Status** | Default / Hover / Pressed / Disabled | 상호작용 상태. **Type=Default·Current에서만 4종 전부 존재**하고, Selected/Pinned/Null은 Status=Default 고정 — 의도된 설계(사용자 확인, 3장 참고) |
 
 ## 2. Type별 스펙
 
@@ -41,7 +41,9 @@ Date는 달력에서 날짜 하나(예: "14")를 나타내는 **40×40px 원형 
 | **Pressed** | `color/gray/900-5`(rgba(3,9,26,0.05), 베이스 위에 5% 검정 오버레이) — Figma 변수명은 `color/interaction/light-gray/hover`와 동일 값(`#03091a0d`)이나 이 컴포넌트에서는 Pressed 상태에 쓰임 | `neutral/800`(변화 없음) | 값이 클수록(5%>2%) Hover보다 진한 것으로 Pressed가 Hover보다 강한 인터랙션임을 시각적으로 표현 |
 | **Disabled** | 없음(오버레이 없이 텍스트 색만 변경) | `neutral/400`(#c2c4c8, Default의 neutral/800보다 옅음). **Current+Disabled는 테두리 색도 `neutral/300`(#dbdcdf)으로 옅어짐**(Default/Hover/Pressed의 `neutral/600`보다 연함) | — |
 
-Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disabled 조합이 Figma 컴포넌트 자체에 없습니다 — 선택되거나 고정되거나 빈 날짜에는 별도의 인터랙션 상태가 정의되어 있지 않은 것으로 보입니다(확인 필요, 5장 참고).
+Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disabled 조합이 Figma 컴포넌트 자체에 없습니다.
+
+> **사용자 확인 완료**: Pinned를 다시 클릭하면 별도의 Pressed 시각 효과 없이 배경색이 바로 빠지며 Type=Default로 전환(선택 해제)됩니다 — Hover/Pressed 변형이 없는 것은 의도된 설계입니다.
 
 > **사용자 확인 완료(Type의 의미)**: Pinned=사용자가 직접 선택한 날짜(범위 선택의 시작/끝 앵커), Selected=두 Pinned 날짜 사이의 기간(범위)이 잡혔을 때 그 사이 날짜들에 쓰이는 하이라이트, Null=문자 그대로 빈 칸. 이는 이 컴포넌트가 **단일 날짜뿐 아니라 기간(range) 선택을 지원하도록 설계**되었음을 확정해줍니다 — [Date Picker Group](../date-picker-group/date-picker-group.md)의 좌우 비대칭 헤더 구조(한쪽은 드롭다운만, 한쪽은 이전/다음 이동만)도 범위 선택 UI라는 맥락에서 재해석할 수 있습니다.
 
@@ -81,10 +83,10 @@ Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disable
 
 **확인 완료(사용자 확인)**
 - Pinned=사용자가 직접 선택한 날짜(범위 선택 앵커), Selected=두 Pinned 사이 구간 하이라이트, Null=빈 칸 — 이 컴포넌트는 단일 날짜뿐 아니라 기간(range) 선택을 지원하도록 설계됨(3장)
+- Pinned에 Hover/Pressed 변형이 없는 것은 의도된 설계임. **Pinned를 다시 누르면(클릭) 배경색이 빠지며 선택이 해제**되는 방식으로, 별도의 Pressed 시각 상태 없이 곧바로 Type=Default로 전환됨
 
 **확인 필요**
 - Null Type의 접근성 처리 방식(6장)
-- Selected/Pinned/Null에 Hover/Pressed/Disabled 변형이 실제로 필요 없는지, 아니면 Figma에 미등록된 것뿐인지 — Selected(구간 하이라이트)·Null(빈칸)은 상호작용이 필요 없어 보이나, Pinned(사용자가 직접 클릭한 날짜)에 Hover/Pressed가 없는 것은 재확인이 필요할 수 있음
 - 접근성 마크업(`aria-selected`, `aria-current`, `disabled` 등) 연결 규정
 
 ## 8. 샘플링에 사용한 노드 (부록, 11개 전수)

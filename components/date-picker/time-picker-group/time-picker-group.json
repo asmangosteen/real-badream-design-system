@@ -27,7 +27,8 @@
     "colon": {
       "type": "고정 이미지 에셋(SVG)",
       "size": { "width": "4px", "height": "14px" },
-      "note": "값 자체는 ref-spacing-04(4px)/ref-spacing-09(14px)와 우연히 일치하나 레이아웃 토큰이 아니라 이미지 에셋 크기 — 토큰 매칭 대상 아님"
+      "note": "값 자체는 ref-spacing-04(4px)/ref-spacing-09(14px)와 우연히 일치하나 레이아웃 토큰이 아니라 이미지 에셋 크기 — 토큰 매칭 대상 아님",
+      "implementation": "사용자 확인 완료 — 실제 구현에서도 텍스트 문자(:)로 대체하지 않고 Figma 이미지 에셋을 그대로 사용"
     },
     "sizeVerification": {
       "count2": "56(TimePicker) + 8(gap) + 4(Colon) + 8(gap) + 56(TimePicker) = 132px — 실측값과 일치",
@@ -64,10 +65,10 @@
     "innerComponentA11y": "time-picker.md 7장, time-field.md 7장의 접근성 요구사항이 그대로 적용됨"
   },
   "resolvedQuestions": [
-    "Group 내부 Time Picker가 실제로 Down Only 외 다른 Direction으로 교체되어 쓰이는지 — 사용자 확인 완료, Picker Count·Direction 모두 다양하게 쓰임"
+    "Group 내부 Time Picker가 실제로 Down Only 외 다른 Direction으로 교체되어 쓰이는지 — 사용자 확인 완료, Picker Count·Direction 모두 다양하게 쓰임",
+    "Colon을 실제 구현에서 텍스트 문자로 대체할지, 이미지 그대로 쓸지 — 사용자 확인 완료, 이미지 에셋 그대로 사용"
   ],
   "openQuestions": [
-    "Colon을 실제 구현에서 텍스트 문자로 대체할지, 이미지 그대로 쓸지",
     "그룹 전체 및 개별 필드의 접근성 마크업(fieldset/aria-label/aria-hidden) 연결 규정"
   ]
 }

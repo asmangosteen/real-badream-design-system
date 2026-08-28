@@ -68,7 +68,7 @@ With=Nothing 조합(Left/Center 공통)은 이전/다음·닫기 버튼이 전�
 1. **Title=Left/Center는 정렬뿐 아니라 타이포 크기 자체가 다릅니다.** Left는 SubTitle/18(18px), Center는 Body1/16(16px) — 작업 지시의 가설("정렬 위치 차이로 추정")보다 한 단계 더 구체적인 차이가 실측으로 확인되었습니다.
 2. **With=Close는 "제목 옆 위쪽 화살표 + 우측 닫기 버튼"의 조합입니다.** 단순히 닫기 버튼만 추가되는 것이 아니라, 제목 옆 화살표도 `arrowhead_down`→`arrowhead_up`으로 바뀝니다 — 달력/드롭다운이 펼쳐진 상태를 아이콘 방향 반전으로 표현하고, Close 버튼으로 그 펼쳐진 상태를 닫는 구조로 추정됩니다.
 3. **With=Arrows에서 레이아웃 골격이 Title에 따라 달라집니다.** Left+Arrows는 화살표 2개가 텍스트 오른쪽에 붙어 한 그룹으로 이동하지만, Center+Arrows는 화살표가 좌/우로 완전히 분리되어 제목을 감싸는 3분할(prev - title - next) 레이아웃입니다.
-4. **Center+Close의 `pl-60px`는 토큰에 없는 하드코딩 값입니다.** `justify-center`와 함께 좌우 패딩이 비대칭(60px vs 8px)이라 텍스트 블록이 352px 전체 폭 기준으로 정확히 중앙 정렬되지 않고, 우측 닫기 버튼의 시각적 무게를 상쇄하는 방향(좌측으로 살짝 이동)으로 치우쳐 있습니다 — 의도된 보정값으로 추정되나 정확한 산출 근거는 **확인 필요**.
+4. **Center+Close의 `pl-60px`는 토큰에 없는 하드코딩 값입니다.** `justify-center`와 함께 좌우 패딩이 비대칭(60px vs 8px)이라 텍스트 블록이 352px 전체 폭 기준으로 정확히 중앙 정렬되지 않고, 우측 닫기 버튼의 시각적 무게를 상쇄하는 방향(좌측으로 살짝 이동)으로 치우쳐 있습니다. **사용자 확인 완료** — 이 값은 **좌측에 아이콘이 없다(비어있다)는 것을 명시적으로 표현하기 위해 의도적으로 하드코딩**한 여백입니다. 토큰화되지 않은 것도 의도적(범용 spacing 토큰이 아니라 이 조합 전용 보정값)으로 이해하면 됩니다.
 5. **`Show Dropdown`은 6개 공식 축과 별개의 정식 boolean 프로퍼티입니다(사용자 확인 완료).** 코드에 `showDropdown = true` 기본값으로 존재하며 꺼지면 제목 옆 화살표 아이콘만 사라집니다. Text Input의 `Show Unit`과 동일한 패턴(Variant 프로퍼티가 아니라 인스턴스별 속성 패널 프로퍼티)입니다.
 
 ## 5. 서브컴포넌트/아이콘 사용
@@ -107,17 +107,17 @@ Icon Button 래퍼(`p-spacing/06`=8px, `radius/06`=12px)는 다른 컴포넌트(
 - 프레임 크기: 352×56px는 Figma 컴포넌트 루트에 명시적으로 박힌 고정값(`w-[352px] h-[56px]`)
 
 **기존 토큰에 없음**
-- Center+Close의 `pl-60px`: 저장소 `tokens/spacing.json`의 `ref-spacing-*` 중 60px에 해당하는 값이 없음(가장 가까운 값은 `ref-spacing-18`=56px, `ref-spacing-19`=64px) — 하드코딩된 보정값으로 추정
+- Center+Close의 `pl-60px`: 저장소 `tokens/spacing.json`의 `ref-spacing-*` 중 60px에 해당하는 값이 없음(가장 가까운 값은 `ref-spacing-18`=56px, `ref-spacing-19`=64px) — 좌측에 아이콘이 없음을 의도적으로 표현하기 위한 전용 보정값(사용자 확인, 토큰화 대상 아님)
 - Title(Left/Center)별로 타이포가 SubTitle18↔Body1/16으로 바뀌는 규칙 자체를 명시하는 시맨틱 토큰은 저장소에 없음
 - With(Arrows/Close/Nothing)별 레이아웃 골격 차이(특히 Center+Arrows의 3분할 구조)를 규정하는 토큰/문서 없음
 
 **확인 완료(사용자 확인)**
 - `Show Dropdown`은 정식 boolean 컴포넌트 프로퍼티입니다(Text Input의 `Show Unit`과 동일한 패턴)
+- Center+Close의 `pl-60px`는 좌측에 아이콘이 없음을 의도적으로 표현하기 위한 전용 하드코딩 보정값입니다
+- ~~"연·월" 텍스트 실제 포맷~~ — **정정**: 최초 초안에 `"2000월 1월"`로 오기됨. [Date Picker](../date-picker/date-picker.md)·[Date Picker Group](../date-picker-group/date-picker-group.md) 문서 작성 과정에서 동일 노드를 재조회한 결과 실제 값은 `"2000년 1월"`(연·월 정상 포맷)임을 확인, 본 문서도 정정함
 
 **확인 필요**
-- `pl-60px` 값의 정확한 산출 근거
 - 아이콘 전용 버튼의 `aria-label`, `aria-expanded`/`aria-haspopup` 등 접근성 마크업 연결 규정
-- ~~"연·월" 텍스트 실제 포맷~~ — **정정**: 최초 초안에 `"2000월 1월"`로 오기됨. [Date Picker](../date-picker/date-picker.md)·[Date Picker Group](../date-picker-group/date-picker-group.md) 문서 작성 과정에서 동일 노드를 재조회한 결과 실제 값은 `"2000년 1월"`(연·월 정상 포맷)임을 확인, 본 문서도 정정함
 
 ## 9. 샘플링에 사용한 노드 (부록, 6개 전수)
 

@@ -43,7 +43,7 @@
   "keyFindings": [
     "Time Picker는 Time Field를 실제로 인스턴스로 조합함 — 병합 코드에 Time Field 축약 정의가 포함되어 코드 레벨에서 확인",
     "내장 Time Field는 진열 변형상 State=Default로 고정되어 보였으나, 사용자 확인 완료 — 실제로는 Hover/Typing까지 작동해 직접 타이핑 가능(하이브리드 입력)",
-    "비활성 방향의 버튼도 완전히 사라지지 않고 옅은 아이콘으로 남으며 자리를 차지함 — disabled 처리 여부는 확인 불가"
+    "비활성 방향의 버튼도 완전히 사라지지 않고 옅은 아이콘으로 남으며 자리를 차지함 — 사용자 확인 완료, 실제로 disabled 처리되어 클릭 막힘"
   ],
   "subcomponentReuse": {
     "timeField": {
@@ -63,16 +63,16 @@
   "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체(11개 컴포넌트) 공용 확인.",
   "accessibility": {
     "stepperButtonLabels": "위/아래 스테퍼 버튼의 aria-label 연결 규정 없음 — 확인 필요",
-    "disabledDirection": "비활성 방향 버튼의 disabled/aria-disabled 처리 여부 확인 필요",
+    "disabledDirection": "비활성 방향 버튼은 disabled 처리됨(사용자 확인). 정확한 aria-disabled 속성 연결 규정은 확인 필요",
     "keyboardMapping": "네이티브 number input 스핀 버튼 대체 시 화살표 키 매핑 규정 없음 — 확인 필요",
     "innerTimeFieldA11y": "time-field.md 7장의 접근성 요구사항이 그대로 적용됨"
   },
   "resolvedQuestions": [
     "Time Picker 내부 Time Field의 Hover/Typing이 실제 인터랙션 시 발현되는지 — 사용자 확인 완료, 발현됨(직접 타이핑 가능)",
-    "Time Picker Group 안에서 개별 Time Picker가 Down Only 외 다른 Direction으로 교체되어 쓰이는지 — 사용자 확인 완료, Picker Count·Direction 모두 다양하게 쓰임"
+    "Time Picker Group 안에서 개별 Time Picker가 Down Only 외 다른 Direction으로 교체되어 쓰이는지 — 사용자 확인 완료, Picker Count·Direction 모두 다양하게 쓰임",
+    "비활성 방향 버튼이 실제로 disabled 처리되는지 — 사용자 확인 완료, disabled 처리되어 클릭 막힘"
   ],
   "openQuestions": [
-    "활성/비활성 화살표 아이콘의 정확한 hex 색상값",
-    "비활성 방향 버튼이 실제로 disabled 처리되는지"
+    "활성/비활성 화살표 아이콘의 정확한 hex 색상값"
   ]
 }

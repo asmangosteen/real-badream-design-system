@@ -42,7 +42,7 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 
 1. **Time Picker Group은 Time Picker를 실제로 인스턴스로 조합합니다.** 병합 코드에 Time Picker의 축약 정의(및 그 내부 Time Field 축약 정의)가 그대로 포함되어 있어, 코드 레벨에서 조합 관계가 확인됩니다 — 작업 지시에서 제기한 가설을 그대로 확인시켜 줍니다.
 2. **이 컴포넌트의 병합 변형 안에서는 내장 Time Picker가 진열상 Direction=Down Only로 고정되어 보였습니다.** Count=2/3 두 변형 모두 안의 모든 Time Picker 인스턴스가 Down Only 하나만 쓰고 있었습니다(스크린샷상 모든 칸의 위쪽 화살표가 옅고 아래쪽 화살표만 진함). **사용자 확인 완료** — 실제 제품에서는 Picker Count(2/3)와 각 자리(시/분/초)의 Direction(Up Only/Down Only/Both) 모두 다양하게 조합되어 쓰입니다. 이 진열 노드가 Down Only만 보여준 것은 샘플링의 한계였을 뿐입니다.
-3. **Colon 구분자는 텍스트가 아니라 고정 이미지 에셋입니다.** 폰트 스타일이 아니라 SVG 그림으로 그려져 있어, 실제 구현 시 실제 콜론 문자(`:`)로 대체할지 이미지 그대로 쓸지는 팀 판단이 필요합니다.
+3. **Colon 구분자는 텍스트가 아니라 고정 이미지 에셋입니다.** 폰트 스타일이 아니라 SVG 그림으로 그려져 있습니다. **사용자 확인 완료** — 실제 구현에서도 텍스트 문자(`:`)로 대체하지 않고 Figma의 이미지 에셋을 그대로 사용합니다.
 
 ## 4. 콜론 사이 간격의 대칭성
 
@@ -79,9 +79,9 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 
 **확인 완료(사용자 확인)**
 - Group 내부 Time Picker의 Picker Count(2/3)·Direction(Up/Down/Both) 모두 실제 제품에서 다양하게 조합되어 쓰임 — 이 진열 노드는 Down Only 샘플만 보여준 것일 뿐
+- Colon은 실제 구현에서도 텍스트 문자로 대체하지 않고 Figma의 이미지 에셋을 그대로 사용
 
 **확인 필요**
-- Colon을 실제 구현에서 텍스트 문자로 대체할지, 이미지 그대로 쓸지
 - 그룹 전체 및 개별 필드의 접근성 마크업(`fieldset`/`aria-label`/`aria-hidden`) 연결 규정
 
 ## 9. 샘플링에 사용한 노드 (부록, 2개 전수)

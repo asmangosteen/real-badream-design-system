@@ -61,7 +61,8 @@
       "textColor": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
       "typography": "SubTitle/18 M",
       "meaning": "사용자 확인 완료 — 사용자가 직접 선택한 날짜(범위 선택의 시작/끝 앵커)",
-      "note": "Status=Default만 존재. 유일하게 타이포가 다름(다른 Type은 Body1/16R)"
+      "note": "Status=Default만 존재. 유일하게 타이포가 다름(다른 Type은 Body1/16R)",
+      "deselectBehavior": "사용자 확인 완료 — 다시 클릭하면 Pressed 시각 효과 없이 배경색이 바로 빠지며 Type=Default로 전환(선택 해제)됨. Hover/Pressed 변형이 없는 것은 이 때문"
     },
     "Null": {
       "background": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
@@ -103,11 +104,11 @@
     "nullCellA11y": "Null(빈 셀) 포커스 트랩 방지 처리(aria-hidden 등) 규정 없음 — 확인 필요"
   },
   "resolvedQuestions": [
-    "Pinned/Selected/Null Type의 정확한 의미 — 사용자 확인 완료(위 source.typeSemantics 참고)"
+    "Pinned/Selected/Null Type의 정확한 의미 — 사용자 확인 완료(위 source.typeSemantics 참고)",
+    "Selected/Pinned/Null에 Hover/Pressed/Disabled가 없는 이유 — 사용자 확인 완료, 의도된 설계. Pinned를 다시 클릭하면 Pressed 시각 효과 없이 배경색이 바로 빠지며 Type=Default로 전환(선택 해제)됨"
   ],
   "openQuestions": [
     "Null Type의 접근성 처리 방식",
-    "Selected/Pinned/Null에 Hover/Pressed/Disabled가 실제로 없는지 — Pinned(직접 클릭한 날짜)에 인터랙션 상태가 없는 것은 재확인 필요할 수 있음",
     "접근성 마크업(aria-selected, aria-current, disabled) 연결 규정"
   ]
 }
