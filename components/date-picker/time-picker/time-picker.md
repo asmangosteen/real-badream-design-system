@@ -45,13 +45,13 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 ## 4. 핵심 발견
 
 1. **Time Picker는 Time Field를 실제로 인스턴스로 조합합니다.** 병합 코드에 Time Field의 축약 정의(`state?: "Default"`만 남은 타입)가 그대로 포함되어 있어, 별도 구조가 아니라 Time Field 컴포넌트를 그대로 가져다 쓰는 것이 코드 레벨에서 확인됩니다.
-2. **단, Time Picker 안의 Time Field는 State=Default로 고정됩니다.** Time Picker 자신의 3개 Direction 변형 어디에도 내장 Time Field의 Hover/Typing이 노출되어 있지 않습니다 — Figma 컴포넌트 변형 자체에 그 조합이 없는 것인지, 아니면 실제 인터랙션 시(hover/click) 동적으로 상태가 바뀌는데 변형 스냅샷에는 반영되지 않은 것인지는 확인할 수 없습니다 — 확인 필요.
+2. **Time Picker 안의 Time Field는 진열 변형상 State=Default로 고정되어 보였습니다.** Time Picker 자신의 3개 Direction 변형 어디에도 내장 Time Field의 Hover/Typing이 노출되어 있지 않았습니다. **사용자 확인 완료** — 실제로는 Figma 변형 스냅샷에 반영되지 않았을 뿐, Time Picker 안의 Time Field도 클릭하면 Typing 상태로 전환되어 직접 타이핑 입력이 가능합니다. 즉 Time Picker는 스테퍼 버튼(증감)과 직접 타이핑을 모두 지원하는 하이브리드 입력입니다.
 3. **비활성 방향은 완전히 사라지지 않고 옅은 색 아이콘으로 남습니다.** 예: Down Only에서 위쪽 화살표 버튼 자체는 여전히 렌더링되고 클릭 가능한 자리를 차지하되, 아이콘만 옅은 톤으로 바뀝니다 — 버튼이 실제로 `disabled` 처리되는지(클릭 이벤트 무시), 단순히 시각적으로만 옅어지는지는 Figma로 확인 불가 — 확인 필요.
 
 ## 5. 서브컴포넌트 재사용 관계
 
 - **Time Field**: [`components/date-picker/time-field/time-field.md`](../time-field/time-field.md)를 그대로 인스턴스로 사용. State=Default로 고정(4장 핵심 발견 2).
-- **Time Picker Group에서 재사용**: [`components/date-picker/time-picker-group/time-picker-group.md`](../time-picker-group/time-picker-group.md)가 이 컴포넌트를 2~3개 인스턴스로 조합합니다. 단, Time Picker Group 자신의 병합 변형 코드 안에서는 내장 Time Picker가 **Direction=Down Only로 고정**되어 있어(Up Only/Both 옵션이 코드 타입에서 제외됨), Group 안에서 개별 Time Picker가 실제로 다른 Direction으로 교체되어 쓰이는지는 확인되지 않습니다 — 확인 필요.
+- **Time Picker Group에서 재사용**: [`components/date-picker/time-picker-group/time-picker-group.md`](../time-picker-group/time-picker-group.md)가 이 컴포넌트를 2~3개 인스턴스로 조합합니다. Time Picker Group 자신의 병합 변형 코드 안에서는 내장 Time Picker가 진열상 Direction=Down Only로 고정되어 보였으나, **사용자 확인 완료** — 실제로는 Picker Count(2/3)와 Direction(Up Only/Down Only/Both) 모두 다양하게 조합되어 쓰입니다.
 
 ## 6. 인터랙션(모션) 스펙
 
@@ -73,6 +73,10 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 - Radius: `radius/06`=12px → `ref-radius-06`
 - 아이콘 크기: 20px(다른 컴포넌트의 20px 아이콘 규칙과 일관)
 - 내장 Time Field의 모든 토큰(5장 참고, [time-field.md](../time-field/time-field.md) 8장과 동일)
+
+**확인 완료(사용자 확인)**
+- Time Picker 내부 Time Field가 실제로 Hover/Typing 상태로 작동함(직접 타이핑 가능)
+- Time Picker Group 안에서 Picker Count(2/3)·Direction(Up/Down/Both) 모두 다양하게 조합되어 쓰임
 
 **기존 토큰에 없음 / 확인 필요**
 - 활성/비활성 화살표 아이콘의 정확한 색상값 — 에셋 URL로만 확인되어 hex 대조 불가

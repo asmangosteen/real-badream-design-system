@@ -21,7 +21,7 @@ Calendar Header는 달력(월/연도 선택) 상단에 위치하는 **352×56px 
 |---|---|---|
 | **Title** | Left / Center | "연·월" 텍스트의 정렬 위치. Left는 SubTitle/18 SemiBold(18px, 더 큼), Center는 Body 1/16 SemiBold(16px, 더 작음) — **정렬뿐 아니라 타이포 크기 자체가 다릅니다**(실측 확인, 3장) |
 | **With** | Arrows / Close / Nothing | 우측(또는 좌우)에 배치되는 부가 컨트롤. Arrows=이전/다음 달 이동 화살표, Close=닫기(X) 버튼(+ 제목 옆 위쪽 화살표), Nothing=제목만(부가 컨트롤 없음) — 실측으로 확인 완료(3장) |
-| **Show Dropdown**(비-variant 축) | False / True(기본 True) | 제목 텍스트 옆에 작은 20px 화살표 아이콘(펼침/접힘 표시)을 보여줄지 여부. 코드에 `showDropdown` prop으로 존재하며 **6개 공식 variant 축과는 별개의 boolean 컴포넌트 프로퍼티**로 보입니다(Text Input의 `Show Unit`과 동일한 패턴 — 4장 참고). 이번 조사에서는 사용자 확인을 거치지 않았으므로 정식 boolean 프로퍼티인지 여부는 **확인 필요**입니다 |
+| **Show Dropdown**(비-variant 축) | False / True(기본 True) | 제목 텍스트 옆에 작은 20px 화살표 아이콘(펼침/접힘 표시)을 보여줄지 여부. 코드에 `showDropdown` prop으로 존재하며 **6개 공식 variant 축과는 별개의 boolean 컴포넌트 프로퍼티입니다**(Text Input의 `Show Unit`과 동일한 패턴 — 4장 참고). **사용자 확인 완료** — 정식 boolean 컴포넌트 프로퍼티가 맞습니다 |
 
 ## 2. 6개 변형 매핑 (전수 실측)
 
@@ -69,7 +69,7 @@ With=Nothing 조합(Left/Center 공통)은 이전/다음·닫기 버튼이 전�
 2. **With=Close는 "제목 옆 위쪽 화살표 + 우측 닫기 버튼"의 조합입니다.** 단순히 닫기 버튼만 추가되는 것이 아니라, 제목 옆 화살표도 `arrowhead_down`→`arrowhead_up`으로 바뀝니다 — 달력/드롭다운이 펼쳐진 상태를 아이콘 방향 반전으로 표현하고, Close 버튼으로 그 펼쳐진 상태를 닫는 구조로 추정됩니다.
 3. **With=Arrows에서 레이아웃 골격이 Title에 따라 달라집니다.** Left+Arrows는 화살표 2개가 텍스트 오른쪽에 붙어 한 그룹으로 이동하지만, Center+Arrows는 화살표가 좌/우로 완전히 분리되어 제목을 감싸는 3분할(prev - title - next) 레이아웃입니다.
 4. **Center+Close의 `pl-60px`는 토큰에 없는 하드코딩 값입니다.** `justify-center`와 함께 좌우 패딩이 비대칭(60px vs 8px)이라 텍스트 블록이 352px 전체 폭 기준으로 정확히 중앙 정렬되지 않고, 우측 닫기 버튼의 시각적 무게를 상쇄하는 방향(좌측으로 살짝 이동)으로 치우쳐 있습니다 — 의도된 보정값으로 추정되나 정확한 산출 근거는 **확인 필요**.
-5. **`Show Dropdown`은 6개 공식 축과 별개의 boolean 프로퍼티로 보입니다.** 코드에 `showDropdown = true` 기본값으로 존재하며 꺼지면 제목 옆 화살표 아이콘만 사라집니다. Text Input의 `Show Unit`과 동일한 패턴(Variant 프로퍼티가 아니라 인스턴스별 속성 패널 프로퍼티로 추정)이나, 이번 조사에서는 사용자 확인을 거치지 않았습니다 — **확인 필요**.
+5. **`Show Dropdown`은 6개 공식 축과 별개의 정식 boolean 프로퍼티입니다(사용자 확인 완료).** 코드에 `showDropdown = true` 기본값으로 존재하며 꺼지면 제목 옆 화살표 아이콘만 사라집니다. Text Input의 `Show Unit`과 동일한 패턴(Variant 프로퍼티가 아니라 인스턴스별 속성 패널 프로퍼티)입니다.
 
 ## 5. 서브컴포넌트/아이콘 사용
 
@@ -111,8 +111,10 @@ Icon Button 래퍼(`p-spacing/06`=8px, `radius/06`=12px)는 다른 컴포넌트(
 - Title(Left/Center)별로 타이포가 SubTitle18↔Body1/16으로 바뀌는 규칙 자체를 명시하는 시맨틱 토큰은 저장소에 없음
 - With(Arrows/Close/Nothing)별 레이아웃 골격 차이(특히 Center+Arrows의 3분할 구조)를 규정하는 토큰/문서 없음
 
+**확인 완료(사용자 확인)**
+- `Show Dropdown`은 정식 boolean 컴포넌트 프로퍼티입니다(Text Input의 `Show Unit`과 동일한 패턴)
+
 **확인 필요**
-- `Show Dropdown`이 정식 boolean 컴포넌트 프로퍼티인지(Text Input의 `Show Unit`처럼 Figma 프로퍼티 패널 직접 확인 필요, 이번 조사에서는 미확인)
 - `pl-60px` 값의 정확한 산출 근거
 - 아이콘 전용 버튼의 `aria-label`, `aria-expanded`/`aria-haspopup` 등 접근성 마크업 연결 규정
 - ~~"연·월" 텍스트 실제 포맷~~ — **정정**: 최초 초안에 `"2000월 1월"`로 오기됨. [Date Picker](../date-picker/date-picker.md)·[Date Picker Group](../date-picker-group/date-picker-group.md) 문서 작성 과정에서 동일 노드를 재조회한 결과 실제 값은 `"2000년 1월"`(연·월 정상 포맷)임을 확인, 본 문서도 정정함

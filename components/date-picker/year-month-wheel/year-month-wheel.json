@@ -71,7 +71,8 @@
     "confirmed": true
   },
   "sequenceObservation": {
-    "note": "핵심 발견: 7행의 연도·월이 동시에 1씩 증가하며 연말(12월→1월)에 함께 롤오버됨(1999년12월→2000년1월). 연/월이 독립된 두 휠인지, 하나로 묶인 단일 시퀀스인지는 이 정적 샘플만으로 확정 불가 — 확인 필요"
+    "note": "7행의 연도·월이 동시에 1씩 증가하는 스냅샷(1999년12월→2000년1월 롤오버 포함)이 관찰됨.",
+    "resolved": "사용자 확인 완료 — 연/월은 각각 독립적으로 스크롤되는 두 개의 휠입니다. 이 노드의 정적 샘플이 연·월을 나란히 1씩 증가시켜 보여준 것은 진열 편의상의 스냅샷일 뿐, 두 컬럼이 함께 묶여 움직인다는 근거가 아닙니다."
   },
   "subcomponentReuse": {
     "note": "Date/Week/Week Header/Month 서브컴포넌트를 재사용하지 않는 독립 구조. 색상·spacing·radius·타이포 토큰만 공유"
@@ -83,8 +84,10 @@
     "selectedStateAnnouncement": "aria-selected/aria-activedescendant 등 상태 전달 마크업 규정 없음 — 확인 필요",
     "keyboardAlternative": "터치/드래그 스크롤 외 키보드 전용 대체 입력 수단 규정 없음 — 확인 필요"
   },
+  "resolvedQuestions": [
+    "연도·월이 독립된 두 휠인지 여부 — 사용자 확인 완료, 각각 독립적으로 스크롤되는 두 개의 휠(sequenceObservation.resolved 참고)"
+  ],
   "openQuestions": [
-    "연도·월이 독립된 두 휠인지, 하나로 묶인 단일 시퀀스 휠인지",
     "스크롤/스냅/관성 등 모션의 구체적 물리 값(Figma에 모션 데이터 없음)",
     "접근성 패턴(select/listbox/slider) 및 키보드 대체 입력 수단",
     "실제 목록의 연도·월 최솟값/최댓값 범위"

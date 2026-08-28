@@ -60,7 +60,7 @@
   "timePickerSection": {
     "condition": "TimePicker=On",
     "container": { "borderTop": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "note": "neutral/200과 동일 값" }, "padding": { "figmaVariable": "spacing/10", "value": "16px" }, "alignment": "flex flex-col items-center justify-center", "height": "148px" },
-    "content": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variant": "Picker Count=2(시:분, Colon 구분자)", "note": "Picker Count=3 조합은 이 컴포넌트에서 관찰되지 않음 — 확인 필요" }
+    "content": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variant": "Picker Count=2(시:분, Colon 구분자)", "note": "이 노드에서는 Count=2만 관찰됐으나, 사용자 확인 완료 — Time Picker Group 자체는 Count=2/3 모두 실제로 쓰임" }
   },
   "subcomponentReuse": {
     "date": { "ref": "components/date-picker/date/date.md" },
@@ -69,7 +69,7 @@
     "month": { "ref": "components/date-picker/month/month.md", "variantUsed": "Week Number=5" },
     "calendarHeader": { "ref": "components/date-picker/calendar-header/calendar-header.md" },
     "yearMonthWheel": { "ref": "components/date-picker/year-month-wheel/year-month-wheel.md" },
-    "timeField": { "ref": "components/date-picker/time-field/time-field.md", "stateObserved": "Default만" },
+    "timeField": { "ref": "components/date-picker/time-field/time-field.md", "stateObserved": "Default만(진열 변형 한정)", "note": "사용자 확인 완료 — 실제로는 클릭 시 Hover/Typing 전환, 직접 타이핑 가능" },
     "timePicker": { "ref": "components/date-picker/time-picker/time-picker.md" },
     "timePickerGroup": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variantUsed": "Picker Count=2" },
     "iconButton": { "ref": "components/button/icon-button/icon-button.md", "note": "Arrow Box·Wheel 닫기 버튼·Time Picker 스테퍼 버튼 전부 동일 Icon Button 패턴(p=spacing/06=8px, radius=radius/06=12px)" }
@@ -83,10 +83,13 @@
     "wheelKeyboardAlt": "Year and Month Wheel의 키보드 전용 대체 조작 규정 없음 — 확인 필요",
     "timePickerSpinbutton": "Time Picker 스테퍼 버튼 aria-label/role=spinbutton/aria-live 규정 없음 — 확인 필요"
   },
+  "resolvedQuestions": [
+    "Time Field가 직접 타이핑 가능한지 — 사용자 확인 완료, 가능함",
+    "Time Picker Group Picker Count=3 조합이 실제로 쓰이는지 — 사용자 확인 완료, Count=2/3 모두 쓰임(이 노드에는 Count=2만 관찰)"
+  ],
   "openQuestions": [
     "Arrow Box·Wheel 닫기 버튼 아이콘 레이어명(plus)과 실제 asset(chevron/close) 불일치 원인",
     "Default↔Wheel 토글의 정확한 클릭 트리거 영역",
-    "Time Picker Group Picker Count=3 조합이 Date Picker에서 실제로 쓰이는지",
     "접근성 마크업(aria-expanded, aria-label, role=spinbutton) 연결 규정 전반"
   ]
 }

@@ -19,7 +19,7 @@ Date는 달력에서 날짜 하나(예: "14")를 나타내는 **40×40px 원형 
 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
-| **Type** | Default / Current / Selected / Pinned / Null | 날짜의 의미론적 종류. Default=일반 날짜, Current=오늘, Selected=선택됨, Pinned=고정(강조) 날짜, Null=빈 셀(달력 그리드의 앞뒤 여백용 placeholder로 추정) |
+| **Type** | Default / Current / Selected / Pinned / Null | 날짜의 의미론적 종류. Default=일반 날짜, Current=오늘, **Pinned=사용자가 직접 선택한 날짜(범위 선택의 시작/끝 앵커)**, **Selected=두 Pinned 날짜 사이의 기간(범위)이 잡혔을 때 그 사이 날짜들에 쓰이는 하이라이트**, **Null=문자 그대로 빈 칸**(사용자 확인 완료 — 4장) |
 | **Status** | Default / Hover / Pressed / Disabled | 상호작용 상태. **Type=Default·Current에서만 4종 전부 존재**하고, Selected/Pinned/Null은 Status=Default 고정(확인 필요 — 3장 참고) |
 
 ## 2. Type별 스펙
@@ -28,9 +28,9 @@ Date는 달력에서 날짜 하나(예: "14")를 나타내는 **40×40px 원형 
 |---|---|---|---|---|
 | **Default** | `common/white-default`(#fdfdfd, Status=Default·Hover·Pressed 공통 베이스) | 없음 | `neutral/800`(#202837), Body 1/16 R | 일반 날짜 |
 | **Current** | `common/white-default`(#fdfdfd) | `borderwidth/02`=1px, `neutral/600`(#5b616c) — Status=Default·Hover·Pressed 공통 | `neutral/800`(#202837), Body 1/16 R | 오늘. 테두리로만 구분되고 배경·텍스트 색은 Default와 동일 |
-| **Selected** | `brand/primary-lightest`(#eef4fc) | 없음 | `neutral/800`(#202837), Body 1/16 R | 선택된 날짜. 테두리 없이 옅은 파란 배경만으로 표현 |
-| **Pinned** | `brand/primary-default`(#2c7be2) | 없음 | `common/white-default`(#fdfdfd), **SubTitle/18 M**(다른 Type보다 크고 굵음) | 고정/강조 날짜(예: 오늘 + 선택 등 복합 상태로 추정). 유일하게 타이포가 다름 — 확인 필요 |
-| **Null** | `common/white-default`(#fdfdfd) | 없음 | 텍스트 없음(빈 원) | 달력 그리드에서 이전/다음 달의 빈 칸으로 추정 — 확인 필요 |
+| **Selected** | `brand/primary-lightest`(#eef4fc) | 없음 | `neutral/800`(#202837), Body 1/16 R | **범위(range) 선택 시 두 Pinned 날짜 사이의 날짜들에 쓰이는 구간 하이라이트**(사용자 확인 완료). 테두리 없이 옅은 파란 배경만으로 표현 |
+| **Pinned** | `brand/primary-default`(#2c7be2) | 없음 | `common/white-default`(#fdfdfd), **SubTitle/18 M**(다른 Type보다 크고 굵음) | **사용자가 직접 선택한 날짜(범위의 시작/끝 앵커)**(사용자 확인 완료). 유일하게 타이포가 다름 — 단일 날짜 선택 시에도 Pinned 하나만 찍힐 것으로 추정 |
+| **Null** | `common/white-default`(#fdfdfd) | 없음 | 텍스트 없음(빈 원) | **문자 그대로 빈 칸**(사용자 확인 완료). 달력 그리드에서 이전/다음 달의 빈 칸 등으로 쓰일 것으로 추정 |
 
 ## 3. Status별 스펙 (Type=Default·Current 한정, 4종 전수 실측)
 
@@ -42,6 +42,8 @@ Date는 달력에서 날짜 하나(예: "14")를 나타내는 **40×40px 원형 
 | **Disabled** | 없음(오버레이 없이 텍스트 색만 변경) | `neutral/400`(#c2c4c8, Default의 neutral/800보다 옅음). **Current+Disabled는 테두리 색도 `neutral/300`(#dbdcdf)으로 옅어짐**(Default/Hover/Pressed의 `neutral/600`보다 연함) | — |
 
 Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disabled 조합이 Figma 컴포넌트 자체에 없습니다 — 선택되거나 고정되거나 빈 날짜에는 별도의 인터랙션 상태가 정의되어 있지 않은 것으로 보입니다(확인 필요, 5장 참고).
+
+> **사용자 확인 완료(Type의 의미)**: Pinned=사용자가 직접 선택한 날짜(범위 선택의 시작/끝 앵커), Selected=두 Pinned 날짜 사이의 기간(범위)이 잡혔을 때 그 사이 날짜들에 쓰이는 하이라이트, Null=문자 그대로 빈 칸. 이는 이 컴포넌트가 **단일 날짜뿐 아니라 기간(range) 선택을 지원하도록 설계**되었음을 확정해줍니다 — [Date Picker Group](../date-picker-group/date-picker-group.md)의 좌우 비대칭 헤더 구조(한쪽은 드롭다운만, 한쪽은 이전/다음 이동만)도 범위 선택 UI라는 맥락에서 재해석할 수 있습니다.
 
 ## 4. 타이포그래피 상세
 
@@ -77,10 +79,12 @@ Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disable
 - Type(Default/Current/Selected/Pinned/Null) 5종의 의미론적 이름 자체와 각각에 어떤 색상 조합을 쓸지 규정하는 "Date 셀 전용" 시맨틱 토큰은 저장소에 없음(개별 색상 값 자체는 토큰과 일치)
 - Selected/Pinned/Null에 Hover/Pressed/Disabled가 없는 규칙을 명시하는 문서/토큰 없음
 
+**확인 완료(사용자 확인)**
+- Pinned=사용자가 직접 선택한 날짜(범위 선택 앵커), Selected=두 Pinned 사이 구간 하이라이트, Null=빈 칸 — 이 컴포넌트는 단일 날짜뿐 아니라 기간(range) 선택을 지원하도록 설계됨(3장)
+
 **확인 필요**
-- Pinned Type의 정확한 의미(단순 "오늘+선택"의 복합 상태인지, 별도 개념인지) — 이름과 스타일(강조 배경+큰 타이포)로 미루어 추정만 가능
-- Null Type의 정확한 용도(월 그리드 앞뒤 빈 칸 placeholder로 추정)와 접근성 처리 방식
-- Selected/Pinned/Null에 Hover/Pressed/Disabled 변형이 실제로 필요 없는지, 아니면 Figma에 미등록된 것뿐인지
+- Null Type의 접근성 처리 방식(6장)
+- Selected/Pinned/Null에 Hover/Pressed/Disabled 변형이 실제로 필요 없는지, 아니면 Figma에 미등록된 것뿐인지 — Selected(구간 하이라이트)·Null(빈칸)은 상호작용이 필요 없어 보이나, Pinned(사용자가 직접 클릭한 날짜)에 Hover/Pressed가 없는 것은 재확인이 필요할 수 있음
 - 접근성 마크업(`aria-selected`, `aria-current`, `disabled` 등) 연결 규정
 
 ## 8. 샘플링에 사용한 노드 (부록, 11개 전수)

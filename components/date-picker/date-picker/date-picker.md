@@ -52,7 +52,7 @@ Time Picker=On일 때 Calendar 콘텐츠 영역 아래에 148px 높이의 섹션
 
 - 컨테이너: 상단 테두리 `color/gray/200`(#f1f2f3, `neutral/200`과 동일 값)만 있는 구분선 역할 + `p=spacing/10`(16px) + `flex flex-col items-center justify-center`(가로 중앙 정렬)
 - 내부 콘텐츠: [Time Picker Group](../time-picker-group/time-picker-group.md)의 **Picker Count=2** 변형(Time Picker 2개 + 가운데 Colon(":") 구분자, 132×116px)이 그대로 인스턴스로 쓰입니다. Picker Count=3(시:분:초) 조합은 이 컴포넌트에서 관찰되지 않았습니다 — 확인 필요.
-- Time Picker Group의 각 [Time Picker](../time-picker/time-picker.md)는 위/아래 Icon Button(`chevron_up`/`chevron_down` 20px, `p=spacing/06`=8px, `radius=radius/06`=12px) + 가운데 [Time Field](../time-field/time-field.md)(`bg=neutral/200`, `radius=radius/06`=12px, `px=spacing/07`=10px `py=spacing/06`=8px, 내부 "00" 텍스트 Body1/16 R neutral/800)로 구성됩니다. 이 문서에서 실측된 Time Field는 State=Default 1종만 확인되었습니다(Hover/Typing은 [time-field.md](../time-field/time-field.md)에서 별도 실측).
+- Time Picker Group의 각 [Time Picker](../time-picker/time-picker.md)는 위/아래 Icon Button(`chevron_up`/`chevron_down` 20px, `p=spacing/06`=8px, `radius=radius/06`=12px) + 가운데 [Time Field](../time-field/time-field.md)(`bg=neutral/200`, `radius=radius/06`=12px, `px=spacing/07`=10px `py=spacing/06`=8px, 내부 "00" 텍스트 Body1/16 R neutral/800)로 구성됩니다. 이 문서에서 실측된 Time Field는 State=Default 1종만 확인되었으나, 사용자 확인 완료 — 실제로는 클릭 시 Hover/Typing으로 전환되어 직접 타이핑 입력이 가능합니다([time-field.md](../time-field/time-field.md) 참고).
 
 ## 5. 크기 요약
 
@@ -92,10 +92,13 @@ Time Picker=On이 추가하는 148px는 State(Default/Wheel)와 무관하게 고
 - State(Default/Wheel) × Time Picker(Off/On) 조합 규칙 자체를 명시하는 시맨틱 토큰/문서는 저장소에 없음
 - Time Picker 섹션의 148px 고정 높이는 별도 토큰이 아니라 Figma 진열값
 
+**확인 완료(사용자 확인)**
+- Time Field는 직접 타이핑 입력이 가능함(스테퍼 전용 아님) — Date Picker 안의 Time Picker Group도 동일하게 적용됨
+- Time Picker Group의 Picker Count(2/3)·Direction 모두 실제로 다양하게 쓰임(Date Picker 자체에서 Count=3 조합이 관찰되지는 않았으나, Time Picker Group 자체는 Count=3을 지원함이 확인됨)
+
 **확인 필요**
 - Arrow Box·Wheel 닫기 버튼 아이콘의 실제 레이어명("plus")과 렌더링 에셋(chevron/close) 불일치 — 실측 코드/스크린샷 기준으로 chevron·close로 판단(2장)
 - Default↔Wheel 토글이 정확히 Calendar Header의 어느 요소를 클릭해 발생하는지(제목 텍스트? 아이콘만?)
-- Time Picker Group의 Picker Count=3(시:분:초) 조합이 Date Picker에서 실제로 쓰이는지(관찰된 예시는 Count=2뿐)
 - 접근성 마크업(`aria-expanded`, `aria-label`, `role="spinbutton"` 등) 연결 규정 전반(7장)
 
 ## 9. 샘플링에 사용한 노드 (부록, 4개 전수)
