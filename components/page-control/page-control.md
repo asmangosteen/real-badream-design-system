@@ -29,7 +29,7 @@ Page Control은 캐러셀/온보딩 등에서 **현재 페이지 위치를 원�
 
 ## 2. 레이아웃·색상 스펙 (Dots=2/3 표본 기준)
 
-- **컨테이너**: `flex` row, `items-center justify-center`, 도트 간 gap `spacing/spacing-06`=8px, 컨테이너 사방 padding `spacing/spacing-06`=8px. (변수명이 다른 컴포넌트의 `spacing/06`과 달리 `spacing/spacing-06`으로 되어 있으나 값 8px은 동일 — 4장 참고)
+- **컨테이너**: `flex` row, `items-center justify-center`, 도트 간 gap `spacing/06`=8px, 컨테이너 사방 padding `spacing/06`=8px(다른 컴포넌트와 동일한 표준 네이밍 — 4장 참고, 최초 조사 시 `spacing/spacing-06`으로 잘못 관측된 것을 재조회로 정정)
 - **도트 크기**: 8×8px 원(`circle r=4`), 축소 없는 일반 상태 기준 반지름 `r=4`(8장 참고)
 - **색상**(SVG `fill`/`fill-opacity` 직접 실측, 4개 상태 전수):
 
@@ -58,11 +58,13 @@ Dots=8+는 8개 도트 슬롯 안에 9페이지 이상을 표현하기 위해, *
 
 Dark 테마(On Dark, Selection=4, `2039:2880`)에서도 동일한 구조(도트7·8이 별도 축소 에셋)가 확인되어, **이 축소 규칙은 Type과 무관하게 동일하게 적용**되는 것으로 보입니다.
 
-## 4. 토큰 변수명 불일치
+## 4. 토큰 변수명 — 정정(오탐)
 
-이 컴포넌트의 spacing 변수는 `spacing/spacing-06`(값 8px)로, 저장소 내 다른 대부분의 컴포넌트가 쓰는 `spacing/06` 네이밍과 형식이 다릅니다("spacing/" 안에 다시 "spacing-06"이 이중 접두). 값 자체는 `ref-spacing-06`(8px)과 정확히 일치합니다.
+**최초 조사 시 이 컴포넌트의 spacing 변수가 `spacing/spacing-06`(다른 컴포넌트의 표준 네이밍 `spacing/06`과 다른 이중 접두 형태)로 관측되어 "변수명 불일치"로 문서화했으나, 이는 잘못된 관측이었습니다.**
 
-**위치 확인**: 저장소 `tokens/spacing.json`·`tokens/tokens.css`에는 `ref-spacing-06`(표준 네이밍)만 존재하고 `spacing-06`/`spacing/spacing-06` 계열은 전혀 없습니다. 또한 지금까지 문서화된 다른 35개 컴포넌트 문서 어디에도 `spacing/spacing-06` 표기는 등장하지 않고 전부 `spacing/06`을 씁니다 — **이 변수는 저장소에 동기화된 공용 토큰 라이브러리가 아니라, Page Control 컴포넌트에만 로컬로 바인딩된 별도 Figma 변수**로 보입니다. Page Control을 만들 때 기존 `spacing/06` 라이브러리 변수를 재사용하지 않고 새 변수를 만들면서(혹은 변수명 입력 시 접두사가 중복되면서) 값은 우연히 같은 8px이지만 이름이 다른 변수가 생긴 것으로 추정됩니다. 정확히 어느 Variable Collection에 정의돼 있는지는 MCP 도구로는 컬렉션 목록을 조회할 수 없어, Figma에서 Page Control 프레임을 선택한 뒤 padding/gap 속성에 연결된 변수 칩을 클릭해 "Go to definition"으로 직접 확인하는 것을 권장합니다.
+같은 노드(`2039:2151`)에 `get_design_context`를 다시 호출한 결과 `var(--spacing\/06,8px)`로, 다른 컴포넌트와 동일한 **표준 `spacing/06` 네이밍**이 확인되었습니다. 최초 조회에서 `spacing/spacing-06`으로 나왔던 것은 Figma MCP 도구 호출 과정에서 발생한 **일회성 조회 오류(캐시/일시적 응답 이상 등)로 추정되며, 실제 Figma 파일의 변수명은 처음부터 `spacing/06`이었던 것으로 보입니다.** 사용자가 Figma의 Variables 패널에서 `spacing/spacing-06`이라는 변수를 찾을 수 없었던 것도 이 때문입니다 — 애초에 그런 이름의 변수가 파일에 존재하지 않습니다.
+
+값(8px)·토큰 매칭(`ref-spacing-06`) 자체는 처음부터 정확했으며, 변수 **이름** 표기만 정정합니다. 이 사례는 저장소 방법론 문서의 "JSON 재작성 금지·Edit로 최소 diff" 원칙과 별개로, **Figma에서 재확인 요청이 오면 반드시 재조회로 검증한다**는 원칙이 실제로 도구 오류를 잡아낸 사례이기도 합니다.
 
 ## 5. 인터랙션(모션) 스펙
 
@@ -93,7 +95,9 @@ Dark 테마(On Dark, Selection=4, `2039:2880`)에서도 동일한 구조(도트7
 **확인 완료(사용자 확인)**
 - Dots=8+ 축소 방향 전환은 Selection=5부터 좌측으로 넘어감(3장)
 - 도트는 클릭 불가능한 순수 표시 요소, 인터랙티브 네비게이션이 아님(6장)
-- `spacing/spacing-06`은 저장소 공용 토큰이 아니라 Page Control에만 로컬로 바인딩된 별도 Figma 변수로 확인됨(4장) — 정확한 Variable Collection 위치는 Figma에서 직접 확인 필요
+
+**정정(오탐 해소)**
+- ~~`spacing/spacing-06`이 저장소 공용 토큰과 다른 별도 Figma 변수~~ — 재조회 결과 오탐으로 확인. 실제 변수명은 다른 컴포넌트와 동일한 `spacing/06`이며, 최초 조회 시의 이상값은 Figma MCP 도구의 일회성 오류였음(4장)
 
 **확인 필요**
 - 접근성 마크업(현재 페이지를 스크린리더에 전달할 텍스트 대체 방식) 연결 규정

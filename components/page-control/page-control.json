@@ -33,8 +33,8 @@
     "display": "flex-row",
     "alignItems": "center",
     "justifyContent": "center",
-    "gap": { "figmaVariable": "spacing/spacing-06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치(변수명 형식은 다름, 4장 참고)" },
-    "padding": { "figmaVariable": "spacing/spacing-06", "value": "8px", "tokenMatch": "정확히 일치" },
+    "gap": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치" },
+    "padding": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
     "dotSize": { "width": "8px", "height": "8px", "shape": "circle", "normalRadius": "r=4" }
   },
   "colors": {
@@ -61,9 +61,8 @@
     "themeIndependent": "On Dark(Selection=4)에서도 동일한 구조(도트7·8이 별도 축소 에셋) 확인 — 색상만 다르고 축소 규칙은 Type과 무관",
     "transitionPoint": "사용자 확인 완료 — 축소 방향 전환은 Selection=5부터 좌측으로 넘어감(Selection 1~4=우측 축소, Selection 5~8=좌측 축소)"
   },
-  "variableNamingInconsistency": {
-    "note": "spacing 변수가 spacing/spacing-06(값 8px)로, 저장소 내 다른 컴포넌트의 spacing/06 네이밍과 형식이 다름(이중 접두). 값 자체는 ref-spacing-06과 일치.",
-    "resolved": "사용자 확인 완료 — tokens/spacing.json·tokens/tokens.css에는 ref-spacing-06(표준 네이밍)만 존재하고 spacing-06/spacing-spacing-06 계열은 없음. 지금까지 문서화된 다른 35개 컴포넌트 문서 어디에도 spacing/spacing-06 표기가 없어, 이는 저장소 공용 토큰 라이브러리가 아니라 Page Control에만 로컬로 바인딩된 별도 Figma 변수로 판단됨. 정확한 Variable Collection 위치는 MCP 도구로 컬렉션 목록을 조회할 수 없어 Figma에서 직접 확인 필요(변수 칩 클릭 → Go to definition)"
+  "variableNamingCorrection": {
+    "note": "최초 조사 시 get_design_context가 spacing/spacing-06(이중 접두)을 반환해 '변수명 불일치'로 잘못 문서화했음. 동일 노드(2039:2151)에 get_design_context를 재호출한 결과 다른 컴포넌트와 동일한 표준 spacing/06으로 확인됨 — Figma 파일 자체의 변수명은 처음부터 spacing/06이었고, 최초 조회값은 Figma MCP 도구의 일회성 오류(캐시/일시적 응답 이상 등)로 추정됨. 사용자가 Figma Variables 패널에서 spacing/spacing-06을 찾지 못한 것도 이 때문 — 그런 이름의 변수는 파일에 존재하지 않음. 값(8px)·토큰 매칭(ref-spacing-06)은 처음부터 정확했고 변수 이름 표기만 정정."
   },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 진열 프레임(2039:2150, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. 페이지 전환/축소·확장 애니메이션 값 없음.",
@@ -76,7 +75,7 @@
   "resolvedQuestions": [
     "Dots=8+ 축소 방향 전환이 정확히 Selection=5 또는 6 중 어디인지 — 사용자 확인 완료, Selection=5부터 좌측 전환",
     "도트가 실제 클릭 가능한 네비게이션 요소인지 여부 — 사용자 확인 완료, 클릭 불가능한 순수 표시",
-    "spacing/spacing-06 변수명 이중 접두 원인 — 사용자 확인 완료, 저장소 공용 토큰이 아닌 Page Control 로컬 변수(variableNamingInconsistency.resolved 참고)"
+    "spacing/spacing-06 변수명 이중 접두 원인 — 재조회 결과 오탐으로 확인, 실제로는 다른 컴포넌트와 동일한 spacing/06(variableNamingCorrection 참고, 최초 조회값은 도구 오류로 추정)"
   ],
   "openQuestions": [
     "접근성 마크업(현재 페이지를 스크린리더에 전달할 텍스트 대체 방식) 연결 규정",
