@@ -18,6 +18,7 @@
 | Avatar | [components/avatar/avatar.md](./avatar/avatar.md) | 완료 | 7개 인스턴스 (Size 12~48px). State 축 없는 순수 표시용 컴포넌트 |
 | Divider | [components/divider/divider.md](./divider/divider.md) | 완료 | 8개 인스턴스 (Height 1~14px). State 축 없는 순수 표시용 컴포넌트 |
 | Radio Button | [components/radio-button/radio-button.md](./radio-button/radio-button.md) | 완료 | 24개 인스턴스 (Checked False/True × State 4종 × Size S/M/L). 전수 실측 |
+| Toggle | [components/toggle/toggle.md](./toggle/toggle.md) | 완료 | 24개 인스턴스 (Size S/L × Status Off/On × Disabled False/True × Label True/False × Label Location Left/Right/No, Location은 Label에 종속). Hover/Pressed/Focused 축 없음. 전수 실측 |
 | Text Blinker | [components/global/text-blinker/text-blinker.md](./global/text-blinker/text-blinker.md) | 완료 | 2개 인스턴스 (State On/Off). `components/global/` 소속 — Input/TextField 서브 아톰(커서 표시) |
 | Label | [components/global/label/label.md](./global/label/label.md) | 완료 | 6개 인스턴스 (Size S/M/L × Essential Off/On). `components/global/` 소속 — Input/TextField 서브 아톰(필드 라벨) |
 | Text Count | [components/global/text-count/text-count.md](./global/text-count/text-count.md) | 완료 | 6개 인스턴스 (Size Small/Default × State 3종). `components/global/` 소속 — Input/TextField/TextArea 서브 아톰(글자 수 카운터) |
