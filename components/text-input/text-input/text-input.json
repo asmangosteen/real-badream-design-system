@@ -17,7 +17,11 @@
       "LeftIcon(False/True)",
       "RightIcon(False/True)"
     ],
-    "note": "768 = Size(3) × [State-Destructed 조합(8) × 토글(2^5=32)]. State-Destructed 조합 8가지 = Default/Hover/Disabled/Done(각 1, Destructed 축 없음) + Selected/Typing(각 2, Destructed False/True). Dropdown은 Destructed가 Selected 1개 State에서만 분기했으나 Text Input은 Selected·Typing 2개 State에서 분기함."
+    "note": "768 = Size(3) × [State-Destructed 조합(8) × 토글(2^5=32)]. State-Destructed 조합 8가지 = Default/Hover/Disabled/Done(각 1, Destructed 축 없음) + Selected/Typing(각 2, Destructed False/True). Dropdown은 Destructed가 Selected 1개 State에서만 분기했으나 Text Input은 Selected·Typing 2개 State에서 분기함.",
+    "additionalNonVariantProperty": {
+      "name": "ShowUnit(False/True)",
+      "note": "8개 variant 축(위 axes 목록, 768개 계산)에는 포함되지 않는 별도의 boolean 컴포넌트 프로퍼티(사용자 확인, Figma 프로퍼티 패널). Variant 프로퍼티는 레이어 이름에 박혀 get_metadata로 셀 수 있지만, boolean/text/instance-swap 프로퍼티는 인스턴스별 속성 패널에만 노출되어 축 개수 계산에서 누락됨. 켜면 우측 아이콘 뒤에 단위 텍스트(예: 'km')가 표시됨. 확인된 사례: 2119:10054(Size=M, State=Done)에서 ShowUnit=True."
+    }
   },
   "sampling": {
     "method": "축별 전략적 샘플링. get_metadata 전수(768개 축 구조 파악, 오케스트레이터 사전 확보) + get_design_context 15회 + get_variable_defs 4회 + get_motion_context 1회(최상위 프레임)",
@@ -139,7 +143,7 @@
       "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
       "typeBoxState": "Done(값 채워짐, neutral/800, 캐럿 없음)",
       "rightIcon": "arrowhead_down",
-      "note": "실측 노드(2119:10054)에 한해 우측 아이콘 뒤 단위 텍스트('km') 슬롯이 추가로 관찰됨 — 8개 공식 축 밖의 요소. 재검증(Hover 2119:10082, Selected 2119:10095, S-Default 2119:9843)에서 이 3개 노드는 showUnit prop 자체가 없어 이 샘플 인스턴스 한정 오버라이드로 추정됨(768개 중 4개만 확인, 완전 배제는 아님) — 확인 필요"
+      "note": "우측 아이콘 뒤 단위 텍스트('km') 슬롯 — Show Unit이라는 정식 boolean 컴포넌트 프로퍼티로 확인됨(사용자 확인, Figma 프로퍼티 패널). 8개 variant 축(768개 계산)과는 별개의 9번째 축이라 축 개수에는 포함되지 않음. 이 노드(2119:10054)에서 Show Unit=True 확인. 재검증한 Hover(2119:10082)/Selected(2119:10095)/S-Default(2119:9843) 3개 노드는 Show Unit=False(기본값)라 get_design_context 코드 출력에 prop 자체가 생략된 것으로 추정"
     },
     "Selected": {
       "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
@@ -226,18 +230,19 @@
     "disabledMarkup": "disabled/aria-disabled 연결 여부는 Figma로 확인 불가 — 확인 필요",
     "colorOnlyDestructed": "에러 상태가 테두리·버튼·캐럿 색상 변화 위주로 표현되고 Supporting Text Theme은 전환되지 않음 — WCAG 1.4.1 관점에서 확인 필요",
     "labelFor": "label.md 5장과 동일한 확인 필요 사항 적용. Essential 토글이 없어 필수 표시 방식은 별도 확인 필요",
-    "unitSuffixA11y": "Done 상태에서 관찰된 단위 텍스트('km')가 값과 함께 스크린리더에 하나의 의미로 읽히도록 하는 처리 규정 없음 — 확인 필요"
+    "unitSuffixA11y": "Show Unit으로 표시되는 단위 텍스트('km')가 값과 함께 스크린리더에 하나의 의미로 읽히도록 하는 처리 규정 없음 — 확인 필요"
   },
   "resolvedQuestions": [
     "TypeBox의 Selected/Typing(캐럿) 상태가 Text Input 안에서 실제로 쓰이는지 — 확인 완료, 실제로 쓰임(Dropdown과 대조되는 지점)",
     "Destructed가 어느 State에서 분기하는지 — Selected·Typing 두 State 모두에서 분기함을 확인 완료(Dropdown은 Selected 1개)",
     "Right Icon 기본 아이콘명 — arrowhead_down으로 확인(Dropdown의 chevron_down과 다름)",
-    "State=Typing에서 Right Icon 슬롯이 close_in_circle로 강제 대체됨을 확인 완료"
+    "State=Typing에서 Right Icon 슬롯이 close_in_circle로 강제 대체됨을 확인 완료",
+    "Show Unit이 8개 공식 축 밖의 별도 요소인지 여부 — 사용자가 Figma 프로퍼티 패널에서 정식 boolean 컴포넌트 프로퍼티임을 확인. 8개 variant 축과 별개의 9번째 축(source.additionalNonVariantProperty 참고)"
   ],
   "openQuestions": [
     "컴포넌트 너비가 실제로 fluid인지(Dropdown처럼 재검증 안 함)",
     "캐럿 깜빡임 애니메이션 duration/easing/반복 주기",
-    "Done 상태의 단위(unit) 텍스트 슬롯이 8개 공식 축 밖의 별도 요소인지 여부",
+    "Show Unit=True를 Done 외 다른 State·Size와 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계) — 15개 표본에는 Done 1건만 있어 미확정",
     "Typing 상태에서 Right Icon=False일 때 지우기 버튼 표시 여부",
     "aria-hidden, aria-label, disabled, <label for> 등 접근성 마크업 연결 규정",
     "Destructed 상태에서 Supporting Text Theme 전환 필요 여부"

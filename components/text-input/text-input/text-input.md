@@ -37,6 +37,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **Supporting Text** | False / True | 하단 [Supporting Text](../../global/supporting-text/supporting-text.md) 표시 여부 |
 | **Left Icon** | False / True | Input 왼쪽 아이콘(기본 `profile_filled`, 자유 교체 슬롯) 표시 여부 |
 | **Right Icon** | False / True | Input 오른쪽 아이콘(기본 `arrowhead_down`, 자유 교체 슬롯) 표시 여부. **단, State=Typing에서는 이 슬롯이 강제로 `close_in_circle`(지우기 버튼)로 대체됨 — 4장 참고** |
+| **Show Unit**(9번째, variant 축 아님) | False / True | 우측 아이콘 뒤에 단위 텍스트(예: "km") 표시 여부. Size×State×Destructed×5토글로 계산한 **768개(variant 조합 수)에는 포함되지 않는 별도 boolean 프로퍼티**(사용자 확인, Figma 프로퍼티 패널) — 3장 핵심 발견 5 참고 |
 
 ## 2. Size별 스펙 (3개 전체 실측, State=Default·나머지 토글 전부 True 기준)
 
@@ -67,7 +68,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **Default** | `common/white-default`(#fdfdfd) | `color/gray/900-10`(rgba(3,9,26,0.1)) | `brand/primary-default`(#2c7be2) | `Placeholder`(회색, `neutral/500`) | `arrowhead_down` | — |
 | **Hover** | 동일 | `color/gray/900-20`(rgba(3,9,26,0.2)) — Default보다 진함 | 동일 | `Placeholder` | `arrowhead_down` | 루트에 `cursor-pointer` 클래스 |
 | **Disabled** | `color/gray/900-5`(rgba(3,9,26,0.05)) — 테두리 없음 | 없음 | `brand/primary-default` + `opacity/20`(0.2) | `Placeholder`, 텍스트 색상 **`neutral/400`**(Default의 `neutral/500`보다 한 단계 옅음) | `arrowhead_down` | Label 텍스트 색상도 `neutral/500`으로 dim(Default는 `neutral/700`) |
-| **Done** | `common/white-default` | `color/gray/900-10`(Default와 동일) | `brand/primary-default` | `Done`(값 채워짐, `neutral/800`, 캐럿 없음) | `arrowhead_down` | 실측 노드(`2119:10054`)에 한해 우측 아이콘 뒤 단위 텍스트("km") 슬롯이 추가로 관찰됨 — 8개 공식 축에는 없는 요소이며, 다른 State 노드에는 이 prop 자체가 없어 이 노드 한정 오버라이드로 추정(**확인 필요**, 아래 핵심 발견 5) |
+| **Done** | `common/white-default` | `color/gray/900-10`(Default와 동일) | `brand/primary-default` | `Done`(값 채워짐, `neutral/800`, 캐럿 없음) | `arrowhead_down` | 우측 아이콘 뒤 단위 텍스트("km") 슬롯 — **`Show Unit`이라는 별도 boolean 컴포넌트 프로퍼티로 확인됨**(사용자 확인, Figma 프로퍼티 패널). 8개 변형 축과는 다른 종류의 속성이라 축 개수(768개)에는 포함되지 않음 — 아래 핵심 발견 5 참고 |
 | **Selected**(Destructed=False) | `common/white-default` | `brand/primary-default`(#2c7be2) — 파란 강조 | `brand/primary-default`(변화 없음) | **`Selected`**(값 없음, `neutral/500` placeholder + **캐럿이 텍스트 앞에 표시**, 캐럿 색상 `brand/primary-default`) | `arrowhead_down`(변화 없음) | 포커스 + 값 없음(빈 필드에 커서만 깜빡이는 상태로 추정) |
 | **Selected + Destructed=True** | `common/white-default` | `theme/destructed-default`(#e72f37) | **`theme/destructed-default`**(#e72f37로 변경) | `Selected`(값 없음 + 캐럿, 단 **캐럿 색상이 `theme/destructed-default`로 오버라이드**됨) | `arrowhead_down`(변화 없음) | — |
 | **Typing**(Destructed=False) | `common/white-default` | `brand/primary-default`(Selected와 동일) | `brand/primary-default`(변화 없음) | **`Typing`**(값 "Input Text", `neutral/800` + **캐럿이 텍스트 뒤에 표시**, 캐럿 색상 `brand/primary-default`) | **`close_in_circle`로 강제 대체**(자유 교체 슬롯이 아님 — 4장 참고) | 포커스 + 값 있음(입력 중) |
@@ -78,7 +79,10 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 2. **TypeBox의 캐럿 상태가 실제로 쓰입니다.** Selected=`Selected`(캐럿+빈 placeholder), Typing=`Typing`(캐럿+값), 나머지(Default/Hover/Disabled/Done)=`Placeholder` 또는 `Done`. 이는 작업 지시에서 제기한 가설(Dropdown과 달리 Text Input은 실제 텍스트 타이핑 필드이므로 캐럿이 쓰일 것)을 그대로 확인시켜 줍니다.
 3. **캐럿(Text Blinker) 색상이 Destructed에 따라 오버라이드됩니다.** [text-blinker.md](../../global/text-blinker/text-blinker.md)는 On 상태의 채우기 색상을 `brand/primary-default` 고정으로 문서화했지만, Text Input 안에서는 Destructed=True일 때 캐럿 색상이 `theme/destructed-default`로 바뀝니다 — Text Blinker 자체의 문서화된 스펙을 벗어나는 것이 아니라, **상위 컴포넌트가 인스턴스 프로퍼티/색상 오버라이드로 캐럿 색을 상황에 맞게 바꿔 쓰는 사례**입니다.
 4. **Disabled의 Placeholder 색상이 Default보다 한 단계 더 옅습니다**(`neutral/400` vs `neutral/500`). Dropdown 문서에서도 동일하게 관찰된 패턴입니다.
-5. **Done 상태에서 관찰된 단위(unit) 텍스트 슬롯("km")은 8개 공식 축 밖의 요소입니다.** 실측 노드(`2119:10054`)에서 우측 아이콘 뒤에 `showUnit` prop과 "km" 텍스트가 추가로 붙어 있었으나, 이 문서가 확인한 축 구조(Size×State×Destructed×5토글=768개)로는 설명되지 않는 요소입니다. **추가 검증(재조사) 결과**: Hover(`2119:10082`)·Selected(`2119:10095`)·Size=S Default(`2119:9843`) 3개 노드를 추가로 실측한 결과, 이들의 컴포넌트 prop 타입에는 `showUnit` 자체가 아예 존재하지 않습니다(다른 두 축처럼 값이 False로 꺼진 게 아니라, prop 정의 자체가 없음). 즉 `showUnit`은 **Text Input 컴포넌트 전체에 적용되는 정식 토글이 아니라, `2119:10054` 이 샘플 인스턴스 하나에만 붙어있는 개별 오버라이드로 보이는 것이 이번 재조사로 좀 더 확실해졌습니다.** 다만 실측하지 않은 나머지 노드에서 이 prop이 있는 경우가 더 있을 가능성 자체를 완전히 배제할 수는 없어(768개 중 4개만 확인) 최종 결론은 여전히 **확인 필요**로 남깁니다 — 실제 구현 시 이 인스턴스를 참고 사례가 아니라 "일반적으로 쓸 수 있는 기능"으로 확대 해석하지 않도록 주의가 필요합니다.
+5. **`Show Unit`은 정식 boolean 컴포넌트 프로퍼티입니다(사용자가 Figma 프로퍼티 패널에서 직접 확인).** 켜면 우측 아이콘 뒤에 단위 텍스트(관찰된 예: "km")가 표시됩니다. 실측 노드 중에는 `2119:10054`(Size=M, State=Done)에서 `Show Unit=True`로 켜진 인스턴스를 확인했습니다.
+   - **왜 8개 공식 축(768개 계산)에 포함되지 않는가**: Figma 컴포넌트에는 두 종류의 프로퍼티가 있습니다 — ① **Variant 프로퍼티**(Size/State/Destructed/Show Button 등, 레이어 이름에 `"Size=M, State=Default, ..."` 식으로 박혀 있어 `get_metadata`로 셀 수 있는 것)와 ② **Boolean/Text/Instance-swap 프로퍼티**(레이어 이름이 아니라 인스턴스별 속성 패널에만 노출되는 것). `Show Unit`은 후자입니다. 즉 Size×State×Destructed×5토글(Show Button/Show Label/Supporting Text/Left Icon/Right Icon)로 계산한 768개는 어디까지나 **variant 조합 수**이고, `Show Unit`은 이 768개 각각에 독립적으로 True/False를 얹을 수 있는 **9번째 축**입니다(있다면 이론상 1,536개까지 늘어날 수 있는 구조).
+   - **재실측(Hover `2119:10082`, Selected `2119:10095`, Size=S Default `2119:9843`)에서는 이 prop이 코드 출력에 아예 나타나지 않았는데**, 이는 인스턴스 자체에 이 프로퍼티가 없어서가 아니라 `get_design_context`의 코드 생성 방식상 **기본값(False)과 같은 프로퍼티는 생략되고, 기본값에서 오버라이드된 프로퍼티만 타입에 노출되는 것으로 보입니다.** 즉 세 노드 모두 `Show Unit=False`(기본값)라 코드에 드러나지 않았을 뿐, 사용자가 확인한 대로 프로퍼티 자체는 전 인스턴스에 공통으로 존재하는 것이 맞습니다.
+   - Size=S/L 등 다른 Size, 또는 Default/Selected 등 Done 외 다른 State에서 `Show Unit=True`로 실제 켠 예시는 이번 15개 표본에는 없어, 다른 축과 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계)까지는 이번 조사로 확정하지 못했습니다 — **확인 필요**.
 
 ## 4. 토글 축(Show Button / Show Label / Supporting Text / Left Icon / Right Icon)
 
@@ -123,7 +127,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 - **Disabled 상태**: `pointer-events`/`aria-disabled`/`disabled` 속성 부여는 Figma 디자인만으로 확인 불가 — Dropdown 문서와 동일하게 확인 필요.
 - **Destructed(에러) 상태**: 테두리·버튼·캐럿 색상 변화로만 표현되며, 하단 Supporting Text는 Destructed와 무관하게 항상 Gray 톤으로 남습니다(5장). 색상에만 의존하지 않기(WCAG 1.4.1) 원칙에서, 실제 구현 시 Supporting Text의 Theme을 Destructed와 함께 전환하거나 최소한 텍스트 문구로 에러 내용을 명시하는 처리가 필요해 보입니다 — 확인 필요.
 - **Label 연결**(`<label for>`), 필수 입력 여부 등은 [Label 문서](../../global/label/label.md) 5장의 확인 필요 사항과 동일하게 적용됩니다. Text Input에는 Essential 토글 자체가 없으므로(5장), 필수 입력 표시가 필요하다면 별도 처리 방식이 필요합니다 — 확인 필요.
-- **단위(unit) 텍스트 슬롯**(3장 핵심 발견 5): 값과 단위(예: "12 km")가 스크린리더에 하나의 의미 단위로 읽히도록 구현할 필요가 있어 보이나, Figma 파일에 규정이 없어 확인 필요입니다.
+- **`Show Unit` 단위 텍스트 슬롯**(3장 핵심 발견 5): 값과 단위(예: "12 km")가 스크린리더에 하나의 의미 단위로 읽히도록 구현할 필요가 있어 보이나, Figma 파일에 규정이 없어 확인 필요입니다.
 
 ## 8. 토큰 매칭 요약
 
@@ -142,12 +146,15 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 - Size(S/M/L)별로 "Text Input엔 이 padding+radius+아이콘크기 조합을 쓴다"는 시맨틱 토큰 자체는 저장소에 없음(개별 값은 토큰과 일치)
 - Destructed가 Selected·Typing 두 State에서만 노출되는 규칙을 명시하는 토큰/문서 없음
 - Typing 상태에서 Right Icon이 "자유 아이콘 슬롯"에서 "지우기 버튼"으로 의미가 바뀌는 규칙을 명시하는 토큰/문서 없음
-- Done 상태의 단위(unit) 텍스트 슬롯 자체가 디자인 토큰이 아니라 컴포넌트 구조 영역
+- `Show Unit` 단위 텍스트 슬롯 자체가 디자인 토큰이 아니라 컴포넌트 구조 영역(boolean 프로퍼티)
+
+**확인 완료(사용자 확인)**
+- `Show Unit`은 Figma 프로퍼티 패널에 등록된 정식 boolean 컴포넌트 프로퍼티입니다. 8개 variant 축(768개 계산)과는 별개의 9번째 축으로, 켜면 우측 아이콘 뒤에 단위 텍스트(예: "km")가 표시됩니다(1장·3장 핵심 발견 5 참고)
 
 **확인 필요**
 - 컴포넌트 너비: Dropdown처럼 화면 폭에 따른 가변(fluid)일 가능성이 높으나 Text Input 자체로는 재검증하지 않음(2장)
 - 캐럿 깜빡임 애니메이션의 duration/easing/반복 주기(Figma에 모션 데이터 없음, text-blinker.md·type-box.md와 동일)
-- Done 상태에서 관찰된 단위(unit) 텍스트 슬롯("km")이 8개 공식 축 밖의 별도 요소인지, 특정 노드에 한정된 임시 값인지 — 4개 노드 재검증 결과 다른 3개 노드엔 `showUnit` prop 자체가 없어 "이 샘플 한정" 쪽에 무게가 실리나, 768개 중 4개만 확인한 것이라 완전히 배제하지는 못함(3장 핵심 발견 5)
+- `Show Unit=True`를 Done 외 다른 State·Size와 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계) — 이번 15개 표본에는 Done 1건만 있어 확정하지 못함(3장 핵심 발견 5)
 - Typing 상태에서 Right Icon=False일 때 지우기 버튼이 사라지는지 여부(4장)
 - 접근성 마크업(`aria-hidden`, `aria-label`, `disabled`, `<label for>`) 연결 규정(7장)
 - Destructed 상태에서 Supporting Text의 Theme이 함께 전환되어야 하는지(색상 단독 의존 이슈, 7장)
