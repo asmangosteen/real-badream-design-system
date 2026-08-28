@@ -139,7 +139,7 @@
       "buttonBackground": { "figmaVariable": "brand/primary-default", "value": "#2c7be2" },
       "typeBoxState": "Done(값 채워짐, neutral/800, 캐럿 없음)",
       "rightIcon": "arrowhead_down",
-      "note": "실측 노드(2119:10054)에 한해 우측 아이콘 뒤 단위 텍스트('km') 슬롯이 추가로 관찰됨 — 8개 공식 축 밖의 요소, 확인 필요"
+      "note": "실측 노드(2119:10054)에 한해 우측 아이콘 뒤 단위 텍스트('km') 슬롯이 추가로 관찰됨 — 8개 공식 축 밖의 요소. 재검증(Hover 2119:10082, Selected 2119:10095, S-Default 2119:9843)에서 이 3개 노드는 showUnit prop 자체가 없어 이 샘플 인스턴스 한정 오버라이드로 추정됨(768개 중 4개만 확인, 완전 배제는 아님) — 확인 필요"
     },
     "Selected": {
       "inputBackground": { "figmaVariable": "common/white-default", "value": "#fdfdfd" },
