@@ -57,26 +57,29 @@
       "7": "2,3,4,4,4,4,4,4 (좌측 1·2번으로 축소 이동)",
       "8": "2,3,4,4,4,4,4,4 (좌측 1·2번 축소, Selection=7과 동일)"
     },
-    "rule": "축소는 선택 위치에서 가장 먼 두 도트가 아니라, 정해진 한쪽 끝(우측 7·8번 또는 좌측 1·2번)에서만 발생. Selection이 앞쪽(1~4, 확인된 범위)이면 우측 축소, 뒤쪽 끝(7~8)이면 좌측 축소 — 8개 도트 윈도우가 선택 위치를 따라 슬라이드하다 끝에 닿으면 반대쪽으로 축소가 넘어가는 캐러셀 인디케이터 패턴으로 추정",
+    "rule": "축소는 선택 위치에서 가장 먼 두 도트가 아니라, 정해진 한쪽 끝(우측 7·8번 또는 좌측 1·2번)에서만 발생. Selection이 앞쪽(1~4)이면 우측 축소, 뒤쪽 끝(5~8)이면 좌측 축소 — 8개 도트 윈도우가 선택 위치를 따라 슬라이드하다 끝에 닿으면 반대쪽으로 축소가 넘어가는 캐러셀 인디케이터 패턴",
     "themeIndependent": "On Dark(Selection=4)에서도 동일한 구조(도트7·8이 별도 축소 에셋) 확인 — 색상만 다르고 축소 규칙은 Type과 무관",
-    "unverified": "정확한 전환 지점이 Selection=5 또는 6 중 어디인지는 5개 표본(1/2/4/7/8)에 포함되지 않아 확인 필요"
+    "transitionPoint": "사용자 확인 완료 — 축소 방향 전환은 Selection=5부터 좌측으로 넘어감(Selection 1~4=우측 축소, Selection 5~8=좌측 축소)"
   },
   "variableNamingInconsistency": {
-    "note": "spacing 변수가 spacing/spacing-06(값 8px)로, 저장소 내 다른 컴포넌트의 spacing/06 네이밍과 형식이 다름(이중 접두). 값 자체는 ref-spacing-06과 일치하나 원인은 확인 필요"
+    "note": "spacing 변수가 spacing/spacing-06(값 8px)로, 저장소 내 다른 컴포넌트의 spacing/06 네이밍과 형식이 다름(이중 접두). 값 자체는 ref-spacing-06과 일치.",
+    "resolved": "사용자 확인 완료 — tokens/spacing.json·tokens/tokens.css에는 ref-spacing-06(표준 네이밍)만 존재하고 spacing-06/spacing-spacing-06 계열은 없음. 지금까지 문서화된 다른 35개 컴포넌트 문서 어디에도 spacing/spacing-06 표기가 없어, 이는 저장소 공용 토큰 라이브러리가 아니라 Page Control에만 로컬로 바인딩된 별도 Figma 변수로 판단됨. 정확한 Variable Collection 위치는 MCP 도구로 컬렉션 목록을 조회할 수 없어 Figma에서 직접 확인 필요(변수 칩 클릭 → Go to definition)"
   },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 진열 프레임(2039:2150, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. 페이지 전환/축소·확장 애니메이션 값 없음.",
   "accessibility": {
-    "interactionModel": "도트가 클릭 가능한 페이지 이동 버튼인지, 순수 장식 표시인지 규정 없음 — 확인 필요",
-    "currentPageAnnouncement": "선택된 도트를 스크린리더가 인지하도록 aria-current/aria-selected 연결 규정 없음 — 확인 필요",
-    "dots8PlusA11y": "8+ 모드의 '몇 번째/총 몇 페이지' 정보가 시각적 축소로만 표현되고 텍스트 대체가 없음 — 확인 필요",
+    "interactionModel": "사용자 확인 완료 — 도트는 클릭 불가능한 순수 표시(장식/상태 표시) 요소. 페이지 이동은 다른 컨트롤(스와이프 등)로 이뤄짐. role=tablist 등 상호작용형 마크업보다 aria-hidden 처리 또는 스크린리더용 별도 텍스트가 적절",
+    "currentPageAnnouncement": "클릭 불가능한 순수 표시임이 확정되어 aria-current/aria-selected보다는 현재 페이지 정보를 전달할 별도 텍스트 필요 여부 검토 필요 — 확인 필요",
+    "dots8PlusA11y": "8+ 모드의 '몇 번째/총 몇 페이지' 정보가 시각적 축소로만 표현되고 텍스트 대체가 없음 — 별도 텍스트로 보완 권장, 정확한 마크업 규정은 확인 필요",
     "contrastVerification": "미선택(20%)·선택(100%) 도트 명암비 WCAG 수치 검증 미실시"
   },
+  "resolvedQuestions": [
+    "Dots=8+ 축소 방향 전환이 정확히 Selection=5 또는 6 중 어디인지 — 사용자 확인 완료, Selection=5부터 좌측 전환",
+    "도트가 실제 클릭 가능한 네비게이션 요소인지 여부 — 사용자 확인 완료, 클릭 불가능한 순수 표시",
+    "spacing/spacing-06 변수명 이중 접두 원인 — 사용자 확인 완료, 저장소 공용 토큰이 아닌 Page Control 로컬 변수(variableNamingInconsistency.resolved 참고)"
+  ],
   "openQuestions": [
-    "spacing/spacing-06 변수명 이중 접두 원인",
-    "Dots=8+ 축소 방향 전환이 정확히 Selection=5 또는 6 중 어디인지",
-    "도트가 실제 클릭 가능한 네비게이션 요소인지 여부",
-    "접근성 마크업(aria-current, role=tablist, 페이지 수 텍스트 대체) 연결 규정",
+    "접근성 마크업(현재 페이지를 스크린리더에 전달할 텍스트 대체 방식) 연결 규정",
     "WCAG 명암비 수치 검증"
   ]
 }
