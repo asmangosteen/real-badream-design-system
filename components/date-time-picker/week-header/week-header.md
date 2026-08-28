@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10944) — Symbol `2208:10944` ("Week Header"), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`week-header.json`](./week-header.json)을 함께 참고합니다. 이 문서와 week-header.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치합니다 — Date/Time Picker 컴포넌트 패밀리 중 달력 그리드 상단의 **요일 라벨 행**입니다. [Week](../week/week.md)와 같은 열 너비(40px)·같은 gap(8px)을 써서 [Month](../month/month.md) 위에 세로로 정렬되도록 설계된 것으로 보입니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치합니다 — Date/Time Picker 컴포넌트 패밀리 중 달력 그리드 상단의 **요일 라벨 행**입니다. [Week](../week/week.md)와 같은 열 너비(40px)·같은 gap(8px)을 써서 [Month](../month/month.md) 위에 세로로 정렬되도록 설계된 것으로 보입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 

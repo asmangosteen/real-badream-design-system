@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10687) — Frame `2208:10687` ("Date"), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`date.json`](./date.json)을 함께 참고합니다. 이 문서와 date.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치합니다 — [Week](../week/week.md) → [Month](../month/month.md) → [Date Picker](../date-picker/date-picker.md)로 이어지는 Date/Time Picker 컴포넌트 패밀리의 최하위 아톰(달력의 날짜 셀 1개)입니다. 다른 그룹(Text Input 등)에서 재사용되지 않으므로 `components/global/`이 아니라 이 패밀리 전용 폴더에 둡니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치합니다 — [Week](../week/week.md) → [Month](../month/month.md) → [Date Picker](../date-picker/date-picker.md)로 이어지는 Date/Time Picker 컴포넌트 패밀리의 최하위 아톰(달력의 날짜 셀 1개)입니다. 다른 그룹(Text Input 등)에서 재사용되지 않으므로 `components/global/`이 아니라 이 패밀리 전용 폴더에 둡니다.
 
 ## 0. 문서 범위와 샘플링 방법
 

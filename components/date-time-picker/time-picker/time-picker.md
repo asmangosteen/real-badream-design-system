@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2229-8835) — Frame `2229:8835`("Time Picker", 진열 프레임 248×156px), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`time-picker.json`](./time-picker.json)을 함께 참고합니다. 이 문서와 time-picker.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치하는 Date/Time Picker 패밀리의 구성원입니다. [Time Field](../time-field/time-field.md)를 인스턴스로 그대로 조합해서 만들어진 **상위 컴포넌트**이며, 역으로 [Time Picker Group](../time-picker-group/time-picker-group.md)에서 이 컴포넌트를 다시 인스턴스로 재사용합니다(5장) — Text Input/Dropdown이 서로를 재사용하는 계층 구조와 동일한 패턴입니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치하는 Date/Time Picker 패밀리의 구성원입니다. [Time Field](../time-field/time-field.md)를 인스턴스로 그대로 조합해서 만들어진 **상위 컴포넌트**이며, 역으로 [Time Picker Group](../time-picker-group/time-picker-group.md)에서 이 컴포넌트를 다시 인스턴스로 재사용합니다(5장) — Text Input/Dropdown이 서로를 재사용하는 계층 구조와 동일한 패턴입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 
@@ -50,8 +50,8 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 
 ## 5. 서브컴포넌트 재사용 관계
 
-- **Time Field**: [`components/date-picker/time-field/time-field.md`](../time-field/time-field.md)를 그대로 인스턴스로 사용. State=Default로 고정(4장 핵심 발견 2).
-- **Time Picker Group에서 재사용**: [`components/date-picker/time-picker-group/time-picker-group.md`](../time-picker-group/time-picker-group.md)가 이 컴포넌트를 2~3개 인스턴스로 조합합니다. Time Picker Group 자신의 병합 변형 코드 안에서는 내장 Time Picker가 진열상 Direction=Down Only로 고정되어 보였으나, **사용자 확인 완료** — 실제로는 Picker Count(2/3)와 Direction(Up Only/Down Only/Both) 모두 다양하게 조합되어 쓰입니다.
+- **Time Field**: [`components/date-time-picker/time-field/time-field.md`](../time-field/time-field.md)를 그대로 인스턴스로 사용. State=Default로 고정(4장 핵심 발견 2).
+- **Time Picker Group에서 재사용**: [`components/date-time-picker/time-picker-group/time-picker-group.md`](../time-picker-group/time-picker-group.md)가 이 컴포넌트를 2~3개 인스턴스로 조합합니다. Time Picker Group 자신의 병합 변형 코드 안에서는 내장 Time Picker가 진열상 Direction=Down Only로 고정되어 보였으나, **사용자 확인 완료** — 실제로는 Picker Count(2/3)와 Direction(Up Only/Down Only/Both) 모두 다양하게 조합되어 쓰입니다.
 
 ## 6. 인터랙션(모션) 스펙
 

@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2229-8932) — Frame `2229:8932`("Time Picker Group", 진열 프레임 248×304px), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`time-picker-group.json`](./time-picker-group.json)을 함께 참고합니다. 이 문서와 time-picker-group.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치하는 Date/Time Picker 패밀리의 최상위 조합 컴포넌트입니다. [Time Picker](../time-picker/time-picker.md) 2~3개를 콜론(`:`) 구분자와 함께 가로로 배열해서 만들어졌습니다(5장) — Text Input Group이 Text Input을 조합하는 것과 동일한 패턴입니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치하는 Date/Time Picker 패밀리의 최상위 조합 컴포넌트입니다. [Time Picker](../time-picker/time-picker.md) 2~3개를 콜론(`:`) 구분자와 함께 가로로 배열해서 만들어졌습니다(5장) — Text Input Group이 Text Input을 조합하는 것과 동일한 패턴입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 
@@ -50,7 +50,7 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 
 ## 5. 서브컴포넌트 재사용 관계
 
-- **Time Picker**: [`components/date-picker/time-picker/time-picker.md`](../time-picker/time-picker.md)를 그대로 인스턴스로 2~3회 사용. 진열 샘플에서는 Direction=Down Only로 고정되어 보였으나, 실제로는 각 자리마다 Direction이 다양하게 쓰임(사용자 확인, 3장 핵심 발견 2).
+- **Time Picker**: [`components/date-time-picker/time-picker/time-picker.md`](../time-picker/time-picker.md)를 그대로 인스턴스로 2~3회 사용. 진열 샘플에서는 Direction=Down Only로 고정되어 보였으나, 실제로는 각 자리마다 Direction이 다양하게 쓰임(사용자 확인, 3장 핵심 발견 2).
 - **Time Field**: Time Picker를 통해 간접적으로 인스턴스화됨 — [`time-field.md`](../time-field/time-field.md) 참고. State=Default로 고정(Time Picker 문서 5장과 동일).
 
 ## 6. 인터랙션(모션) 스펙

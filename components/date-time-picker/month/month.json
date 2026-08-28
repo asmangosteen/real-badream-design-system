@@ -48,17 +48,17 @@
   "weekHeaderComposition": {
     "included": false,
     "note": "두 변형 모두 get_design_context 코드 트리에 Week Header(요일 라벨 행)가 포함되어 있지 않음. Month는 순수하게 Week 행들의 세로 스택.",
-    "resolvedInDatePicker": "후속 확인 완료 — components/date-picker/date-picker/date-picker.md 작성 과정에서 2224:3249(State=Default)를 get_metadata로 실측, Calendar 컨테이너 안에 Week Header(y=12,h=22)+Month·Week Number=5(y=42,h=224)가 8px gap으로 실제 조합되어 쓰임을 확인. Default State는 Week Number=5를 씀."
+    "resolvedInDatePicker": "후속 확인 완료 — components/date-time-picker/date-picker/date-picker.md 작성 과정에서 2224:3249(State=Default)를 get_metadata로 실측, Calendar 컨테이너 안에 Week Header(y=12,h=22)+Month·Week Number=5(y=42,h=224)가 8px gap으로 실제 조합되어 쓰임을 확인. Default State는 Week Number=5를 씀."
   },
   "subcomponentReuse": {
     "week": {
-      "ref": "components/date-picker/week/week.md",
+      "ref": "components/date-time-picker/week/week.md",
       "instanceCountByVariant": { "5": 5, "6": 6 },
       "note": "week.md 실측 스펙(gap spacing/06=8px, Date 셀 7개, 328x40px)과 정확히 일치",
       "tokenMatch": "정확히 일치"
     },
     "date": {
-      "ref": "components/date-picker/date/date.md",
+      "ref": "components/date-time-picker/date/date.md",
       "note": "Week를 통해 간접 재사용. 두 변형 모두 전 셀 Type=Default/Status=Default/'00' 플레이스홀더로 고정되어 실제 날짜 매핑 규칙은 확인하지 못함"
     }
   },

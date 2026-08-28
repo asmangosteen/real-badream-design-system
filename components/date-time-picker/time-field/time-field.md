@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2229-8789) — Frame `2229:8789`("Time Field", 진열 프레임 248×80px), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`time-field.json`](./time-field.json)을 함께 참고합니다. 이 문서와 time-field.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치하는 Date/Time Picker 패밀리의 최하위 아톰입니다. [Time Picker](../time-picker/time-picker.md)가 이 컴포넌트를 그대로 인스턴스로 재사용합니다(5장) — Text Input 패밀리의 [Type Box](../../global/type-box/type-box.md)와 유사한 위치의 서브 아톰입니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치하는 Date/Time Picker 패밀리의 최하위 아톰입니다. [Time Picker](../time-picker/time-picker.md)가 이 컴포넌트를 그대로 인스턴스로 재사용합니다(5장) — Text Input 패밀리의 [Type Box](../../global/type-box/type-box.md)와 유사한 위치의 서브 아톰입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 

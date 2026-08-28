@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2212-2712) — Frame `2212:2712`("Calendar Header", 진열 프레임 792×256px), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`calendar-header.json`](./calendar-header.json)을 함께 참고합니다. 이 문서와 calendar-header.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치하는 Date/Time Picker 패밀리의 구성원입니다. [Date](../date/date.md)(날짜 셀), [Week](../week/week.md)(주 단위 로우)와 마찬가지로 달력/시간 선택 UI 상단에 쓰이는 헤더로 추정되며, 다른 그룹(Text Input 등)에서 재사용되지 않아 `components/global/`이 아니라 이 패밀리 전용 폴더에 둡니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치하는 Date/Time Picker 패밀리의 구성원입니다. [Date](../date/date.md)(날짜 셀), [Week](../week/week.md)(주 단위 로우)와 마찬가지로 달력/시간 선택 UI 상단에 쓰이는 헤더로 추정되며, 다른 그룹(Text Input 등)에서 재사용되지 않아 `components/global/`이 아니라 이 패밀리 전용 폴더에 둡니다.
 
 ## 0. 문서 범위와 샘플링 방법
 

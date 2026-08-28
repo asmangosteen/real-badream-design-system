@@ -43,7 +43,7 @@
   },
   "bothDatePickersUse": "State=Default, Time Picker=Off (Group 자체에서 Time Picker 통합 조합은 관찰되지 않음)",
   "subcomponentReuse": {
-    "datePicker": { "ref": "components/date-picker/date-picker/date-picker.md" },
+    "datePicker": { "ref": "components/date-time-picker/date-picker/date-picker.md" },
     "divider": { "ref": "components/divider/divider.md", "tokenMatch": "정확히 일치(neutral/200)" }
   },
   "interactions": [],

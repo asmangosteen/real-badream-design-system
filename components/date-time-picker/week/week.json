@@ -34,7 +34,7 @@
   },
   "subcomponentReuse": {
     "date": {
-      "ref": "components/date-picker/date/date.md",
+      "ref": "components/date-time-picker/date/date.md",
       "instanceCount": 7,
       "note": "get_design_context가 반환한 Date 함수 정의가 date.md 실측 스펙(배경 common/white-default, radius/12=999px, 40x40px, 텍스트 neutral/800 Body1/16R)과 정확히 일치",
       "tokenMatch": "정확히 일치"

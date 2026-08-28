@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10748) — Symbol `2208:10748` ("Week"), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`week.json`](./week.json)을 함께 참고합니다. 이 문서와 week.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치합니다 — Date/Time Picker 컴포넌트 패밀리 중 [Date](../date/date.md) 셀 7개를 가로로 묶어 "한 주(週)" 행을 만드는 컴포넌트입니다. [Month](../month/month.md)이 이 컴포넌트를 세로로 5~6개 쌓아 만들어집니다(5장).
+> 이 컴포넌트는 `components/date-time-picker/`에 위치합니다 — Date/Time Picker 컴포넌트 패밀리 중 [Date](../date/date.md) 셀 7개를 가로로 묶어 "한 주(週)" 행을 만드는 컴포넌트입니다. [Month](../month/month.md)이 이 컴포넌트를 세로로 5~6개 쌓아 만들어집니다(5장).
 
 ## 0. 문서 범위와 샘플링 방법
 
@@ -36,7 +36,7 @@ Week는 달력 그리드의 **한 주(週) 행**을 나타내는 328×40px 컴�
 
 ## 3. 서브컴포넌트 재사용 관계
 
-- **Date**: [`components/date-picker/date/date.md`](../date/date.md)의 컴포넌트를 7회 그대로 인스턴스화합니다. `get_design_context`가 반환한 `Date` 함수 정의(배경 `common/white-default`, radius `radius/12`=999px, 크기 40×40px, 텍스트 `neutral/800`·`Body 1/16 R`)가 date.md에 실측된 스펙과 **정확히 일치**합니다. 이번 실측에서는 7개 셀 전부 `Type=Default`·`Status=Default`로 고정되어 있어, Date의 11개 변형(Current/Selected/Pinned/Null 포함) 중 다른 조합이 Week 안에서 실제로 쓰이는 모습은 이 샘플 하나로는 확인하지 못했습니다 — 사용 규칙(어떤 셀이 언제 Current/Selected가 되는지)은 [Date Picker](../date-picker/date-picker.md) 등 상위 컴포넌트 문서에서 확인이 필요합니다.
+- **Date**: [`components/date-time-picker/date/date.md`](../date/date.md)의 컴포넌트를 7회 그대로 인스턴스화합니다. `get_design_context`가 반환한 `Date` 함수 정의(배경 `common/white-default`, radius `radius/12`=999px, 크기 40×40px, 텍스트 `neutral/800`·`Body 1/16 R`)가 date.md에 실측된 스펙과 **정확히 일치**합니다. 이번 실측에서는 7개 셀 전부 `Type=Default`·`Status=Default`로 고정되어 있어, Date의 11개 변형(Current/Selected/Pinned/Null 포함) 중 다른 조합이 Week 안에서 실제로 쓰이는 모습은 이 샘플 하나로는 확인하지 못했습니다 — 사용 규칙(어떤 셀이 언제 Current/Selected가 되는지)은 [Date Picker](../date-picker/date-picker.md) 등 상위 컴포넌트 문서에서 확인이 필요합니다.
 
 ## 4. 인터랙션(모션) 스펙
 

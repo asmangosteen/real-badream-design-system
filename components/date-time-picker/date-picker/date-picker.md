@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2224-3250) — Component Set `2224:3250` ("Date Picker"), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`date-picker.json`](./date-picker.json)을 함께 참고합니다. 이 문서와 date-picker.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/` 패밀리의 **플래그십(최상위) 컴포넌트**입니다 — [Date](../date/date.md) → [Week](../week/week.md) → [Month](../month/month.md) → [Calendar Header](../calendar-header/calendar-header.md) → [Year and Month Wheel](../year-month-wheel/year-month-wheel.md) → [Time Field](../time-field/time-field.md) → [Time Picker](../time-picker/time-picker.md) → [Time Picker Group](../time-picker-group/time-picker-group.md)를 전부 조합해서 만들어집니다. [Date Picker Group](../date-picker-group/date-picker-group.md)은 이 컴포넌트를 2개 조합해서 만든 상위 컴포넌트입니다.
+> 이 컴포넌트는 `components/date-time-picker/` 패밀리의 **플래그십(최상위) 컴포넌트**입니다 — [Date](../date/date.md) → [Week](../week/week.md) → [Month](../month/month.md) → [Calendar Header](../calendar-header/calendar-header.md) → [Year and Month Wheel](../year-month-wheel/year-month-wheel.md) → [Time Field](../time-field/time-field.md) → [Time Picker](../time-picker/time-picker.md) → [Time Picker Group](../time-picker-group/time-picker-group.md)를 전부 조합해서 만들어집니다. [Date Picker Group](../date-picker-group/date-picker-group.md)은 이 컴포넌트를 2개 조합해서 만든 상위 컴포넌트입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 

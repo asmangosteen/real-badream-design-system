@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10947) — 진열 프레임 `2208:10947` ("Month", 716×310px) 안에 두 변형 심볼 `2208:10946`("Week Number=5")·`2208:10945`("Week Number=6"), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`month.json`](./month.json)을 함께 참고합니다. 이 문서와 month.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치합니다 — Date/Time Picker 컴포넌트 패밀리 중 [Week](../week/week.md)를 세로로 5~6개 쌓아 만드는 **달력 한 달치 그리드**입니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치합니다 — Date/Time Picker 컴포넌트 패밀리 중 [Week](../week/week.md)를 세로로 5~6개 쌓아 만드는 **달력 한 달치 그리드**입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 
@@ -60,7 +60,7 @@ Month는 한 달의 날짜를 담는 **달력 그리드 본체**입니다. [Week
 
 ## 4. 서브컴포넌트 재사용 관계
 
-- **Week**: [`components/date-picker/week/week.md`](../week/week.md)를 5회(Week Number=5) 또는 6회(Week Number=6) 그대로 인스턴스화합니다. `get_design_context`가 반환한 `Week` 함수 정의가 week.md에 실측된 스펙(gap `spacing/06`=8px, 7개 Date 셀, 전체 328×40px)과 **정확히 일치**합니다.
+- **Week**: [`components/date-time-picker/week/week.md`](../week/week.md)를 5회(Week Number=5) 또는 6회(Week Number=6) 그대로 인스턴스화합니다. `get_design_context`가 반환한 `Week` 함수 정의가 week.md에 실측된 스펙(gap `spacing/06`=8px, 7개 Date 셀, 전체 328×40px)과 **정확히 일치**합니다.
 - **Date**: Week를 통해 간접적으로 재사용됩니다. 두 변형 모두 각 Week 행의 Date 셀이 7개 전부 `Type=Default, Status=Default, "00"` 플레이스홀더로 고정되어 있어([Week](../week/week.md) 1장과 동일한 관찰), 실제 달력에서 각 셀에 실제 날짜·Type이 어떻게 매핑되는지는 이번 실측 범위로는 확인하지 못했습니다.
 
 ## 5. 인터랙션(모션) 스펙

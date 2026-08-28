@@ -31,7 +31,7 @@
     "structure": "Calendar Header(56px 고정) → Calendar 콘텐츠 영역(278px) → (TimePicker=On일 때만) Time Picker 섹션(148px)"
   },
   "calendarHeader": {
-    "ref": "components/date-picker/calendar-header/calendar-header.md",
+    "ref": "components/date-time-picker/calendar-header/calendar-header.md",
     "container": { "height": "56px", "paddingLeft": { "figmaVariable": "spacing/11", "value": "20px" }, "paddingRight": { "figmaVariable": "spacing/06", "value": "8px" }, "paddingY": { "figmaVariable": "spacing/06", "value": "8px" }, "gap": { "figmaVariable": "spacing/08", "value": "12px" } },
     "Default": {
       "title": "Year and Month 텍스트(예: '2000년 1월'), SubTitle/18 SB, neutral/800",
@@ -60,18 +60,18 @@
   "timePickerSection": {
     "condition": "TimePicker=On",
     "container": { "borderTop": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "note": "neutral/200과 동일 값" }, "padding": { "figmaVariable": "spacing/10", "value": "16px" }, "alignment": "flex flex-col items-center justify-center", "height": "148px" },
-    "content": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variant": "Picker Count=2(시:분, Colon 구분자)", "note": "이 노드에서는 Count=2만 관찰됐으나, 사용자 확인 완료 — Time Picker Group 자체는 Count=2/3 모두 실제로 쓰임" }
+    "content": { "ref": "components/date-time-picker/time-picker-group/time-picker-group.md", "variant": "Picker Count=2(시:분, Colon 구분자)", "note": "이 노드에서는 Count=2만 관찰됐으나, 사용자 확인 완료 — Time Picker Group 자체는 Count=2/3 모두 실제로 쓰임" }
   },
   "subcomponentReuse": {
-    "date": { "ref": "components/date-picker/date/date.md" },
-    "week": { "ref": "components/date-picker/week/week.md" },
-    "weekHeader": { "ref": "components/date-picker/week-header/week-header.md" },
-    "month": { "ref": "components/date-picker/month/month.md", "variantUsed": "Week Number=5" },
-    "calendarHeader": { "ref": "components/date-picker/calendar-header/calendar-header.md" },
-    "yearMonthWheel": { "ref": "components/date-picker/year-month-wheel/year-month-wheel.md" },
-    "timeField": { "ref": "components/date-picker/time-field/time-field.md", "stateObserved": "Default만(진열 변형 한정)", "note": "사용자 확인 완료 — 실제로는 클릭 시 Hover/Typing 전환, 직접 타이핑 가능" },
-    "timePicker": { "ref": "components/date-picker/time-picker/time-picker.md" },
-    "timePickerGroup": { "ref": "components/date-picker/time-picker-group/time-picker-group.md", "variantUsed": "Picker Count=2" },
+    "date": { "ref": "components/date-time-picker/date/date.md" },
+    "week": { "ref": "components/date-time-picker/week/week.md" },
+    "weekHeader": { "ref": "components/date-time-picker/week-header/week-header.md" },
+    "month": { "ref": "components/date-time-picker/month/month.md", "variantUsed": "Week Number=5" },
+    "calendarHeader": { "ref": "components/date-time-picker/calendar-header/calendar-header.md" },
+    "yearMonthWheel": { "ref": "components/date-time-picker/year-month-wheel/year-month-wheel.md" },
+    "timeField": { "ref": "components/date-time-picker/time-field/time-field.md", "stateObserved": "Default만(진열 변형 한정)", "note": "사용자 확인 완료 — 실제로는 클릭 시 Hover/Typing 전환, 직접 타이핑 가능" },
+    "timePicker": { "ref": "components/date-time-picker/time-picker/time-picker.md" },
+    "timePickerGroup": { "ref": "components/date-time-picker/time-picker-group/time-picker-group.md", "variantUsed": "Picker Count=2" },
     "iconButton": { "ref": "components/button/icon-button/icon-button.md", "note": "Arrow Box·Wheel 닫기 버튼·Time Picker 스테퍼 버튼 전부 동일 Icon Button 패턴(p=spacing/06=8px, radius=radius/06=12px)" }
   },
   "interactions": [],

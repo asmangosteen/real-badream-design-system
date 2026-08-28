@@ -28,7 +28,7 @@
       "iconSize": "20px",
       "computedSize": "36x36px"
     },
-    "timeFieldInstance": { "ref": "components/date-picker/time-field/time-field.md", "width": "w-full(56px)", "height": "40px", "stateFixed": "Default(진열 변형 한정 — 사용자 확인 완료, 실제로는 Hover/Typing까지 작동)" },
+    "timeFieldInstance": { "ref": "components/date-time-picker/time-field/time-field.md", "width": "w-full(56px)", "height": "40px", "stateFixed": "Default(진열 변형 한정 — 사용자 확인 완료, 실제로는 Hover/Typing까지 작동)" },
     "sizeDerivation": {
       "width": "TimeField 폭(56px)이 최댓값 — items-center로 정렬된 Icon Button(36px)보다 넓어 컨테이너 폭 결정",
       "height": "36(위 버튼) + spacing/02(2px) + 40(TimeField) + spacing/02(2px) + 36(아래 버튼) = 116px"
@@ -47,14 +47,14 @@
   ],
   "subcomponentReuse": {
     "timeField": {
-      "ref": "components/date-picker/time-field/time-field.md",
+      "ref": "components/date-time-picker/time-field/time-field.md",
       "stateFixed": "Default(진열 변형 한정)",
       "note": "사용자 확인 완료 — Time Picker 안에서도 Time Field의 Hover/Typing이 실제로 작동함(클릭 시 직접 타이핑 가능)",
       "tokenMatch": "정확히 일치(time-field.md 8장 참고)"
     },
     "usedBy": {
       "timePickerGroup": {
-        "ref": "components/date-picker/time-picker-group/time-picker-group.md",
+        "ref": "components/date-time-picker/time-picker-group/time-picker-group.md",
         "note": "Time Picker Group이 이 컴포넌트를 2~3개 인스턴스로 조합. Group 자신의 병합 코드 안에서는 내장 Time Picker가 진열상 Direction=Down Only로 고정되어 보였으나, 사용자 확인 완료 — 실제로는 Picker Count(2/3)·Direction(Up/Down/Both) 모두 다양하게 조합되어 쓰임"
       }
     }

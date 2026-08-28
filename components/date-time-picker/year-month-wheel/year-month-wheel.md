@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2224-3190) — Symbol `2224:3190` ("Year and Month Wheel"), 상위 그룹 `2497:13877`
 > 기계 판독용 값은 [`year-month-wheel.json`](./year-month-wheel.json)을 함께 참고합니다. 이 문서와 year-month-wheel.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/date-picker/`에 위치합니다 — Date/Time Picker 패밀리 중 연/월을 선택하는 **휠(스크롤) 피커**입니다. [Week](../week/week.md)·[Week Header](../week-header/week-header.md)·[Month](../month/month.md)과 달리 달력 그리드 계열이 아니라 별도의 입력 UI 패턴이지만, 작업 지시에 따라 이번 4개 문서화 범위에 함께 포함합니다.
+> 이 컴포넌트는 `components/date-time-picker/`에 위치합니다 — Date/Time Picker 패밀리 중 연/월을 선택하는 **휠(스크롤) 피커**입니다. [Week](../week/week.md)·[Week Header](../week-header/week-header.md)·[Month](../month/month.md)과 달리 달력 그리드 계열이 아니라 별도의 입력 UI 패턴이지만, 작업 지시에 따라 이번 4개 문서화 범위에 함께 포함합니다.
 
 ## 0. 문서 범위와 샘플링 방법
 

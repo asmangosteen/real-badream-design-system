@@ -44,14 +44,14 @@
   ],
   "subcomponentReuse": {
     "timePicker": {
-      "ref": "components/date-picker/time-picker/time-picker.md",
+      "ref": "components/date-time-picker/time-picker/time-picker.md",
       "instanceCount": "2 또는 3 (Picker Count에 따름)",
       "directionFixed": "Down Only(진열 변형 한정)",
       "note": "사용자 확인 완료 — Group 안에서 개별 Time Picker의 Direction은 실제로 Up Only/Down Only/Both 모두 다양하게 쓰임. 이 진열 노드가 Down Only만 보여준 것은 샘플링의 한계",
       "tokenMatch": "정확히 일치(time-picker.md 8장 참고)"
     },
     "timeField": {
-      "ref": "components/date-picker/time-field/time-field.md",
+      "ref": "components/date-time-picker/time-field/time-field.md",
       "usedVia": "Time Picker를 통해 간접 인스턴스화, State=Default 고정",
       "tokenMatch": "정확히 일치(time-field.md 8장 참고)"
     }
