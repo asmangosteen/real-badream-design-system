@@ -82,7 +82,7 @@ Checkbox·Radio Button과 달리 Toggle에는 **Hover/Pressed 등 세분화된 S
 | **Left** | `<p>라벨</p>` → `<div>트랙(thumb 포함)</div>` (라벨이 먼저, 트랙이 뒤) | `text-right`(트랙에 붙도록 텍스트가 오른쪽 정렬) |
 | **Right** | `<div>트랙(thumb 포함)</div>` → `<p>라벨</p>` (트랙이 먼저, 라벨이 뒤) | 정렬 클래스 없음(기본 좌측 정렬) |
 
-- 라벨 텍스트 스타일: **`Body 2/14 M`** — `font-family: Pretendard`, `weight: Medium(500)`, `size: 14px`, `lineHeight: 22px`, `letterSpacing: -0.25%`(14px 기준 실제 렌더링 값 `-0.035px`), 색상 `neutral/800` `#202837`. S/L Size 무관하게 **완전히 동일**합니다.
+- 라벨 텍스트 스타일: **`Body 2/14 M`** — `font-family: Pretendard`, `weight: Medium(500)`, `size: 14px`, `lineHeight: 22px`, `letterSpacing: letterSpacing/Body`=-0.04px, 색상 `neutral/800` `#202837`. S/L Size 무관하게 **완전히 동일**합니다.
 - 라벨-트랙 사이 gap은 Size에 종속됩니다(2장): S=`spacing/06`(8px), L=`spacing/07`(10px). Label Location(Left/Right)과는 무관하게 동일 gap 값입니다.
 - 최상위 wrapper는 `content-stretch flex items-center` — 라벨과 트랙이 수직 중앙 정렬됩니다.
 - Label=True/False 전환은 컨테이너 최상위 `<div>`의 자식 개수·순서만 바뀌는 구조이며, 트랙·thumb 자체의 크기/색상/padding에는 전혀 영향을 주지 않습니다(3~4장 값과 완전히 독립).
@@ -97,8 +97,7 @@ Checkbox·Radio Button과 달리 Toggle에는 **Hover/Pressed 등 세분화된 S
 
 ## 7. 접근성
 
-- **Hover/Pressed 상태 자체가 정의되어 있지 않음**: Checkbox·Radio Button은 State 축(Default/Hover/Pressed/Disabled)이 있지만, Toggle의 Figma 컴포넌트 셋에는 Disabled 축만 있고 Hover/Pressed에 대한 별도 시각 변형이 없습니다. 마우스 오버·클릭 시 시각적 피드백을 구현 시 별도로 설계해야 하며, Figma 파일에 명시된 값이 없어 확인 필요입니다.
-- **Focused 상태 없음**: 키보드 포커스 상태(Focused)가 정의되어 있지 않습니다. 키보드로 토글을 조작할 때 포커스 링/아웃라인 표시 방법이 Figma 파일 안에 명시되어 있지 않습니다 — 구현 시 별도의 접근성 포커스 스타일이 필요하며, 디자이너 확인이 필요합니다.
+- **Hover/Pressed/Focused 상태 자체가 정의되어 있지 않음(의도된 설계, 확인됨)**: Checkbox·Radio Button은 State 축(Default/Hover/Pressed/Disabled)이 있지만, Toggle의 Figma 컴포넌트 셋에는 Disabled 축만 있습니다. 다만 마우스 오버·클릭·키보드 포커스에 대한 시각적 피드백(포커스 링 등)은 실제 구현 시 별도로 설계해야 합니다 — 그 구체적인 스타일 값 자체는 Figma에 없어 확인 필요입니다.
 - **role/aria 매핑**: 웹 표준상 `role="switch"` 및 `aria-checked="true"/"false"` 부여가 일반적인 접근성 규약입니다. `disabled` 상태는 `aria-disabled="true"` 또는 네이티브 `disabled` 속성과 매핑하는 것이 일반적입니다. Figma 파일 자체에는 이 규정이 문서화되어 있지 않으므로 확인 필요입니다.
 - **키보드 조작**: 일반적으로 Tab으로 포커스, Space(또는 Enter)로 토글하는 것이 웹 표준 스위치 패턴이나 Figma 파일에 명시된 바 없음 — 확인 필요.
 - **최소 터치 영역**: 트랙 자체 크기는 S 40×24px, L 48×28px로 44px 권장 기준보다 작습니다. 라벨이 있는 경우(Label=True) 라벨 텍스트까지 클릭 가능 영역에 포함할지(즉 라벨 클릭 시에도 토글되는지) Figma 파일에 명시된 규정이 없어 확인 필요입니다.
@@ -116,17 +115,17 @@ Checkbox·Radio Button과 달리 Toggle에는 **Hover/Pressed 등 세분화된 S
 - S 라벨-트랙 gap 8px → `ref-spacing-06`
 - L 라벨-트랙 gap 10px → `ref-spacing-07`
 - 라벨 색상 `neutral/800`(`#202837`) → `tokens/colors.json` `reference.gray.800`과 정확히 일치
-- 라벨 타이포 크기 14px·lineHeight 22px → `tokens/typography.json` `body2` 스타일과 크기/줄높이 일치
+- 라벨 타이포 `Body 2/14 M`(크기 14px·lineHeight 22px·letterSpacing -0.04px) → `tokens/typography.json` `body2` 스타일과 정확히 일치
 
 **기존 토큰에 없음**
 - 트랙 크기(40×24px S, 48×28px L)와 thumb 크기(20px S, 24px L) 자체는 저장소에 별도의 "Toggle 크기" 토큰으로 존재하지 않는 고정값입니다.
 - "thumb = 트랙 높이 − padding×2", "트랙 너비 = thumb×2"라는 비율 규칙 자체가 토큰화되어 있지 않습니다 — 실측으로 발견한 파생값입니다.
 - thumb 이동 거리(S 16px, L 20px)는 토큰이 아니라 위 크기 규칙에서 파생되는 값입니다.
 
+**확인 완료**
+- Hover/Pressed/Focused 상태 축이 Toggle에 없는 것은 Checkbox/Radio Button과 다른 의도된 설계입니다(확인됨). 다만 실제 구현 시 마우스 오버·클릭·키보드 포커스에 대한 시각 피드백은 별도로 설계해야 합니다(7장 참고).
+
 **확인 필요**
-- 라벨 타이포의 letterSpacing: Figma 실측값은 `-0.25%`(14px 기준 `-0.035px`)이나, `tokens/typography.json`의 `body2` 스타일은 `-0.04px`로 기재되어 있어 완전히 동일하지는 않습니다(근사값). 두 값의 차이가 의도적인지, 혹은 Toggle 라벨이 `body2` 토큰에서 미세 조정된 것인지 확인 필요.
-- Hover/Pressed 시각 피드백이 Figma 컴포넌트 셋에 아예 정의되어 있지 않은 것이 의도적인지(Checkbox/Radio Button과 다른 설계 방향인지) 확인 필요.
-- Focused 상태가 정의되지 않은 것에 대한 접근성 대응 방안.
 - `role="switch"`/`aria-checked`/키보드 조작(Space/Enter) 등 ARIA·키보드 규약(Figma에 없음, 일반 웹 표준 권장).
 - 최소 터치 영역 확장 규정 여부(S/L 모두 44px 미만) 및 라벨 클릭 시 토글 여부.
 - Off→On 전환 애니메이션의 duration/easing(Figma에 모션 데이터 자체가 없음).
