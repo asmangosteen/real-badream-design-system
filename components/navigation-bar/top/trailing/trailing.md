@@ -19,6 +19,8 @@ Trailing은 Navigation Bar 우측에 배치되는 **액션 아이템 묶음**입
 |---|---|---|
 | **Number** | 1 / 2 / 3 | [Trailing Components](../trailing-components/trailing-components.md) 인스턴스 개수 |
 
+> **사용자 확인 완료 — Number는 정확한 개수가 아니라 최대 허용치입니다.** [Top](../top/top.md)에서 각 화면 Type마다 정해지는 Number(1/2/3)는 그 자리에 넣을 수 있는 **최댓값**이며, 실제로는 0개(전부 숨김)부터 최댓값까지 자유롭게 조절할 수 있습니다. 또한 [Trailing Components](../trailing-components/trailing-components.md)의 Icon 타입과 Button 타입을 **섞어서** 배치할 수 있습니다(단, 화면에 따라 중앙 Smalltitle 영역을 침범하지 않는 선에서 — 정확한 폭 계산 규칙은 확인 필요).
+
 **핵심 발견 — Mode 축이 Trailing 자체에는 없습니다.** 이 컴포넌트 단독으로는 항상 `Type=Icon, Mode=Light`의 Trailing Components만 인스턴스화합니다(`get_design_context` 병합 코드에서 Mode prop 자체가 노출되지 않음). [Top](../top/top.md)에서 Dark 모드로 조합될 때는 Top이 각 Trailing Components 인스턴스를 개별적으로 `Mode=Dark`로 재정의하는 방식입니다 — 즉 Trailing 자체는 "Light 전용 진열 샘플"이고, 실제 Mode 대응은 상위 [Top](../top/top.md) 컴포넌트가 담당합니다(확인 완료, top.md 참고).
 
 ## 2. Number별 스펙 (3개 전수 실측)
@@ -34,7 +36,7 @@ Trailing Components 인스턴스 간 별도 gap 클래스가 코드에 없어, �
 ## 3. 서브컴포넌트 재사용 관계
 
 - **Trailing Components**: [`components/navigation-bar/top/trailing-components/trailing-components.md`](../trailing-components/trailing-components.md)를 1~3회 그대로 인스턴스화(Type=Icon, Mode=Light 고정, 1장 참고).
-- **Top에서 재사용**: [`Top`](../top/top.md)이 Type에 따라 Number=1(Seg_back/Seg_close), 2(Smalltitle_back/Smalltitle_close), 3(Big Title/NoTitle_back/NoTitle_close)을 선택적으로 조합합니다 — 중앙 콘텐츠(Smalltitle 등)가 많을수록 Trailing 슬롯 수가 줄어드는 규칙입니다(top.md 3장 참고).
+- **Top에서 재사용**: [`Top`](../top/top.md)이 Type에 따라 최대 Number=1(Seg_back/Seg_close), 2(Smalltitle_back/Smalltitle_close), 3(Big Title/NoTitle_back/NoTitle_close)을 배정합니다 — 중앙 콘텐츠(Smalltitle 등)가 많을수록 Trailing 최대 허용량이 줄어드는 규칙입니다(top.md 2장 참고). 각 Type 안에서는 이 최댓값 이하로 자유롭게 줄이거나 비울 수 있고, Icon/Button을 섞어 쓸 수 있습니다(사용자 확인).
 
 ## 4. 인터랙션(모션) 스펙
 
