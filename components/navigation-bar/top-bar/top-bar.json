@@ -1,0 +1,84 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Top Bar",
+  "componentFamily": "Navigation Bar",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-13875",
+    "frameNodeId": "2555:13875",
+    "frameName": "Top Bar",
+    "totalVariantInstances": 10,
+    "axes": ["Mode(Light/Dark)", "Background(No/Default/Blur)", "Line(Off/On, Background=No 한정 존재하지 않음)"],
+    "note": "비직교. 2(Mode)x3(Background)x2(Line)=12 아니라 10 — Background=No일 때 Line=On 조합이 Figma에 존재하지 않음(사용자 확인). 최상위 합성 컴포넌트 — Status Bar + Navigation Bar Top을 세로로 조합."
+  },
+  "sampling": {
+    "method": "get_metadata로 10개 심볼 전수 확인 후, Background 3종 x Line 가능 조합 x 대표 Mode를 교차하는 6개 노드를 get_design_context로 실측.",
+    "coverage": "10개 중 6개 노드 직접 실측(Blur+Line=On 2개 조합은 미실측)",
+    "sampledNodeIds": {
+      "Light_Default_Off": "2555:13871",
+      "Light_Default_On": "2555:13874",
+      "Light_No_Off": "2555:14327",
+      "Light_Blur_Off": "2555:13869",
+      "Dark_Default_On": "2555:13873",
+      "Dark_Blur_Off": "2555:13870"
+    },
+    "notSampled": ["Dark_Default_Off(2555:13872)", "Dark_No_Off(2555:14383)", "Light_Blur_On(2555:13868)", "Dark_Blur_On(2555:13867)"]
+  },
+  "backgroundTypes": {
+    "note": "사용자 확인 완료 — 배경은 No(없음)/Default(단색 채움)/Blur(반투명+backdrop blur) 3가지",
+    "No": { "treatment": "배경 클래스 자체 없음(완전 투명)" },
+    "Default": {
+      "Light": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
+      "Dark": { "figmaVariable": "common/black-emphasis", "value": "#000000", "tokenMatch": "정확히 일치" },
+      "asymmetryNote": "핵심 발견 — Light는 white-default, Dark는 black-emphasis로 토큰 계열이 비대칭(대응하는 -default/-default 또는 -emphasis/-emphasis 페어가 아님). 값 자체는 정확하나 의도된 것인지 확인 필요"
+    },
+    "Blur": {
+      "backdropBlurRadius": "40px(Mode·조합 공통)",
+      "Light": { "figmaVariable": "color/gray/50-60", "value": "rgba(253,253,253,0.6)", "tokenMatch": "정확히 일치", "note": "흰색 60% 오버레이" },
+      "Dark": { "figmaVariable": "color/gray/900-40", "value": "rgba(3,9,26,0.4)", "tokenMatch": "정확히 일치", "note": "검정 40% 오버레이" },
+      "note": "오버레이 색상·불투명도가 Mode마다 다르게 튜닝됨(단순 반전 아님)"
+    },
+    "exampleValueNote": "Navigation Bar Top에서 확인된 원칙과 동일하게, 이 배경색들도 예시일 뿐 실제 화면에 맞게 자유 교체 가능할 것으로 추정 — Top Bar 자체로는 재확인 안 함, 확인 필요"
+  },
+  "lineRule": {
+    "note": "사용자 확인 완료 — Background=No일 때는 Line이 존재하지 않음. get_metadata 실측으로 확인: No 조합은 Light/Dark 각 1개(Line 축 자체 없음, 2개), Default/Blur는 각 Light/Dark x Off/On 4개씩(8개) = 총 10개",
+    "onSpec": {
+      "Light_Default": { "borderSide": "bottom", "width": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "color": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치" } },
+      "Dark_Default": { "borderSide": "bottom", "width": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "color": { "figmaVariable": "color/gray/50-5", "value": "rgba(253,253,253,0.05)", "tokenMatch": "정확히 일치" } },
+      "Blur_variants": { "verified": false, "note": "Light/Dark + Blur + Line=On 조합은 미실측. Default와 동일 패턴(반대 톤 뉴트럴 5%)으로 추정 — 확인 필요" }
+    },
+    "colorRule": "구분선 색상은 Mode의 반대 톤 뉴트럴을 5% 불투명도로 사용(Light 배경엔 gray-900 5%, Dark 배경엔 gray-50 5%)"
+  },
+  "independentHide": {
+    "note": "사용자 확인 완료 — Status Bar와 Navigation Bar는 각각 독립적으로 hide 가능",
+    "props": { "statusBar": { "type": "boolean", "default": true }, "navigationBar": { "type": "boolean", "default": true } },
+    "behavior": "하나를 hide해도 다른 하나는 flex-col 컨테이너 안에서 자연스럽게 그 자리를 채움(별도 absolute 배치가 아니므로 reflow가 자연스럽게 일어남 — Navigation Bar Top 내부 요소들의 hide는 reflow 없음이었던 것과는 다른 레벨의 동작)"
+  },
+  "subcomponentReuse": {
+    "statusBar": {
+      "ref": "components/status-bar/status-bar.md",
+      "fixedProps": { "os": "iOS" },
+      "note": "Mode는 Top Bar의 Mode를 그대로 전파. Status Bar 자체의 Background 축과는 무관 — 항상 투명 상태로 쓰이고 실제 배경은 Top Bar 컨테이너가 담당"
+    },
+    "navigationBarTop": {
+      "ref": "components/navigation-bar/top/top/top.md",
+      "fixedProps": { "type": "Smalltitle_back" },
+      "note": "실측된 6개 노드 전부 type=Smalltitle_back으로 고정. Top이 컴포넌트 인스턴스이므로 실제로는 7종 Type 중 다른 것으로 교체 가능할 것으로 추정되나 Top Bar 자체의 공식 variant 축에는 노출 안 됨 — 확인 필요"
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 최상위 프레임(2555:13875, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. Background=Blur 진입/이탈 트랜지션 등 모션 값 없음.",
+  "accessibility": {
+    "landmarkRole": "header 마크업 규정 없음 — Navigation Bar Top과 동일한 확인 필요 사항",
+    "statusBarMockup": "Status Bar는 순수 목업(status-bar.md 6장 참고), 실구현에서 보통 제외 또는 aria-hidden",
+    "blurContrast": "Background=Blur 위 텍스트/아이콘의 실제 명암비는 배경 콘텐츠에 따라 가변적 — 정적 디자인만으로 검증 불가"
+  },
+  "openQuestions": [
+    "Default의 Light/Dark 배경 토큰 페어가 비대칭인 이유(white-default vs black-emphasis)",
+    "Background=Blur + Line=On 조합의 구분선 색상이 Default와 동일 패턴인지",
+    "Navigation Bar Top의 Type을 Smalltitle_back 외 다른 6종으로 자유 교체 가능한지",
+    "Background=Default/Blur 배경색이 Top Bar에서도 예시일 뿐 자유 교체 가능한지",
+    "Blur의 backdrop-blur 진입/이탈 모션 처리 여부",
+    "Blur 배경 위 텍스트/아이콘의 실제 명암비"
+  ]
+}
