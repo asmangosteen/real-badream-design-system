@@ -1,7 +1,7 @@
 {
   "$schema": "https://badream.internal/schemas/component-spec-v1.json",
   "component": "Top Bar",
-  "componentFamily": "Navigation Bar",
+  "componentFamily": null,
   "source": {
     "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
     "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-13875",
@@ -28,9 +28,8 @@
     "note": "사용자 확인 완료 — 배경은 No(없음)/Default(단색 채움)/Blur(반투명+backdrop blur) 3가지",
     "No": { "treatment": "배경 클래스 자체 없음(완전 투명)" },
     "Default": {
-      "Light": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" },
-      "Dark": { "figmaVariable": "common/black-emphasis", "value": "#000000", "tokenMatch": "정확히 일치" },
-      "asymmetryNote": "핵심 발견 — Light는 white-default, Dark는 black-emphasis로 토큰 계열이 비대칭(대응하는 -default/-default 또는 -emphasis/-emphasis 페어가 아님). 값 자체는 정확하나 의도된 것인지 확인 필요"
+      "Light": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치", "meaning": "사용자 확인 완료 — 실제 페이지 바탕색과 동일한 값. Top Bar를 얹는 화면의 실제 배경 토큰을 그대로 사용" },
+      "Dark": { "figmaVariable": "common/black-emphasis", "value": "#000000", "tokenMatch": "정확히 일치", "meaning": "사용자 확인 완료 — 검정 배경 화면(자주 쓰이진 않음)에 맞춰 쓰는 순수 검정. Light/Dark가 대칭 토큰 페어가 아닌 것은 의도된 설계" }
     },
     "Blur": {
       "backdropBlurRadius": "40px(Mode·조합 공통)",
@@ -38,7 +37,7 @@
       "Dark": { "figmaVariable": "color/gray/900-40", "value": "rgba(3,9,26,0.4)", "tokenMatch": "정확히 일치", "note": "검정 40% 오버레이" },
       "note": "오버레이 색상·불투명도가 Mode마다 다르게 튜닝됨(단순 반전 아님)"
     },
-    "exampleValueNote": "Navigation Bar Top에서 확인된 원칙과 동일하게, 이 배경색들도 예시일 뿐 실제 화면에 맞게 자유 교체 가능할 것으로 추정 — Top Bar 자체로는 재확인 안 함, 확인 필요"
+    "colorIsNotArbitraryExample": "사용자 확인 완료 — Navigation Bar Top의 Background=On 배경색(진짜 예시, 자유 교체 가능)과 달리, Top Bar의 Default 배경색은 실제 페이지 배경 규칙을 그대로 반영한 의도된 값. 화면 배경이 바뀌면 이 토큰도 함께 따라가야 하며, 임의로 다른 색으로 교체하는 자유 슬롯이 아님"
   },
   "lineRule": {
     "note": "사용자 확인 완료 — Background=No일 때는 Line이 존재하지 않음. get_metadata 실측으로 확인: No 조합은 Light/Dark 각 1개(Line 축 자체 없음, 2개), Default/Blur는 각 Light/Dark x Off/On 4개씩(8개) = 총 10개",
@@ -55,15 +54,17 @@
     "behavior": "하나를 hide해도 다른 하나는 flex-col 컨테이너 안에서 자연스럽게 그 자리를 채움(별도 absolute 배치가 아니므로 reflow가 자연스럽게 일어남 — Navigation Bar Top 내부 요소들의 hide는 reflow 없음이었던 것과는 다른 레벨의 동작)"
   },
   "subcomponentReuse": {
+    "note": "사용자 확인 완료 — 샘플에 관찰된 값(os=iOS, type=Smalltitle_back)은 진열용 예시일 뿐 고정값이 아님. Top Bar는 두 서브 컴포넌트를 세로로 배치하는 레이아웃 껍데기이고, 각 서브 컴포넌트의 문서화된 하위 속성을 전부 자유롭게 승계·적용 가능",
     "statusBar": {
       "ref": "components/status-bar/status-bar.md",
-      "fixedProps": { "os": "iOS" },
-      "note": "Mode는 Top Bar의 Mode를 그대로 전파. Status Bar 자체의 Background 축과는 무관 — 항상 투명 상태로 쓰이고 실제 배경은 Top Bar 컨테이너가 담당"
+      "sampleValueObserved": { "os": "iOS" },
+      "freelyApplicable": "OS(iOS/Android)·Mode(Light/Dark) 축 전부 자유 적용 가능(사용자 확인) — Android로도 바꿔 쓸 수 있음",
+      "note": "Mode는 Top Bar의 Mode를 따르는 것이 자연스러우나 OS는 화면 타겟에 맞게 독립 결정. Status Bar 자체의 Background 축은 Top Bar 안에서 쓰이지 않음(항상 투명, 실제 배경은 Top Bar 컨테이너가 담당)"
     },
     "navigationBarTop": {
       "ref": "components/navigation-bar/top/top/top.md",
-      "fixedProps": { "type": "Smalltitle_back" },
-      "note": "실측된 6개 노드 전부 type=Smalltitle_back으로 고정. Top이 컴포넌트 인스턴스이므로 실제로는 7종 Type 중 다른 것으로 교체 가능할 것으로 추정되나 Top Bar 자체의 공식 variant 축에는 노출 안 됨 — 확인 필요"
+      "sampleValueObserved": { "type": "Smalltitle_back" },
+      "freelyApplicable": "Type 7종 전부 + top.json에 문서화된 모든 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back showLabel 토글, 각 영역 개별 hide 등) 그대로 적용 가능(사용자 확인)"
     }
   },
   "interactions": [],
@@ -73,11 +74,14 @@
     "statusBarMockup": "Status Bar는 순수 목업(status-bar.md 6장 참고), 실구현에서 보통 제외 또는 aria-hidden",
     "blurContrast": "Background=Blur 위 텍스트/아이콘의 실제 명암비는 배경 콘텐츠에 따라 가변적 — 정적 디자인만으로 검증 불가"
   },
+  "resolvedQuestions": [
+    "Default의 Light/Dark 배경 토큰 페어가 비대칭인 이유 — 사용자 확인 완료, 의도된 설계(backgroundTypes.Default 참고)",
+    "Navigation Bar Top의 Type을 Smalltitle_back 외 다른 6종으로 자유 교체 가능한지 — 사용자 확인 완료, 가능(subcomponentReuse 참고)",
+    "Status Bar의 OS를 Android로 자유 교체 가능한지 — 사용자 확인 완료, 가능(subcomponentReuse 참고)",
+    "Background=Default 배경색이 예시일 뿐 자유 교체 가능한지 — 사용자 확인 완료, 예시가 아니라 실제 페이지 배경을 반영하는 의도된 값(backgroundTypes.colorIsNotArbitraryExample 참고)"
+  ],
   "openQuestions": [
-    "Default의 Light/Dark 배경 토큰 페어가 비대칭인 이유(white-default vs black-emphasis)",
     "Background=Blur + Line=On 조합의 구분선 색상이 Default와 동일 패턴인지",
-    "Navigation Bar Top의 Type을 Smalltitle_back 외 다른 6종으로 자유 교체 가능한지",
-    "Background=Default/Blur 배경색이 Top Bar에서도 예시일 뿐 자유 교체 가능한지",
     "Blur의 backdrop-blur 진입/이탈 모션 처리 여부",
     "Blur 배경 위 텍스트/아이콘의 실제 명암비"
   ]

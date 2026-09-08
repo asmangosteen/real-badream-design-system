@@ -2,7 +2,7 @@
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-13875) — Frame `2555:13875` ("Top Bar")
 > 기계 판독용 값은 [`top-bar.json`](./top-bar.json)을 함께 참고합니다. 이 문서와 top-bar.json은 항상 같은 소스에서 나온 값이어야 합니다.
-> 이 컴포넌트는 `components/navigation-bar/`의 **최종 합성 컴포넌트**입니다 — [Status Bar](../../status-bar/status-bar.md)와 [Navigation Bar Top](../top/top/top.md)을 세로로 쌓아 화면 최상단에 그대로 얹는 완성형 "기기 상단 전체" 컴포넌트입니다. Bottom Navigation Bar 작업이 끝나면 이와 대응하는 하단 합성 컴포넌트가 별도로 문서화될 예정입니다.
+> 이 컴포넌트는 [Status Bar](../status-bar/status-bar.md)와 [Navigation Bar Top](../navigation-bar/top/top/top.md)을 세로로 쌓아 화면 최상단에 그대로 얹는 **최종 합성 컴포넌트**("기기 상단 전체")입니다. `components/navigation-bar/`에 속하지 않는 별도 최상위 컴포넌트로 `components/top-bar/`에 둡니다(사용자 지정 경로) — Status Bar와 Navigation Bar 두 서로 다른 패밀리를 조합하는 상위 레벨 컴포넌트이기 때문입니다. Bottom 화면용 대응 컴포넌트가 필요해지면 별도로 문서화될 예정입니다.
 
 ## 0. 문서 범위와 샘플링 방법
 
@@ -15,11 +15,11 @@ Top Bar는 **Mode(Light/Dark) × Background(No/Default/Blur) × Line(Off/On) 3�
 
 ## 1. 컴포넌트 개요
 
-Top Bar는 [Status Bar](../../status-bar/status-bar.md)(기기 상태바)와 [Navigation Bar Top](../top/top/top.md)(내비게이션 바)을 `flex-col`로 세로로 쌓은 **화면 최상단 전체 영역** 컴포넌트입니다. 두 서브 컴포넌트를 각각 개별적으로 켜고 끌 수 있어(3장), 필요에 따라 상태바만/내비게이션 바만/둘 다를 배치할 수 있습니다.
+Top Bar는 [Status Bar](../status-bar/status-bar.md)(기기 상태바)와 [Navigation Bar Top](../navigation-bar/top/top/top.md)(내비게이션 바)을 `flex-col`로 세로로 쌓은 **화면 최상단 전체 영역** 컴포넌트입니다. 두 서브 컴포넌트를 각각 개별적으로 켜고 끌 수 있어(3장), 필요에 따라 상태바만/내비게이션 바만/둘 다를 배치할 수 있습니다.
 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
-| **Mode** | Light / Dark | 밝은/어두운 화면에 맞춘 배경·전경색 팔레트. [Status Bar](../../status-bar/status-bar.md)·[Navigation Bar Top](../top/top/top.md)에도 동일하게 전파됨 |
+| **Mode** | Light / Dark | 밝은/어두운 화면에 맞춘 배경·전경색 팔레트. [Status Bar](../status-bar/status-bar.md)·[Navigation Bar Top](../navigation-bar/top/top/top.md)에도 동일하게 전파됨 |
 | **Background** | No / Default / Blur | No=배경 없음(투명), Default=단색 배경 채움, Blur=반투명 배경+backdrop blur(사용자 확인 — 3가지 배경 처리, 2장) |
 | **Line**(Background=No에서는 존재하지 않음) | Off / On | 컴포넌트 하단에 구분선(divider)을 표시할지 여부. **Background=No일 때는 Line 자체가 없음**(사용자 확인, 2장) |
 | **Show Status Bar**(비-variant) | False / True(기본 True) | Status Bar 표시 여부, 독립적으로 hide 가능(사용자 확인, 3장) |
@@ -35,11 +35,15 @@ Top Bar는 [Status Bar](../../status-bar/status-bar.md)(기기 상태바)와 [Na
 | **Default** | 단색 배경 채움 | `common/white-default`(#fdfdfd) | `common/black-emphasis`(#000000) |
 | **Blur** | `backdrop-blur(40px)` + 반투명 오버레이 | `color/gray/50-60`(rgba(253,253,253,0.6), 흰색 60%) | `color/gray/900-40`(rgba(3,9,26,0.4), 검정 40%) |
 
-**핵심 발견 1 — Default의 Light/Dark 배경 토큰 계열이 서로 다릅니다.** Light는 `common/white-**default**`(#fdfdfd)를 쓰지만 Dark는 `common/black-**emphasis**`(#000000, `-default`가 아님)를 씁니다 — Light와 Dark가 대칭적인 토큰 페어(`white-default`/`black-default` 또는 `white-emphasis`/`black-emphasis`)를 이루지 않는 비대칭 사례입니다. 값 자체는 실측대로 정확하나, 의도된 비대칭인지 Figma 파일의 일관성 오류인지는 **확인 필요**입니다.
+**사용자 확인 완료 — Default의 Light/Dark 배경 토큰이 서로 다른 것은 의도된 설계입니다.** Light는 `common/white-default`(#fdfdfd)를, Dark는 `common/black-emphasis`(#000000)를 쓰는데, 이는 실수가 아니라 각기 다른 의미를 갖습니다:
+- **Light의 `white-default`(#fdfdfd)**: 실제 페이지 바탕색과 동일한 값입니다. Top Bar를 화면 위에 얹을 때 페이지 배경과 자연스럽게 이어지도록 실제 화면 배경 토큰을 그대로 쓴 것입니다.
+- **Dark의 `black-emphasis`(#000000, 순수 검정)**: 검정 배경 자체가 자주 쓰이는 경우는 아니지만, 실제로 검정 배경 화면일 때 맞춰 쓰는 용도로 순수 검정(강조용 `-emphasis` 계열)을 채택한 것입니다.
+
+즉 두 값은 "같은 규칙의 반전"이 아니라 각각 **"실제 이 Mode에서 쓰이는 페이지 배경색이 무엇이냐"**에 대한 서로 다른 답입니다 — 토큰 계열이 다른 것 자체가 의도이므로 정정하거나 통일할 필요가 없습니다.
 
 **핵심 발견 2 — Blur의 오버레이 색상·불투명도가 Mode마다 다릅니다.** Light는 흰색 60% 오버레이, Dark는 검정 40% 오버레이로, 오버레이 자체의 톤과 강도가 Mode에 맞춰 별도로 튜닝되어 있습니다(단순히 같은 규칙을 색만 반전한 것이 아님). `backdrop-blur` 반경(40px)은 Mode·조합 전체 공통입니다.
 
-**참고**: Background=Default·Blur의 배경/오버레이 색상은 [Navigation Bar Top](../top/top/top.md) 4장에서 이미 확인된 원칙("Background=On의 배경색은 Figma 예시일 뿐 고정 규칙이 아니며 자유 교체 가능", 사용자 확인)과 동일하게, 이 값들도 예시로 간주하고 실제 화면에 맞게 조정 가능할 것으로 추정됩니다 — 다만 Top Bar 자체에 대해 별도로 재확인하지는 않았습니다(확인 필요).
+**참고 — Top Bar의 Background 색상은 Navigation Bar Top의 "예시일 뿐" 배경색과 성격이 다릅니다.** [Navigation Bar Top](../navigation-bar/top/top/top.md)에서는 Background=On 배경색이 진짜 예시값(자유 교체 가능)이었지만, Top Bar의 `white-default`/`black-emphasis`는 위에서 확인했듯 **실제 페이지 배경 규칙을 그대로 반영한 의도된 값**입니다. 따라서 Light Default는 사실상 "그 화면의 실제 배경색"과 항상 같아야 하고, 화면 배경이 바뀌면 이 토큰도 함께 따라가야 합니다 — 임의로 다른 색으로 교체하는 자유도가 있는 슬롯이 아닙니다.
 
 ## 3. Line(구분선) 규칙 (사용자 확인 + 실측)
 
@@ -57,16 +61,18 @@ Top Bar는 [Status Bar](../../status-bar/status-bar.md)(기기 상태바)와 [Na
 
 **사용자 확인 완료 — Status Bar와 Navigation Bar는 각각 독립적으로 hide할 수 있습니다.** `TopBarProps`에 `statusBar`(기본 true)·`navigationBar`(기본 true) 두 boolean prop이 별도로 존재하며, 실측 코드에서도 두 서브 컴포넌트가 각각 별도 조건부 렌더링 블록으로 분리되어 있어 독립 토글이 코드 레벨로 확인됩니다.
 
-- Show Status Bar=False: [Status Bar](../../status-bar/status-bar.md) 영역이 완전히 사라지고 Navigation Bar Top이 맨 위로 올라옵니다(Top Bar 자체가 `flex-col`이라 자연스럽게 붙음).
-- Show Navigation Bar=False: [Navigation Bar Top](../top/top/top.md) 영역이 사라지고 Status Bar만 남습니다.
-- [Navigation Bar Top](../top/top/top.md) 자체의 Leading/Trailing/Smalltitle 개별 hide(사용자 확인, top.md 3-1장)와는 별개의 상위 레벨 토글입니다.
+- Show Status Bar=False: [Status Bar](../status-bar/status-bar.md) 영역이 완전히 사라지고 Navigation Bar Top이 맨 위로 올라옵니다(Top Bar 자체가 `flex-col`이라 자연스럽게 붙음).
+- Show Navigation Bar=False: [Navigation Bar Top](../navigation-bar/top/top/top.md) 영역이 사라지고 Status Bar만 남습니다.
+- [Navigation Bar Top](../navigation-bar/top/top/top.md) 자체의 Leading/Trailing/Smalltitle 개별 hide(사용자 확인, top.md 3-1장)와는 별개의 상위 레벨 토글입니다.
 
-## 5. 서브컴포넌트 재사용 관계 — 실제 구성값
+## 5. 서브컴포넌트 재사용 관계 — 하위 속성 전부 자유롭게 승계 (사용자 확인)
 
-Top Bar 안에서 두 서브 컴포넌트는 아래 값으로 고정 조립됩니다:
+Top Bar가 실측 샘플에서 보여준 값(`os=iOS`, `type=Smalltitle_back`)은 **진열용 예시일 뿐, 고정값이 아닙니다.** **사용자 확인 완료 — Status Bar와 Navigation Bar Top은 각자 문서화된 하위 속성(variant)을 전부 자유롭게 적용할 수 있습니다.**
 
-- **[Status Bar](../../status-bar/status-bar.md)**: `os=iOS` 고정, Mode는 Top Bar의 Mode를 그대로 전파. Background는 항상 관찰되지 않음(Status Bar 자체의 Background 축과 Top Bar의 Background 축은 서로 무관 — Status Bar는 자신의 `Background=Off`(투명) 상태로만 쓰이고, 진짜 배경은 Top Bar 컨테이너가 담당).
-- **[Navigation Bar Top](../top/top/top.md)**: **`type="Smalltitle_back"`으로 고정**되어 있습니다(실측된 6개 노드 전부 동일). [Top](../top/top/top.md) 자체가 Figma 컴포넌트 인스턴스이므로, 실제 사용 시 이 인스턴스의 Type을 7종(Big Title/NoTitle_back/NoTitle_close/Smalltitle_back/Smalltitle_close/Seg_back/Seg_close) 중 다른 것으로 교체(swap)하는 것이 구조적으로 가능할 것으로 보이나, Top Bar 컴포넌트 자체의 공식 variant 축으로는 노출되어 있지 않습니다 — Type을 자유롭게 바꿔써도 되는지는 **확인 필요**(Navigation Bar Top 문서에서 이미 확인된 "28개 변형이 전부가 아니다"라는 원칙과 같은 맥락일 가능성이 높음).
+- **[Status Bar](../status-bar/status-bar.md)**: 실측 샘플은 `os=iOS`였지만, **Android로도 자유롭게 바꿔 쓸 수 있습니다.** [status-bar.md](../status-bar/status-bar.md)에 문서화된 OS(iOS/Android)·Mode(Light/Dark) 축을 전부 그대로 승계합니다. Mode는 Top Bar의 Mode를 따르는 것이 자연스럽지만, OS 선택은 화면(iOS/Android 타겟)에 맞게 독립적으로 결정됩니다. Status Bar 자체의 Background 축은 Top Bar 안에서는 쓰이지 않습니다(Status Bar는 항상 투명 상태로 얹히고, 실제 배경은 Top Bar 컨테이너가 담당).
+- **[Navigation Bar Top](../navigation-bar/top/top/top.md)**: 실측 샘플은 전부 `type=Smalltitle_back`이었지만, **Top의 7개 Type(Big Title/NoTitle_back/NoTitle_close/Smalltitle_back/Smalltitle_close/Seg_back/Seg_close) 전부, 그리고 그 안의 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back의 showLabel 토글, 각 영역 개별 hide 등, [top.md](../navigation-bar/top/top/top.md) 참고)까지 전부 그대로 적용 가능합니다.**
+
+정리하면 Top Bar는 두 서브 컴포넌트를 "특정 값으로 고정해서 담는 그릇"이 아니라, **두 서브 컴포넌트를 세로로 배치하는 레이아웃 껍데기**이고 내용물(Status Bar의 OS, Navigation Bar Top의 Type 등)은 각 서브 컴포넌트 문서에 있는 자유도를 그대로 물려받습니다.
 
 ## 6. 인터랙션(모션) 스펙
 
@@ -76,8 +82,8 @@ Top Bar 안에서 두 서브 컴포넌트는 아래 값으로 고정 조립됩�
 
 ## 7. 접근성
 
-- Top Bar 전체는 시맨틱하게 `<header>`로 마크업되는 것이 일반적이나 Figma 파일에 규정 없음 — [Navigation Bar Top](../top/top/top.md) 6장과 동일한 확인 필요 사항입니다.
-- Status Bar는 [status-bar.md](../../status-bar/status-bar.md) 6장에서 이미 확인된 대로 순수 목업이라 실제 구현에서는 보통 제외되거나 `aria-hidden` 처리됩니다.
+- Top Bar 전체는 시맨틱하게 `<header>`로 마크업되는 것이 일반적이나 Figma 파일에 규정 없음 — [Navigation Bar Top](../navigation-bar/top/top/top.md) 6장과 동일한 확인 필요 사항입니다.
+- Status Bar는 [status-bar.md](../status-bar/status-bar.md) 6장에서 이미 확인된 대로 순수 목업이라 실제 구현에서는 보통 제외되거나 `aria-hidden` 처리됩니다.
 - Background=Blur는 배경 콘텐츠가 비쳐 보이는 디자인이므로, 그 위에 얹히는 텍스트/아이콘의 명암비가 배경에 따라 달라질 수 있습니다 — 실제 스크롤 콘텐츠와 겹쳤을 때의 WCAG 명암비 검증은 Figma 정적 디자인만으로 확인할 수 없습니다 — 확인 필요.
 
 ## 8. 토큰 매칭 요약
@@ -95,12 +101,11 @@ Top Bar 안에서 두 서브 컴포넌트는 아래 값으로 고정 조립됩�
 - 배경 3종(No/Default/Blur) 구분(2장)
 - Background=No에서는 Line이 존재하지 않음(3장)
 - Status Bar·Navigation Bar 각각 독립적으로 hide 가능(4장)
+- Default의 Light(`white-default`)/Dark(`black-emphasis`) 배경 토큰이 다른 것은 의도된 설계 — Light는 실제 페이지 배경색, Dark는 검정 배경 화면용 순수 검정(2장)이며, 따라서 이 색상은 자유 교체 가능한 예시가 아니라 실제 페이지 배경을 그대로 반영해야 하는 값(2장 참고)
+- Status Bar·Navigation Bar Top 모두 각자 문서화된 하위 속성(Status Bar의 OS 포함, Navigation Bar Top의 Type 7종 포함)을 전부 자유롭게 승계·적용 가능(5장)
 
 **확인 필요**
-- Default의 Light(`white-default`)/Dark(`black-emphasis`) 배경 토큰 페어가 비대칭인 이유(2장 핵심 발견 1)
 - Background=Blur일 때 Line=On의 구분선 색상이 Default와 동일한 패턴인지(3장, 미실측)
-- Navigation Bar Top의 Type을 Smalltitle_back 외 다른 6종으로 자유롭게 교체해도 되는지(5장)
-- Background=Default/Blur 배경색이 Top Bar에서도 예시일 뿐 자유 교체 가능한지(2장 참고, Navigation Bar Top에서는 사용자 확인됨)
 - Blur의 backdrop-blur 진입/이탈 모션 처리 여부
 - Blur 배경 위 텍스트/아이콘의 실제 명암비(배경 콘텐츠에 따라 가변적)
 
