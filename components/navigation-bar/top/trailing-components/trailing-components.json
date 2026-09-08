@@ -1,0 +1,57 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Trailing Components",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2551-10163",
+    "frameNodeId": "2551:10163",
+    "frameName": "_Trailing Components",
+    "familyGroupNodeId": "2555:16790",
+    "totalVariantInstances": 4,
+    "axes": ["Type(Icon/Button)", "Mode(Light/Dark)"],
+    "note": "완전 직교 2x2=4. 레이어명 밑줄 접두(_)는 아토믹 디자인 목적의 내부 서브 아톰 표기(Segmented Control Item의 _Item과 동일 컨벤션). Trailing이 이 컴포넌트를 1~3회 조합."
+  },
+  "sampling": {
+    "method": "get_design_context 1회 호출(2551:10163)로 4개 변형 전체가 병합 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2555:16790)에서 패밀리 공용으로 확보.",
+    "coverage": "4개 변형 전수",
+    "sampledNodeIds": {
+      "Icon_Light": "2551:10162",
+      "Icon_Dark": "2555:12410",
+      "Button_Light": "2551:10160",
+      "Button_Dark": "2555:12412"
+    }
+  },
+  "types": {
+    "Icon": {
+      "layout": { "alignItems": "center", "justifyContent": "center", "paddingY": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" } },
+      "iconButtonWrapper": { "padding": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" } },
+      "content": "Icon / Default / 24px / plus — 플레이스홀더 글리프, 자유 교체 슬롯으로 추정"
+    },
+    "Button": {
+      "layout": { "display": "flex-col", "alignItems": "flex-start", "paddingY": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" } },
+      "textButtonWrapper": { "width": "64px", "textAlign": "right" },
+      "content": "\"Button\" 텍스트",
+      "subcomponentReuse": {
+        "ref": "components/button/text-button/text-button.md",
+        "variantUsed": "Size=XL, Text Color=Blue, State=Default, Contents=Text",
+        "note": "실측 타이포·색상이 Text Button 문서의 Size=XL·Text Color=Blue·State=Default 스펙과 정확히 일치. Mode=Dark에서도 텍스트 색이 brand/primary-default 그대로 유지됨(변경 없음)"
+      }
+    }
+  },
+  "iconsByMode": {
+    "Light": { "asset": "plus 기본 SVG 에셋" },
+    "Dark": { "asset": "plus 별도 다크 SVG 에셋(색반전 아님)" }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Navigation Bar 상위 그룹(2555:16790, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — Navigation Bar/Top 전체 공용 확인.",
+  "accessibility": {
+    "iconOnlyButtonLabel": "Icon 타입의 aria-label 연결 규정 없음 — 확인 필요",
+    "buttonA11yInherited": "Button 타입은 text-button.md 7장의 접근성 요구사항을 그대로 따름",
+    "darkModeContrast": "Dark 배경 위 브랜드 블루 Button 텍스트의 WCAG 명암비 수치 검증 미실시 — 확인 필요"
+  },
+  "openQuestions": [
+    "Dark 배경 위 브랜드 블루 Button 텍스트의 WCAG 명암비",
+    "아이콘 전용 버튼 aria-label 연결 규정",
+    "Icon 타입의 plus 아이콘이 고정 글리프인지 자유 교체 슬롯인지"
+  ]
+}

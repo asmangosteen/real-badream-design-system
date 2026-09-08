@@ -1,0 +1,39 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Trailing",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-11972",
+    "frameNodeId": "2555:11972",
+    "frameName": "Trailing",
+    "familyGroupNodeId": "2555:16790",
+    "totalVariantInstances": 3,
+    "axes": ["Number(1/2/3)"]
+  },
+  "sampling": {
+    "method": "get_design_context 1회 호출(2555:11972)로 3개 변형 전체가 병합 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2555:16790)에서 패밀리 공용으로 확보.",
+    "coverage": "3개 변형 전수",
+    "sampledNodeIds": { "Number1": "2555:11971", "Number2": "2555:11970", "Number3": "2555:11969" }
+  },
+  "layout": { "alignItems": "center", "justifyContent": "flex-end", "paddingRight": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" } },
+  "modeAxisNote": "핵심 발견 — Trailing 자체에는 Mode 축이 없음. 항상 Type=Icon, Mode=Light의 Trailing Components만 인스턴스화. Top에서 Dark 모드로 조합될 때는 Top이 각 Trailing Components 인스턴스를 개별적으로 Mode=Dark로 재정의함(확인 완료, top.json 참고).",
+  "subcomponentReuse": {
+    "trailingComponents": { "ref": "components/navigation-bar/top/trailing-components/trailing-components.md", "instanceCount": "1~3(Number에 따름)", "fixedProps": "Type=Icon, Mode=Light" },
+    "usedBy": {
+      "top": {
+        "ref": "components/navigation-bar/top/top/top.md",
+        "note": "Type에 따라 Number 선택: Big Title/NoTitle_back/NoTitle_close=3, Smalltitle_back/Smalltitle_close=2(추정, back만 직접 확인), Seg_back/Seg_close=1. 중앙 콘텐츠가 많을수록 Trailing 슬롯 수가 줄어드는 규칙"
+      }
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "모션 데이터 없음. get_motion_context를 Navigation Bar 상위 그룹(2555:16790, recursive=true)에 호출했으나 {\"nodes\":[]} 반환.",
+  "accessibility": {
+    "groupSemantics": "여러 액션 항목을 role=toolbar 또는 개별 aria-label로 구분하는 처리 규정 없음 — 확인 필요",
+    "inheritedA11y": "trailing-components.json accessibility 참고"
+  },
+  "openQuestions": [
+    "여러 액션 항목의 접근성 그룹핑(role=toolbar 등) 규정",
+    "Smalltitle_close의 Trailing Number가 실제로 2인지(Smalltitle_back과 동일 추정, 직접 미확인)"
+  ]
+}
