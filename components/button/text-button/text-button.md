@@ -119,18 +119,26 @@ Loading 변형은 **Contents=Default**로, 라벨 텍스트를 표시하지 않�
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+`get_motion_context`(키프레임/Animate 탭 데이터 조회용)를 컴포넌트 셋 전체(`439:21305`, recursive=true)에 호출한 결과는 빈 결과였습니다 — 이는 Figma의 "Animate" 툴(키프레임 타임라인) 기준으로는 모션이 없다는 뜻이며, 아래 프로토타입 인터랙션(Prototype 탭의 리액션)과는 별개의 데이터입니다. 프로토타입 리액션은 MCP 도구로 조회되지 않아 **사용자가 Figma에서 직접 확인해 전달**했습니다(2026-08-29 확인).
 
-`get_motion_context`를 컴포넌트 셋 전체(`439:21305`, recursive=true)에 호출한 결과 빈 결과(`{"nodes":[]}`)를 반환했습니다. Hover/Pressed 색 전환이나 Loading 스피너 회전에 대한 프로토타입 인터랙션(스마트 애니메이트, 트랜지션, 키프레임)이 Figma 파일에 정의되어 있지 않습니다.
+**사용자 확인 완료 — Hover/Pressed 전환에 프로토타입 인터랙션이 정의되어 있습니다.** 아래 규칙은 Size(S/M/L/XL) × Text Color(Blue/Gray/Red) × Contents(Text/Text+Icon/Icon+Text) **모든 조합에 동일하게 적용**됩니다(사용자 확인 — 대표로 Size=S, Text Color=Blue, Contents=Text 노드에서 프로토타입 패널을 캡처해 전달받음).
+
+| 트리거 | Action | 대상 State | Animation | Easing | Duration |
+|---|---|---|---|---|---|
+| **While hovering** | Change to | Default → **Hover** (Size/Text Color/Contents 동일 유지) | Smart animate | **Slow**(Figma 스프링 프리셋) | **150ms** |
+| **While pressing** | Change to | Hover → **Pressed** (Size/Text Color/Contents 동일 유지) | Smart animate | **Slow**(Figma 스프링 프리셋) | **50ms** |
+
+- **트랜지션 대상 프로퍼티**: Text Button은 상태 간 레이아웃 변화가 없고(2장 공통 구조 참고) 텍스트/아이콘 `color`만 바뀌므로(4장), Smart Animate가 실질적으로 보간하는 값은 **라벨·아이콘의 색상**입니다. Hover=`#276fcd`(Blue 기준), Pressed=`#2364b8`(Blue 기준) — 4장 실측값 참고.
+- **Easing "Slow"에 대한 주의**: Figma의 "Slow"는 cubic-bezier가 아니라 **스프링(spring) 물리 기반 프리셋**입니다(Gentle/Quick/Bouncy/Slow 중 하나). Figma UI에는 근사 duration(150ms/50ms)만 표시되고 정확한 mass/stiffness/damping 값은 노출되지 않습니다 — CSS `transition-timing-function`으로는 스프링 곡선을 정확히 재현할 수 없으므로, 웹 구현 시 ① CSS `ease-out` 계열로 근사하거나 ② Framer Motion/React Spring 등 스프링 기반 애니메이션 라이브러리로 구현하는 두 가지 선택지가 있습니다. 정확한 스프링 파라미터는 **확인 필요**(Figma 파일에서 직접 노출되지 않음).
+- **Hover→Pressed가 50ms로 Default→Hover(150ms)보다 짧습니다** — 눌림 반응은 더 즉각적으로, 호버 진입은 더 부드럽게 처리하려는 의도로 보입니다.
+- Disabled 진입/Loading 스피너 회전에 대한 프로토타입 리액션은 이번에 전달받지 못했습니다 — 여전히 **확인 필요**.
 
 | 트리거 | 대상 프로퍼티 | Duration | Easing | 시작값 | 종료값 |
 |---|---|---|---|---|---|
-| Default → Hover | 텍스트/아이콘 color | 모션 데이터 없음 | 모션 데이터 없음 | `#2c7be2`(Blue) | `#276fcd`(Blue) |
-| Hover → Pressed | 텍스트/아이콘 color | 모션 데이터 없음 | 모션 데이터 없음 | `#276fcd` | `#2364b8` |
-| Default → Disabled | opacity | 모션 데이터 없음 | 모션 데이터 없음 | 100% | 20% |
-| Loading 스피너 회전 | transform: rotate | 모션 데이터 없음 | 모션 데이터 없음 | 모션 데이터 없음 | 모션 데이터 없음 |
-
-State 간 색/opacity 값 자체는 4장에 실측되어 있으나, 전환 duration/easing은 Figma에 정의된 바가 없어 임의 수치를 만들지 않았습니다. 구현 시 필요하면 디자이너 확인이 필요합니다.
+| While hovering (Default→Hover) | 텍스트/아이콘 color | **150ms** | **Slow(spring)** | `#2c7be2`(Blue) | `#276fcd`(Blue) |
+| While pressing (Hover→Pressed) | 텍스트/아이콘 color | **50ms** | **Slow(spring)** | `#276fcd` | `#2364b8` |
+| Default → Disabled | opacity | 확인 필요 | 확인 필요 | 100% | 20% |
+| Loading 스피너 회전 | transform: rotate | 확인 필요 | 확인 필요 | 확인 필요 | 확인 필요 |
 
 ## 7. 접근성
 
@@ -159,10 +167,17 @@ State 간 색/opacity 값 자체는 4장에 실측되어 있으나, 전환 durat
 - hover/pressed가 배경 오버레이가 아니라 텍스트 색 직접 합성
 - Loading이 라벨을 유지하지 않고 스피너로 대체(Contents=Default)
 
+**확인 완료(사용자 확인, 2026-08-29) — 프로토타입 인터랙션**
+- While hovering → Change to Hover, Smart animate, Slow easing, 150ms
+- While pressing → Change to Pressed, Smart animate, Slow easing, 50ms
+- 전 Size × Text Color × Contents 조합에 동일 규칙 적용(6장 참고)
+
 **확인 필요 (미측정)**
 - S/L/XL의 아이콘 크기(M만 16px 실측)
 - Gray/Red의 hover/pressed 최종 합성 라벨 색(메커니즘만 Blue에서 확인)
 - Loading 스피너 링 색상의 문맥별 적용 매핑
+- Figma "Slow" 스프링 프리셋의 정확한 mass/stiffness/damping 값(웹 구현 시 근사 필요, 6장 참고)
+- Disabled 진입·Loading 스피너 회전에 대한 프로토타입 리액션 여부
 
 ## 9. 샘플링에 사용한 대표 노드 (부록)
 
