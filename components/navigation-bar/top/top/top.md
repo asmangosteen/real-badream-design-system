@@ -42,7 +42,7 @@ Top은 화면 최상단에 오는 **완성형 상단 내비게이션 바**입니
 
 **사용자 확인 완료 — Trailing에는 아이콘과 버튼([Trailing Components](../trailing-components/trailing-components.md)의 Icon/Button 두 타입)을 섞어 쓸 수 있습니다.** 단, 화면 상황에 따라 Smalltitle(중앙 콘텐츠) 영역을 침범하지 않는 선에서만 사용 가능합니다 — 정확한 상한 규칙(예: 버튼 1개=아이콘 몇 개분 폭인지)은 Figma에 수치로 정의되어 있지 않아 **확인 필요**입니다.
 
-**컨테이너 정렬 방식이 Type에 따라 갈립니다.** Big Title만 `justify-between`(Leading·Trailing이 각각 끝에 붙고 사이 공간은 비워짐)이고, 나머지 6개 Type은 전부 `gap-166px`라는 **고정 간격 값**을 씁니다(스페이싱 토큰이 아닌 리터럴 값 — 확인 필요, Big Title을 제외한 모든 Type이 정확히 동일한 166px를 공유한다는 점에서 의도된 디자인 상수로 보입니다).
+**정정(재실측) — 컨테이너 정렬 속성값 자체는 Type에 따라 갈리지만, 시각적으로는 차이가 없습니다.** Figma 원본 코드상 Big Title 컨테이너는 `justify-between`, 나머지 6개 Type은 `gap-166px`(스페이싱 토큰이 아닌 고정 리터럴 값)를 쓰는 게 맞습니다. 하지만 Trailing 래퍼 자체가 모든 Type에서 공통으로 `flex-grow:1` + 내부 `justify-end`를 갖고 있어서, Trailing이 항상 남는 공간을 전부 차지한 뒤 그 안에서 아이콘을 오른쪽 끝에 붙입니다. 그 결과 부모 컨테이너가 `justify-between`이든 `gap-166px`이든 **렌더링 결과가 완전히 동일**합니다 — Leading 텍스트 길이(Big Title/Label/X 등)와 무관하게 Trailing 아이콘들은 항상 같은 x 위치(컨테이너 우측 끝)에 정렬됩니다(사용자 스크린샷으로 확인). `gap-166px`는 Leading 콘텐츠가 비정상적으로 길어질 때의 최소 간격 보장 정도로만 의미가 있을 수 있으나, 그런 변형은 Figma에 존재하지 않아 실질적 효과가 없습니다. 이전 버전에서 이 속성값 차이를 "컨테이너 정렬 방식이 갈린다"는 핵심 구조적 차이처럼 서술한 것은 과장된 표현이었습니다 — 정정합니다.
 
 **사용자 확인 완료 — Back의 Label 표시 여부는 Type과 무관하게 항상 자유롭게 켜고 끌 수 있습니다.** 최초 샘플링에서 Seg_back/Seg_close 노드가 `showLabel=false`로 관측되어 "Seg 계열은 라벨을 강제로 숨긴다"고 잘못 추정했으나, **사용자 확인 결과 이는 그 샘플의 설정값일 뿐이며 실제로는 Back 타입이 어느 Top Type에 들어가든(NoTitle_back/Smalltitle_back/Seg_back 무관) Label을 붙이고 뗄 수 있는 자유 토글입니다.** 이전 판단을 정정합니다.
 
@@ -102,6 +102,7 @@ Top 안에서 각 서브 아톰은 아래처럼 특정 값으로 고정되어 �
 - Back의 showLabel은 Top의 어느 Type에 들어가든 자유 토글(이전에 "Seg 계열 강제 false"로 잘못 문서화했던 것 정정, 2장)
 - Leading/Trailing/Smalltitle을 개별적으로 숨겨도 나머지 항목의 위치는 고정됨(reflow 없음, 3-1장)
 - Background=On의 배경색은 고정값이 아니라 예시이며 실제 화면에서 자유롭게 교체 가능(4장)
+- Big Title과 나머지 6개 Type의 컨테이너 정렬 속성값(justify-between vs gap-166px) 차이는 Figma 원본 그대로지만, Trailing의 flex-grow+justify-end 때문에 렌더링 결과는 동일 — 핵심 구조 차이처럼 서술했던 이전 버전을 정정(2장)
 
 **확인 필요**
 - Dark·Background=Off 조합의 배경 처리(Light·Off와 대칭으로 추정, 직접 미확인)
