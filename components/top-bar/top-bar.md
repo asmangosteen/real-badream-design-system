@@ -70,7 +70,7 @@ Top Bar는 [Status Bar](../status-bar/status-bar.md)(기기 상태바)와 [Navig
 Top Bar가 실측 샘플에서 보여준 값(`os=iOS`, `type=Smalltitle_back`)은 **진열용 예시일 뿐, 고정값이 아닙니다.** **사용자 확인 완료 — Status Bar와 Navigation Bar Top은 각자 문서화된 하위 속성(variant)을 전부 자유롭게 적용할 수 있습니다.**
 
 - **[Status Bar](../status-bar/status-bar.md)**: 실측 샘플은 `os=iOS`였지만, **Android로도 자유롭게 바꿔 쓸 수 있습니다.** [status-bar.md](../status-bar/status-bar.md)에 문서화된 OS(iOS/Android)·Mode(Light/Dark) 축을 전부 그대로 승계합니다. Mode는 Top Bar의 Mode를 따르는 것이 자연스럽지만, OS 선택은 화면(iOS/Android 타겟)에 맞게 독립적으로 결정됩니다. Status Bar 자체의 Background 축은 Top Bar 안에서는 쓰이지 않습니다(Status Bar는 항상 투명 상태로 얹히고, 실제 배경은 Top Bar 컨테이너가 담당).
-- **[Navigation Bar Top](../navigation-bar/top/top/top.md)**: 실측 샘플은 전부 `type=Smalltitle_back`이었지만, **Top의 7개 Type(Big Title/NoTitle_back/NoTitle_close/Smalltitle_back/Smalltitle_close/Seg_back/Seg_close) 전부, 그리고 그 안의 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back의 showLabel 토글, 각 영역 개별 hide 등, [top.md](../navigation-bar/top/top/top.md) 참고)까지 전부 그대로 적용 가능합니다.**
+- **[Navigation Bar Top](../navigation-bar/top/top/top.md)**: 실측 샘플은 전부 `type=Smalltitle_back`이었지만, **Top의 8개 Type(Big Title/NoTitle_back/NoTitle_close/Smalltitle_back/Smalltitle_close/Seg_back/Seg_close/Home, 2026-09-09 Home 추가) 전부, 그리고 그 안의 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back의 showLabel 토글, 각 영역 개별 hide 등, [top.md](../navigation-bar/top/top/top.md) 참고)까지 전부 그대로 적용 가능합니다.** 단, **Type=Home은 나머지 7개와 달리 홈 화면 전용이라는 강한 제약이 있습니다** — Top Bar를 Home 조합으로 구성하는 것도 이 제약을 그대로 상속하며, 다른 화면에서는 쓰지 않습니다([top.md](../navigation-bar/top/top/top.md) 2장 참고).
 
 정리하면 Top Bar는 두 서브 컴포넌트를 "특정 값으로 고정해서 담는 그릇"이 아니라, **두 서브 컴포넌트를 세로로 배치하는 레이아웃 껍데기**이고 내용물(Status Bar의 OS, Navigation Bar Top의 Type 등)은 각 서브 컴포넌트 문서에 있는 자유도를 그대로 물려받습니다.
 
@@ -102,7 +102,8 @@ Top Bar가 실측 샘플에서 보여준 값(`os=iOS`, `type=Smalltitle_back`)�
 - Background=No에서는 Line이 존재하지 않음(3장)
 - Status Bar·Navigation Bar 각각 독립적으로 hide 가능(4장)
 - Default의 Light(`white-default`)/Dark(`black-emphasis`) 배경 토큰이 다른 것은 의도된 설계 — Light는 실제 페이지 배경색, Dark는 검정 배경 화면용 순수 검정(2장)이며, 따라서 이 색상은 자유 교체 가능한 예시가 아니라 실제 페이지 배경을 그대로 반영해야 하는 값(2장 참고)
-- Status Bar·Navigation Bar Top 모두 각자 문서화된 하위 속성(Status Bar의 OS 포함, Navigation Bar Top의 Type 7종 포함)을 전부 자유롭게 승계·적용 가능(5장)
+- Status Bar·Navigation Bar Top 모두 각자 문서화된 하위 속성(Status Bar의 OS 포함, Navigation Bar Top의 Type 8종 포함)을 전부 자유롭게 승계·적용 가능(5장)
+- (2026-09-09) Navigation Bar Top에 Home Type이 추가됨 — Top Bar도 이를 그대로 승계하되, Home은 홈 화면 전용이라는 제약을 함께 상속(5장)
 
 **확인 필요**
 - Background=Blur일 때 Line=On의 구분선 색상이 Default와 동일한 패턴인지(3장, 미실측)

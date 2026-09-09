@@ -6,7 +6,9 @@
 
 ## 0. 문서 범위와 샘플링 방법
 
-Leading은 **Type(Back/Close/Big Title) × Mode(Light/Dark) 2축, 6-변형 컴포넌트**로 완전 직교(3×2=6)입니다. `get_metadata`로 6개 심볼을 전수 확인한 뒤, `get_design_context`를 최상위 프레임(`2555:11928`)에 1회 호출해 6개 변형 전체가 병합 코드로 반환된 것을 실측했습니다.
+Leading은 **Type(Back/Close/Big Title/Home) × Mode(Light/Dark) 2축, 8-변형 컴포넌트**로 완전 직교(4×2=8)입니다. `get_metadata`로 8개 심볼을 전수 확인한 뒤, `get_design_context`를 최상위 프레임(`2555:11928`)에 호출해 6개 변형(Back/Close/Big Title)이 병합 코드로 반환된 것과, Home 2개 변형(Light `2573:12732`, Dark `2573:12736`)을 개별 실측했습니다.
+
+**추가(2026-09-09) — Type=Home 신규 추가.** 사용자 확인: Home은 홈 화면(첫 화면) 전용이며, Back/Close/Big Title처럼 여러 화면에서 범용으로 재사용하는 Type이 아닙니다(1장 참고).
 
 - `get_variable_defs`·`get_motion_context`는 상위 그룹(`2555:16790`, Navigation Bar 전체)에서 1회씩 확보한 값을 재사용했습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소 `tokens/*.json`에 없는 값은 "확인 필요" 또는 "기존 토큰에 없음"으로 명시합니다.
@@ -17,28 +19,33 @@ Leading은 Navigation Bar 좌측에 오는 **뒤로가기/닫기 아이콘 또�
 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
-| **Type** | Back / Close / Big Title | Back=뒤로가기 아이콘(+선택적 라벨), Close=닫기 아이콘, Big Title=화면 대제목 텍스트 |
-| **Mode** | Light / Dark | 밝은/어두운 배경에 맞춘 아이콘·텍스트 색상 |
-| **Show Label**(비-variant 축, Back 전용) | False / True(기본 True) | Back 아이콘 옆에 "Label" 텍스트를 표시할지 여부. Close/Big Title에는 이 prop 자체가 없음 |
+| **Type** | Back / Close / Big Title / Home | Back=뒤로가기 아이콘(+선택적 라벨), Close=닫기 아이콘, Big Title=화면 대제목 텍스트, Home=바드림 로고(홈 화면 전용) |
+| **Mode** | Light / Dark | 밝은/어두운 배경에 맞춘 아이콘·텍스트·로고 색상 |
+| **Show Label**(비-variant 축, Back 전용) | False / True(기본 True) | Back 아이콘 옆에 "Label" 텍스트를 표시할지 여부. Close/Big Title/Home에는 이 prop 자체가 없음 |
 
-## 2. Type별 스펙 (6개 전수 실측)
+**사용 범위 제약(사용자 확인, 강한 제약사항) — Home은 다른 3개 Type과 성격이 다릅니다.** Back/Close/Big Title은 여러 화면에서 범용으로 골라 쓰는 재사용 가능한 헤더 콘텐츠인 반면, **Home은 앱의 홈 화면(첫 진입 화면)에서만 쓰도록 의도된 전용 Type입니다.** 다른 화면에 Home Type을 가져다 쓰는 것은 이 컴포넌트의 의도된 사용 범위를 벗어납니다.
+
+## 2. Type별 스펙 (8개 전수 실측)
 
 | Type | 레이아웃 | 내용 | 타이포/아이콘 |
 |---|---|---|---|
 | **Back** | `pl=spacing/08`(12px) `py=spacing/08`(12px), hug-width | `Icon / Default / 24px / backward`(24px) + (Show Label=True 시) "Label" 텍스트(w=48px) | 라벨: `SubTitle/18 R`(Regular), 색상은 Mode에 따름(3장) |
 | **Close** | `pl=spacing/11`(20px) `pr=spacing/16`(40px) `py=spacing/08`(12px) | `Icon / Default / 24px / close`(24px) 단독, 라벨 없음(showLabel prop 자체가 없음) | — |
 | **Big Title** | `justify-center` `pl=spacing/11`(20px) `py=spacing/07`(10px) | "Big Title" 텍스트(w=230px, 중앙 정렬) | `Title/20 SB`(SemiBold, 저장소 `title` 스타일과 일치, 4장 참고) |
+| **Home**(신규) | `justify-center` `pl=spacing/11`(20px) `py=spacing/08`(12px) | "logo"(바드림 로고, w=104px×h=24px) 단독 SVG 이미지, 텍스트 없음(로고 자체에 워드마크 포함) | 해당 없음(이미지 에셋, 타이포 없음) |
+
+**Home과 Big Title의 차이**: 레이아웃 패턴(justify-center + pl=spacing/11)은 동일하지만, 세로 패딩이 Big Title은 `spacing/07`(10px), Home은 `spacing/08`(12px)로 실측상 다릅니다(오독 아님, 두 Type 모두 재확인 완료). 또한 Big Title은 텍스트 콘텐츠, Home은 로고 이미지 콘텐츠라는 근본적 차이가 있습니다.
 
 **핵심 발견**: Close 타입의 우측 패딩(`pr=spacing/16`=40px)이 Back(패딩 없음, hug)이나 Big Title보다 훨씬 넓습니다 — 이는 [Top](../top/top.md)에서 NoTitle_close/Seg_close/Smalltitle_close 조합 시 오른쪽 여백을 강제로 확보해 X 아이콘이 화면 좌측에 치우치지 않고 살짝 안쪽으로 들어오게 하려는 의도로 추정됩니다(확인 필요).
 
-## 3. Mode별 색상 (Back·Big Title에서 전수 실측, Close는 아이콘 색만 해당)
+## 3. Mode별 색상 (Back·Big Title·Home에서 전수 실측, Close는 아이콘 색만 해당)
 
-| Mode | Back 아이콘 | Back 라벨 텍스트 | Close 아이콘 | Big Title 텍스트 |
-|---|---|---|---|---|
-| **Light** | `backward` 기본 SVG | `neutral/800`(#202837) | `close` 기본 SVG | `neutral/800`(#202837) |
-| **Dark** | `backward` **별도 다크 SVG 에셋**(CSS 색반전 아님) | `common/white-default`(#fdfdfd) | `close` **별도 다크 SVG 에셋** | `common/white-default`(#fdfdfd) |
+| Mode | Back 아이콘 | Back 라벨 텍스트 | Close 아이콘 | Big Title 텍스트 | Home 로고 |
+|---|---|---|---|---|---|
+| **Light** | `backward` 기본 SVG | `neutral/800`(#202837) | `close` 기본 SVG | `neutral/800`(#202837) | 로고 SVG(라이트용, 어두운 톤) |
+| **Dark** | `backward` **별도 다크 SVG 에셋**(CSS 색반전 아님) | `common/white-default`(#fdfdfd) | `close` **별도 다크 SVG 에셋** | `common/white-default`(#fdfdfd) | 로고 SVG(다크용, **별도 파일** — 밝은 톤) |
 
-아이콘은 두 Mode 모두 **별도로 준비된 SVG 에셋**을 쓰며(색상 필터로 반전하는 방식이 아님), 텍스트만 CSS 색상 변수로 전환됩니다.
+아이콘·로고 모두 두 Mode에서 **별도로 준비된 SVG 에셋**을 쓰며(색상 필터로 반전하는 방식이 아님), 텍스트만 CSS 색상 변수로 전환됩니다.
 
 ## 4. 타이포그래피 상세
 
@@ -76,12 +83,13 @@ Leading은 Navigation Bar 좌측에 오는 **뒤로가기/닫기 아이콘 또�
 - Title/20 SB 자간 단위(퍼센트 vs px) 해석
 - 접근성 마크업(`aria-label` 등) 연결 규정
 
-## 8. 샘플링에 사용한 6개 노드 (부록, 전수)
+## 8. 샘플링에 사용한 8개 노드 (부록, 전수)
 
 | Type＼Mode | Light | Dark |
 |---|---|---|
 | **Back** | `2555:11927` | `2555:12468` |
 | **Close** | `2555:11925` | `2555:12471` |
 | **Big Title** | `2555:11924` | `2555:12473` |
+| **Home** | `2573:12732` | `2573:12736` |
 
-6개 변형 전체가 `get_design_context` 1회 호출(`2555:11928`)로 병합 코드로 반환되었습니다. `get_variable_defs`·`get_motion_context`는 Navigation Bar 상위 그룹(`2555:16790`)에서 공용으로 확보했습니다.
+Back/Close/Big Title 6개 변형은 `get_design_context` 1회 호출(`2555:11928`)로 병합 코드로 반환되었고, Home 2개 변형은 각 노드를 개별 호출해 실측했습니다. `get_variable_defs`·`get_motion_context`는 Navigation Bar 상위 그룹(`2555:16790`)에서 공용으로 확보했습니다.

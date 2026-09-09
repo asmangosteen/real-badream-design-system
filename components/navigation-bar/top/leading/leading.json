@@ -7,22 +7,27 @@
     "frameNodeId": "2555:11928",
     "frameName": "Leading",
     "familyGroupNodeId": "2555:16790",
-    "totalVariantInstances": 6,
-    "axes": ["Type(Back/Close/Big Title)", "Mode(Light/Dark)"],
-    "note": "완전 직교 3x2=6. Navigation Bar/Top의 좌측 영역 서브 아톰(사용자 확인 — 좌측 그룹은 하위항목, Top 프레임이 실제 쓰일 컴포넌트)",
-    "nonVariantProperty": { "name": "showLabel", "type": "boolean", "default": true, "appliesTo": "Type=Back 한정", "note": "Close/Big Title에는 이 prop 자체가 코드 타입에 없음" }
+    "totalVariantInstances": 8,
+    "axes": ["Type(Back/Close/Big Title/Home)", "Mode(Light/Dark)"],
+    "note": "완전 직교 4x2=8(2026-09-09 Home 추가로 3x2=6에서 확장). Navigation Bar/Top의 좌측 영역 서브 아톰(사용자 확인 — 좌측 그룹은 하위항목, Top 프레임이 실제 쓰일 컴포넌트)",
+    "nonVariantProperty": { "name": "showLabel", "type": "boolean", "default": true, "appliesTo": "Type=Back 한정", "note": "Close/Big Title/Home에는 이 prop 자체가 코드 타입에 없음" }
   },
   "sampling": {
-    "method": "get_design_context 1회 호출(2555:11928)로 6개 변형 전체가 병합 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2555:16790)에서 패밀리 공용으로 확보.",
-    "coverage": "6개 변형 전수",
+    "method": "get_design_context 1회 호출(2555:11928)로 Back/Close/Big Title 6개 변형이 병합 코드로 반환됨. Home 2개 변형(2573:12732, 2573:12736)은 개별 실측(2026-09-09 추가). get_variable_defs·get_motion_context는 상위 그룹(2555:16790)에서 패밀리 공용으로 확보.",
+    "coverage": "8개 변형 전수",
     "sampledNodeIds": {
       "Back_Light": "2555:11927",
       "Back_Dark": "2555:12468",
       "Close_Light": "2555:11925",
       "Close_Dark": "2555:12471",
       "BigTitle_Light": "2555:11924",
-      "BigTitle_Dark": "2555:12473"
+      "BigTitle_Dark": "2555:12473",
+      "Home_Light": "2573:12732",
+      "Home_Dark": "2573:12736"
     }
+  },
+  "usageScope": {
+    "note": "사용자 확인 완료(강한 제약사항) — Home Type은 Back/Close/Big Title과 달리 범용 재사용 Type이 아니라, 앱의 홈 화면(첫 진입 화면) 전용입니다. 다른 화면에서 Home Type을 쓰는 것은 의도된 사용 범위를 벗어남."
   },
   "types": {
     "Back": {
@@ -38,6 +43,12 @@
       "layout": { "justifyContent": "center", "paddingLeft": { "figmaVariable": "spacing/11", "value": "20px", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/07", "value": "10px", "tokenMatch": "정확히 일치" } },
       "content": "\"Big Title\" 텍스트, w=230px, 중앙 정렬",
       "typography": "Title/20 SB"
+    },
+    "Home": {
+      "layout": { "justifyContent": "center", "paddingLeft": { "figmaVariable": "spacing/11", "value": "20px", "tokenMatch": "정확히 일치" }, "paddingY": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" }, "note": "Big Title과 레이아웃 패턴(justify-center+pl=spacing/11)은 같으나 세로 패딩은 spacing/08(12px)로 Big Title의 spacing/07(10px)과 다름 — 재확인 완료, 실제 값" },
+      "content": "\"logo\"(바드림 로고+워드마크 SVG), w=104px h=24px, 텍스트 없음",
+      "typography": "해당 없음(이미지 에셋)",
+      "usageScope": "홈 화면 전용(usageScope 참고)"
     }
   },
   "colorsByMode": {
@@ -53,6 +64,11 @@
       "closeIcon": "close 별도 다크 SVG 에셋(색반전 아님)",
       "bigTitleColor": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치" }
     }
+  },
+  "logoAssetsByMode": {
+    "note": "Home 로고는 아이콘과 동일하게 Light/Dark 별도 SVG 파일이며 CSS 색반전이 아님",
+    "Light": "로고 SVG(어두운 톤, 밝은 배경용)",
+    "Dark": "로고 SVG(밝은 톤, 어두운 배경용) — Light와 다른 파일"
   },
   "typography": {
     "SubTitle/18 R": { "figmaVariable": "font/pretendard", "weight": "weight/400 Regular", "size": "18px", "lineHeight": "24px", "letterSpacing": "-0.09px", "appliesTo": ["Back Label"], "tokenMatch": "정확히 일치(tokens/typography.json subtitle)" },

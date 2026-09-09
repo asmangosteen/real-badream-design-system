@@ -64,7 +64,8 @@
     "navigationBarTop": {
       "ref": "components/navigation-bar/top/top/top.md",
       "sampleValueObserved": { "type": "Smalltitle_back" },
-      "freelyApplicable": "Type 7종 전부 + top.json에 문서화된 모든 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back showLabel 토글, 각 영역 개별 hide 등) 그대로 적용 가능(사용자 확인)"
+      "freelyApplicable": "Type 8종(2026-09-09 Home 추가로 7종에서 확장) 전부 + top.json에 문서화된 모든 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back showLabel 토글, 각 영역 개별 hide 등) 그대로 적용 가능(사용자 확인)",
+      "homeTypeCaveat": "단, Type=Home은 나머지 7종과 달리 범용 재사용 Type이 아니라 홈 화면 전용입니다(top.json constraints.homeIsScreenSpecific 참고) — Top Bar 안에서 Navigation Bar Top을 Home으로 구성하는 조합도 이 제약을 그대로 상속하며, 홈 화면 용도로만 사용해야 합니다."
     }
   },
   "interactions": [],
@@ -76,7 +77,7 @@
   },
   "resolvedQuestions": [
     "Default의 Light/Dark 배경 토큰 페어가 비대칭인 이유 — 사용자 확인 완료, 의도된 설계(backgroundTypes.Default 참고)",
-    "Navigation Bar Top의 Type을 Smalltitle_back 외 다른 6종으로 자유 교체 가능한지 — 사용자 확인 완료, 가능(subcomponentReuse 참고)",
+    "Navigation Bar Top의 Type을 Smalltitle_back 외 다른 Type으로 자유 교체 가능한지 — 사용자 확인 완료, 가능(subcomponentReuse 참고). 단 Home Type은 홈 화면 전용이라는 제약이 있음(2026-09-09, subcomponentReuse.navigationBarTop.homeTypeCaveat 참고)",
     "Status Bar의 OS를 Android로 자유 교체 가능한지 — 사용자 확인 완료, 가능(subcomponentReuse 참고)",
     "Background=Default 배경색이 예시일 뿐 자유 교체 가능한지 — 사용자 확인 완료, 예시가 아니라 실제 페이지 배경을 반영하는 의도된 값(backgroundTypes.colorIsNotArbitraryExample 참고)"
   ],
