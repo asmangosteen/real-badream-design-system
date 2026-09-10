@@ -16,7 +16,7 @@
 | Checkbox | [components/checkbox/checkbox.md](./checkbox/checkbox.md) | 완료 | 24개 인스턴스 (Angular 12 + Rounded 12). Figma상 2개 Component Set으로 분리됨 |
 | Chip | [components/chip/chip.md](./chip/chip.md) | 완료 | 190개 인스턴스 (Selection 150 + Filter 40). Figma상 2개 Component Set으로 분리됨 |
 | Avatar | [components/avatar/avatar.md](./avatar/avatar.md) | 완료 | 7개 인스턴스 (Size 12~48px). State 축 없는 순수 표시용 컴포넌트 |
-| Divider | [components/divider/divider.md](./divider/divider.md) | 완료 | 8개 인스턴스 (Height 1~14px). State 축 없는 순수 표시용 컴포넌트 |
+| Divider | [components/divider/divider.md](./divider/divider.md) | 완료 | 16개 인스턴스 (Type Horizontal/Vertical × Size 1~14px). State 축 없는 순수 표시용 컴포넌트. Horizontal은 너비, Vertical은 높이가 자유 치수(100%) |
 | Radio Button | [components/radio-button/radio-button.md](./radio-button/radio-button.md) | 완료 | 24개 인스턴스 (Checked False/True × State 4종 × Size S/M/L). 전수 실측 |
 | Toggle | [components/toggle/toggle.md](./toggle/toggle.md) | 완료 | 24개 인스턴스 (Size S/L × Status Off/On × Disabled False/True × Label True/False × Label Location Left/Right/No, Location은 Label에 종속). Hover/Pressed/Focused 축 없음. 전수 실측 |
 | Text Blinker | [components/global/text-blinker/text-blinker.md](./global/text-blinker/text-blinker.md) | 완료 | 2개 인스턴스 (State On/Off). `components/global/` 소속 — Input/TextField 서브 아톰(커서 표시) |
@@ -50,6 +50,7 @@
 | Time Picker Group | [components/date-time-picker/time-picker-group/time-picker-group.md](./date-time-picker/time-picker-group/time-picker-group.md) | 완료 | 2개 인스턴스 (Picker Count 2/3). Time Picker 2~3개를 콜론(`:`, Figma 이미지 에셋 그대로 사용) 구분자로 조합, Count·Direction 모두 실사용(사용자 확인). 전수 실측 |
 | Date Picker | [components/date-time-picker/date-picker/date-picker.md](./date-time-picker/date-picker/date-picker.md) | 완료 | 4개 인스턴스 (State Default/Wheel × Time Picker Off/On). 달력 그리드+연월 휠+시간 선택을 한 패널에 담은 패밀리 플래그십 컴포넌트. 전수 실측 |
 | Date Picker Group | [components/date-time-picker/date-picker-group/date-picker-group.md](./date-time-picker/date-picker-group/date-picker-group.md) | 완료 | 2개 인스턴스 (Type Horizontal/Vertical). Date Picker 2개를 Divider로 구분해 나란히 배치, 두 패널은 동기화되지 않는 독립 캘린더(사용자 확인). 전수 실측 |
+| Footer | [components/footer/footer.md](./footer/footer.md) | 완료 | 2개 인스턴스 (State Close/Open). 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용하며 둘 다 기본 fill이 아닌 색상으로 오버라이드됨(확인 필요). 전수 실측 |
 
 ## components/date-time-picker/란
 

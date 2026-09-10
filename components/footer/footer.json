@@ -1,0 +1,139 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Footer",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2589-16887",
+    "componentSetNodeId": "2589:16887",
+    "componentSetName": "Footer",
+    "totalVariantInstances": 2,
+    "axes": ["State(Close/Open)"],
+    "note": "바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). Header 탭으로 Close/Open 토글."
+  },
+  "sampling": {
+    "method": "전수 실측 (get_design_context 2회 + get_variable_defs 1회 + get_motion_context 1회(recursive) + get_metadata 3회)",
+    "coverage": "Close/Open 2개 State 전체 개별 실측함. 추정/외삽 없음."
+  },
+  "usageConstraint": {
+    "scope": "바드림 앱 홈 화면 최하단 전용",
+    "confirmed": "사용자 확인",
+    "note": "Navigation Bar Top의 Home 타입과 동일한 성격의 강한 제약사항. 다른 화면에 범용 재사용 대상 아님."
+  },
+  "interaction": {
+    "defaultState": "Close",
+    "trigger": "Header 탭",
+    "behavior": "Close→Open, Open→Close (동일 토글 동작, 사용자 확인)",
+    "confirmed": "사용자 확인",
+    "motionDataInFigma": "없음 (get_motion_context가 컴포넌트 셋 전체에 recursive=true로 nodes: [] 빈 결과 반환 — Close/Open은 정적 스냅샷 2개로만 존재, 전환 애니메이션은 Figma에 정의되어 있지 않음)"
+  },
+  "states": {
+    "close": {
+      "nodeId": "2589:16885",
+      "containerHeight": "212px",
+      "headerIcon": "chevron_down",
+      "hasInformation": false
+    },
+    "open": {
+      "nodeId": "2589:16886",
+      "containerHeight": "334px",
+      "headerIcon": "chevron_up",
+      "hasInformation": true,
+      "informationRowCount": 7
+    }
+  },
+  "structure": {
+    "main": {
+      "header": {
+        "nodeIdClose": "2589:16846",
+        "nodeIdOpen": "2589:16783",
+        "label": "CYCLOID Corp. 사업자 정보",
+        "typography": { "style": "Caption1/12 Medium", "sizeToken": "size/Caption1", "sizeValue": "12px", "weightToken": "weight/500", "lineHeightToken": "lineHeight/Caption1", "lineHeightValue": "18px", "letterSpacingToken": "letterSpacing/Caption", "letterSpacingValue": "-0.03px" },
+        "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "token": "sys-color-neutral-500 (ref-color-gray-500)", "tokenMatch": "정확히 일치" },
+        "icon": { "close": "Icon / Default / 16px / chevron_down", "open": "Icon / Default / 16px / chevron_up", "size": "16x16px", "assetPath": "assets/icons/default/outlined/16px/chevron_down.svg / chevron_up.svg" },
+        "labelIconGap": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" }
+      },
+      "information": {
+        "nodeId": "2589:16786",
+        "onlyInState": "open",
+        "rows": [
+          { "label": "대표자", "exampleValue": "권준일" },
+          { "label": "사업자등록번호", "exampleValue": "815-81-03223" },
+          { "label": "통신판매업신고번호", "exampleValue": "제 2023-서울마포-3590 호" },
+          { "label": "주소", "exampleValue": "서울 광진구 광나루로 478 105호" },
+          { "label": "운영시간", "exampleValue": "09:00 - 18:00" },
+          { "label": "대표번호", "exampleValue": "010-6243-3223" },
+          { "label": "고객문의", "exampleValue": "contact@ba-dream.com" }
+        ],
+        "labelTypography": { "style": "Caption2/10 Semibold", "sizeToken": "size/Caption2", "weightToken": "weight/600" },
+        "valueTypography": { "style": "Caption2/10 Regular", "sizeToken": "size/Caption2", "weightToken": "weight/400" },
+        "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" },
+        "labelValueGap": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
+        "rowGap": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "tokenMatch": "정확히 일치" },
+        "dataNote": "예시 데이터 — 실 서비스 사업자 정보로 교체 필요, 하드코딩 금지 대상"
+      },
+      "headerInformationGap": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" }
+    },
+    "mainSubDivider": {
+      "nodeIdClose": "2589:16871",
+      "nodeIdOpen": "2589:16808",
+      "componentRef": "components/divider/divider.json (Type=Horizontal, Size=1px)",
+      "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
+      "fillOverride": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "token": "ref-color-alpha-gray-900-10", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값 — 확인 필요" }
+    },
+    "sub": {
+      "nodeIdClose": "2589:16872",
+      "nodeIdOpen": "2589:16809",
+      "links": {
+        "items": ["이용약관", "개인정보처리방침", "사업자정보확인"],
+        "typography": { "style": "Caption2/10 Semibold" },
+        "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" },
+        "gap": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
+        "separator": {
+          "componentRef": "components/divider/divider.json (Type=Vertical, Size=1px)",
+          "height": "11px (자유 치수, 부모에 맞춰짐 — Divider Type=Vertical 규칙)",
+          "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
+          "fillOverride": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "token": "sys-color-neutral-400 (ref-color-gray-400)", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값 — 확인 필요" }
+        }
+      },
+      "copyright": {
+        "text": "ⓒ 2026. CYCLOID Corp. All rights reserved.",
+        "typography": { "style": "Caption2/10 Regular" },
+        "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "tokenMatch": "정확히 일치" }
+      },
+      "linksCopyrightGap": { "figmaVariable": "spacing/01", "value": "1px", "token": "ref-spacing-01", "tokenMatch": "정확히 일치" }
+    }
+  },
+  "layout": {
+    "backgroundColor": { "figmaVariable": "neutral/200", "value": "#f1f2f3", "token": "sys-color-neutral-200 (ref-color-gray-200)", "tokenMatch": "정확히 일치" },
+    "paddingTop": { "figmaVariable": "spacing/11", "value": "20px", "token": "ref-spacing-11", "tokenMatch": "정확히 일치" },
+    "paddingX": { "figmaVariable": "spacing/11", "value": "20px", "token": "ref-spacing-11", "tokenMatch": "정확히 일치" },
+    "paddingBottom": { "figmaVariable": "spacing/22", "value": "120px", "token": "ref-spacing-22", "tokenMatch": "토큰 자체는 존재하나 저장소 grid.scrollRule(40px) 규칙과 3배 차이 — 확인 필요", "note": "홈 화면 최하단 전용이라 하단 UI(탭바 등) 클리어런스 목적으로 추정되나 디자이너 확인 전까지 미확정" },
+    "blockGap": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "tokenMatch": "정확히 일치", "note": "Main-Divider-Sub 블록 간 gap" },
+    "contentWidth": { "value": "350px", "note": "부모 390px(iPhone 14 기준 프레임) - 좌우 마진 20px×2. 저장소 grid.mobile.contentWidth(350px)와 정확히 일치. Footer가 화면 폭에 맞춰 늘어나는 100% 설계인지 고정 350px 설계인지는 확인 필요" }
+  },
+  "accessibility": {
+    "headerRole": "탭 가능한 토글 트리거 — role=\"button\" + aria-expanded 필요로 추정되나 Figma 파일에 role 규정 없음. 확인 필요.",
+    "linksRole": "기타정보 3개 링크는 네비게이션 액션으로 추정 — <a> 등 시맨틱 마크업 필요, 실제 이동 대상은 이 조사에서 미검증. 확인 필요.",
+    "colorContrast": "docs/DESIGN.md의 일반 WCAG 원칙만 존재, Footer 전용 수치 검증은 미수행."
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "배경색 neutral/200(#f1f2f3) → sys-color-neutral-200(ref-color-gray-200)",
+      "텍스트 색상 neutral/500(#8c9199) → sys-color-neutral-500(ref-color-gray-500), Header/Information/Sub 공통",
+      "Divider(Sub 링크 구분자) 오버라이드 색상 neutral/400(#c2c4c8) → sys-color-neutral-400(ref-color-gray-400)",
+      "Divider(Main-Sub 구분선) 오버라이드 색상 color/gray/900-10(rgba(3,9,26,0.1)) → ref-color-alpha-gray-900-10",
+      "padding/gap 전부(spacing/01,02,04,07,11) → ref-spacing-01/02/04/07/11",
+      "Divider 두께 1px → ref-borderwidth-02",
+      "타이포 Caption1/12 Medium, Caption2/10 Semibold/Regular → tokens/typography.json과 일치",
+      "콘텐츠 너비 350px → tokens/spacing.json grid.mobile.contentWidth와 일치"
+    ],
+    "기존토큰에없음또는확인필요": [
+      "아래 padding 120px(spacing/22)이 저장소 스크롤 그리드 규칙(40px)과 다른 이유",
+      "Header 탭 시 State 전환 애니메이션(easing/duration) — Figma 프로토타입 데이터 없음",
+      "접근성 role/aria(aria-expanded 등) 규정",
+      "두 Divider 인스턴스의 색상 오버라이드가 의도된 디자인인지 여부",
+      "기타정보 3개 링크의 실제 이동 대상"
+    ]
+  },
+  "sampledNodeIds": ["2589:16885", "2589:16886"]
+}
