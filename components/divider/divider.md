@@ -20,6 +20,8 @@ Divider는 화면 안에서 콘텐츠 영역을 시각적으로 구분하는 얇
 | **Type** | Horizontal / Vertical | 구분선의 방향 |
 | **Size** | 1 / 2 / 4 / 6 / 8 / 10 / 12 / 14px | 구분선의 두께. 색상 축은 없음 |
 
+**색상 오버라이드**: Figma 컴포넌트 셋 자체에는 색상 축이 없고 16개 변형 전부 기본값 `neutral/100`(`#f6f7f7`)을 씁니다. 다만 이 기본 색상은 고정 규칙이 아니라 **사용 맥락에 따라 언제든 자유롭게 오버라이드 가능한 속성**입니다(사용자 확인). 실사용 예시로 [Footer 컴포넌트](../footer/footer.md)는 내부 Divider 2곳(Main-Sub 구분선, Sub 링크 구분자)의 색상을 각각 `color/gray/900-10`, `neutral/400`으로 오버라이드해서 씁니다.
+
 ## 2. Type별 자유 치수(free dimension) 규칙
 
 - **Horizontal**: 두께 = `height`, **너비(`width`)는 자유** — 부모 컨테이너 폭에 맞춰 늘어나는 `width: 100%` 설계.

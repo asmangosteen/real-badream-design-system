@@ -39,6 +39,12 @@
     "14px": { "horizontalNodeId": "2587:2612", "verticalNodeId": "2587:2604", "borderWidth": { "figmaVariable": "borderwidth/09", "value": "14px", "token": "ref-borderwidth-09", "tokenMatch": "정확히 일치" }, "fill": { "figmaVariable": "neutral/100", "value": "#f6f7f7", "tokenMatch": "정확히 일치" } }
   },
   "sizeToTokenRule": "Size 값과 ref-borderwidth-0N 토큰이 1:1 대응 (1px→02, 2px→03, 4px→04, 6px→05, 8px→06, 10px→07, 12px→08, 14px→09), Horizontal/Vertical 공통. ref-borderwidth-01(0.5px)은 이 컴포넌트 셋에 존재하지 않음 — Divider 최솟값은 1px부터.",
+  "colorOverride": {
+    "figmaDefault": "neutral/100 (#f6f7f7), 16개 변형 전부 공통 — 컴포넌트 셋 자체에는 색상 축 없음",
+    "overridable": true,
+    "confirmed": "사용자 확인",
+    "note": "기본 색상은 고정 규칙이 아니라 사용 맥락에 따라 언제든 자유롭게 오버라이드 가능한 속성. 실사용 예시: components/footer/footer.json의 Main-Sub 구분선(color/gray/900-10)과 Sub 링크 구분자(neutral/400)가 각각 기본값과 다른 색상으로 오버라이드됨."
+  },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2587:2620, recursive)에 호출했으나 빈 결과(nodes: []) 반환. State 축 자체가 없는 순수 표시용 컴포넌트.",
   "accessibility": {
@@ -48,7 +54,7 @@
   "tokenMatchSummary": {
     "정확히일치": [
       "Size 8단계 전부, Horizontal/Vertical 공통 → ref-borderwidth-02~ref-borderwidth-09",
-      "배경색 neutral/100(#f6f7f7) → sys-color-neutral-100(ref-color-gray-100), 16개 변형 전부 공통",
+      "배경색 neutral/100(#f6f7f7) → sys-color-neutral-100(ref-color-gray-100), 16개 변형 전부 공통(기본값 — 사용 맥락에 따라 자유 오버라이드 가능, 사용자 확인)",
       "Horizontal 너비 / Vertical 높이 = 100% (부모 컨테이너에 맞춰 늘어나는 자유 치수)"
     ],
     "기존토큰에없음": [

@@ -77,8 +77,7 @@
       "nodeIdClose": "2589:16871",
       "nodeIdOpen": "2589:16808",
       "componentRef": "components/divider/divider.json (Type=Horizontal, Size=1px)",
-      "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
-      "fillOverride": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "token": "ref-color-alpha-gray-900-10", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값. Divider 색상은 사용 맥락에 따라 언제든 자유 교체 가능한 속성(사용자 확인) — 고정 규칙 아님" }
+      "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" }
     },
     "sub": {
       "nodeIdClose": "2589:16872",
@@ -91,8 +90,7 @@
         "separator": {
           "componentRef": "components/divider/divider.json (Type=Vertical, Size=1px)",
           "height": "11px (자유 치수, 부모에 맞춰짐 — Divider Type=Vertical 규칙)",
-          "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
-          "fillOverride": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "token": "sys-color-neutral-400 (ref-color-gray-400)", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값. Divider 색상은 사용 맥락에 따라 언제든 자유 교체 가능한 속성(사용자 확인) — 고정 규칙 아님" }
+          "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" }
         }
       },
       "copyright": {
@@ -120,8 +118,6 @@
     "정확히일치": [
       "배경색 neutral/200(#f1f2f3) → sys-color-neutral-200(ref-color-gray-200)",
       "텍스트 색상 neutral/500(#8c9199) → sys-color-neutral-500(ref-color-gray-500), Header/Information/Sub 공통",
-      "Divider(Sub 링크 구분자) 오버라이드 색상 neutral/400(#c2c4c8) → sys-color-neutral-400(ref-color-gray-400), 자유 교체 가능한 속성(사용자 확인)",
-      "Divider(Main-Sub 구분선) 오버라이드 색상 color/gray/900-10(rgba(3,9,26,0.1)) → ref-color-alpha-gray-900-10, 동일하게 자유 교체 가능(사용자 확인)",
       "padding/gap 전부(spacing/01,02,04,07,11) → ref-spacing-01/02/04/07/11",
       "아래 padding 120px(spacing/22) → ref-spacing-22, Footer 전용 의도된 예외(Bottom Navigation Bar 대비, 사용자 확인)",
       "Divider 두께 1px → ref-borderwidth-02",

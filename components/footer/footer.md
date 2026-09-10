@@ -75,15 +75,14 @@ Footer
 
 ### 3-3. Divider (Main과 Sub 사이)
 
-- 두께 1px = `ref-borderwidth-02`, 방향 Horizontal, 너비는 부모(350px)에 맞춰 늘어남
-- **배경색이 [Divider 컴포넌트](../divider/divider.md)의 기본값(`neutral/100`)이 아닌 `color/gray/900-10`(`rgba(3,9,26,0.1)`)로 오버라이드됨** — Divider 색상은 컴포넌트 자체가 상황에 맞춰 언제든 변경 가능한 속성이며(사용자 확인), 이 값은 Footer에서 쓰인 예시 오버라이드일 뿐 고정값이 아님
+- [Divider 컴포넌트](../divider/divider.md) Horizontal, 두께 1px = `ref-borderwidth-02`, 너비는 부모(350px)에 맞춰 늘어남
 
 ### 3-4. Sub
 
 | 속성 | 값 |
 |---|---|
 | 기타정보 링크 | 이용약관 · 개인정보처리방침 · 사업자정보확인 (Caption2/10 Semibold, `neutral/500`) |
-| 링크 구분자 | [Divider 컴포넌트](../divider/divider.md) Vertical, 높이 11px, 두께 1px(`ref-borderwidth-02`) — **배경색이 Divider 기본값이 아닌 `neutral/400`(`#c2c4c8`)로 오버라이드됨**(자유 변경 가능한 속성, 사용자 확인) |
+| 링크 구분자 | [Divider 컴포넌트](../divider/divider.md) Vertical, 높이 11px, 두께 1px(`ref-borderwidth-02`) |
 | 링크 gap | `spacing/04` = 4px |
 | 저작권 문구 | `ⓒ 2026. CYCLOID Corp. All rights reserved.` (Caption2/10 Regular, `neutral/500`) |
 | 기타정보-저작권 gap | `spacing/01` = 1px |
@@ -128,8 +127,6 @@ Footer
 **정확히 일치**
 - 배경색 `neutral/200`(`#f1f2f3`) → `sys-color-neutral-200`(`ref-color-gray-200`)
 - 텍스트 색상 `neutral/500`(`#8c9199`) → `sys-color-neutral-500`(`ref-color-gray-500`)
-- Divider(Sub 링크 구분자) 오버라이드 색상 `neutral/400`(`#c2c4c8`) → `sys-color-neutral-400`(`ref-color-gray-400`), Divider 색상은 언제든 자유 교체 가능한 속성(사용자 확인)
-- Divider(Main-Sub 구분선) 오버라이드 색상 `color/gray/900-10`(`rgba(3,9,26,0.1)`) → `ref-color-alpha-gray-900-10`, 동일하게 자유 교체 가능(사용자 확인)
 - 좌우/위 padding `spacing/11`(20px), 블록 간 gap `spacing/07`(10px), 세부 gap `spacing/01`(1px)·`spacing/02`(2px)·`spacing/04`(4px) → 전부 저장소 `tokens/spacing.json`의 `ref-spacing-*`와 일치
 - 아래 padding `spacing/22`(120px) → `ref-spacing-22`, Footer 전용 의도된 예외(Bottom Navigation Bar 대비 여유 공간, 사용자 확인) — 4장 참고
 - Divider 두께 1px → `ref-borderwidth-02` ([Divider 컴포넌트](../divider/divider.md) 참고)
