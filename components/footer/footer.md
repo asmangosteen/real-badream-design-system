@@ -76,14 +76,14 @@ Footer
 ### 3-3. Divider (Main과 Sub 사이)
 
 - 두께 1px = `ref-borderwidth-02`, 방향 Horizontal, 너비는 부모(350px)에 맞춰 늘어남
-- **배경색이 [Divider 컴포넌트](../divider/divider.md)의 기본값(`neutral/100`)이 아닌 `color/gray/900-10`(`rgba(3,9,26,0.1)`)로 오버라이드됨** — Footer 전용 인스턴스 컬러 커스터마이징(확인 필요: 디자이너 의도 재확인 권장, 기본 토큰과 다름)
+- **배경색이 [Divider 컴포넌트](../divider/divider.md)의 기본값(`neutral/100`)이 아닌 `color/gray/900-10`(`rgba(3,9,26,0.1)`)로 오버라이드됨** — Divider 색상은 컴포넌트 자체가 상황에 맞춰 언제든 변경 가능한 속성이며(사용자 확인), 이 값은 Footer에서 쓰인 예시 오버라이드일 뿐 고정값이 아님
 
 ### 3-4. Sub
 
 | 속성 | 값 |
 |---|---|
 | 기타정보 링크 | 이용약관 · 개인정보처리방침 · 사업자정보확인 (Caption2/10 Semibold, `neutral/500`) |
-| 링크 구분자 | [Divider 컴포넌트](../divider/divider.md) Vertical, 높이 11px, 두께 1px(`ref-borderwidth-02`) — **배경색이 Divider 기본값이 아닌 `neutral/400`(`#c2c4c8`)로 오버라이드됨**(확인 필요) |
+| 링크 구분자 | [Divider 컴포넌트](../divider/divider.md) Vertical, 높이 11px, 두께 1px(`ref-borderwidth-02`) — **배경색이 Divider 기본값이 아닌 `neutral/400`(`#c2c4c8`)로 오버라이드됨**(자유 변경 가능한 속성, 사용자 확인) |
 | 링크 gap | `spacing/04` = 4px |
 | 저작권 문구 | `ⓒ 2026. CYCLOID Corp. All rights reserved.` (Caption2/10 Regular, `neutral/500`) |
 | 기타정보-저작권 gap | `spacing/01` = 1px |
@@ -99,7 +99,7 @@ Footer
 | Main/Divider/Sub 블록 간 gap | `spacing/07` | 10px |
 | 콘텐츠 너비 | — | 350px (부모 390px 기준, 좌우 20px 마진) |
 
-**아래 padding 120px은 확인 필요 항목입니다.** 저장소 `tokens/spacing.json`의 모바일 그리드 규칙(`scrollRule`)은 스크롤 화면 하단 padding을 40px(`ref-spacing-16`)로 규정하는데, Footer 실측값 120px(`ref-spacing-22`)은 이보다 3배 큽니다. Footer가 홈 화면 최하단 전용(1장)이라는 점을 고려하면 하단 탭바 등 다른 UI와의 겹침을 피하기 위한 의도적 예외로 추정되나, 디자이너 확인 전까지는 확정하지 않습니다.
+**아래 padding 120px은 Footer만의 의도된 예외입니다(사용자 확인).** 저장소 `tokens/spacing.json`의 모바일 그리드 규칙(`scrollRule`)은 스크롤 화면 하단 padding을 40px(`ref-spacing-16`)로 규정하지만, Footer는 홈 화면에 추후 추가될 **Bottom Navigation Bar와 겹치지 않도록 여유 공간을 미리 확보**하기 위해 120px(`ref-spacing-22`)을 예외적으로 적용합니다. 다른 컴포넌트에 이 값을 일반화하지 않습니다.
 
 콘텐츠 너비 350px은 Figma 진열 프레임이 iPhone 14 기준 화면(390px, 좌우 20px 마진, `docs` 그리드 규칙과 일치)을 보여준 것입니다. Footer는 홈 화면 전용 컴포넌트이므로(1장) Divider처럼 임의 컨테이너 폭에 맞춰 늘어나는 범용 100% 설계인지, 아니면 화면 폭 고정 설계인지는 이 조사만으로 단정하지 않습니다 — 확인 필요.
 
@@ -128,17 +128,16 @@ Footer
 **정확히 일치**
 - 배경색 `neutral/200`(`#f1f2f3`) → `sys-color-neutral-200`(`ref-color-gray-200`)
 - 텍스트 색상 `neutral/500`(`#8c9199`) → `sys-color-neutral-500`(`ref-color-gray-500`)
-- Divider(Sub 링크 구분자) 오버라이드 색상 `neutral/400`(`#c2c4c8`) → `sys-color-neutral-400`(`ref-color-gray-400`)
-- Divider(Main-Sub 구분선) 오버라이드 색상 `color/gray/900-10`(`rgba(3,9,26,0.1)`) → `ref-color-alpha-gray-900-10`
+- Divider(Sub 링크 구분자) 오버라이드 색상 `neutral/400`(`#c2c4c8`) → `sys-color-neutral-400`(`ref-color-gray-400`), Divider 색상은 언제든 자유 교체 가능한 속성(사용자 확인)
+- Divider(Main-Sub 구분선) 오버라이드 색상 `color/gray/900-10`(`rgba(3,9,26,0.1)`) → `ref-color-alpha-gray-900-10`, 동일하게 자유 교체 가능(사용자 확인)
 - 좌우/위 padding `spacing/11`(20px), 블록 간 gap `spacing/07`(10px), 세부 gap `spacing/01`(1px)·`spacing/02`(2px)·`spacing/04`(4px) → 전부 저장소 `tokens/spacing.json`의 `ref-spacing-*`와 일치
+- 아래 padding `spacing/22`(120px) → `ref-spacing-22`, Footer 전용 의도된 예외(Bottom Navigation Bar 대비 여유 공간, 사용자 확인) — 4장 참고
 - Divider 두께 1px → `ref-borderwidth-02` ([Divider 컴포넌트](../divider/divider.md) 참고)
 - 타이포 Caption1/12 Medium, Caption2/10 Semibold/Regular → `tokens/typography.json`과 일치
 
 **기존 토큰에 없음 / 확인 필요**
-- 아래 padding 120px(`spacing/22`)이 저장소 스크롤 그리드 규칙(40px)과 다른 이유 — 4장 참고
 - Header 탭 시 State 전환 애니메이션(easing/duration) — Figma 프로토타입 데이터 없음, 구현 시 별도 정의 필요
 - 접근성 role/aria(`aria-expanded` 등) 규정
-- Divider 두 인스턴스의 색상 오버라이드가 의도된 디자인인지(기본 `neutral/100`과 다름) — 7장 참고
 
 ## 9. 샘플링에 사용한 노드 (부록, 2개 전수)
 

@@ -50,7 +50,7 @@
 | Time Picker Group | [components/date-time-picker/time-picker-group/time-picker-group.md](./date-time-picker/time-picker-group/time-picker-group.md) | 완료 | 2개 인스턴스 (Picker Count 2/3). Time Picker 2~3개를 콜론(`:`, Figma 이미지 에셋 그대로 사용) 구분자로 조합, Count·Direction 모두 실사용(사용자 확인). 전수 실측 |
 | Date Picker | [components/date-time-picker/date-picker/date-picker.md](./date-time-picker/date-picker/date-picker.md) | 완료 | 4개 인스턴스 (State Default/Wheel × Time Picker Off/On). 달력 그리드+연월 휠+시간 선택을 한 패널에 담은 패밀리 플래그십 컴포넌트. 전수 실측 |
 | Date Picker Group | [components/date-time-picker/date-picker-group/date-picker-group.md](./date-time-picker/date-picker-group/date-picker-group.md) | 완료 | 2개 인스턴스 (Type Horizontal/Vertical). Date Picker 2개를 Divider로 구분해 나란히 배치, 두 패널은 동기화되지 않는 독립 캘린더(사용자 확인). 전수 실측 |
-| Footer | [components/footer/footer.md](./footer/footer.md) | 완료 | 2개 인스턴스 (State Close/Open). 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용하며 둘 다 기본 fill이 아닌 색상으로 오버라이드됨(확인 필요). 전수 실측 |
+| Footer | [components/footer/footer.md](./footer/footer.md) | 완료 | 2개 인스턴스 (State Close/Open). 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용하며 둘 다 기본 fill이 아닌 색상으로 오버라이드됨(Divider 색상은 자유 교체 가능, 사용자 확인). 하단 padding 120px은 Bottom Navigation Bar 대비 Footer 전용 의도된 예외(사용자 확인). 전수 실측 |
 
 ## components/date-time-picker/란
 

@@ -78,7 +78,7 @@
       "nodeIdOpen": "2589:16808",
       "componentRef": "components/divider/divider.json (Type=Horizontal, Size=1px)",
       "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
-      "fillOverride": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "token": "ref-color-alpha-gray-900-10", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값 — 확인 필요" }
+      "fillOverride": { "figmaVariable": "color/gray/900-10", "value": "rgba(3,9,26,0.1)", "token": "ref-color-alpha-gray-900-10", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값. Divider 색상은 사용 맥락에 따라 언제든 자유 교체 가능한 속성(사용자 확인) — 고정 규칙 아님" }
     },
     "sub": {
       "nodeIdClose": "2589:16872",
@@ -92,7 +92,7 @@
           "componentRef": "components/divider/divider.json (Type=Vertical, Size=1px)",
           "height": "11px (자유 치수, 부모에 맞춰짐 — Divider Type=Vertical 규칙)",
           "thickness": { "value": "1px", "token": "ref-borderwidth-02", "tokenMatch": "정확히 일치" },
-          "fillOverride": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "token": "sys-color-neutral-400 (ref-color-gray-400)", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값 — 확인 필요" }
+          "fillOverride": { "figmaVariable": "neutral/400", "value": "#c2c4c8", "token": "sys-color-neutral-400 (ref-color-gray-400)", "tokenMatch": "정확히 일치", "note": "Divider 컴포넌트 기본 fill(neutral/100)이 아닌 오버라이드 값. Divider 색상은 사용 맥락에 따라 언제든 자유 교체 가능한 속성(사용자 확인) — 고정 규칙 아님" }
         }
       },
       "copyright": {
@@ -107,7 +107,7 @@
     "backgroundColor": { "figmaVariable": "neutral/200", "value": "#f1f2f3", "token": "sys-color-neutral-200 (ref-color-gray-200)", "tokenMatch": "정확히 일치" },
     "paddingTop": { "figmaVariable": "spacing/11", "value": "20px", "token": "ref-spacing-11", "tokenMatch": "정확히 일치" },
     "paddingX": { "figmaVariable": "spacing/11", "value": "20px", "token": "ref-spacing-11", "tokenMatch": "정확히 일치" },
-    "paddingBottom": { "figmaVariable": "spacing/22", "value": "120px", "token": "ref-spacing-22", "tokenMatch": "토큰 자체는 존재하나 저장소 grid.scrollRule(40px) 규칙과 3배 차이 — 확인 필요", "note": "홈 화면 최하단 전용이라 하단 UI(탭바 등) 클리어런스 목적으로 추정되나 디자이너 확인 전까지 미확정" },
+    "paddingBottom": { "figmaVariable": "spacing/22", "value": "120px", "token": "ref-spacing-22", "tokenMatch": "정확히 일치 (Footer 전용 의도된 예외)", "note": "저장소 grid.scrollRule(40px)과 다르지만 Footer만의 의도된 예외(사용자 확인) — 홈 화면에 추후 추가될 Bottom Navigation Bar와 겹치지 않도록 여유 공간을 미리 확보하기 위함. 다른 컴포넌트에 일반화하지 않음" },
     "blockGap": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "tokenMatch": "정확히 일치", "note": "Main-Divider-Sub 블록 간 gap" },
     "contentWidth": { "value": "350px", "note": "부모 390px(iPhone 14 기준 프레임) - 좌우 마진 20px×2. 저장소 grid.mobile.contentWidth(350px)와 정확히 일치. Footer가 화면 폭에 맞춰 늘어나는 100% 설계인지 고정 350px 설계인지는 확인 필요" }
   },
@@ -120,18 +120,17 @@
     "정확히일치": [
       "배경색 neutral/200(#f1f2f3) → sys-color-neutral-200(ref-color-gray-200)",
       "텍스트 색상 neutral/500(#8c9199) → sys-color-neutral-500(ref-color-gray-500), Header/Information/Sub 공통",
-      "Divider(Sub 링크 구분자) 오버라이드 색상 neutral/400(#c2c4c8) → sys-color-neutral-400(ref-color-gray-400)",
-      "Divider(Main-Sub 구분선) 오버라이드 색상 color/gray/900-10(rgba(3,9,26,0.1)) → ref-color-alpha-gray-900-10",
+      "Divider(Sub 링크 구분자) 오버라이드 색상 neutral/400(#c2c4c8) → sys-color-neutral-400(ref-color-gray-400), 자유 교체 가능한 속성(사용자 확인)",
+      "Divider(Main-Sub 구분선) 오버라이드 색상 color/gray/900-10(rgba(3,9,26,0.1)) → ref-color-alpha-gray-900-10, 동일하게 자유 교체 가능(사용자 확인)",
       "padding/gap 전부(spacing/01,02,04,07,11) → ref-spacing-01/02/04/07/11",
+      "아래 padding 120px(spacing/22) → ref-spacing-22, Footer 전용 의도된 예외(Bottom Navigation Bar 대비, 사용자 확인)",
       "Divider 두께 1px → ref-borderwidth-02",
       "타이포 Caption1/12 Medium, Caption2/10 Semibold/Regular → tokens/typography.json과 일치",
       "콘텐츠 너비 350px → tokens/spacing.json grid.mobile.contentWidth와 일치"
     ],
     "기존토큰에없음또는확인필요": [
-      "아래 padding 120px(spacing/22)이 저장소 스크롤 그리드 규칙(40px)과 다른 이유",
       "Header 탭 시 State 전환 애니메이션(easing/duration) — Figma 프로토타입 데이터 없음",
       "접근성 role/aria(aria-expanded 등) 규정",
-      "두 Divider 인스턴스의 색상 오버라이드가 의도된 디자인인지 여부",
       "기타정보 3개 링크의 실제 이동 대상"
     ]
   },
