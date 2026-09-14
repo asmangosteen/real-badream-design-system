@@ -1,0 +1,63 @@
+# 스토리북을 GitHub Pages 에 자동 배포합니다.
+#
+# 사용하려면 저장소 Settings → Pages → "Build and deployment" → Source 를
+# "GitHub Actions" 로 한 번만 바꿔주세요. 그 뒤로는 main 에 푸시할 때마다 자동 배포됩니다.
+#
+# 배포 주소: https://asmangosteen.github.io/real-badream-design-system/
+
+name: Deploy Storybook
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'storybook/**'
+      - 'tokens/**'
+      - 'assets/**'
+      - '.github/workflows/storybook.yml'
+  workflow_dispatch:   # Actions 탭에서 수동 실행도 가능
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: storybook/package-lock.json
+
+      - name: 의존성 설치
+        working-directory: storybook
+        run: npm ci
+
+      - name: 스토리북 빌드
+        working-directory: storybook
+        run: npm run build-storybook
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook/storybook-static
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
