@@ -292,5 +292,55 @@
       "Loading 스피너 컨테이너 패딩(3.5px)/아이콘(15px)",
       "opacity/40 변수 (사용처 미확인)"
     ]
+  },
+  "verifiedCombinations": {
+    "verifiedOn": "2026-09-14",
+    "method": "get_metadata(2601:1555)로 935개 변형 이름을 전수 파싱",
+    "formula": "11개 스타일 조합 × 5 Size × 17개 State·Contents = 935",
+    "stateContentsNote": "17 = (Default·Hover·Pressed·Disabled 4종 × Contents 4종 = 16) + (Loading × Contents=Text 1종). Loading은 Contents=Text와만 조합됨(전수 확인).",
+    "combinations": [
+      { "type": "Primary", "textColor": "White", "stroke": false, "boldStroke": false, "on": "Light" },
+      { "type": "Secondary", "textColor": "Blue", "stroke": false, "boldStroke": false, "on": "Light" },
+      { "type": "Tertiary", "textColor": "Blue", "stroke": false, "boldStroke": false, "on": "Light" },
+      { "type": "Tertiary", "textColor": "Blue", "stroke": true, "boldStroke": false, "on": "Light" },
+      { "type": "Tertiary", "textColor": "Blue", "stroke": true, "boldStroke": true, "on": "Light" },
+      { "type": "Tertiary", "textColor": "Gray", "stroke": false, "boldStroke": false, "on": "Light" },
+      { "type": "Tertiary", "textColor": "Gray", "stroke": true, "boldStroke": false, "on": "Light" },
+      { "type": "Tertiary", "textColor": "Gray", "stroke": true, "boldStroke": true, "on": "Light" },
+      { "type": "Tertiary", "textColor": "White", "stroke": false, "boldStroke": false, "on": "Dark" },
+      { "type": "Destructed", "textColor": "White", "stroke": false, "boldStroke": false, "on": "Light" },
+      { "type": "Destructed", "textColor": "Blue", "stroke": true, "boldStroke": false, "on": "Light", "note": "축 이름은 Blue지만 실제 렌더링은 빨강. 410:3561의 get_variable_defs로 theme/destructed-default #e72f37 확정." }
+    ],
+    "absentCombinationsNote": "Primary·Secondary에는 Stroke 변형이 없고, Bold Stroke는 Tertiary에만 있으며, On=Dark는 Tertiary + White 조합에만 존재합니다."
+  },
+  "loadingSpinnerSizes": {
+    "verifiedOn": "2026-09-14",
+    "method": "Contents=Text와 State=Loading 변형의 너비 차이를 역산하고, L·XL 노드의 _ButtonSpinner 인스턴스를 get_metadata로 직접 확인",
+    "gapFromLabel": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02" },
+    "S": { "value": "18px", "spinnerVariant": "S" },
+    "M": { "value": "22px", "spinnerVariant": "M", "sourceNodeId": "439:18792" },
+    "L": { "value": "22px", "spinnerVariant": "M 또는 L", "note": "스피너 M·L 두 변형이 모두 22px이라 특정 불가. 시각적으로 동일.", "sourceNodeId": "439:18836" },
+    "XL": { "value": "24px", "spinnerVariant": "XL", "sourceNodeId": "439:18924" },
+    "2XL": { "value": "24px", "spinnerVariant": "XL", "sourceNodeId": "2002:11649" }
+  },
+  "iconOnlySquareCorrection": {
+    "correctedOn": "2026-09-14",
+    "note": "Icon-only 정사각형 한 변(S26/M30/L38/XL48/2XL56)은 '패딩 공식 역산 불가한 고정값'이 아니라, 같은 Size의 Contents=Text 버튼 높이와 정확히 동일합니다. 즉 패딩Y×2 + lineHeight로 계산되는 값입니다. 935개 변형 치수 전수 확인으로 검증했습니다.",
+    "supersedes": "sizes.*.iconOnly 및 tokenMatchSummary.기존토큰에없음의 'Icon-only 정사각형 고정 크기' 항목 설명"
+  },
+  "strokeOverlayCorrection": {
+    "correctedOn": "2026-09-14",
+    "summary": "Hover/Pressed 오버레이는 Type 이 아니라 그 변형의 실제 배경색이 결정합니다. Stroke=True 는 배경이 common/white-default 로 바뀌므로 Type 과 무관하게 interaction/light-gray 를 씁니다.",
+    "supersedes": "states.hover / states.pressed 의 Type 별 오버레이 매핑 (Stroke=False 기준으로 읽을 것)",
+    "rule": {
+      "strokeFalse": "Type 별 매핑 그대로 (Primary=blue, Secondary=light-blue, Tertiary=light-gray, Tertiary On=Dark=gray, Destructed=red)",
+      "strokeTrue": { "hover": "color/interaction/light-gray/hover (#03091a0d, gray-900 5%)", "pressed": "color/interaction/light-gray/pressed (#03091a1a, gray-900 10%)" }
+    },
+    "evidence": [
+      { "nodeId": "410:3573", "combination": "Destructed + Stroke=True, Hover", "variable": "color/interaction/light-gray/hover", "value": "#03091a0d" },
+      { "nodeId": "410:3579", "combination": "Destructed + Stroke=True, Pressed", "variable": "color/interaction/light-gray/pressed", "value": "#03091a1a" },
+      { "nodeId": "410:3448", "combination": "Tertiary + Stroke=True, Hover", "variable": "color/interaction/light-gray/hover", "value": "#03091a0d" }
+    ],
+    "commonMistake": "Destructed + Stroke 에 interaction/red 를 얹으면 흰 배경이 분홍빛으로 물듭니다. interaction/red 는 Stroke=False 인 빨강 채움 변형에만 씁니다."
   }
 }

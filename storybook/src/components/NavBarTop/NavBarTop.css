@@ -1,0 +1,33 @@
+/* Navigation Bar Top — 스펙: components/navigation-bar/top/top/top.md (32개 변형)
+   Leading / Trailing / Smalltitle 을 조합한 **이 패밀리의 플래그십**입니다. */
+.bd-navbar-top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 390px;                 /* 전 변형 공통 고정 폭 */
+}
+
+/* Background=On 은 Mode 에 맞는 단색을 채웁니다.
+   ⚠️ 이 색은 고정 규칙이 아니라 **예시**이며 실제 화면 배경에 맞게 교체 가능합니다(사용자 확인) */
+.bd-navbar-top[data-background='off'] { background: transparent; }
+.bd-navbar-top[data-mode='light'][data-background='on'] { background: var(--sys-color-common-white-default); }
+.bd-navbar-top[data-mode='dark'][data-background='on'] { background: var(--sys-color-neutral-800); }
+
+/* Trailing 래퍼가 남는 공간을 전부 차지하고 그 안에서 오른쪽 끝에 붙습니다.
+   그래서 Figma 의 justify-between / gap-166px 차이가 렌더링 결과에는 나타나지 않습니다(스펙 2장 정정 참고). */
+.bd-navbar-top__leading { flex: 0 0 auto; }
+.bd-navbar-top__trailing { flex: 1 1 auto; display: flex; justify-content: flex-end; }
+
+/* Smalltitle 은 컨테이너 정중앙에 절대 배치됩니다 */
+.bd-navbar-top__center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+/* 항목을 숨겨도 나머지 위치가 고정됩니다(reflow 없음, 사용자 확인) */
+.bd-navbar-top__leading[hidden] { display: block; visibility: hidden; }
+.bd-navbar-top__center[hidden] { display: block; visibility: hidden; }

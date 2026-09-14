@@ -1,0 +1,28 @@
+/* Text Blinker — 스펙: components/global/text-blinker/text-blinker.md (2개 전수 실측)
+   입력 필드 안의 커서(캐럿). On/Off 두 상태뿐이고 크기·radius 는 공통입니다.
+   Off 는 별도 색이 아니라 **같은 색의 alpha 0%** 입니다. */
+.bd-text-blinker {
+  display: inline-block;
+  width: 1.5px;
+  /* 컴포넌트 자체의 기본값은 20px 이지만, 상위에서 인스턴스를 리사이즈해 씁니다.
+     Type Box 실측: S 16px · M 18px · L 20px (각 Size 의 lineHeight 안에 세로 중앙 정렬) */
+  height: var(--bd-blinker-height, 20px);
+  border-radius: var(--ref-radius-01);      /* 2px */
+  /* 기본 색. Text Input 이 에러 상태에서 destructed 로 오버라이드합니다 */
+  background-color: var(--bd-blinker-color, var(--sys-color-brand-primary-default));
+  flex: 0 0 auto;
+}
+.bd-text-blinker[data-state='off'] { opacity: 0; }
+
+/* ⚠️ Figma 에 깜빡임 duration·주기가 전혀 없습니다.
+   blink 를 켜면 아래 기본값(1s step-end)이 적용되며, 이는 구현 추정값입니다. */
+.bd-text-blinker[data-blink='true'] {
+  animation: bd-blinker var(--bd-blinker-duration, 1s) step-end infinite;
+}
+@keyframes bd-blinker {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bd-text-blinker[data-blink='true'] { animation: none; opacity: 1; }
+}

@@ -34,6 +34,8 @@ Type Box는 텍스트 입력 필드(Input/TextField 등) 안에서 **사용자�
 | **Typing** | "Input Text" (입력된 값) | `neutral/800` (진한 색) | **있음** (텍스트 뒤) | 포커스 + 값 있음 (입력 중) |
 | **Done** | "Input Text" (입력된 값) | `neutral/800` (진한 색) | 없음 | 비포커스 + 값 있음 (입력 완료/커밋) |
 
+**2026-09-14 추가 — 캐럿 높이가 Size 마다 다릅니다.** [Text Blinker](../text-blinker/text-blinker.md) 인스턴스는 20px 고정이 아니라 각 Size 의 lineHeight 에 맞춰 리사이즈되어 세로 중앙에 놓입니다 — **S 16px · M 18px · L 20px**(래퍼는 각각 18/22/24px). 너비 1.5px 와 radius 2px 만 공통입니다. 캐럿을 20px 고정으로 구현하면 Size=S 에서 줄 높이를 넘어 삐져나옵니다. 캐럿을 갖는 6개 변형(Selected·Typing × S/M/L)을 전수 실측했습니다. 또한 `Selected` 의 캐럿↔텍스트 간격은 1px 입니다(텍스트가 `x=2.5`, 캐럿 폭 1.5).
+
 **핵심 확인 사항**: `Selected` 상태는 텍스트 색상이 바뀌는 것이 아니라 `Placeholder`와 동일하게 회색 플레이스홀더 문구를 유지한 채로 캐럿만 추가된 상태입니다. 즉 State 축은 "텍스트 색상이 바뀌는 것(Placeholder↔Typing/Done)"과 "캐럿이 보이는 것(Selected/Typing↔Placeholder/Done)"이라는 두 개의 독립적인 하위 신호가 조합된 4가지 경우의 수로 보입니다.
 
 > **너비/높이 관련 확인**: 12개 노드의 실측 크기(예: S,Selected=67.5×18px)는 각 변형에 채워진 기본 텍스트("Placeholder" 또는 "Input Text")의 hug-content(내용에 맞춰 늘어나는) 결과값입니다. Divider·Avatar와 달리 Type Box에 고정 너비 토큰은 없으며, 실제 구현 시 입력된 텍스트 길이에 따라 너비가 가변적으로 늘어나는 것이 맞습니다.

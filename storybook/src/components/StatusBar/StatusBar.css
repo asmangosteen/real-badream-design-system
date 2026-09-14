@@ -1,0 +1,78 @@
+/* ============================================================
+   Status Bar — 스펙: components/status-bar/status-bar.md (8개 전수 실측)
+   화면 목업 상단에 얹는 기기 상태바입니다. 순수 표시용(장식)입니다.
+   ⚠️ 상태바 아이콘(셀룰러·와이파이·배터리)은 저장소 assets/ 에 없어
+      실측 치수에 맞춰 근사 재현한 것입니다 — 원본 SVG 추출이 필요합니다.
+   ============================================================ */
+.bd-status-bar {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 390px;   /* 8개 변형 공통 고정 치수 */
+  height: 50px;
+}
+
+/* Background=On 은 Mode 와 같은 색의 단색 배경을 채웁니다.
+   Off 는 배경이 아예 없어 화면 콘텐츠 위에 겹쳐 씁니다. */
+.bd-status-bar[data-background='off'] { background: transparent; }
+.bd-status-bar[data-mode='light'][data-background='on'] { background: #ffffff; } /* common/white-emphasis */
+.bd-status-bar[data-mode='dark'][data-background='on']  { background: #000000; } /* common/black-emphasis */
+
+.bd-status-bar[data-mode='light'] { color: #000000; }
+.bd-status-bar[data-mode='dark']  { color: #ffffff; }
+
+/* ---------------- iOS — Time / 노치 스페이서 / 아이콘 3분할 ---------------- */
+.bd-status-bar[data-os='ios'] {
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 16px;
+}
+.bd-status-bar[data-os='ios'] .bd-status-bar__time {
+  flex: 1 0 0;
+  text-align: center;
+  /* ⚠️ SF Pro 는 저장소에 없습니다. weight 590 은 가변 폰트의 커스텀 굵기입니다 */
+  font-family: -apple-system, 'SF Pro Text', 'SF Pro', system-ui, sans-serif;
+  font-weight: 590;
+  font-size: 17px;
+  line-height: 22px;
+}
+/* Dynamic Island 가 차지하는 공간을 레이아웃상 비워두는 빈 스페이서 */
+.bd-status-bar__island {
+  width: 125px;
+  height: 37px;
+  border-radius: 100px;
+  flex: 0 0 auto;
+}
+.bd-status-bar[data-os='ios'] .bd-status-bar__levels {
+  flex: 1 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+/* ---------------- Android — 양끝 정렬 + margin 오프셋 ---------------- */
+.bd-status-bar[data-os='android'] {
+  justify-content: space-between;
+  padding: 10px 24px;
+}
+.bd-status-bar[data-os='android'] .bd-status-bar__time {
+  /* ⚠️ Roboto 도 저장소에 없습니다 */
+  font-family: Roboto, 'Noto Sans KR', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.14px;
+  font-feature-settings: 'ss02' 1, 'dlig' 1, 'lnum' 1, 'pnum' 1;
+}
+/* iOS 의 gap 방식과 달리 개별 margin-left 로 위치를 잡습니다 */
+.bd-status-bar[data-os='android'] .bd-status-bar__levels {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+}
+.bd-status-bar[data-os='android'] .bd-status-bar__levels > :nth-child(1) { margin-left: 0; }
+.bd-status-bar[data-os='android'] .bd-status-bar__levels > :nth-child(2) { margin-left: 16px; }
+.bd-status-bar[data-os='android'] .bd-status-bar__levels > :nth-child(3) { margin-left: 38px; }
+
+.bd-status-bar svg { display: block; }

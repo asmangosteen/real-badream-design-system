@@ -61,9 +61,35 @@
     "activePatternInSamples": "실측 샘플 전부에서 Tab1만 Active=On, 나머지는 Active=Off로 진열됨 — Figma 진열 기본값일 뿐 실제로는 어느 탭이든 활성화 가능해야 함",
     "disabledEmphasizeUsage": "10개 샘플 전부 Disabled=False, Emphasize=Off인 _Item만 사용됨 — Tab 조합 안에서 개별 탭에 Disabled/Emphasize를 적용한 실사용 예시는 Figma에 없음"
   },
+  "containerWidth": {
+    "confirmedOn": "2026-09-14",
+    "value": "고정이 아니라 부모(화면) 폭에 맞춰 늘어나는 가변 — 디자이너 확정",
+    "note": "노드에 찍힌 390px(390x42 / 390x48)는 Figma 진열 프레임 폭 표시값일 뿐임. Segmented Control·Footer와 같은 패턴. overflowMask의 336px도 390px 프레임 기준 계산 예시이며, 실제로는 '컨테이너 폭 - 12(gap) - Trailing 슬롯'으로 따라 늘어남."
+  },
+  "trailingIcon": {
+    "correctedOn": "2026-09-14",
+    "purpose": "탭을 추가하는 버튼이 아님 — 디자이너 확정. 초판 문서의 '탭 개수를 늘리는 액션으로 추정'은 틀린 추정이었음. 실제로는 탭 목록과 무관한 메뉴가 펼쳐지는 버튼이며, 메뉴 내용·모양은 미정 — 확인 필요.",
+    "component": "저장소 Icon Button(Ghost)과 값이 정확히 동일 — S: 패딩 8 + 아이콘 20 = 36px(Size M), L: 패딩 8 + 아이콘 24 = 40px(Size L), radius 12px, 아이콘색 neutral/800",
+    "slot": "탭 바 높이와 같은 정사각형(S 42x42 / L 48x48)에 Icon Button이 가운데 놓임",
+    "gapFromScrollArea": { "figmaVariable": "spacing/08", "value": "12px", "sourceNodeId": "2262:1825", "note": "Leading(스크롤 영역) ↔ Trailing 슬롯 사이 gap. Tailing Icon=True일 때 스크롤 영역 실폭 = 390 - 12(gap) - 42(슬롯) = 336px 로 overflowMask 실측 폭과 일치" }
+  },
+  "overflowScroll": {
+    "confirmedOn": "2026-09-14",
+    "source": "디자이너 확정 (Figma 스펙에는 스크롤 인터랙션 명시 없음)",
+    "container": "Type=Hug는 탭 로우 자체가 가로 스크롤 컨테이너(overflow-x: auto, 스크롤바는 CSS로 숨김). 별도 래퍼로 감싸지 않음.",
+    "itemSizing": "탭은 콘텐츠 폭을 그대로 차지하고 줄어들지 않음(flex-shrink: 0). _Item의 min-width 32px는 짧은 라벨의 하한일 뿐 목표 폭이 아니며, 줄어들게 두면 전부 32px로 찌그러져 '넘치면 스크롤' 전제가 깨짐.",
+    "fadeIsOverlayNotMask": "페이드는 콘텐츠를 깎는 mask-image가 아니라, 그 방향에 숨겨진 탭이 남아 있을 때만 나타나는 그라디언트 오버레이임.",
+    "fadeWidth": "탭 바 높이와 동일 (S 42px / L 48px)",
+    "fadeStops": "0/15/30/50/70/85/100% → alpha 0/0.08/0.22/0.42/0.64/0.82/1 (overflowMask 애셋 실측 그대로)",
+    "visibilityRule": { "start": "scrollLeft > 0", "end": "scrollLeft + clientWidth < scrollWidth - 1", "note": "-1px은 부동소수점 버퍼" },
+    "transition": "opacity 200ms ease (레이아웃 변화 없는 크로스페이드)",
+    "updateTriggers": ["scroll(passive)", "ResizeObserver", "window resize", "탭 개수 변경"],
+    "pointerEvents": "none — 페이드가 탭 클릭을 막지 않음",
+    "withTrailingIcon": "'+' 슬롯이 스크롤 영역 뒤에 고정되므로 오른쪽 페이드는 '+'를 덮지 않고 스크롤 영역 끝에 붙음"
+  },
   "overflowMask": {
     "observed": "Type=Hug의 Tabs 행에는 항상 SVG mask-image가 씌워져 있으며, mask-size는 가용 폭(예: S/TailingIcon=True/SidePadding=False는 336x42px)에 맞춰 계산됨. 스크린샷에서 마지막 탭 1~2개가 옅게 페이드아웃되며 잘리는 것이 확인됨.",
-    "interpretation": "가로 스크롤 가능한 탭 목록임을 시사하는 시각적 힌트로 추정되나, 실제 overflow-x/스크롤 인터랙션은 Figma 스펙에 명시되어 있지 않음 — 확인 필요.",
+    "interpretation": "가로 스크롤 가능한 탭 목록임을 시사하는 시각적 힌트. 2026-09-14 디자이너 확정으로 실제 가로 스크롤이 존재하며, 구현은 이 마스크를 그대로 씌우지 않고 overflowScroll 규칙대로 조건부 오버레이로 옮김.",
     "sourceAsset": {
       "figmaNodeId": "2262:1908",
       "figmaNodeName": "Alpha Gradient Mask",
@@ -84,13 +110,26 @@
     }
   },
   "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 최상위 프레임(2262:2251, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. Active 탭 전환 시 밑줄 인디케이터가 슬라이딩하는 애니메이션 유무를 특히 주의 깊게 확인했으나 Figma에 그런 트랜지션 정의 없음.",
+  "interactionsNote": "Figma에 모션 데이터 없음. get_motion_context를 최상위 프레임(2262:2251, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. 아래 underlineMotion은 Figma 실측이 아니라 2026-09-14 디자이너가 확정한 스펙임.",
+  "underlineMotion": {
+    "confirmedOn": "2026-09-14",
+    "source": "디자이너 확정 (Figma에 근거 없음)",
+    "behavior": "Active가 바뀌면 밑줄 막대 하나가 새 탭 위치로 이동. 탭마다 밑줄을 켜고 끄지 않음",
+    "duration": "200ms",
+    "easing": "cubic-bezier(0.32, 0.72, 0, 1)",
+    "sameAs": "Segmented Control의 흰 pill과 같은 값",
+    "alsoTransitioned": "탭 텍스트 색상 (같은 duration·easing)",
+    "pressScale": "없음 — 의도적으로 넣지 않음",
+    "reducedMotion": "prefers-reduced-motion: reduce 에서는 전환 없이 즉시 이동",
+    "color": "활성 탭의 글자색을 따름 — 일반 neutral/800, Emphasize theme/destructed, Disabled neutral/400",
+    "positioning": "탭마다 폭이 달라 CSS 계산 불가 — 활성 탭을 실측해 옮김. 스크롤 영역 안에 두어 가로 스크롤을 따라 함께 움직임"
+  },
   "accessibility": {
     "tablist": "컨테이너 role=\"tablist\", 각 탭 role=\"tab\" aria-selected aria-disabled 부여가 WAI-ARIA Tabs 패턴에 부합해 보이나 Figma에 규정 없음 — 확인 필요.",
     "keyboardNav": "좌우 화살표/Home/End 등 키보드 네비게이션은 WAI-ARIA Tabs 일반 관례이나 Figma로 확인 불가 — 확인 필요.",
     "colorOnlyActive": "Active 상태가 밑줄 인디케이터+텍스트 명도 차이로만 표현되어 aria-selected 등 프로그램적 상태 전달 필요.",
     "scrollAffordance": "오버플로우 마스크가 시사하는 가로 스크롤에 대한 키보드/스크린리더 접근성 설계가 Figma 스펙 범위 밖 — 확인 필요.",
-    "trailingButtonLabel": "Trailing '+' 아이콘 버튼에 대한 접근 가능한 이름(aria-label)이 Figma에 지정되어 있지 않음 — 확인 필요.",
+    "trailingButtonLabel": "Trailing '+' 아이콘 버튼의 접근 가능한 이름(aria-label)이 Figma에 지정되어 있지 않음 — 확인 필요. '탭 추가'는 목적 자체가 틀리므로 쓰면 안 됨(trailingIcon 참조).",
     "disabledAxis": "Tab 컨테이너 자체에는 Disabled 축이 없음(개별 _Item에만 존재) — Segmented Control과 동일한 패턴, 관찰 사실."
   },
   "tokenMatchSummary": {
@@ -108,9 +147,8 @@
     "확인필요": [
       "Tailing Icon=True+Side Padding=True 조합에서 우측 padding 12px이 변수 미바인딩(하드코딩)인 이유",
       "Size=L에서 Side Padding=True여도 아이템 gap이 24px로 유지되어 S(20px로 축소)와 다른 패턴을 보이는 이유",
-      "컨테이너 너비 390px의 화면 폭 가변 여부",
       "Type=Hug 최대 8개/Fill 고정 5개가 실제 프로덕트 제약인지 진열 편의상 값인지",
-      "가로 스크롤 마스크가 시사하는 실제 스크롤 인터랙션의 존재 여부",
+      "Trailing '+' 버튼을 눌렀을 때 펼쳐지는 메뉴의 내용·모양(탭 추가가 아님은 확정, 그 외 미정)",
       "role/aria/키보드 네비게이션/Trailing 버튼 aria-label 등 접근성 마크업 연결 규정"
     ]
   },

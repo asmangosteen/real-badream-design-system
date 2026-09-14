@@ -1,0 +1,46 @@
+/* ============================================================
+   Page Control — 스펙: components/page-control/page-control.md
+   State 축이 없는 순수 표시용 인디케이터입니다. 도트는 클릭할 수 없습니다(사용자 확인).
+   ============================================================ */
+.bd-page-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-spacing-06);      /* 8px */
+  padding: var(--ref-spacing-06);  /* 8px 사방 */
+}
+
+/* 도트 슬롯은 항상 8×8px 이고, 그 안의 원만 반지름이 줄어듭니다 */
+.bd-page-control__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+}
+.bd-page-control__dot {
+  border-radius: var(--ref-radius-12);
+  background-color: var(--bd-dot-color);
+  opacity: var(--bd-dot-opacity, 1);
+}
+
+/* On Light — 미선택은 검정 계열 20%, 선택은 neutral/700 100% */
+.bd-page-control[data-type='on-light'] .bd-page-control__dot {
+  --bd-dot-color: var(--ref-color-gray-900);
+  --bd-dot-opacity: 0.2;
+}
+.bd-page-control[data-type='on-light'] .bd-page-control__dot[data-selected='true'] {
+  --bd-dot-color: var(--sys-color-neutral-700);
+  --bd-dot-opacity: 1;
+}
+
+/* On Dark — 미선택은 흰색 계열 20%, 선택은 neutral/100 100% */
+.bd-page-control[data-type='on-dark'] .bd-page-control__dot {
+  --bd-dot-color: var(--sys-color-common-white-default);
+  --bd-dot-opacity: 0.2;
+}
+.bd-page-control[data-type='on-dark'] .bd-page-control__dot[data-selected='true'] {
+  --bd-dot-color: var(--sys-color-neutral-100);
+  --bd-dot-opacity: 1;
+}

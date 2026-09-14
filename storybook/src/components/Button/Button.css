@@ -1,0 +1,172 @@
+/* ============================================================
+   Button — 스펙: components/button/button/button.md
+   935개 인스턴스 · 8개 변형 축 (Size/Type/State/Text Color/Stroke/Bold Stroke/On/Contents)
+   Hover·Pressed 는 Figma 와 동일하게 "베이스 위에 interaction/* 오버레이를 합성" 하는 방식입니다.
+   ============================================================ */
+.bd-button {
+  --bd-btn-overlay: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  white-space: nowrap;
+  text-decoration: none;
+  gap: var(--ref-spacing-02);            /* 전 Size 공통 2px */
+  background-image: linear-gradient(var(--bd-btn-overlay), var(--bd-btn-overlay));
+  background-color: var(--bd-btn-bg);
+  color: var(--bd-btn-fg);
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-button:disabled { cursor: not-allowed; }
+
+/* ---------------- Size ---------------- */
+.bd-button[data-size='s'] {
+  padding: var(--ref-spacing-04) var(--ref-spacing-06);   /* 4 / 8 */
+  border-radius: var(--ref-radius-04);                    /* 8px */
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-semibold);               /* S 만 Semibold(600) */
+}
+.bd-button[data-size='m'] {
+  padding: var(--ref-spacing-04) var(--ref-spacing-06);   /* 4 / 8 */
+  border-radius: var(--ref-radius-05);                    /* 10px */
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-button[data-size='l'] {
+  padding: var(--ref-spacing-06) var(--ref-spacing-08);   /* 8 / 12 */
+  border-radius: var(--ref-radius-05);
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-button[data-size='xl'] {
+  padding: var(--ref-spacing-08) var(--ref-spacing-10);   /* 12 / 16 */
+  border-radius: var(--ref-radius-06);                    /* 12px */
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-button[data-size='2xl'] {
+  padding: var(--ref-spacing-10);                         /* 16 전방향 */
+  border-radius: var(--ref-radius-06);
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Contents=Icon — 패딩 공식을 따르지 않는 고정 정사각형 */
+.bd-button[data-contents='icon'] { padding: 0; }
+.bd-button[data-contents='icon'][data-size='s']   { width: 26px; height: 26px; }
+.bd-button[data-contents='icon'][data-size='m']   { width: 30px; height: 30px; }
+.bd-button[data-contents='icon'][data-size='l']   { width: 38px; height: 38px; }
+.bd-button[data-contents='icon'][data-size='xl']  { width: 48px; height: 48px; }
+.bd-button[data-contents='icon'][data-size='2xl'] { width: 56px; height: 56px; }
+
+/* ---------------- Type · 베이스 색 ---------------- */
+.bd-button[data-type='primary'] {
+  --bd-btn-bg: var(--sys-color-brand-primary-default);
+  --bd-btn-fg: var(--sys-color-common-white-default);
+}
+.bd-button[data-type='secondary'] {
+  --bd-btn-bg: var(--sys-color-brand-primary-lightest);
+  --bd-btn-fg: var(--sys-color-brand-primary-default);
+}
+.bd-button[data-type='tertiary'] {
+  --bd-btn-bg: var(--sys-color-neutral-100);
+  --bd-btn-fg: var(--sys-color-neutral-600);
+}
+.bd-button[data-type='tertiary'][data-text-color='blue'] {
+  --bd-btn-fg: var(--sys-color-brand-primary-default);
+}
+/* Tertiary + White 라벨은 On=Dark 에서만 관측됨 */
+.bd-button[data-type='tertiary'][data-on='dark'] {
+  --bd-btn-bg: var(--sys-color-neutral-600);
+  --bd-btn-fg: var(--sys-color-common-white-default);
+}
+.bd-button[data-type='destructed'] {
+  --bd-btn-bg: var(--sys-color-theme-destructed-default);
+  --bd-btn-fg: var(--sys-color-common-white-default);
+}
+
+/* ---------------- Stroke ---------------- */
+.bd-button[data-stroke='true'] {
+  --bd-btn-bg: var(--sys-color-common-white-default);
+  border: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-10);
+}
+/* Bold Stroke 는 Tertiary 에서만 관측됨 — 불투명 단색 보더 */
+.bd-button[data-stroke='true'][data-bold-stroke='true'] {
+  border-color: var(--sys-color-neutral-400);
+}
+/* Stroke 일 때 라벨 색은 Type 을 따라갑니다 */
+.bd-button[data-type='tertiary'][data-stroke='true'] { --bd-btn-fg: var(--sys-color-neutral-600); }
+.bd-button[data-type='tertiary'][data-stroke='true'][data-text-color='blue'] {
+  --bd-btn-fg: var(--sys-color-brand-primary-default);
+}
+/* ⚠️ Figma 에서 "Text Color=Blue" 로 이름 붙은 Destructed+Stroke 변형이
+   실제로는 빨간 라벨로 렌더링됩니다 (스펙 4장 "명명 불일치 주의"). 실측값을 따릅니다. */
+.bd-button[data-type='destructed'][data-stroke='true'] {
+  --bd-btn-fg: var(--sys-color-theme-destructed-default);
+}
+
+/* ---------------- Hover / Pressed 오버레이 ---------------- */
+.bd-button[data-type='primary']:hover:not(:disabled),
+.bd-button[data-type='primary'][data-force-state='hover'] { --bd-btn-overlay: var(--interaction-blue-hover); }
+.bd-button[data-type='primary']:active:not(:disabled),
+.bd-button[data-type='primary'][data-force-state='pressed'] { --bd-btn-overlay: var(--interaction-blue-pressed); }
+
+.bd-button[data-type='secondary']:hover:not(:disabled),
+.bd-button[data-type='secondary'][data-force-state='hover'] { --bd-btn-overlay: var(--interaction-light-blue-hover); }
+.bd-button[data-type='secondary']:active:not(:disabled),
+.bd-button[data-type='secondary'][data-force-state='pressed'] { --bd-btn-overlay: var(--interaction-light-blue-pressed); }
+
+.bd-button[data-type='tertiary']:hover:not(:disabled),
+.bd-button[data-type='tertiary'][data-force-state='hover'] { --bd-btn-overlay: var(--interaction-light-gray-hover); }
+.bd-button[data-type='tertiary']:active:not(:disabled),
+.bd-button[data-type='tertiary'][data-force-state='pressed'] { --bd-btn-overlay: var(--interaction-light-gray-pressed); }
+/* On=Dark 는 더 진한 interaction/gray 를 씁니다 */
+.bd-button[data-type='tertiary'][data-on='dark']:hover:not(:disabled),
+.bd-button[data-type='tertiary'][data-on='dark'][data-force-state='hover'] { --bd-btn-overlay: var(--interaction-gray-hover); }
+.bd-button[data-type='tertiary'][data-on='dark']:active:not(:disabled),
+.bd-button[data-type='tertiary'][data-on='dark'][data-force-state='pressed'] { --bd-btn-overlay: var(--interaction-gray-pressed); }
+
+.bd-button[data-type='destructed']:hover:not(:disabled),
+.bd-button[data-type='destructed'][data-force-state='hover'] { --bd-btn-overlay: var(--interaction-red-hover); }
+.bd-button[data-type='destructed']:active:not(:disabled),
+.bd-button[data-type='destructed'][data-force-state='pressed'] { --bd-btn-overlay: var(--interaction-red-pressed); }
+
+/* ---------------- Stroke=True 의 오버레이 예외 (2026-09-14 정정) ----------------
+   Stroke=True 는 배경이 흰색(common/white-default)으로 바뀌므로,
+   Type 이 아니라 **실제 배경**에 맞는 interaction/light-gray 를 씁니다.
+   Figma 실측 근거:
+     410:3573 (Destructed + Stroke, Hover)   → color/interaction/light-gray/hover  #03091a0d
+     410:3579 (Destructed + Stroke, Pressed) → color/interaction/light-gray/pressed #03091a1a
+     410:3448 (Tertiary  + Stroke, Hover)    → color/interaction/light-gray/hover
+   이전에는 Destructed 라는 이유로 interaction/red 를 얹어 흰 배경이 분홍빛으로 물들었습니다.
+   (타입별 규칙 뒤에 와야 같은 우선순위에서 이 규칙이 이깁니다) */
+.bd-button[data-stroke='true']:hover:not(:disabled),
+.bd-button[data-stroke='true'][data-force-state='hover'] { --bd-btn-overlay: var(--interaction-light-gray-hover); }
+.bd-button[data-stroke='true']:active:not(:disabled),
+.bd-button[data-stroke='true'][data-force-state='pressed'] { --bd-btn-overlay: var(--interaction-light-gray-pressed); }
+
+/* ---------------- Disabled ----------------
+   Checkbox/Radio 와 달리 Button 은 전체에 opacity 20% 입니다 (색상값 자체는 불변) */
+.bd-button:disabled {
+  opacity: var(--ref-opacity-20);
+  --bd-btn-overlay: transparent;
+}
+
+/* ⚠️ Figma 에 Focused 정의가 없어 구현에서 추가 (스펙 7장) */
+.bd-button:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+}

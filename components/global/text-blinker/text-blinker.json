@@ -62,5 +62,18 @@
       "네이티브 브라우저 캐럿과의 중복 방지 처리 방식"
     ]
   },
-  "sampledNodeIds": ["2111:7482", "2111:7481"]
+  "sampledNodeIds": ["2111:7482", "2111:7481"],
+  "heightResizedByParent": {
+    "addedOn": "2026-09-14",
+    "method": "get_metadata 로 Type Box 12개 변형 중 캐럿을 갖는 6개(Selected·Typing × S/M/L)를 전수 확인",
+    "componentDefaultHeight": "20px",
+    "note": "컴포넌트 자체 기본 높이는 20px 이지만 Type Box 가 각 Size 의 lineHeight 에 맞춰 인스턴스를 리사이즈합니다. 20px 고정으로 구현하면 Size=S 에서 캐럿이 줄 높이(18px)보다 커져 밖으로 삐져나옵니다.",
+    "byTypeBoxSize": {
+      "S": { "lineHeight": "18px", "wrapper": "1.5x18", "caretHeight": "16px", "topOffset": "1px", "nodes": { "selected": "2111:7568", "typing": "2111:7574" } },
+      "M": { "lineHeight": "22px", "wrapper": "1.5x22", "caretHeight": "18px", "topOffset": "2px", "nodes": { "selected": "2111:7570", "typing": "2111:7573" } },
+      "L": { "lineHeight": "24px", "wrapper": "1.5x24", "caretHeight": "20px", "topOffset": "2px", "nodes": { "selected": "2111:7566", "typing": "2111:7567" } }
+    },
+    "constantAcrossSizes": ["width 1.5px", "radius/01 (2px)"],
+    "verticalAlignment": "래퍼 프레임은 줄 높이만큼이고 그 안에서 캐럿이 세로 중앙에 놓입니다."
+  }
 }

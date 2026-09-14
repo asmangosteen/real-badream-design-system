@@ -1,0 +1,26 @@
+/* Text Count — 스펙: components/global/text-count/text-count.md (6개 전수 실측)
+   핵심: State 가 바뀌어도 **분자만 색이 바뀌고 슬래시·분모는 항상 neutral/500 고정**입니다. */
+.bd-text-count {
+  display: inline-flex;
+  align-items: center;                       /* gap 없음 — 글자가 바로 붙습니다 */
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-500);       /* 슬래시·분모 색 */
+  white-space: nowrap;
+}
+
+/* Size 는 크기뿐 아니라 weight 도 다릅니다 */
+.bd-text-count[data-size='small'] {
+  font-size: var(--typography-caption-2-size);
+  line-height: var(--typography-caption-2-line-height);
+  font-weight: var(--font-weight-medium);    /* 500 */
+}
+.bd-text-count[data-size='default'] {
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  font-weight: var(--font-weight-regular);   /* 400 — Small 과 다릅니다 */
+}
+
+/* 분자만 State 에 따라 색이 바뀝니다 */
+.bd-text-count__current { color: var(--sys-color-neutral-500); }
+.bd-text-count[data-state='typing'] .bd-text-count__current { color: var(--sys-color-neutral-700); }
+.bd-text-count[data-state='destructed'] .bd-text-count__current { color: var(--sys-color-theme-destructed-default); }

@@ -107,7 +107,7 @@
     "paddingX": { "figmaVariable": "spacing/11", "value": "20px", "token": "ref-spacing-11", "tokenMatch": "정확히 일치" },
     "paddingBottom": { "figmaVariable": "spacing/22", "value": "120px", "token": "ref-spacing-22", "tokenMatch": "정확히 일치 (Footer 전용 의도된 예외)", "note": "저장소 grid.scrollRule(40px)과 다르지만 Footer만의 의도된 예외(사용자 확인) — 홈 화면에 추후 추가될 Bottom Navigation Bar와 겹치지 않도록 여유 공간을 미리 확보하기 위함. 다른 컴포넌트에 일반화하지 않음" },
     "blockGap": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "tokenMatch": "정확히 일치", "note": "Main-Divider-Sub 블록 간 gap" },
-    "contentWidth": { "value": "350px", "note": "부모 390px(iPhone 14 기준 프레임) - 좌우 마진 20px×2. 저장소 grid.mobile.contentWidth(350px)와 정확히 일치. Footer가 화면 폭에 맞춰 늘어나는 100% 설계인지 고정 350px 설계인지는 확인 필요" }
+    "contentWidth": { "value": "부모 폭 - 좌우 마진 20px×2", "note": "Footer 너비는 고정이 아니라 화면(부모) 폭에 맞춰 늘어나는 가변임 — 2026-09-14 디자이너 확정. Figma 진열 프레임 390px(iPhone 14)에서는 콘텐츠 350px 이 되며 저장소 grid.mobile.contentWidth(350px)와 정확히 일치. 고정되는 것은 좌우 20px 마진뿐" }
   },
   "accessibility": {
     "headerRole": "탭 가능한 토글 트리거 — role=\"button\" + aria-expanded 필요로 추정되나 Figma 파일에 role 규정 없음. 확인 필요.",

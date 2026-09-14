@@ -59,7 +59,9 @@
     "padding": {
       "textIcon": { "left": { "figmaVariable": "spacing/08", "value": "12px" }, "right": { "figmaVariable": "spacing/06", "value": "8px" }, "y": { "figmaVariable": "spacing/05", "value": "6px" } },
       "iconOnly": { "all": { "figmaVariable": "spacing/05", "value": "6px" }, "innerIconContainer": { "figmaVariable": "spacing/03", "value": "3px" } },
-      "avatarIcon": { "left": { "figmaVariable": "spacing/05", "value": "6px", "note": "Selection의 Avatar+Text pl(8px)보다 작음" }, "right": { "figmaVariable": "spacing/06", "value": "8px" }, "y": { "figmaVariable": "spacing/05", "value": "6px" } }
+      "avatarIcon": { "left": { "figmaVariable": "spacing/05", "value": "6px", "note": "Selection의 Avatar+Text pl(8px)보다 작음" }, "right": { "figmaVariable": "spacing/06", "value": "8px" }, "y": { "figmaVariable": "spacing/05", "value": "6px" } },
+      "avatarTextIcon": { "sourceNodeId": "2275:3268", "left": { "figmaVariable": "spacing/05", "value": "6px" }, "right": { "figmaVariable": "spacing/06", "value": "8px" }, "y": { "figmaVariable": "spacing/05", "value": "6px" }, "note": "avatarIcon과 완전히 동일. 2026-09-14 추가 — 초판에 이 값이 없어 구현에서 이 조합만 왼쪽 12px로 남는 버그가 있었음" },
+      "leftPaddingRule": "기본 왼쪽 패딩은 spacing/08=12px이지만, 왼쪽에 아바타가 붙는 Contents(avatarIcon, avatarTextIcon)는 spacing/05=6px로 줄어듦. 왼쪽이 12px인 것은 textIcon 하나뿐이고 iconOnly는 4방향 6px 균등."
     },
     "icon": { "asset": "Icon / Default / 16px / chevron_down", "swappable": false, "note": "Selection과 달리 항상 고정된 chevron_down 아이콘. Selected 상태에서 다른 SVG 애셋으로 교체됨(색상 변경 추정, SVG fill 미확인)" },
     "colorStateMechanism": "Selection의 typeState와 완전히 동일 (Default/Hover=gray-900-2%/Pressed=gray-900-5%/Disabled=opacity-40%/Selected=Outlined는 brand-lightest+blue-500-60% 테두리, Filled는 neutral-800)"

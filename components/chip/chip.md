@@ -85,7 +85,10 @@ Chip은 Badge와 마찬가지로 **하나가 아니라 2개의 독립된 Compone
 | Padding(Text+Icon) | pl `spacing/08`=12px · pr `spacing/06`=8px · py `spacing/05`=6px |
 | Padding(Icon만) | `spacing/05`=6px 4방향 균등, 내부 Icon Container `spacing/03`=3px |
 | Padding(Avatar+Icon) | pl `spacing/05`=6px(Selection의 Avatar+Text pl=8px보다 작음) · pr `spacing/06`=8px · py `spacing/05`=6px |
+| Padding(Avatar+Text+Icon) | pl `spacing/05`=6px · pr `spacing/06`=8px · py `spacing/05`=6px — **Avatar+Icon과 완전히 동일** (`2275:3268` 실측) |
 | 아이콘 | `Icon / Default / 16px / chevron_down` — **항상 고정**, Selection처럼 스왑 가능한 슬롯이 아님 |
+
+**Filter의 왼쪽 패딩 규칙**: 기본은 `spacing/08`=12px 이지만, **왼쪽에 아바타가 붙는 Contents(Avatar+Icon · Avatar+Text+Icon)는 `spacing/05`=6px 로 줄어듭니다.** Contents 4종 중 왼쪽이 12px인 것은 `Text+Icon` 하나뿐이고, `Icon`만은 4방향 6px 균등입니다. 초판 문서에 Avatar+Text+Icon 값이 빠져 있어 구현에서 이 조합만 12px로 남는 버그가 있었습니다(2026-09-14 정정).
 
 색상/State 메커니즘은 Selection과 **완전히 동일**합니다(Outlined/Filled의 Default·Hover(`gray-900-2%`)·Pressed(`gray-900-5%`)·Disabled(`opacity/40`)·Selected(Outlined=브랜드 라이트+블루 테두리, Filled=neutral/800) 전부 3장과 동일 토큰).
 

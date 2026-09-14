@@ -1,0 +1,62 @@
+/* Supporting Text — 스펙: components/global/supporting-text/supporting-text.md
+   Size(3) × Theme(6) × Text Count(2) = 36개 변형. 세 축이 서로 완전히 독립적입니다.
+   Theme = 글자·아이콘 색만 / Size = 타이포·패딩·아이콘 크기만 / Text Count = 카운터 유무만 */
+.bd-supporting-text {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-sizing: border-box;
+  gap: var(--ref-spacing-06);              /* 본문↔카운터 8px, 전 Size 공통 */
+  font-family: var(--font-family-base);
+  color: var(--bd-st-color);
+}
+
+/* 높이 = padding-top + lineHeight (S 4+16=20 · M 4+18=22 · L 6+18=24) */
+.bd-supporting-text[data-size='s'] {
+  padding: var(--ref-spacing-04) var(--ref-spacing-07) 0;   /* 4 / 10 */
+  font-size: var(--typography-caption-2-size);
+  line-height: var(--typography-caption-2-line-height);
+  letter-spacing: var(--typography-caption-2-letter-spacing);
+  font-weight: var(--font-weight-medium);                   /* S 만 Medium */
+}
+/* M 과 L 은 타이포·아이콘이 완전히 같고 패딩만 다릅니다 */
+.bd-supporting-text[data-size='m'] {
+  padding: var(--ref-spacing-04) var(--ref-spacing-08) 0;   /* 4 / 12 */
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-regular);
+}
+.bd-supporting-text[data-size='l'] {
+  padding: var(--ref-spacing-05) var(--ref-spacing-09) 0;   /* 6 / 14 */
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Theme — 본문과 아이콘에만 적용됩니다 */
+.bd-supporting-text[data-theme='gray']       { --bd-st-color: var(--sys-color-neutral-500); }
+.bd-supporting-text[data-theme='black']      { --bd-st-color: var(--sys-color-neutral-700); } /* 이름과 달리 진회색입니다 */
+.bd-supporting-text[data-theme='brand']      { --bd-st-color: var(--sys-color-brand-primary-default); }
+.bd-supporting-text[data-theme='destructed'] { --bd-st-color: var(--sys-color-theme-destructed-default); }
+.bd-supporting-text[data-theme='success']    { --bd-st-color: var(--sys-color-theme-success-default); }
+.bd-supporting-text[data-theme='warning']    { --bd-st-color: var(--sys-color-theme-warning-default); }
+
+/* 아이콘 래퍼 — ⚠️ **S 에만** 위쪽 1px 여백이 붙습니다 (M·L 은 없음, Figma 실측) */
+.bd-supporting-text__icon { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.bd-supporting-text[data-size='s'] .bd-supporting-text__icon { padding-top: var(--ref-spacing-01); }
+
+.bd-supporting-text__content {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-spacing-02);              /* 아이콘↔글자 2px, 전 Size 공통 */
+  flex: 1 0 0;                             /* 카운터가 없으면 이 영역이 넓어집니다 */
+  min-width: 0;
+}
+
+/* 카운터는 Theme 과 무관하게 **항상 neutral/500 고정**입니다 */
+.bd-supporting-text__count {
+  flex: 0 0 auto;
+  color: var(--sys-color-neutral-500);
+}

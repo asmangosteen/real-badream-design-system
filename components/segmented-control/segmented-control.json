@@ -31,7 +31,7 @@
       "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
       "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" },
       "padding": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
-      "gap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치", "correctedOn": "2026-09-14", "previousValue": "spacing/05 = 6px" },
       "measuredHeight": "26px",
       "innerItemSize": "XS (_Item 문서 XS행과 완전 일치: px8/py3/radius03/Caption2·10 SB)",
       "heightFormula": "_Item(XS) 22px + padding 2px×2 = 26px",
@@ -42,7 +42,7 @@
       "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
       "radius": { "figmaVariable": "radius/04", "value": "8px", "tokenMatch": "정확히 일치" },
       "padding": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
-      "gap": { "figmaVariable": "spacing/05", "value": "6px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치", "correctedOn": "2026-09-14", "previousValue": "spacing/05 = 6px" },
       "measuredHeight": "30px",
       "innerItemSize": "S (_Item 문서 S행과 완전 일치: px8/py4/radius03/Caption1·12 SB)",
       "heightFormula": "_Item(S) 26px + padding 2px×2 = 30px"
@@ -52,7 +52,7 @@
       "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
       "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" },
       "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" },
-      "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치", "correctedOn": "2026-09-14", "previousValue": "spacing/06 = 8px" },
       "measuredHeight": "42px",
       "innerItemSize": "M (_Item 문서 M행과 완전 일치)",
       "heightFormula": "_Item(M) 34px + padding 4px×2 = 42px",
@@ -64,7 +64,7 @@
       "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
       "radius": { "figmaVariable": "radius/07", "value": "16px", "tokenMatch": "정확히 일치" },
       "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" },
-      "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치", "correctedOn": "2026-09-14", "previousValue": "spacing/06 = 8px" },
       "measuredHeight": "48px",
       "innerItemSize": "L (_Item 문서 L행과 완전 일치)",
       "heightFormula": "_Item(L) 40px + padding 4px×2 = 48px"
@@ -74,7 +74,7 @@
       "background": { "figmaVariable": "color/gray/200", "value": "#f1f2f3", "tokenMatch": "정확히 일치" },
       "radius": { "figmaVariable": "radius/07", "value": "16px", "tokenMatch": "정확히 일치" },
       "padding": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" },
-      "gap": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
+      "gap": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치", "correctedOn": "2026-09-14", "previousValue": "spacing/06 = 8px" },
       "measuredHeight": "56px",
       "innerItemSize": "XL (_Item 문서 XL행과 완전 일치)",
       "heightFormula": "_Item(XL) 48px + padding 4px×2 = 56px"
@@ -84,7 +84,7 @@
     "컨테이너 높이 = 내부 _Item 표준 높이 + 컨테이너 padding×2 공식이 5개 Size 전부에서 정확히 성립함(XS/S/M/L/XL 모두 확인)",
     "컨테이너 radius는 3단 계단: XS·S 공유 radius/04(8px) → M 단독 radius/06(12px) → L·XL 공유 radius/07(16px). _Item 자체의 radius 계단(XS·S 공유 radius/03 → M 단독 radius/04 → L·XL 공유 radius/06)과 값은 다르지만 그룹핑 패턴(XS+S / M / L+XL)은 동일함",
     "컨테이너 padding/gap은 XS·S만 2px/6px이고 M/L/XL은 전부 4px/8px로 동일 — Size 축 전체가 이제 _Item의 5단 스케일과 1:1로 정확히 대응함",
-    "너비 390px가 화면 폭 가변인지는 Segmented Control 자체에서 명시적으로 확인되지 않음 — 확인 필요(Dropdown과 달리)"
+    "컨테이너 너비는 고정이 아니라 부모(화면) 폭에 맞춰 늘어나는 가변임 — 2026-09-14 디자이너 확정. Figma 노드의 390px 및 w-[390px] 는 진열 프레임 폭 표시값"
   ],
   "countAxisFindings": {
     "sizeM_count2345": "Count가 2→5로 늘어도 컨테이너 padding/gap/radius/높이(42px) 전혀 변하지 않음. 유일한 변화는 _Item 자식 개수. 각 _Item은 flex-[1_0_0] min-w-px로 컨테이너 폭을 균등 분할함(코드에서 확인).",
@@ -101,7 +101,18 @@
     "selectedPatternInSamples": "실측 샘플 전부에서 첫 번째 세그먼트만 Selected=True, 나머지 Selected=False로 진열되어 있음 — 이는 Figma 진열 기본값일 뿐 실제로는 어느 세그먼트든 선택 가능해야 함"
   },
   "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 최상위 프레임(2197:8777, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. Selected 세그먼트 전환 시 흰 배경 pill의 슬라이딩 애니메이션 유무를 특히 주의 깊게 확인했으나 Figma에 그런 트랜지션 정의 없음 — 즉시 전환이 현재 스펙.",
+  "interactionsNote": "Figma에 모션 데이터 없음. get_motion_context를 최상위 프레임(2197:8777, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. Selected 세그먼트 전환 시 흰 배경 pill의 슬라이딩 애니메이션 유무를 특히 주의 깊게 확인했으나 Figma에 트랜지션 정의 없음. 아래 indicatorMotion은 Figma 실측이 아니라 2026-09-14 디자이너가 확정한 스펙임.",
+  "indicatorMotion": {
+    "confirmedOn": "2026-09-14",
+    "source": "디자이너 확정 (Figma에 근거 없음)",
+    "behavior": "Selected가 바뀌면 흰 pill 하나가 새 위치로 이동. 항목마다 배경을 켜고 끄지 않음",
+    "duration": "200ms",
+    "easing": "cubic-bezier(0.32, 0.72, 0, 1)",
+    "alsoTransitioned": "세그먼트 텍스트 색상 (같은 duration·easing)",
+    "pressScale": "없음 — 의도적으로 넣지 않음",
+    "reducedMotion": "prefers-reduced-motion: reduce 에서는 전환 없이 즉시 이동",
+    "positionFormula": "itemWidth = (컨테이너폭 - padding×2 - gap×(Count-1)) / Count, left(i) = padding + i × (itemWidth + gap)"
+  },
   "accessibility": {
     "tablist": "컨테이너 role=\"tablist\", 세그먼트 role=\"tab\" aria-selected 부여가 WAI-ARIA Tabs 패턴에 부합해 보이나 Figma에 규정 없음 — 확인 필요.",
     "keyboardNav": "좌우 화살표/Home/End 등 키보드 네비게이션은 WAI-ARIA Tabs 일반 관례이나 Figma로 확인 불가 — 확인 필요.",
@@ -120,10 +131,23 @@
       "컨테이너 높이=_Item 표준높이+padding×2 합성 규칙을 지정하는 토큰/문서"
     ],
     "확인필요": [
-      "컨테이너 너비 390px의 화면 폭 가변 여부",
       "role/aria/키보드 네비게이션 등 접근성 마크업 연결 규정",
       "Disabled 상태 축 부재가 의도인지"
     ]
   },
-  "sampledNodeIds": ["2215:13505", "2197:8776", "2197:8774", "2197:8772", "2197:8773", "2197:8767", "2197:8763", "2197:8769", "2215:13508", "2215:13512"]
+  "sampledNodeIds": ["2215:13505", "2197:8776", "2197:8774", "2197:8772", "2197:8773", "2197:8767", "2197:8763", "2197:8769", "2215:13508", "2215:13512"],
+  "gapCorrection": {
+    "correctedOn": "2026-09-14",
+    "summary": "세그먼트 간 gap 은 컨테이너 padding 과 동일한 값입니다 — XS·S 2px, M·L·XL 4px. 초판의 6px/8px 을 정정합니다.",
+    "method": "get_metadata 로 각 Count=2 변형의 Item 자식 좌표를 직접 측정하고, M 은 get_design_context 가 반환한 spacing/04 로 확인",
+    "evidence": [
+      { "size": "XS", "node": "2215:13505", "item1": "x=2 w=192", "item2x": 196, "gap": "2px" },
+      { "size": "S",  "node": "2197:8776", "item1": "x=2 w=192", "item2x": 196, "gap": "2px" },
+      { "size": "M",  "node": "2197:8774", "source": "get_design_context → gap-[var(--spacing/04,4px)]", "gap": "4px" },
+      { "size": "L",  "node": "2197:8772", "item1": "x=4 w=189", "item2x": 197, "gap": "4px" },
+      { "size": "XL", "node": "2197:8773", "item1": "x=4 w=189", "item2x": 197, "gap": "4px" }
+    ],
+    "countAxisCheck": { "node": "2197:8769", "size": "M", "count": 5, "itemWidth": "73.2px", "formula": "4 + 73.2x5 + 4x4 + 4 = 390px", "conclusion": "Count 축에서도 gap 4px 로 일관됨" },
+    "unchanged": ["배경 color/gray/200", "컨테이너 radius (8/8/12/16/16)", "컨테이너 padding (2/2/4/4/4)", "전체 높이 (26/30/42/48/56)"]
+  }
 }

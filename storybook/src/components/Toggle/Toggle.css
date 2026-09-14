@@ -1,0 +1,90 @@
+/* ============================================================
+   Toggle
+   스펙 출처: components/toggle/toggle.md + toggle.json (전수 실측 24개)
+   모든 수치는 tokens/tokens.css 변수로만 참조합니다. 임의 HEX 금지.
+   ============================================================ */
+
+.bd-toggle {
+  display: inline-flex;
+  align-items: center;          /* 스펙 5장: items-center — 라벨과 트랙 수직 중앙 정렬 */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: var(--font-family-base);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 라벨-트랙 gap 은 Size 축에만 종속 (스펙 2장) */
+.bd-toggle[data-size='s'] { gap: var(--ref-spacing-06); } /* 8px */
+.bd-toggle[data-size='l'] { gap: var(--ref-spacing-07); } /* 10px */
+
+/* 스펙 4장: Off/On 모두 색 교체가 아니라 전체 opacity 40% */
+.bd-toggle:disabled {
+  opacity: var(--ref-opacity-40);
+  cursor: not-allowed;
+}
+
+/* ---------- 트랙(track) ---------- */
+.bd-toggle__track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  padding: var(--ref-spacing-02);              /* 2px, 전 Size 공통 */
+  border-radius: var(--ref-radius-12);         /* 999px */
+  background-color: var(--sys-color-neutral-300); /* Off: gray/300 #DBDCDF */
+  transition: background-color 150ms ease;
+}
+
+/* 트랙 크기: 토큰에 없는 컴포넌트 고정값 (스펙 8장 "기존 토큰에 없음") */
+.bd-toggle[data-size='s'] .bd-toggle__track { width: 40px; height: 24px; }
+.bd-toggle[data-size='l'] .bd-toggle__track { width: 48px; height: 28px; }
+
+.bd-toggle[aria-checked='true'] .bd-toggle__track {
+  background-color: var(--sys-color-brand-primary-default); /* On: #2C7BE2 */
+}
+
+/* ---------- thumb ---------- */
+.bd-toggle__thumb {
+  display: block;
+  flex: 0 0 auto;
+  border-radius: var(--ref-radius-12);
+  background-color: var(--sys-color-common-white-default); /* Off/On 공통 #FDFDFD */
+  transition: transform 150ms ease;
+}
+
+/* thumb = 트랙 높이 − padding×2 (스펙 2장 핵심 규칙) */
+.bd-toggle[data-size='s'] .bd-toggle__thumb { width: 20px; height: 20px; }
+.bd-toggle[data-size='l'] .bd-toggle__thumb { width: 24px; height: 24px; }
+
+/* 이동거리 = 트랙너비 − padding×2 − thumb (S:16px, L:20px)
+   Figma 는 justify-content 전환이지만 애니메이션이 불가능해 transform 으로 재구성 (스펙 6장 권고) */
+.bd-toggle[data-size='s'][aria-checked='true'] .bd-toggle__thumb { transform: translateX(16px); }
+.bd-toggle[data-size='l'][aria-checked='true'] .bd-toggle__thumb { transform: translateX(20px); }
+
+/* ---------- 라벨 ---------- */
+.bd-toggle__label {
+  font-size: var(--typography-body-2-size);            /* Body 2 / 14 M — S/L 공통 */
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);
+  color: var(--sys-color-neutral-800);                 /* #202837 */
+}
+
+/* 스펙 5장: Left 는 트랙에 붙도록 텍스트 우측 정렬, Right 는 기본(좌측) */
+.bd-toggle[data-label-position='left'] .bd-toggle__label { text-align: right; }
+
+/* ---------- ⚠️ 아래는 Figma 에 정의가 없어 구현 단계에서 추가한 부분 ----------
+   스펙 7장: "포커스 링 등 시각 피드백은 실제 구현 시 별도 설계 필요 — 값은 확인 필요"       */
+.bd-toggle:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 3px;
+  border-radius: var(--ref-radius-12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-toggle__track,
+  .bd-toggle__thumb { transition: none; }
+}

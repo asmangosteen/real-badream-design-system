@@ -26,6 +26,23 @@ Supporting Text는 Input/TextField 계열 컴포넌트 하단에 표시되는 **
 | **Theme** | Gray / Black / Brand / Destructed / Success / Warning | 안내 문구의 의미(상태)를 색상으로 구분 |
 | **Text Count** | True / False | 글자 수 카운터(예: `000/000`)를 함께 표시할지 여부 |
 
+### 1-1. variant 가 아닌 별도 프로퍼티 3종 (2026-09-14 추가 조사)
+
+Figma 프로퍼티 패널·`get_design_context` 재조회로, 36개 variant 축 외에 **별도 프로퍼티 3개**가 확인되었습니다. Text Input 의 `Show Unit`, Calendar Header 의 `Show Dropdown` 과 같은 패턴입니다.
+
+| 프로퍼티 | 종류 | 기본값 | 설명 |
+|---|---|---|---|
+| **`Text`** | 텍스트 | `"Text"` | 안내 문구 본문 |
+| **`Show Icon`** | boolean | `True` | 아이콘 표시 여부 |
+| **`Icon S`** | 인스턴스 스왑 | `Icon / Default / 12px / warning_filled` | **Size=S 전용** 아이콘 슬롯 |
+| **`Icon M`** | 인스턴스 스왑 | `Icon / Default / 16px / warning_filled` | **Size=M 과 L 이 공유**하는 아이콘 슬롯 |
+
+**초판 "확인 필요" 해소 — 아이콘 글리프가 규정되어 있습니다.** 초판은 "크기(12/16px)와 색만 확인됐고 어떤 아이콘인지는 미정"이라고 남겼으나, 재조회 결과 기본 글리프가 **`warning_filled`**(`default/filled` 카테고리)로 명시되어 있습니다. 인스턴스 스왑 프로퍼티이므로 실제 사용 시 자유롭게 교체합니다.
+
+**핵심 발견 — `Icon L` 은 존재하지 않습니다.** 스왑 슬롯은 `Icon S`·`Icon M` 둘뿐이고, **Size=L 은 `Icon M` 슬롯을 그대로 씁니다**(`2114:4175` 의 `get_design_context` 가 L 변형에서 `iconM` prop 을 참조함을 확인). M 과 L 의 아이콘 크기가 16px 로 동일하기 때문입니다 — 3장의 "M·L 은 타이포·아이콘이 완전히 동일" 발견과 정합합니다.
+
+**핵심 발견 — 아이콘 래퍼의 위 여백 1px 은 S 에만 붙습니다.** S 변형의 Icon 래퍼에는 `pt=spacing/01`(1px)이 있지만, M·L 변형의 Icon 래퍼에는 패딩 클래스가 없습니다(전부 실측 확인). 10px 본문 옆의 12px 아이콘을 광학적으로 맞추기 위한 보정으로 보입니다.
+
 **Theme별 사용 맥락 추정**(Figma 파일에 문서화된 규정은 없으며, 저장소의 컬러 롤 원칙(`design-system-spec.json`의 `colorRoles`)에 대입한 추정입니다):
 - **Gray**: 기본 안내(디폴트 헬퍼 텍스트)
 - **Black**: Gray보다 강조된 안내(포커스 상태 등 — 확인 필요)
@@ -47,7 +64,7 @@ Gray/Black 두 톤의 정확한 사용 구분 기준(예: Default 상태=Gray, F
 | **Success** | `theme/success-default` | `#1f8f30` | `sys-color-theme-success-default`(`ref-color-green-600` `#1F8F30`) | **정확히 일치** |
 | **Warning** | `theme/warning-default` | `#ff792c` | `sys-color-theme-warning-default`(`ref-color-orange-500` `#FF792C`) | **정확히 일치** |
 
-**핵심 규칙**: Theme은 본문 텍스트 색상과 아이콘 색상(둘 다 동일한 Theme 색상 사용)만 바꿉니다. 단, **글자 수 카운터("000/000") 요소는 Theme과 무관하게 항상 `neutral/500`(Gray) 고정**입니다 — Destructed/Success/Warning 등 어떤 Theme이어도 카운터 자체는 회색으로 남습니다(4장 참고). 실측한 6개 Theme, 그리고 교차 검증한 M,Destructed(`2114:4161`)까지 이 규칙에서 벗어나지 않았습니다. "Black" 테마는 이름과 달리 실제로는 완전한 검정(`gray-900`/`gray-1000`)이 아니라 `neutral/700`(`#454C58`, 진회색)임을 실측으로 확인했습니다.
+**핵심 규칙**: Theme은 본문 텍스트 색상과 아이콘 색상(둘 다 동일한 Theme 색상 사용)만 바꿉니다. 아이콘 글리프 자체는 Theme 과 무관하게 `Icon S`/`Icon M` 슬롯이 결정합니다(1-1장). 단, **글자 수 카운터("000/000") 요소는 Theme과 무관하게 항상 `neutral/500`(Gray) 고정**입니다 — Destructed/Success/Warning 등 어떤 Theme이어도 카운터 자체는 회색으로 남습니다(4장 참고). 실측한 6개 Theme, 그리고 교차 검증한 M,Destructed(`2114:4161`)까지 이 규칙에서 벗어나지 않았습니다. "Black" 테마는 이름과 달리 실제로는 완전한 검정(`gray-900`/`gray-1000`)이 아니라 `neutral/700`(`#454C58`, 진회색)임을 실측으로 확인했습니다.
 
 ## 3. Size별 타이포·스페이싱 표 (3개 전체 실측)
 

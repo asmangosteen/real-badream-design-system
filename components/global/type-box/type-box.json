@@ -178,5 +178,15 @@
     "L-Done":         { "sourceNodeId": "2111:7564", "size": "L", "state": "Done",         "width": "71px",   "height": "24px" }
   },
   "widthHeightNote": "12개 변형의 실측 크기는 기본 텍스트('Placeholder' 또는 'Input Text')의 hug-content 결과값이며, 고정 크기 토큰이 아님. 실제 구현 시 입력된 텍스트 길이에 따라 너비가 가변적으로 늘어남.",
-  "sampledNodeIds": ["2111:7568", "2111:7575", "2111:7574", "2111:7571", "2111:7570", "2111:7569", "2111:7573", "2111:7572", "2111:7566", "2111:7565", "2111:7567", "2111:7564"]
+  "sampledNodeIds": ["2111:7568", "2111:7575", "2111:7574", "2111:7571", "2111:7570", "2111:7569", "2111:7573", "2111:7572", "2111:7566", "2111:7565", "2111:7567", "2111:7564"],
+  "caretHeightBySize": {
+    "addedOn": "2026-09-14",
+    "method": "get_metadata 로 캐럿을 갖는 6개 변형(Selected·Typing × S/M/L) 전수 확인",
+    "note": "Text Blinker 인스턴스는 20px 고정이 아니라 각 Size 의 lineHeight 에 맞춰 리사이즈되어 세로 중앙에 놓입니다. 20px 고정으로 구현하면 Size=S 에서 줄 높이(18px)를 넘어 삐져나옵니다.",
+    "S": { "lineHeight": "18px", "caretHeight": "16px" },
+    "M": { "lineHeight": "22px", "caretHeight": "18px" },
+    "L": { "lineHeight": "24px", "caretHeight": "20px" },
+    "constant": ["width 1.5px", "radius/01 (2px)"],
+    "caretToTextGap": "1px (Selected 기준: 캐럿 폭 1.5 + 1 = 텍스트 x=2.5)"
+  }
 }

@@ -1,0 +1,36 @@
+/* Type Box — 스펙: components/global/type-box/type-box.md (12개 전수 실측)
+   테두리·배경·라운드가 전혀 없는 "콘텐츠 레이어" 입니다 — 필드 프레임은 상위(Text Input)가 그립니다. */
+.bd-type-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-family: var(--font-family-base);
+  white-space: nowrap;
+}
+
+/* Size 마다 weight 가 다릅니다 (S 만 Medium) */
+.bd-type-box[data-size='s'] {
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-medium);    /* 500 */
+}
+.bd-type-box[data-size='m'] {
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-regular);   /* 400 */
+}
+.bd-type-box[data-size='l'] {
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+  font-weight: var(--font-weight-regular);   /* 400 */
+}
+
+/* State 는 '글자색'과 '캐럿 유무' 두 신호의 조합입니다.
+   Selected 는 색이 바뀌는 게 아니라 Placeholder 문구 그대로 두고 캐럿만 붙습니다. */
+.bd-type-box[data-state='placeholder'],
+.bd-type-box[data-state='selected'] { color: var(--sys-color-neutral-500); }
+.bd-type-box[data-state='typing'],
+.bd-type-box[data-state='done'] { color: var(--sys-color-neutral-800); }

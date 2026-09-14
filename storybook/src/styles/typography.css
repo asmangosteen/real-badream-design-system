@@ -1,0 +1,11 @@
+/* tokens.css 의 typography 변수를 그대로 묶어놓은 재사용 클래스.
+   값은 정의하지 않고 토큰만 참조합니다 — 수치는 언제나 tokens/ 가 기준입니다. */
+.bd-typo-display   { font-size: var(--typography-display-size);   line-height: var(--typography-display-line-height);   letter-spacing: var(--typography-display-letter-spacing); }
+.bd-typo-heading1  { font-size: var(--typography-heading-1-size);  line-height: var(--typography-heading-1-line-height);  letter-spacing: var(--typography-heading-1-letter-spacing); }
+.bd-typo-heading2  { font-size: var(--typography-heading-2-size);  line-height: var(--typography-heading-2-line-height);  letter-spacing: var(--typography-heading-2-letter-spacing); }
+.bd-typo-title     { font-size: var(--typography-title-size);      line-height: var(--typography-title-line-height);      letter-spacing: var(--typography-title-letter-spacing); }
+.bd-typo-subtitle  { font-size: var(--typography-subtitle-size);   line-height: var(--typography-subtitle-line-height);   letter-spacing: var(--typography-subtitle-letter-spacing); }
+.bd-typo-body1     { font-size: var(--typography-body-1-size);     line-height: var(--typography-body-1-line-height);     letter-spacing: var(--typography-body-1-letter-spacing); }
+.bd-typo-body2     { font-size: var(--typography-body-2-size);     line-height: var(--typography-body-2-line-height);     letter-spacing: var(--typography-body-2-letter-spacing); }
+.bd-typo-caption1  { font-size: var(--typography-caption-1-size);  line-height: var(--typography-caption-1-line-height);  letter-spacing: var(--typography-caption-1-letter-spacing); }
+.bd-typo-caption2  { font-size: var(--typography-caption-2-size);  line-height: var(--typography-caption-2-line-height);  letter-spacing: var(--typography-caption-2-letter-spacing); }

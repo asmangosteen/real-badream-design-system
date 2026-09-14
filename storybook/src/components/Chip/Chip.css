@@ -1,0 +1,118 @@
+/* Chip — 스펙: components/chip/chip.md (190개 인스턴스, Figma 상 2개 Component Set)
+   Selection(범용 칩) 과 Filter(드롭다운 트리거 전용) 로 나뉩니다.
+   ⚠️ Hover/Pressed 오버레이가 Button·Checkbox 의 interaction/* 패밀리가 아니라
+      gray-900-2% / gray-900-5% raw 알파를 직접 참조합니다. */
+.bd-chip {
+  --bd-chip-overlay: transparent;
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);   /* 3개 Size 전부 Medium 고정 */
+  white-space: nowrap;
+  background-image: linear-gradient(var(--bd-chip-overlay), var(--bd-chip-overlay));
+  background-color: var(--bd-chip-bg);
+  color: var(--bd-chip-fg);
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-chip:disabled { cursor: not-allowed; }
+
+/* ---------------- Selection — Size ---------------- */
+/* M 과 L 의 좌우 패딩이 12px 로 같습니다. S 만 8px 로 작습니다. */
+.bd-chip[data-kind='selection'][data-size='s'] {
+  padding: var(--ref-spacing-03) var(--ref-spacing-06);   /* 3 / 8 */
+  border-radius: var(--ref-radius-03);                    /* 6px */
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+}
+.bd-chip[data-kind='selection'][data-size='m'] {
+  padding: var(--ref-spacing-05) var(--ref-spacing-08);   /* 6 / 12 */
+  border-radius: var(--ref-radius-05);                    /* 10px */
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+}
+.bd-chip[data-kind='selection'][data-size='l'] {
+  padding: var(--ref-spacing-06) var(--ref-spacing-08);   /* 8 / 12 — 좌우는 M 과 동일 */
+  border-radius: var(--ref-radius-06);                    /* 12px */
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+}
+
+/* Contents 에 따라 좌우 패딩이 비대칭이 됩니다 (아이콘·아바타가 붙는 쪽이 작아짐) */
+.bd-chip[data-kind='selection'][data-size='m'][data-contents='avatar-text'],
+.bd-chip[data-kind='selection'][data-size='m'][data-contents='icon-text'] { padding-left: var(--ref-spacing-06); }
+.bd-chip[data-kind='selection'][data-size='m'][data-contents='text-icon'] { padding-right: var(--ref-spacing-06); }
+.bd-chip[data-kind='selection'][data-size='m'][data-contents='avatar-text-icon'] {
+  padding-left: var(--ref-spacing-06);
+  padding-right: var(--ref-spacing-06);
+}
+
+/* ---------------- Filter — Size 축이 없습니다 ---------------- */
+.bd-chip[data-kind='filter'] {
+  padding: var(--ref-spacing-05) var(--ref-spacing-06) var(--ref-spacing-05) var(--ref-spacing-08); /* 6 / 8 / 6 / 12 */
+  border-radius: var(--ref-radius-12);                    /* 999px — 항상 완전한 필 */
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+}
+.bd-chip[data-kind='filter'][data-contents='icon'] { padding: var(--ref-spacing-05); }
+/* 아바타가 왼쪽에 붙으면 왼쪽 패딩이 12 → 6px 로 줄어듭니다
+   (Figma 실측: Avatar+Icon `2275:3893` · Avatar+Text+Icon `2275:3268` 둘 다 `pl spacing/05`) */
+.bd-chip[data-kind='filter'][data-contents='avatar-icon'],
+.bd-chip[data-kind='filter'][data-contents='avatar-text-icon'] {
+  padding-left: var(--ref-spacing-05);    /* 6px */
+  padding-right: var(--ref-spacing-06);   /* 8px */
+}
+
+/* ---------------- Type · State 색상 (Selection·Filter 공통) ---------------- */
+.bd-chip[data-type='outlined'] {
+  --bd-chip-bg: var(--sys-color-common-white-default);
+  --bd-chip-fg: var(--sys-color-neutral-600);
+  border: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-10);
+}
+.bd-chip[data-type='filled'] {
+  --bd-chip-bg: var(--ref-color-gray-900-5);
+  --bd-chip-fg: var(--sys-color-neutral-600);
+}
+
+/* Hover — gray-900-2%. ⚠️ Filled 는 Figma 실측상 Default 와 값이 같아 시각 피드백이 없습니다 */
+.bd-chip[data-type='outlined']:hover:not(:disabled):not([data-selected='true']),
+.bd-chip[data-type='outlined'][data-force-state='hover'] { --bd-chip-overlay: var(--ref-color-gray-900-2); }
+/* Pressed — gray-900-5% */
+.bd-chip:active:not(:disabled):not([data-selected='true']),
+.bd-chip[data-force-state='pressed'] { --bd-chip-overlay: var(--ref-color-gray-900-5); }
+.bd-chip[data-type='filled']:active:not(:disabled):not([data-selected='true']),
+.bd-chip[data-type='filled'][data-force-state='pressed'] { --bd-chip-overlay: var(--ref-color-gray-900-10); }
+
+/* Selected — Outlined 와 Filled 가 완전히 다른 전략을 씁니다 */
+.bd-chip[data-type='outlined'][data-selected='true'] {
+  --bd-chip-bg: var(--sys-color-brand-primary-lightest);
+  --bd-chip-fg: var(--sys-color-brand-primary-default);
+  border-color: var(--ref-color-blue-500-60);
+}
+.bd-chip[data-type='filled'][data-selected='true'] {
+  --bd-chip-bg: var(--sys-color-neutral-800);
+  --bd-chip-fg: var(--sys-color-common-white-default);
+}
+
+/* Disabled — opacity 40%. Button 문서에서 "사용처 미확인"이던 opacity/40 의 실제 사용처입니다 */
+.bd-chip:disabled {
+  opacity: var(--ref-opacity-40);
+  --bd-chip-overlay: transparent;
+}
+
+/* ⚠️ Figma 에 Focused 정의가 없어 구현에서 추가 */
+.bd-chip:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+}
+
+/* 내부 슬롯 */
+.bd-chip__avatar { display: inline-flex; padding: var(--ref-spacing-03) var(--ref-spacing-04); }
+.bd-chip__icon { display: inline-flex; padding: var(--ref-spacing-03) var(--ref-spacing-02); }
+.bd-chip[data-kind='filter'][data-contents='icon'] .bd-chip__icon { padding: var(--ref-spacing-03); }

@@ -1,0 +1,34 @@
+/* Top Bar — 스펙: components/top-bar/top-bar.md (10개 전수 실측)
+   Status Bar + Navigation Bar Top 을 세로로 쌓은 **최종 합성 컴포넌트**입니다.
+   두 서브 컴포넌트를 각각 독립적으로 켜고 끌 수 있습니다. */
+.bd-top-bar {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 390px;
+}
+
+/* Background 3종 — No / Default / Blur */
+.bd-top-bar[data-background='no'] { background: transparent; }
+
+/* ⚠️ Default 의 색은 Navigation Bar Top 과 달리 '예시'가 아닙니다.
+   실제 페이지 배경 규칙을 그대로 반영한 의도된 값이라 임의 교체 대상이 아닙니다(사용자 확인). */
+.bd-top-bar[data-mode='light'][data-background='default'] { background: var(--sys-color-common-white-default); }
+.bd-top-bar[data-mode='dark'][data-background='default'] { background: var(--sys-color-common-black-emphasis); }
+
+/* Blur — 오버레이 톤·강도가 Mode 마다 별도로 튜닝되어 있습니다(단순 반전이 아님) */
+.bd-top-bar[data-background='blur'] {
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+}
+.bd-top-bar[data-mode='light'][data-background='blur'] { background: var(--ref-color-gray-50-60); }   /* 흰색 60% */
+.bd-top-bar[data-mode='dark'][data-background='blur'] { background: var(--ref-color-gray-900-40); }   /* 검정 40% */
+
+/* Line — Background=No 에는 이 축 자체가 존재하지 않습니다.
+   색은 Mode 의 '반대 톤' 뉴트럴 5% 입니다. */
+.bd-top-bar[data-line='true'][data-mode='light'] {
+  border-bottom: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-5);
+}
+.bd-top-bar[data-line='true'][data-mode='dark'] {
+  border-bottom: var(--ref-borderwidth-02) solid var(--ref-color-gray-50-5);
+}

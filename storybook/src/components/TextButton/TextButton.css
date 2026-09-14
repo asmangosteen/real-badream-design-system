@@ -1,0 +1,88 @@
+/* ============================================================
+   Text Button — 스펙: components/button/text-button/text-button.md
+   Button 과의 결정적 차이: 배경·패딩·radius 가 전혀 없습니다.
+   그래서 Hover/Pressed 도 "배경 위 오버레이"가 아니라
+   **텍스트 색 자체를 어둡게 합성**하는 방식입니다 (color-mix 로 동일하게 재현).
+   ============================================================ */
+.bd-text-button {
+  --bd-tb-overlay: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-spacing-02);   /* 아이콘이 있을 때만 의미 있음 — 2px */
+  /* ⚠️ S 만 예외: 2026-09-14 Figma 재실측 결과 S 는 텍스트와 아이콘 사이 간격이 **0** 입니다.
+     (S Text+Icon 노드 439:21286 — 텍스트가 x=0~25 에서 끝나고 12px 아이콘이 x=25 에서 바로 시작)
+     M/L/XL 은 2px 로 확인됐습니다. 저장소 스펙 문서의 "전 사이즈 공통 2px" 은 S 에서 사실과 다릅니다. */
+  margin: 0;
+  padding: 0;                    /* 패딩 없음 */
+  border: 0;
+  border-radius: 0;              /* radius 없음 */
+  background: none;              /* 배경 없음 */
+  font-family: var(--font-family-base);
+  cursor: pointer;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--bd-tb-overlay) var(--bd-tb-overlay-amount, 0%), var(--bd-tb-base));
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-text-button:disabled { cursor: not-allowed; }
+
+/* ---------------- Size ----------------
+   Button 과 Size↔타이포 매핑이 다릅니다: L=body1, XL=subtitle (Button 의 L 은 body2) */
+.bd-text-button[data-size='s'] {
+  gap: 0;   /* S 만 간격 없음 (위 주석 참고) */
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-semibold);   /* S 만 Semibold */
+}
+.bd-text-button[data-size='m'] {
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-text-button[data-size='l'] {
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-text-button[data-size='xl'] {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ---------------- Text Color · 베이스 + 합성용 오버레이 ---------------- */
+.bd-text-button[data-color='blue'] {
+  --bd-tb-base: var(--sys-color-brand-primary-default);
+  --bd-tb-overlay: #0d2d57;                    /* color/interaction/blue */
+}
+.bd-text-button[data-color='gray'] {
+  --bd-tb-base: var(--sys-color-neutral-600);
+  --bd-tb-overlay: #03091a;                    /* color/interaction/gray */
+}
+.bd-text-button[data-color='red'] {
+  --bd-tb-base: var(--sys-color-theme-destructed-default);
+  --bd-tb-overlay: #5e1314;                    /* color/interaction/red */
+}
+
+/* Hover 15% · Pressed 30% — 실측 라벨 색과 정확히 일치하는 합성 비율 */
+.bd-text-button:hover:not(:disabled),
+.bd-text-button[data-force-state='hover'] { --bd-tb-overlay-amount: 15%; }
+.bd-text-button:active:not(:disabled),
+.bd-text-button[data-force-state='pressed'] { --bd-tb-overlay-amount: 30%; }
+
+/* Disabled — Button 과 동일하게 전체 opacity 20% */
+.bd-text-button:disabled {
+  opacity: var(--ref-opacity-20);
+  --bd-tb-overlay-amount: 0%;
+}
+
+/* ⚠️ Figma 에 Focused 정의가 없어 구현에서 추가 */
+.bd-text-button:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+  border-radius: var(--ref-radius-02);
+}

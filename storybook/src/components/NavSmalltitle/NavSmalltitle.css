@@ -1,0 +1,40 @@
+/* Navigation Bar Top / Smalltitle — 스펙: components/navigation-bar/top/smalltitle/smalltitle.md (8개 전수 실측)
+   중앙 영역. 폭 190px 고정이 전 Type 공통입니다. */
+.bd-nav-smalltitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 190px;
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-800);
+}
+.bd-nav-smalltitle[data-mode='dark'] { color: var(--sys-color-common-white-default); }
+
+.bd-nav-smalltitle[data-type='default'] { padding: var(--ref-spacing-08) 0; }    /* 12px */
+.bd-nav-smalltitle[data-type='selection'] {
+  gap: var(--ref-spacing-02);                                                    /* 2px */
+  padding: var(--ref-spacing-08) 0;
+}
+/* ⚠️ 9px 은 토큰이 아니라 Figma 에 박힌 리터럴 값입니다 */
+.bd-nav-smalltitle[data-type='segmented-control'] { padding: 9px 0; }
+.bd-nav-smalltitle[data-type='caption'] {
+  flex-direction: column;
+  gap: var(--ref-spacing-00);                                                    /* -2px — 두 줄을 바짝 붙입니다 */
+  padding: var(--ref-spacing-04) 0;                                              /* 4px */
+  text-align: center;
+}
+
+.bd-nav-smalltitle__title {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+/* Caption 보조 텍스트는 Mode 와 무관하게 항상 neutral/500 입니다 (WCAG 미검증) */
+.bd-nav-smalltitle__caption {
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  color: var(--sys-color-neutral-500);
+}

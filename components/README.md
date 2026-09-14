@@ -8,7 +8,7 @@
 
 | 컴포넌트 | 문서 | 상태 | 변형 수 |
 |---|---|---|---|
-| Button | [components/button/button/button.md](./button/button/button.md) | 완료 | 935개 인스턴스 (187개 고유 조합 × 5 Size) |
+| Button | [components/button/button/button.md](./button/button/button.md) | 완료 | 935개 인스턴스 = **11개 스타일 조합 × 5 Size × 17개 State·Contents** (2026-09-14 전수 확인으로 구성 정정) |
 | Text Button | [components/button/text-button/text-button.md](./button/text-button/text-button.md) | 완료 | ~156 (Size 4 × Text Color 3 × State 5 × Contents 3). Hover/Pressed 프로토타입 인터랙션(Smart animate, Slow, 150ms/50ms) 전 조합 동일 적용(사용자 확인) |
 | Icon Button | [components/button/icon-button/icon-button.md](./button/icon-button/icon-button.md) | 완료 | ~108 (Size 3 × Type 6 × State 4 + Stroke/Icon Color 변형) |
 | Button Spinner | [components/button/button-spinner/button-spinner.md](./button/button-spinner/button-spinner.md) | 완료 | 4 (Size S/M/L/XL). 버튼 Loading 상태의 스피너 아톰 |

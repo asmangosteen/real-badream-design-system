@@ -1,0 +1,73 @@
+/* Segmented Control Item (_Item) — 스펙: components/global/segmented-control-item/segmented-control-item.md
+   10개 전수 실측. Selected 는 **배경·그림자·글자색 3가지만** 바꾸고 레이아웃·타이포는 건드리지 않습니다. */
+.bd-seg-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 1 0 0;                 /* 부모 폭을 세그먼트 수만큼 균등 분할 */
+  min-width: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  white-space: nowrap;
+  color: var(--sys-color-neutral-500);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 높이 = lineHeight + 세로padding×2. 패딩 스텝이 균등하지 않습니다(09·10 건너뜀에 주의) */
+.bd-seg-item[data-size='xs'] {
+  padding: var(--ref-spacing-03) var(--ref-spacing-06);   /* 3 / 8  → 22px */
+  border-radius: var(--ref-radius-03);                    /* 6px */
+  font-size: var(--typography-caption-2-size);
+  line-height: var(--typography-caption-2-line-height);
+  letter-spacing: var(--typography-caption-2-letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+.bd-seg-item[data-size='s'] {
+  padding: var(--ref-spacing-04) var(--ref-spacing-06);   /* 4 / 8  → 26px */
+  border-radius: var(--ref-radius-03);                    /* 6px — XS 와 공유 */
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+.bd-seg-item[data-size='m'] {
+  padding: var(--ref-spacing-05) var(--ref-spacing-07);   /* 6 / 10 → 34px */
+  border-radius: var(--ref-radius-04);                    /* 8px — M 단독 */
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);                 /* M 부터 Medium 으로 전환 */
+}
+.bd-seg-item[data-size='l'] {
+  padding: var(--ref-spacing-06) var(--ref-spacing-08);   /* 8 / 12 → 40px */
+  border-radius: var(--ref-radius-06);                    /* 12px — L·XL 공유 */
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-seg-item[data-size='xl'] {
+  padding: var(--ref-spacing-08) var(--ref-spacing-10);   /* 12 / 16 → 48px */
+  border-radius: var(--ref-radius-06);
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Selected — 흰 배경 pill + 옅은 그림자 + 진한 글자
+   ⚠️ 그림자가 저장소의 shadow/01~03 체계가 아니라 gray-900-5 를 직접 참조합니다 */
+.bd-seg-item[data-selected='true'] {
+  background-color: var(--sys-color-common-white-default);
+  box-shadow: 0 2px 2px 0 var(--ref-color-gray-900-5);
+  color: var(--sys-color-neutral-800);
+}
+
+/* ⚠️ Figma 에 Hover/Pressed/Focused 축이 없습니다 — 아래는 구현에서 추가한 최소 피드백입니다 */
+.bd-seg-item:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: -2px;
+}

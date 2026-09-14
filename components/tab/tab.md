@@ -41,7 +41,7 @@ Fill이 다른 토글 조합과 결합되지 않는 이유는 Figma에 별도로
 2. **컨테이너 좌우 padding은 Size와 무관하게 0px(Side Padding=False 기준)** — Segmented Control 컨테이너가 항상 padding을 가졌던 것과 다른 지점입니다.
 3. **아이템 간 gap은 Side Padding=False일 때 두 Size 모두 `spacing/12`=24px로 동일**합니다(3장에서 Side Padding=True일 때 20px로 바뀌는 것과 대비).
 4. **하단 구분선(전체 폭, `neutral/100`)의 정확한 세로 위치가 인스턴스마다 미세하게 다르게 기록되어 있습니다**(예: S는 `inset-[97.62%_0_0_0]`, L 인스턴스별로 `97.62%~97.77%`, 하단 오프셋도 `0`/`0.15%`/`0.3%`로 편차). 이는 percentage 기반 절대 위치 지정에서 발생하는 반올림 편차로 보이며, 실제 렌더링 높이(1px, `borderwidth/02`)는 전 인스턴스 동일합니다 — 의미 있는 디자인 차이가 아닌 것으로 판단되나 확인 필요로 남깁니다.
-5. **너비 390px는 고정값이 아닐 가능성이 높습니다 — 확인 필요.** Segmented Control과 동일한 패턴(Figma 진열 프레임 표시값)으로 보이나, Tab 자체에서 "화면 폭 가변"이 명시적으로 확인되지는 않았습니다.
+5. **너비 390px는 고정값이 아닙니다 — 부모(화면) 폭에 맞춰 늘어나는 가변입니다.** (2026-09-14 디자이너 확정) [Segmented Control](../segmented-control/segmented-control.md)·[Footer](../footer/footer.md)와 같은 패턴으로, 노드에 찍힌 390px 는 **Figma 진열 프레임 폭**일 뿐입니다. 아래 8장 부록의 `390×42` / `390×48` 도 같은 이유이며, 4장의 마스크 폭 336px 역시 390px 프레임 기준으로 계산된 예시입니다 — 실제로는 `컨테이너 폭 − 12(gap) − 슬롯` 으로 따라 늘어납니다.
 
 ## 3. Type=Hug/Fill 차이
 
@@ -70,12 +70,35 @@ Fill이 다른 토글 조합과 결합되지 않는 이유는 Figma에 별도로
 | L | False | True | `2262:2929` | 좌우 `spacing/11`=20px(대칭) | `spacing/12`=24px | 없음 |
 
 **핵심 발견**:
-1. **Tailing Icon=True는 오른쪽에 정사각형 아이콘 버튼 슬롯(탭 바 높이와 동일한 42px/48px 정사각형)을 추가합니다.** 내부에 `spacing/06`=8px padding과 `radius/06`=12px radius를 가진 "Icon Button" 컨테이너가 있고, 그 안에 "plus"(+) 아이콘(S=20px, L=24px)이 들어갑니다. 탭 개수를 늘리는 액션으로 추정됩니다.
+1. **Tailing Icon=True는 오른쪽에 정사각형 아이콘 버튼 슬롯(탭 바 높이와 동일한 42px/48px 정사각형)을 추가합니다.** 내부에 `spacing/06`=8px padding과 `radius/06`=12px radius를 가진 "Icon Button" 컨테이너가 있고, 그 안에 "plus"(+) 아이콘(S=20px, L=24px)이 들어갑니다. 이 "Icon Button" 은 저장소의 [Icon Button](../button/icon-button/icon-button.md) **Ghost** 와 값이 정확히 같습니다 — 패딩 8 + 아이콘 20 = **36px(Size M)**, 패딩 8 + 아이콘 24 = **40px(Size L)**, radius 12px, 아이콘색 `neutral/800`.
+
+   > **⚠️ 2026-09-14 정정 — 이 버튼은 탭을 추가하는 버튼이 아닙니다(디자이너 확정).**
+   > 초판 문서의 "탭 개수를 늘리는 액션으로 추정" 은 **틀린 추정**이었습니다. 실제로는 **탭 목록과 무관한 메뉴**가 펼쳐지는 버튼입니다.
+   > 그 메뉴에 무엇이 들어가는지·어떤 모양으로 열리는지는 아직 정해지지 않았습니다 — 확인 필요.
+
+   **스크롤 영역(Leading) ↔ Trailing 슬롯 사이에는 `spacing/08`(12px) gap 이 있습니다** (컨테이너 노드 `2262:1825` 의 `gap-[var(--spacing/08,12px)]`). 그래서 Tailing Icon=True 일 때 스크롤 영역의 실제 폭은 `390 − 12(gap) − 42(슬롯) = 336px` 이고, 이는 아래 4번의 마스크 폭 336px 과 정확히 일치합니다.
 2. **Side Padding=True는 컨테이너 좌우에 여백을 추가하지만, Tailing Icon 유무에 따라 비대칭적으로 구현되어 있습니다.** Tailing Icon=False일 때는 좌우 대칭 `spacing/11`=20px(`px-[20px]`)이지만, Tailing Icon=True일 때는 왼쪽만 `spacing/11`=20px 변수를 쓰고 오른쪽은 **`12px`이 변수 바인딩 없이 하드코딩**되어 있습니다(`pr-[12px]`, `var(--spacing/...)` 형태가 아님). 우연히 `spacing/08`(12px)과 값이 같지만 토큰으로 연결되어 있지 않습니다 — 확인 필요.
 3. **아이템 간 gap이 Side Padding에 따라 바뀝니다**: Side Padding=False → `spacing/12`=24px, Side Padding=True(Size=S만) → `spacing/11`=20px로 축소됩니다. 다만 **Size=L에서는 Side Padding=True여도 gap이 24px(`spacing/12`) 그대로 유지**되어 S와 다른 패턴을 보입니다 — Size와 Side Padding의 상호작용에 예외가 있다는 관찰이며, 의도적 설계인지 인스턴스별 편차인지는 확인 필요입니다.
-4. **오버플로우 마스크**: Tabs 행에는 항상 SVG 마스크 이미지가 씌워져 있고(`mask-image`, `mask-size`가 가용 폭에 맞춰 정확히 계산됨: 예 S/TailingIcon=True/SidePadding=False는 336×42px, S/TailingIcon=False/SidePadding=False는 390×42px), 이는 탭 목록이 가로로 넘칠 때 경계 근처에서 점점 옅어지는 페이드 효과를 만듭니다. 실제 스크린샷에서도 마지막 탭 1~2개가 옅게 흐려진 채 잘리는 모습이 확인됩니다(9장 스크린샷 요약 참고). 이는 **탭 목록이 가로 스크롤 가능하다는 시각적 힌트**로 해석되나, 실제 스크롤 인터랙션(overflow-x: auto 등)이 Figma 스펙에 명시되어 있지는 않습니다 — 확인 필요.
+4. **오버플로우 마스크**: Tabs 행에는 항상 SVG 마스크 이미지가 씌워져 있고(`mask-image`, `mask-size`가 가용 폭에 맞춰 정확히 계산됨: 예 S/TailingIcon=True/SidePadding=False는 336×42px, S/TailingIcon=False/SidePadding=False는 390×42px), 이는 탭 목록이 가로로 넘칠 때 경계 근처에서 점점 옅어지는 페이드 효과를 만듭니다. 실제 스크린샷에서도 마지막 탭 1~2개가 옅게 흐려진 채 잘리는 모습이 확인됩니다(9장 스크린샷 요약 참고). 이는 **탭 목록이 가로 스크롤 가능하다는 시각적 힌트**입니다.
 
-   **이 마스크는 별도 Figma 컴포넌트로 실측 완료됨**: 같은 페이지의 `Alpha Gradient Mask`(node `2262:1908`, 336×42px)가 정확히 이 오버플로우 마스크의 원본 애셋입니다. 구조는 좌측 `Front Gradient`(고정 42px) + 가운데 `Rectangle`(완전 불투명, 가변폭) + 우측 `Back Gradient`(고정 42px)이며, 각 gradient는 선형이 아니라 **7개 정지점(0/15/30/50/70/85/100%)에 alpha 0/0.08/0.22/0.42/0.64/0.82/1.00을 배치한 이징(ease) 곡선**입니다(가장자리 근처는 느리게, 중간에서 빠르게 변화). 실제 CSS로 옮길 때는 이 정지점을 `px`/`calc(100% - Npx)`로 고정해 페이드 폭이 컨테이너 폭과 무관하게 항상 42px가 되도록 해야 하며, Figma가 내보내는 `rgba(0,0,0,α)`(검정+알파)를 그대로 쓰면 브라우저의 luminance 기반 마스크 계산에서 깨질 수 있어 `rgba(255,255,255,α)`(흰색+알파)로 바꿔야 합니다. 정확한 정지점 표·CSS는 [tab.json](./tab.json)의 `overflowMask` 필드에 기록되어 있습니다.
+   > **⚠️ 2026-09-14 확정 — 가로 스크롤은 실재하고, 페이드는 "항상 씌워진 마스크" 가 아닙니다(디자이너 확정).**
+
+   `Type=Hug` 에서는 **탭 로우 자체가 가로 스크롤 컨테이너**입니다(`overflow-x: auto`, 스크롤바는 CSS 로 숨김). 이때 탭은 **콘텐츠 폭을 그대로 차지하고 줄어들지 않습니다**(`flex-shrink: 0`) — `_Item` 의 `min-width: 32px` 는 짧은 라벨의 **하한**일 뿐 목표 폭이 아니며, 줄어들게 두면 탭이 전부 32px 로 찌그러져 "넘치면 스크롤" 이라는 전제 자체가 성립하지 않습니다.
+
+   페이드도 콘텐츠를 깎는 마스크가 아니라, **그 방향에 숨겨진 탭이 남아 있을 때만 나타나는 그라디언트 오버레이**입니다.
+
+   | 항목 | 값 |
+   |---|---|
+   | 페이드 폭 | **탭 바 높이와 동일** (S 42px · L 48px) |
+   | 정지점 | 0/15/30/50/70/85/100% → alpha 0 / .08 / .22 / .42 / .64 / .82 / 1 (아래 마스크 애셋 실측 그대로) |
+   | 표시 조건 | 좌 `scrollLeft > 0` · 우 `scrollLeft + clientWidth < scrollWidth − 1` (−1px 은 부동소수점 버퍼) |
+   | 전환 | `opacity` 200ms ease — 레이아웃 변화 없는 크로스페이드 |
+   | 갱신 트리거 | `scroll`(passive) · `ResizeObserver` · `window resize` · 탭 개수 변경 |
+   | 클릭 | `pointer-events: none` — 페이드가 탭 클릭을 막지 않습니다 |
+
+   Tailing Icon=True 면 "+" 슬롯이 스크롤 영역 **뒤에** 고정되므로, 오른쪽 페이드는 "+" 를 덮지 않고 스크롤 영역의 끝에 붙습니다.
+
+   **이 마스크는 별도 Figma 컴포넌트로 실측 완료됨**: 같은 페이지의 `Alpha Gradient Mask`(node `2262:1908`, 336×42px)가 정확히 이 오버플로우 마스크의 원본 애셋입니다. 구조는 좌측 `Front Gradient`(고정 42px) + 가운데 `Rectangle`(완전 불투명, 가변폭) + 우측 `Back Gradient`(고정 42px)이며, 각 gradient는 선형이 아니라 **7개 정지점(0/15/30/50/70/85/100%)에 alpha 0/0.08/0.22/0.42/0.64/0.82/1.00을 배치한 이징(ease) 곡선**입니다(가장자리 근처는 느리게, 중간에서 빠르게 변화). 실제 CSS로 옮길 때 페이드 폭은 컨테이너 폭과 무관하게 **탭 바 높이(S 42px · L 48px)** 로 고정하고(정지점은 그 폭 기준 %), Figma가 내보내는 `rgba(0,0,0,α)`(검정+알파)를 그대로 쓰면 브라우저의 luminance 기반 마스크 계산에서 깨질 수 있어 `rgba(255,255,255,α)`(흰색+알파)로 바꿔야 합니다. 정확한 정지점 표·CSS는 [tab.json](./tab.json)의 `overflowMask` 필드에 기록되어 있습니다.
 
 ## 5. `_Item`(Tab Item) 재사용 관계 — 실측 사실
 
@@ -90,7 +113,20 @@ Fill이 다른 토글 조합과 결합되지 않는 이유는 Figma에 별도로
 
 **모션 데이터 없음.**
 
-`get_motion_context`를 최상위 프레임(`2262:2251`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. **Active 탭이 바뀔 때 밑줄 인디케이터가 이전 탭에서 새 탭 위치로 슬라이딩하는 애니메이션이 있는지 특히 주의 깊게 확인했으나, Figma 파일에는 그런 트랜지션이 정의되어 있지 않습니다.** `_Item` 자체의 모션 조사([tab-item.md](../global/tab-item/tab-item.md) 6장)와 마찬가지로 빈 결과이며, Segmented Control·Segmented Control Item에서도 동일하게 빈 결과였던 것과 같은 패턴입니다. 실제 프로덕트에서 밑줄 슬라이딩 인디케이터를 구현하고 싶다면 이는 Figma 디자인에 없는 별도의 구현 판단(모션 시스템 자체 결정)이 필요합니다.
+`get_motion_context`를 최상위 프레임(`2262:2251`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. **Active 탭이 바뀔 때 밑줄 인디케이터가 이전 탭에서 새 탭 위치로 슬라이딩하는 애니메이션이 있는지 특히 주의 깊게 확인했으나, Figma 파일에는 그런 트랜지션이 정의되어 있지 않습니다.** `_Item` 자체의 모션 조사([tab-item.md](../global/tab-item/tab-item.md) 6장)와 마찬가지로 빈 결과이며, Segmented Control·Segmented Control Item에서도 동일하게 빈 결과였던 것과 같은 패턴입니다.
+
+> **⚠️ 2026-09-14 확정 — 밑줄 슬라이딩을 쓰기로 정해졌습니다(디자이너 확정).** 아래 값은 Figma 실측이 아니라 디자이너가 확정한 스펙입니다.
+
+| 항목 | 값 |
+|---|---|
+| 동작 | Active 가 바뀌면 **밑줄 막대 하나가** 새 탭 위치로 이동합니다. 탭마다 밑줄을 켜고 끄지 않습니다 |
+| 이동 시간 | **200ms** |
+| 이징 | **`cubic-bezier(0.32, 0.72, 0, 1)`** — [Segmented Control](../segmented-control/segmented-control.md) 의 흰 pill 과 같은 값 |
+| 함께 전환되는 것 | 탭 텍스트 색상 (같은 시간·이징) |
+| 누를 때 축소 | **없음** — 의도적으로 넣지 않습니다 |
+| `prefers-reduced-motion: reduce` | 전환 없이 즉시 이동 |
+
+밑줄 색은 활성 탭의 글자색을 그대로 따릅니다(일반 `neutral/800` · Emphasize `theme/destructed` · Disabled `neutral/400`). **탭마다 폭이 달라 Segmented Control 처럼 CSS 로 위치를 계산할 수 없으므로, 활성 탭을 실측해 옮깁니다.** 밑줄은 스크롤 영역 안에 두어 가로 스크롤을 따라 함께 움직입니다.
 
 ## 7. 접근성
 
@@ -117,9 +153,8 @@ Fill이 다른 토글 조합과 결합되지 않는 이유는 Figma에 별도로
 **확인 필요**
 - Tailing Icon=True + Side Padding=True 조합에서 오른쪽 padding이 `12px`로 하드코딩되어 변수 바인딩이 없는 것이 의도인지(4장)
 - Size=L에서 Side Padding=True여도 아이템 gap이 24px로 유지되어 S(20px로 축소)와 다른 패턴을 보이는 것이 의도인지(4장)
-- 컨테이너 너비 390px의 화면 폭 가변 여부
 - Type=Hug의 최대 탭 개수(8개, prop 기준)와 Type=Fill의 고정 개수(5개)가 실제 프로덕트 제약인지, 진열 편의상 값인지
-- 가로 스크롤 마스크가 시사하는 실제 스크롤 인터랙션의 존재 여부
+- Trailing "+" 버튼을 눌렀을 때 펼쳐지는 메뉴의 내용·모양(4장 — 탭 추가가 아님은 확정, 그 외는 미정)
 - `role="tablist"`/`role="tab"`/`aria-selected`/`aria-disabled`/키보드 네비게이션/"+" 버튼 aria-label 등 접근성 마크업 연결 규정
 
 ## 9. 샘플링에 사용한 10개 노드 (부록, 전수)

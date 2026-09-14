@@ -9,35 +9,43 @@
 Text Count는 **Size(Small/Default) × State(3종) 두 축, 6-변형 컴포넌트 셋**입니다. 6개 노드 전부 `get_design_context`로 개별 실측했고, `get_variable_defs`는 컴포넌트 셋 전체에 1회 호출한 결과를 재사용했습니다(오케스트레이터가 사전 확보). `get_motion_context`는 컴포넌트 셋(`2114:3929`, recursive=true)에 이 문서 작성 과정에서 별도로 1회 호출했습니다.
 
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소 `tokens/*.json`에 없는 값은 "확인 필요" 또는 "기존 토큰에 없음"으로 명시합니다.
-- **Figma 소스 파일의 네이밍 불일치를 명시적으로 지적합니다**: 아래 1장에서 상세히 다룹니다.
+- **2026-09-14 해소**: 초판에서 지적한 Figma 소스의 네이밍 불일치(`State6`/`State5`/`State4`)는 **디자이너가 Figma 원본을 정정해 해소**되었습니다. 1장 참고.
 
 ## 1. 컴포넌트 개요
 
 Text Count는 텍스트 입력 필드(TextArea 등) 근처에 표시되는 글자 수 카운터입니다(예: "12/50"). 현재 입력된 글자 수(분자)와 최대 허용 글자 수(분모)를 "/"로 구분해 표시하며, 입력 상태에 따라 분자 부분의 색상이 바뀝니다.
 
-**⚠️ Figma 소스 파일의 네이밍 불일치**: 이 Component Set의 State 값은 Size 그룹마다 이름 붙이는 방식이 다릅니다.
-- **Small** 그룹의 State는 `Default` / `Typing` / `Destructed`로, 의미가 드러나는 이름이 붙어 있습니다.
-- **Default(Size)** 그룹의 State는 `State6` / `State5` / `State4`로, 의미 없는 자동 생성 이름 그대로 남아 있습니다.
-
-작업 지시 단계에서는 이를 임의로 Small 그룹과 매칭시키지 말라고 명시했기에, **실제 렌더링 색상값을 `get_design_context`로 실측 비교**하여 매칭을 검증했습니다(2장 참고). 이는 추측이 아니라 색상 실측에 근거한 결론입니다.
+> **2026-09-14 정정 완료 — 네이밍 불일치가 해소되었습니다.**
+>
+> 초판 조사 시점에는 Size 그룹마다 State 이름 붙이는 방식이 달랐습니다 — Small 그룹은 `Default`/`Typing`/`Destructed`로 의미가 드러났지만, Default(Size) 그룹은 `State6`/`State5`/`State4`라는 자동 생성 이름이 그대로 남아 있었습니다. 당시에는 이를 임의로 매칭하지 않고 **실제 렌더링 색상을 실측 비교**해 대응을 확정했습니다.
+>
+> 이후 **디자이너가 Figma 원본의 변형 이름을 정정**했고, `get_metadata`(`2114:3929`) 재조회로 6개 변형 전부 `State=…, Size=…` 형식으로 정리된 것을 확인했습니다.
+>
+> | 이전 이름 | 현재 이름 | 초판의 색상 실측 추론 |
+> |---|---|---|
+> | `State6` | `State=Default, Size=Default` | Default — **맞음** |
+> | `State5` | `State=Typing, Size=Default` | Typing — **맞음** |
+> | `State4` | `State=Destructed, Size=Default` | Destructed — **맞음** |
+>
+> 색상 실측으로 내린 결론 3건이 모두 정정된 이름과 일치했습니다. 노드 ID·값·구조는 전혀 바뀌지 않았고 **이름만** 정리되었습니다.
 
 | 축(Axis) | 값 | 의미 |
 |---|---|---|
 | **Size** | Small(Caption2, 10px) / Default(Caption1, 12px) | 카운터 텍스트 크기 |
-| **State** | Default / Typing / Destructed (Small 그룹 명칭 기준) | 입력 안 함(회색) / 입력 중(진한 회색 강조) / 최대 글자수 초과 등 오류(빨강 강조) |
+| **State** | Default / Typing / Destructed | 입력 안 함(회색) / 입력 중(진한 회색 강조) / 최대 글자수 초과 등 오류(빨강 강조) |
 
 ## 2. Size × State별 스펙 (6개 전체 실측)
 
-| Size | State(실제 의미) | Figma 노드 | 노드상 State 이름 | 크기(실측) | 타이포 | 분자(입력된 수) 색상 | 슬래시·분모 색상 |
+| Size | State | Figma 노드 | Figma 변형 이름(2026-09-14 정정 후) | 크기(실측) | 타이포 | 분자(입력된 수) 색상 | 슬래시·분모 색상 |
 |---|---|---|---|---|---|---|---|
-| Small | Default | `2114:3928` | `Default` | 42×16px | Caption2(10px) Medium(500), `lineHeight/Caption2`=16px | `neutral/500`=`#8c9199` (분자도 동일하게 회색) | `neutral/500`=`#8c9199` |
-| Small | Typing | `2114:3927` | `Typing` | 42×16px | Caption2(10px) Medium(500) | `neutral/700`=`#454c58` (더 짙은 회색으로 강조) | `neutral/500`=`#8c9199` |
-| Small | Destructed | `2114:3926` | `Destructed` | 42×16px | Caption2(10px) Medium(500) | `theme/destructed-default`=`#e72f37` (빨강) | `neutral/500`=`#8c9199` |
-| Default | Default | `2114:4251` | `State6` | 49×18px | Caption1(12px) **Regular(400)**, `lineHeight/Caption1`=18px | `neutral/500`=`#8c9199` (분자도 동일하게 회색) | `neutral/500`=`#8c9199` |
-| Default | Typing | `2114:4255` | `State5` | 49×18px | Caption1(12px) Regular(400) | `neutral/700`=`#454c58` (더 짙은 회색으로 강조) | `neutral/500`=`#8c9199` |
-| Default | Destructed | `2114:4259` | `State4` | 49×18px | Caption1(12px) Regular(400) | `theme/destructed-default`=`#e72f37` (빨강) | `neutral/500`=`#8c9199` |
+| Small | Default | `2114:3928` | `State=Default, Size=Small` | 42×16px | Caption2(10px) Medium(500), `lineHeight/Caption2`=16px | `neutral/500`=`#8c9199` (분자도 동일하게 회색) | `neutral/500`=`#8c9199` |
+| Small | Typing | `2114:3927` | `State=Typing, Size=Small` | 42×16px | Caption2(10px) Medium(500) | `neutral/700`=`#454c58` (더 짙은 회색으로 강조) | `neutral/500`=`#8c9199` |
+| Small | Destructed | `2114:3926` | `State=Destructed, Size=Small` | 42×16px | Caption2(10px) Medium(500) | `theme/destructed-default`=`#e72f37` (빨강) | `neutral/500`=`#8c9199` |
+| Default | Default | `2114:4251` | `State=Default, Size=Default` | 49×18px | Caption1(12px) **Regular(400)**, `lineHeight/Caption1`=18px | `neutral/500`=`#8c9199` (분자도 동일하게 회색) | `neutral/500`=`#8c9199` |
+| Default | Typing | `2114:4255` | `State=Typing, Size=Default` | 49×18px | Caption1(12px) Regular(400) | `neutral/700`=`#454c58` (더 짙은 회색으로 강조) | `neutral/500`=`#8c9199` |
+| Default | Destructed | `2114:4259` | `State=Destructed, Size=Default` | 49×18px | Caption1(12px) Regular(400) | `theme/destructed-default`=`#e72f37` (빨강) | `neutral/500`=`#8c9199` |
 
-**State6/5/4 매칭 근거 (색상 실측 비교, 확정)**:
+**State6/5/4 매칭 근거 (초판 조사 이력 — 현재는 Figma 이름이 정정되어 추론이 불필요합니다)**:
 - `State6`(`2114:4251`)은 세 텍스트 조각(분자/슬래시/분모) 모두 부모 컨테이너의 공통 색상(`neutral/500`)만 상속하고 개별 색상 override가 전혀 없습니다 — Small 그룹의 `Default`(분자도 회색)와 정확히 같은 패턴 → **State6 = Default**
 - `State5`(`2114:4255`)는 분자만 `neutral/700`(더 짙은 회색)로 override되고 슬래시·분모는 `neutral/500` 그대로입니다 — Small 그룹의 `Typing`과 정확히 같은 패턴 → **State5 = Typing**
 - `State4`(`2114:4259`)는 분자만 `theme/destructed-default`(빨강)로 override되고 슬래시·분모는 `neutral/500` 그대로입니다 — Small 그룹의 `Destructed`와 정확히 같은 패턴 → **State4 = Destructed**

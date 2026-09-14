@@ -59,7 +59,7 @@
 
 **모션 데이터 없음.**
 
-`get_motion_context`를 컴포넌트 최상위(`2196:8568`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Selected=False→True 전환 시의 배경/그림자 페이드나 텍스트 색상 트랜지션에 대한 모션 정의는 Figma 파일에 없습니다. (Segmented Control 조합 레벨에서의 "슬라이딩 인디케이터" 애니메이션 유무는 [segmented-control.md](../../segmented-control/segmented-control.md) 6장에서 별도로 확인했습니다 — 마찬가지로 모션 데이터 없음.)
+`get_motion_context`를 컴포넌트 최상위(`2196:8568`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Selected=False→True 전환 시의 배경/그림자 페이드나 텍스트 색상 트랜지션에 대한 모션 정의는 Figma 파일에 없습니다. (Segmented Control 조합 레벨의 "슬라이딩 인디케이터" 역시 Figma 에는 정의가 없고, 2026-09-14 디자이너가 별도로 확정했습니다 — [segmented-control.md](../../segmented-control/segmented-control.md) 5장 참조.)
 
 ## 5. 접근성
 

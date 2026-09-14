@@ -1,0 +1,42 @@
+/* Navigation Bar Top / Leading — 스펙: components/navigation-bar/top/leading/leading.md (8개 전수 실측)
+   Type 마다 패딩 패턴이 전부 다릅니다. */
+.bd-nav-leading {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  gap: var(--ref-spacing-06);
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-800);
+}
+.bd-nav-leading[data-mode='dark'] { color: var(--sys-color-common-white-default); }
+
+.bd-nav-leading[data-type='back'] {
+  padding: var(--ref-spacing-08) 0 var(--ref-spacing-08) var(--ref-spacing-08);   /* 12 / 0 / 12 / 12 */
+}
+/* Close 만 우측 패딩이 40px 로 유독 넓습니다 — X 아이콘을 안쪽으로 들이려는 의도로 추정 */
+.bd-nav-leading[data-type='close'] {
+  padding: var(--ref-spacing-08) var(--ref-spacing-16) var(--ref-spacing-08) var(--ref-spacing-11); /* 12 / 40 / 12 / 20 */
+}
+.bd-nav-leading[data-type='big-title'] {
+  justify-content: center;
+  padding: var(--ref-spacing-07) 0 var(--ref-spacing-07) var(--ref-spacing-11);   /* 10 / 0 / 10 / 20 */
+}
+/* Home 은 Big Title 과 레이아웃 패턴이 같지만 세로 패딩이 12px 로 다릅니다(실측 확인) */
+.bd-nav-leading[data-type='home'] {
+  justify-content: center;
+  padding: var(--ref-spacing-08) 0 var(--ref-spacing-08) var(--ref-spacing-11);   /* 12 / 0 / 12 / 20 */
+}
+
+.bd-nav-leading__label {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-regular);
+}
+.bd-nav-leading__big-title {
+  font-size: var(--typography-title-size);
+  line-height: var(--typography-title-line-height);
+  letter-spacing: var(--typography-title-letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+.bd-nav-leading__logo { height: 24px; width: auto; display: block; }

@@ -1,0 +1,42 @@
+/* Week · Week Header · Month — 스펙: components/date-time-picker/{week,week-header,month}/*.md
+   세 컴포넌트 모두 328px 고정 폭으로 서로 열이 맞도록 설계돼 있습니다. */
+
+/* Week — Date 셀 7개 가로 배열. 328 = 40×7 + 8×6 */
+.bd-week {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ref-spacing-06);          /* 8px */
+  width: 328px;
+  height: 40px;
+}
+
+/* Week Header — 요일 라벨 행. Week 와 같은 40px 칸·8px gap 이라 열이 맞습니다 */
+.bd-week-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ref-spacing-06);          /* 8px */
+  width: 328px;
+  height: 22px;
+  font-family: var(--font-family-base);
+}
+.bd-week-header__cell {
+  width: 40px;
+  text-align: center;
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  color: var(--sys-color-neutral-600);
+}
+/* 일요일만 강조색입니다. **토요일은 평일과 같은 회색**입니다 */
+.bd-week-header__cell[data-day='sun'] { color: var(--sys-color-theme-destructed-default); }
+
+/* Month — Week 를 5~6개 세로로 쌓습니다. 224px(5주) / 270px(6주) */
+.bd-month {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ref-spacing-05);          /* 6px */
+  width: 328px;
+}

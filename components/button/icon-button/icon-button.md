@@ -26,7 +26,27 @@ Icon Button은 라벨 없이 아이콘 하나만으로 액션을 제공하는 **
 | **Stroke** | False / True | 1px 보더 사용 여부. **Tertiary**에서 관측됨 |
 | **Bold Stroke** | False / True | Stroke=True일 때 옅은 반투명 보더 대신 진한 단색(neutral/400) 보더 사용 여부. **Tertiary**에서 관측됨 |
 
-### 1-1. 이 컴포넌트에만 있는 Type 설명
+### 1-1. 실제로 존재하는 조합은 9개뿐입니다 (2026-09-14 추가, 전수 확인)
+
+`get_metadata`로 108개 변형의 이름을 전수 파싱한 결과입니다. `9개 조합 × 3 Size × 4 State = 108`.
+
+| # | Type | Icon Color | Stroke | Bold Stroke |
+|---|---|---|---|---|
+| 1 | Ghost | Black | False | False |
+| 2 | Primary | White | False | False |
+| 3 | Secondary | Blue | False | False |
+| 4 | Destructed | White | False | False |
+| 5 | Destructed-Subtle | Red | False | False |
+| 6 | Tertiary | Black | False | False |
+| 7 | Tertiary | Black | True | False |
+| 8 | Tertiary | Black | True | True |
+| 9 | Tertiary | White | False | False |
+
+- **Icon Color는 Tertiary를 빼면 Type이 완전히 결정합니다.** Tertiary만 Black/White 중 선택 가능합니다.
+- **Stroke / Bold Stroke는 Tertiary + Black 조합에만 존재합니다** — Tertiary + White 에도 없습니다.
+- **이 컴포넌트에는 `On`(Light/Dark) 축이 없습니다.** 어두운 배경용 변형은 `Icon Color=White`(9번)로 표현되며, 이는 `On` 축을 갖는 `Button` 컴포넌트와 구조가 다른 지점입니다. 구현 시 `On` 프로퍼티를 만들지 않도록 주의합니다.
+
+### 1-2. 이 컴포넌트에만 있는 Type 설명
 
 - **Ghost**: 배경 채움이 전혀 없는(투명) 아이콘 버튼. 아이콘만 검정(Black)으로 표시됩니다. Button 컴포넌트에는 없는 타입으로, 배경 없이 아이콘만 얹어야 하는 헤더/툴바용입니다.
 - **Destructed-Subtle**: 파괴적 액션의 저강조 버전. 채도 높은 빨강 채움(Destructed) 대신 **연한 빨강 surface**(`theme/destructed-bg` `#ffedeb`)에 빨강 아이콘(`Red`)을 얹습니다. Button 컴포넌트에는 없는 이 컴포넌트 고유 타입입니다.

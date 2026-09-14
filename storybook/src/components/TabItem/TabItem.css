@@ -1,0 +1,60 @@
+/* Tab Item (_Item) — 스펙: components/global/tab-item/tab-item.md (12개 전수 실측)
+   Segmented Control Item 이 '배경 pill + 그림자' 로 선택을 표현하는 것과 달리,
+   Tab Item 은 **밑줄 인디케이터** 로만 표현합니다. 배경 변화가 전혀 없습니다. */
+.bd-tab-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 32px;
+  padding-left: 0;             /* 가로 padding 이 아예 없습니다 (Segmented Control Item 과 다른 점) */
+  padding-right: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  white-space: nowrap;
+  font-weight: var(--font-weight-semibold);   /* S·L 모두 SemiBold 고정 */
+  color: var(--sys-color-neutral-500);
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-tab-item:disabled { cursor: not-allowed; }
+
+/* 높이 = lineHeight + 세로padding×2 (S 22+20=42 · L 24+24=48) */
+.bd-tab-item[data-size='s'] {
+  padding-top: var(--ref-spacing-07);         /* 10px */
+  padding-bottom: var(--ref-spacing-07);
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+}
+.bd-tab-item[data-size='l'] {
+  padding-top: var(--ref-spacing-08);         /* 12px */
+  padding-bottom: var(--ref-spacing-08);
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+}
+
+/* 색 우선순위: Disabled > Emphasize > Active */
+.bd-tab-item[data-active='true'] { color: var(--sys-color-neutral-800); }
+.bd-tab-item[data-emphasize='true'] { color: var(--sys-color-theme-destructed-default); }
+.bd-tab-item:disabled { color: var(--sys-color-neutral-400); }
+
+/* 밑줄 — 색은 **항상 글자색과 동일**합니다 */
+.bd-tab-item[data-active='true']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: currentColor;
+}
+
+/* ⚠️ Figma 에 Hover/Pressed/Focused 축이 없습니다 */
+.bd-tab-item:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: -2px;
+}

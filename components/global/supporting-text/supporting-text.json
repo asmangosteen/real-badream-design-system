@@ -139,5 +139,30 @@
       "2114:4154": "S,Success,False", "2114:4153": "M,Success,True", "2114:4169": "M,Success,False", "2114:4151": "L,Success,True", "2114:4152": "L,Success,False",
       "2114:4149": "S,Warning,False", "2114:4148": "M,Warning,True", "2114:4147": "M,Warning,False", "2114:4146": "L,Warning,True", "2114:4157": "L,Warning,False"
     }
+  },
+  "nonVariantProperties": {
+    "addedOn": "2026-09-14",
+    "method": "Figma 프로퍼티 패널 스크린샷(사용자 제공) + get_design_context(2114:4181 / 2114:4164 / 2114:4175) 재조회",
+    "note": "36개 variant 축(Size×Theme×Text Count) 외에 별도 프로퍼티 3종이 존재합니다. Text Input 의 Show Unit, Calendar Header 의 Show Dropdown 과 같은 패턴입니다.",
+    "properties": {
+      "Text": { "type": "text", "default": "Text", "description": "안내 문구 본문" },
+      "Show Icon": { "type": "boolean", "default": true, "description": "아이콘 표시 여부" },
+      "Icon S": { "type": "instanceSwap", "default": "Icon / Default / 12px / warning_filled", "usedBy": ["S"] },
+      "Icon M": { "type": "instanceSwap", "default": "Icon / Default / 16px / warning_filled", "usedBy": ["M", "L"] }
+    },
+    "iconGlyphResolved": {
+      "supersedes": "tokenMatchSummary 의 '아이콘 글리프 미확인' 항목",
+      "value": "warning_filled",
+      "category": "default/filled",
+      "sizeBySupportingTextSize": { "S": "12px", "M": "16px", "L": "16px" },
+      "swappable": true
+    },
+    "noIconLSlot": "스왑 슬롯은 Icon S·Icon M 둘뿐이며 Icon L 은 존재하지 않습니다. Size=L 은 Icon M 슬롯을 그대로 공유합니다(2114:4175 의 L 변형이 iconM prop 을 참조). M·L 의 아이콘 크기가 16px 로 동일하기 때문입니다.",
+    "iconWrapperPadding": {
+      "S": "pt = spacing/01 (1px)",
+      "M": "없음",
+      "L": "없음",
+      "note": "위 여백 1px 은 S 에만 붙습니다. 10px 본문 옆 12px 아이콘의 광학 보정으로 보입니다."
+    }
   }
 }

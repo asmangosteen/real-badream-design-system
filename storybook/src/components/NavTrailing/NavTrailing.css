@@ -1,0 +1,45 @@
+/* Navigation Bar Top / Trailing Components + Trailing
+   스펙: components/navigation-bar/top/trailing-components|trailing/*.md (전수 실측) */
+.bd-nav-trailing-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-800);
+}
+.bd-nav-trailing-item[data-mode='dark'] { color: var(--sys-color-common-white-default); }
+
+.bd-nav-trailing-item[data-type='icon'] { padding: var(--ref-spacing-04) 0; }   /* 4px */
+.bd-nav-trailing-item[data-type='icon'] > span {
+  display: flex;
+  padding: var(--ref-spacing-06);          /* 8px */
+  border-radius: var(--ref-radius-06);     /* 12px */
+}
+
+/* Button 타입은 Text Button(Size=XL · Blue · Default)을 그대로 재사용합니다.
+   ⚠️ Mode=Dark 에서도 파란색 그대로입니다 (WCAG 명암비 미검증) */
+.bd-nav-trailing-item[data-type='button'] {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--ref-spacing-08) 0;        /* 12px */
+}
+.bd-nav-trailing-item[data-type='button'] > span {
+  width: 64px;
+  text-align: right;
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-medium);
+  color: var(--sys-color-brand-primary-default);
+}
+
+/* Trailing 묶음 — 항목 사이 gap 이 없고 각 항목의 패딩으로만 떨어집니다 */
+.bd-nav-trailing {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: var(--ref-spacing-08);    /* 12px */
+}

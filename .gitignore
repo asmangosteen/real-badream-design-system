@@ -1,0 +1,7 @@
+# 의존성 — 저장소에 담지 않습니다 (storybook/package-lock.json 으로 복원)
+node_modules/
+
+# 스토리북 빌드 산출물 — GitHub Actions 가 매번 새로 빌드합니다
+storybook/storybook-static/
+
+.DS_Store

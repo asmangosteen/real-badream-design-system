@@ -29,6 +29,33 @@ Button은 화면 이동, 확인, 제출 등 사용자의 주요 액션을 유도
 | **On** | Light / Dark | 버튼이 놓이는 배경이 밝은지 어두운지. **Tertiary + Text Color=White 조합에서만** On=Dark가 관측됨(어두운 배경 위에 놓이는 Tertiary 버튼) |
 | **Contents** | Text / Icon / Text + Icon / Icon + Text | 라벨과 아이콘의 유무 및 순서. "Text + Icon"은 아이콘이 텍스트 뒤(오른쪽), "Icon + Text"는 아이콘이 텍스트 앞(왼쪽) |
 
+### 1-1. 실제로 존재하는 조합은 11개뿐입니다 (2026-09-14 추가, 전수 확인)
+
+8개 축을 단순히 곱하면 수천 가지가 나오지만, `get_metadata`로 935개 변형의 이름을 전수 파싱한 결과
+**Type × Text Color × Stroke × Bold Stroke × On 의 실제 조합은 11개**입니다.
+
+`11개 스타일 조합 × 5 Size × 17개 State·Contents = 935`
+
+| # | Type | Text Color | Stroke | Bold Stroke | On |
+|---|---|---|---|---|---|
+| 1 | Primary | White | False | False | Light |
+| 2 | Secondary | Blue | False | False | Light |
+| 3 | Tertiary | Blue | False | False | Light |
+| 4 | Tertiary | Blue | True | False | Light |
+| 5 | Tertiary | Blue | True | True | Light |
+| 6 | Tertiary | Gray | False | False | Light |
+| 7 | Tertiary | Gray | True | False | Light |
+| 8 | Tertiary | Gray | True | True | Light |
+| 9 | Tertiary | White | False | False | **Dark** |
+| 10 | Destructed | White | False | False | Light |
+| 11 | Destructed | **Blue**(이름만, 실제 렌더링은 빨강 — 4장 참고) | True | False | Light |
+
+- **Primary·Secondary에는 Stroke 변형이 없습니다.**
+- **Bold Stroke는 Tertiary에만 있습니다** (Destructed에 Bold Stroke=True 조합이 없다는 초판 관찰과 일치).
+- **On=Dark는 Tertiary + Text Color=White 조합에만 있습니다.**
+- 17 = (Default·Hover·Pressed·Disabled 4종 × Contents 4종 = 16) + (Loading × Contents=Text 1종).
+  **Loading은 Contents=Text와만 조합**된다는 초판 관찰이 전수 확인으로 재확정되었습니다.
+
 ## 2. Size별 스펙
 
 기준 조합: Type=Primary, State=Default, Contents=Text + Icon (5개 Size 전체 실측: `409:6441`(S), `409:6750`(M), `409:6544`(L), `409:6721`(XL), `2002:11644`(2XL))
@@ -51,13 +78,27 @@ Icon-only 변형은 위 패딩 공식을 따르지 않고 **고정 정사각형*
 
 | Size | 정사각형 한 변 | 내부 아이콘 크기 | 토큰 매칭 |
 |---|---|---|---|
-| S | 26px | 12px | 기존 토큰에 없음(패딩 공식 역산 불가, 고정값) |
+| S | 26px | 12px | 기존 토큰에 없음 (→ 2026-09-14 정정: 아래 참고) |
 | M | 30px | 16px | 기존 토큰에 없음 |
 | L | 38px | **20px** | 기존 토큰에 없음. Text+Icon 조합의 16px과 다름 — 확인 필요 |
 | XL | 48px | **20px** | 기존 토큰에 없음. Text+Icon 조합의 16px과 다름 — 확인 필요 |
 | 2XL | 56px | 24px | 기존 토큰에 없음 |
 
 L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)은 Figma 실측으로 확인된 사실이며, 의도적 디자인인지 오타인지는 이 문서 조사 범위에서 판단할 수 없어 **확인 필요**로 남깁니다.
+
+**2026-09-14 정정 — Icon-only 정사각형은 "역산 불가한 고정값"이 아닙니다.** `get_metadata`로 935개 변형의 치수를 전수 확인한 결과, Icon-only 한 변은 **같은 Size의 Contents=Text 버튼 높이와 정확히 동일**합니다(S 26 · M 30 · L 38 · XL 48 · 2XL 56px). 즉 2장의 패딩 공식 `패딩Y×2 + lineHeight`로 그대로 계산되는 값입니다 — 별도 토큰이 없다는 점은 맞지만, 임의의 고정값은 아닙니다.
+
+### 2-2. Loading 스피너 크기 (2026-09-14 추가, 전수 실측)
+
+Contents=Text × State=Loading 변형의 스피너 실측 치수입니다(라벨 뒤 `spacing/02`=2px 간격).
+
+| Size | 스피너 크기 | 대응 `_ButtonSpinner` 변형 |
+|---|---|---|
+| S | 18px | S |
+| M | 22px | M |
+| L | 22px | M 또는 L (두 변형이 같은 크기라 특정 불가, 시각적으로 동일) |
+| XL | **24px** | XL (`439:18924` 실측 — 24.0009765625px) |
+| 2XL | 24px | XL |
 
 ## 3. Type별 색상 (State=Default 기준, M 사이즈로 실측 · 다른 Size에도 동일 적용 추정)
 
@@ -83,6 +124,10 @@ L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)�
 
 **명명 불일치 주의**: 935개 심볼 목록과 컴포넌트 프로퍼티상 "Text Color=Blue"로 표기된 Destructed+Stroke 변형(`409:6642` 등)이 실제로는 파란색이 아니라 `theme/destructed-default`(빨강 `#e72f37`) 텍스트로 렌더링됩니다. Figma 변형 축 이름과 실제 렌더링 결과가 일치하지 않는 것으로 실측 확인되었습니다 — 원본 파일에서 명명을 재확인해야 합니다.
 
+> **2026-09-14 재확인 — 확정**: `get_variable_defs`를 M 사이즈 노드(`410:3561`)에 호출한 결과 바인딩 변수가
+> `theme/destructed-default #e72f37` · `common/white-default #fdfdfd` · `color/gray/900-10 #03091a1a` · `borderwidth/02 1` 로 반환되어,
+> **빨간 라벨 + 흰 배경 + gray-900 10% 1px 테두리**임이 확정되었습니다. 축 이름 "Blue"는 실제 색과 무관합니다.
+
 ## 5. State별 색상 변화
 
 ### 5-1. Default
@@ -98,6 +143,21 @@ L/XL에서 Icon-only 아이콘이 Text+Icon 조합보다 큰 것(20px vs 16px)�
 | Tertiary(라이트) | `interaction/light-gray` | `gray-900` `#03091A` 5% (`ref-color-gray-900-5`) | `gray-900` `#03091A` 10% (`ref-color-gray-900-10`) |
 | Tertiary(On=Dark) | `interaction/gray` | `gray-900` `#03091A` 15% (`#03091A26`) | `gray-900` `#03091A` 30% (`#03091A4D`) |
 | Destructed(빨강 채움) | `interaction/red` | `red-900` `#5E1314` 15% (`#5E131426`) | `red-900` `#5E1314` 30% (`#5E13144D`) |
+
+> **2026-09-14 정정 — 위 표는 Stroke=False 기준입니다. Stroke=True 는 예외입니다.**
+>
+> 위 표는 오버레이를 **Type 별로** 매핑하고 있으나, 실제 규칙은 **Type 이 아니라 그 변형의 실제 배경색**이 결정합니다.
+> Stroke=True 는 배경이 `common/white-default`(흰색)로 바뀌므로(4장), Type 과 무관하게
+> **`interaction/light-gray`(gray-900 5% → 10%)** 를 씁니다.
+>
+> | 노드 | 조합 | 실측된 오버레이 변수 |
+> |---|---|---|
+> | `410:3573` | Destructed + Stroke, **Hover** | `color/interaction/light-gray/hover` `#03091a0d` |
+> | `410:3579` | Destructed + Stroke, **Pressed** | `color/interaction/light-gray/pressed` `#03091a1a` |
+> | `410:3448` | Tertiary + Stroke, **Hover** | `color/interaction/light-gray/hover` `#03091a0d` |
+>
+> 즉 **Destructed + Stroke 에 `interaction/red` 를 얹으면 안 됩니다** — 흰 배경이 분홍빛으로 물듭니다.
+> `interaction/red` 는 빨강으로 채워진(Stroke=False) Destructed 에만 적용됩니다.
 
 - Hover 상태에는 `cursor: pointer` 힌트도 함께 붙습니다.
 - 각 계열은 배경/텍스트 위에 해당 `interaction/*` 오버레이를 합성합니다. 채움 계열(Primary/Destructed)과 On=Dark Tertiary는 **어두운(-900) 오버레이 15% → 30%**, 연한 surface 계열(Secondary/Tertiary-light)은 **연한 오버레이(blue-500 8→15%, gray-900 5→10%)**로 눌림 깊이를 표현합니다.

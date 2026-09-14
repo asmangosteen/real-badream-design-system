@@ -217,5 +217,23 @@
       "외곽 정사각형 치수 (28/36/40px) — 패딩+아이콘 합성 결과",
       "opacity/40 변수 (사용처 미확인)"
     ]
+  },
+  "verifiedCombinations": {
+    "verifiedOn": "2026-09-14",
+    "method": "get_metadata(2601:1555)로 108개 변형 이름을 전수 파싱",
+    "formula": "9개 조합 × 3 Size × 4 State = 108",
+    "noOnAxis": "이 컴포넌트에는 On(Light/Dark) 축이 없습니다. 어두운 배경용 변형은 Icon Color=White로 표현됩니다 — On 축을 갖는 Button과 구조가 다르므로 구현 시 On 프로퍼티를 만들지 않습니다.",
+    "iconColorIsDerivedFromType": "Tertiary를 빼면 Icon Color는 Type이 완전히 결정합니다. Stroke/Bold Stroke는 Tertiary + Black 조합에만 존재합니다.",
+    "combinations": [
+      { "type": "Ghost", "iconColor": "Black", "stroke": false, "boldStroke": false },
+      { "type": "Primary", "iconColor": "White", "stroke": false, "boldStroke": false },
+      { "type": "Secondary", "iconColor": "Blue", "stroke": false, "boldStroke": false },
+      { "type": "Destructed", "iconColor": "White", "stroke": false, "boldStroke": false },
+      { "type": "Destructed-Subtle", "iconColor": "Red", "stroke": false, "boldStroke": false },
+      { "type": "Tertiary", "iconColor": "Black", "stroke": false, "boldStroke": false },
+      { "type": "Tertiary", "iconColor": "Black", "stroke": true, "boldStroke": false },
+      { "type": "Tertiary", "iconColor": "Black", "stroke": true, "boldStroke": true },
+      { "type": "Tertiary", "iconColor": "White", "stroke": false, "boldStroke": false, "sourceNodeId": "2209:4312", "variableDefs": { "neutral/600": "#5b616c", "common/white-default": "#fdfdfd", "spacing/06": "8", "radius/06": "12" } }
+    ]
   }
 }

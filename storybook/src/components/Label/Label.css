@@ -1,0 +1,36 @@
+/* Label — 스펙: components/global/label/label.md (6개 전수 실측)
+   핵심: S 와 M 은 타이포가 완전히 같고 하단 padding 만 다릅니다. L 만 타이포가 Body2 로 바뀝니다. */
+.bd-label {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ref-spacing-02);            /* 라벨↔별표 2px, 전 Size 공통 */
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-700);
+}
+
+/* S·M 은 Caption1 SemiBold 로 동일 — 차이는 하단 padding 뿐 */
+.bd-label[data-size='s'],
+.bd-label[data-size='m'] {
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-semibold);
+}
+.bd-label[data-size='s'] { padding-bottom: var(--ref-spacing-02); }  /* 2px → 높이 20 */
+.bd-label[data-size='m'] { padding-bottom: var(--ref-spacing-04); }  /* 4px → 높이 22 */
+
+/* L 만 타이포 자체가 다름 */
+.bd-label[data-size='l'] {
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);
+  padding-bottom: var(--ref-spacing-05);                             /* 6px → 높이 28 */
+}
+
+.bd-label__essential {
+  color: var(--sys-color-theme-destructed-default);
+  /* S·M 은 별표가 라벨(600)보다 한 단계 가벼운 Medium(500).
+     L 은 라벨과 별표가 둘 다 Medium 이라 별도 지정이 필요 없습니다. */
+  font-weight: var(--font-weight-medium);
+}

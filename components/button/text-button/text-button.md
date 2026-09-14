@@ -32,15 +32,19 @@ Text Button은 배경 없이 라벨(과 선택적 아이콘)만으로 저강조 
 
 | Size | 배경 | Padding | Radius | Gap(아이콘 시) | 폰트 스타일 | Weight | 아이콘 크기 |
 |---|---|---|---|---|---|---|---|
-| **S** | 없음 | 없음(0) | 없음 | `spacing/02`=2px (`ref-spacing-02`) | caption1 (12px/18px, ls -0.03px) | `weight/600` Semibold | 확인 필요 (S Contents=Icon 조합 미측정) |
+| **S** | 없음 | 없음(0) | 없음 | **0px (간격 없음)** — 2026-09-14 정정 | caption1 (12px/18px, ls -0.03px) | `weight/600` Semibold | **12px** (실측 `439:21286`) |
 | **M** | 없음 | 없음(0) | 없음 | `spacing/02`=2px | body2 (14px/22px, ls -0.04px) | `weight/500` Medium | **16px** (실측 `439:21278`) |
-| **L** | 없음 | 없음(0) | 없음 | `spacing/02`=2px | body1 (16px/24px, ls -0.04px) | `weight/500` Medium | 확인 필요 (L Contents=Icon 조합 미측정) |
-| **XL** | 없음 | 없음(0) | 없음 | `spacing/02`=2px | subtitle (18px/24px, ls -0.09px) | `weight/500` Medium | 확인 필요 (XL Contents=Icon 조합 미측정) |
+| **L** | 없음 | 없음(0) | 없음 | `spacing/02`=2px | body1 (16px/24px, ls -0.04px) | `weight/500` Medium | **16px** (실측 `439:21274`) |
+| **XL** | 없음 | 없음(0) | 없음 | `spacing/02`=2px | subtitle (18px/24px, ls -0.09px) | `weight/500` Medium | **20px** (실측 `439:21271`) |
 
 - 타이포 값(size/lineHeight/letterSpacing)은 저장소 `tokens/typography.json`의 caption1/body2/body1/subtitle 행과 **정확히 일치**합니다. 폰트 패밀리는 전 사이즈 공통 `font/pretendard` = Pretendard(`tokens/typography.json` fontFamily와 일치).
 - 특이사항: **S만 Semibold(`weight/600`), M/L/XL은 전부 Medium(`weight/500`)** 라벨 굵기를 사용합니다.
 - Size 스케일이 Button과 다릅니다. Text Button은 S=caption1 → M=body2 → L=**body1** → XL=**subtitle** 로 올라갑니다(Button의 L은 body2였음). Button 문서와 Size별 타이포 매핑이 다르므로 혼동 주의.
-- 아이콘 크기는 Contents=Text+Icon/Icon+Text(M)에서만 16px로 실측되었습니다. S/L/XL의 아이콘 크기는 개별 노드를 샘플링하지 않아 **확인 필요**로 남깁니다. 아이콘 애셋 이름은 `Icon / Default / 16px / plus`(기본 플레이스홀더 글리프)입니다.
+- **2026-09-14 갱신**: 초판에서 "확인 필요"로 남겼던 S/L/XL의 아이콘 크기를 `get_metadata`로 4개 Size 전부 실측해 확정했습니다. 각 노드의 아이콘 레이어명이 그대로 크기를 가리킵니다 — `Icon / Default / 12px / plus`(S) · `16px`(M·L) · `20px`(XL).
+
+- **2026-09-14 정정 — S의 Gap은 2px이 아니라 0입니다.** 초판은 전 사이즈 공통 `spacing/02`(2px)로 기재했으나, S 노드(`439:21286`)를 실측하니 텍스트가 `x=0`에서 너비 25로 끝나고 **12px 아이콘이 `x=25`에서 곧바로 시작**합니다(전체 너비 37 = 25 + 12). 간격이 없습니다. M(`x=28`→아이콘 `x=30`) · L(`x=32`→`x=34`) · XL(`x=36`→`x=38`)은 전부 2px가 맞습니다. **S만 0인 것이 의도된 설계인지 확인이 필요합니다.**
+
+- **2026-09-14 추가 — Loading 스피너 크기**: Contents=Default(Loading 전용) 변형의 실측 치수는 **S 18 · M 22 · L 24 · XL 24px** 입니다(`439:21253` · `439:21250` · `439:21198` · `439:21301`). **L이 XL과 같은 24px**이라, Button 컴포넌트의 매핑(L=22px)과 다릅니다.
 
 ## 3. Text Color별 색상 (Size=M, State=Default 기준 실측)
 

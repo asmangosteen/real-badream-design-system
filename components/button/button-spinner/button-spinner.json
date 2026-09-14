@@ -89,5 +89,43 @@
     "innerSubtractNodes": { "S": "439:19684", "M": "439:19075", "L": "439:19082", "XL": "프레임 자체가 SVG 이미지" },
     "variableDefsCall": "get_variable_defs(439:19645) → common/white-default, neutral/800, spacing/03",
     "motionCall": "get_motion_context(439:19645, recursive:true) → 빈 결과"
+  },
+  "ringGeometryResolved": {
+    "resolvedOn": "2026-09-14",
+    "method": "Figma 애셋 서버에서 원본 SVG(XL)·PNG(S/M/L, 2배 해상도)를 직접 내려받아 픽셀 단위 실측하고, 버튼 내부 _ButtonSpinner 인스턴스를 get_metadata 로 전수 확인",
+    "supersedes": "stroke 섹션의 '확인 필요' 및 colors 섹션의 '색상↔문맥 매핑 확인 필요'",
+    "shape": {
+      "description": "잘린 호가 아니라 끊김 없는 360° 완전한 링입니다. 링 자체가 각도(conic/angular) 그라디언트로 칠해져 회전 시 꼬리처럼 보입니다.",
+      "startAngle": "Figma 의 from 90deg 에 -135° 회전 행렬(matrix(-0.00636431 -0.00636396 ...))이 곱해져 실효 315deg",
+      "gradientRule": "시작색 = 그 스피너가 놓인 배경색, 끝색 = 라벨 색.",
+      "evidence": "Primary 2XL Loading(2002:11649) 내부 애셋의 실제 채우기가 conic-gradient(from 90deg, #2C7BE2 0deg, #FDFDFD 360deg) 로, 시작색이 버튼 배경 brand/primary-default 와 정확히 일치합니다.",
+      "standaloneAssetNote": "컴포넌트 셋 단독 애셋이 #202837 → #FDFDFD 인 것도 같은 규칙입니다 — 진열 프레임 배경이 남색이기 때문입니다. 배경별로 색을 고르는 축은 존재하지 않습니다.",
+      "implementationHint": "transparent → currentColor 로 구현하면 배경색을 몰라도 됩니다. CSS 그라디언트는 프리멀티플라이드 알파로 보간하므로 어떤 배경 위에서도 Figma 와 픽셀 단위로 동일합니다(0/25/50/75/100% 전 구간 검증 완료).",
+      "subtractNamingNote": "레이어명 'Subtract' 는 가운데 원을 빼내 링을 만든 불린 연산을 가리킬 뿐, 호가 잘려 있다는 뜻이 아닙니다."
+    },
+    "strokeBySize": {
+      "S":  { "value": "1.5px", "assetFormat": "PNG", "assetResolution": "26x26 (2배)", "ringDiameter": "13px" },
+      "M":  { "value": "2px",   "assetFormat": "PNG", "assetResolution": "30x30 (2배)", "ringDiameter": "15px" },
+      "L":  { "value": "2px",   "assetFormat": "PNG", "assetResolution": "32x32 (2배)", "ringDiameter": "16px" },
+      "XL": { "value": "2px",   "assetFormat": "SVG", "pathGeometry": "바깥 원 r=9 / 안쪽 원 r=7 (viewBox 24x24, 중심 12,12)", "ringDiameter": "24px" }
+    },
+    "strokeIsNotProportional": "지름 대비 두께 비율이 일정하지 않습니다 — S 0.115 · M 0.133 · L 0.125 · XL 0.083. 인스턴스를 리사이즈하면 이 비율이 유지되므로 두께도 함께 커집니다(L 을 24px 로 키우면 링 18px · 두께 2.25px).",
+    "consumerRingSizes": {
+      "note": "컴포넌트 셋의 XL 변형(프레임24/패딩0/링24)은 Button·Text Button 어느 쪽에서도 쓰이지 않습니다. 큰 사이즈는 L 변형의 프레임만 24px 로 키워(패딩 3 유지 → 링 18px) 씁니다. 링을 24px 로 구현하면 실제보다 33% 크게 보입니다.",
+      "Button": {
+        "S":   { "frame": 18, "padding": 2.5, "ring": 13, "variant": "S" },
+        "M":   { "frame": 22, "padding": 3.5, "ring": 15, "variant": "M", "instanceId": "439:19697" },
+        "L":   { "frame": 22, "padding": 3,   "ring": 16, "variant": "L", "instanceId": "439:19730" },
+        "XL":  { "frame": 24, "padding": 3,   "ring": 18, "variant": "L(24px 로 리사이즈)", "instanceId": "439:19763" },
+        "2XL": { "frame": 24, "padding": 3,   "ring": 18, "variant": "L(24px 로 리사이즈)", "instanceId": "2002:11651" }
+      },
+      "TextButton": {
+        "S":  { "frame": 18, "padding": 2.5, "ring": 13, "variant": "S" },
+        "M":  { "frame": 22, "padding": 3.5, "ring": 15, "variant": "M", "instanceId": "439:20649" },
+        "L":  { "frame": 24, "padding": 3,   "ring": 18, "variant": "L(24px 로 리사이즈)", "instanceId": "439:21060" },
+        "XL": { "frame": 24, "padding": 3,   "ring": 18, "variant": "L(24px 로 리사이즈)", "instanceId": "439:21134" }
+      }
+    },
+    "stillUnresolved": ["회전 애니메이션 duration/easing (Figma 에 모션 데이터 없음)", "XL 만 SVG, S/M/L 은 래스터 PNG 인 애셋 형태 불일치"]
   }
 }

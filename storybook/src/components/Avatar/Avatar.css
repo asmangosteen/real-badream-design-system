@@ -1,0 +1,37 @@
+/* Avatar — 스펙: components/avatar/avatar.md (7개 Size 전수 실측)
+   State 축이 없는 순수 표시용 컴포넌트입니다. */
+.bd-avatar {
+  display: inline-block;
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: var(--ref-radius-12);              /* 999px — 전 Size 공통 */
+  border: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-5);
+  box-sizing: border-box;
+  overflow: hidden;
+  background: var(--sys-color-neutral-100);
+}
+/* 핵심 규칙: 12px 에서만 테두리가 0.5px 로 더 얇습니다 */
+.bd-avatar[data-size='12'] { border-width: var(--ref-borderwidth-01); }
+
+.bd-avatar__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* 원본 비율과 무관하게 정사각 크롭 */
+}
+
+/* 이미지가 없거나 로드에 실패했을 때.
+   ⚠️ Figma 에 폴백 정의가 없어 구현에서 추가한 최소 표시입니다 (스펙 6장 "확인 필요") */
+.bd-avatar__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--sys-color-neutral-200);
+  color: var(--sys-color-neutral-600);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  user-select: none;
+}

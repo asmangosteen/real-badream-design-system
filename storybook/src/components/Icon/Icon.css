@@ -1,0 +1,28 @@
+/* ============================================================
+   Icon — assets/icons/ 의 원본 SVG 를 그대로 렌더링합니다.
+   UI 아이콘(outlined/filled)만 color 로 색을 바꿀 수 있고,
+   브랜드·제조사 아이콘은 원본 색을 유지합니다 (저장소 사용 원칙 3).
+   ============================================================ */
+.bd-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  line-height: 0;
+  /* 부모의 글자색을 그대로 따릅니다.
+     예전에는 여기서 neutral/800 을 직접 지정해, 파란 버튼 위에서도 아이콘이 검게 나오는 버그가 있었습니다.
+     (2026-09-14 수정 — 아이콘은 항상 라벨과 같은 색이어야 합니다) */
+  color: inherit;
+}
+.bd-icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.bd-icon--missing {
+  box-sizing: border-box;
+  border: 1px dashed var(--sys-color-theme-destructed-default, #e72f37);
+  border-radius: 2px;
+  color: var(--sys-color-theme-destructed-default, #e72f37);
+  font-size: 9px;
+}

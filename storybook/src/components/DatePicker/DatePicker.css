@@ -1,0 +1,120 @@
+/* Calendar Header · Year and Month Wheel · Date Picker · Date Picker Group
+   스펙: components/date-time-picker/{calendar-header,year-month-wheel,date-picker,date-picker-group}/*.md */
+
+/* ---------------- Calendar Header (352×56px) ---------------- */
+.bd-calendar-header {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 352px;
+  height: 56px;
+  gap: var(--ref-spacing-08);                  /* 12px */
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-800);
+}
+/* 패딩이 Title × With 조합마다 다릅니다 */
+.bd-calendar-header[data-title='left'][data-with='nothing'] { padding: var(--ref-spacing-06) var(--ref-spacing-11); }
+.bd-calendar-header[data-title='left'][data-with='arrows'],
+.bd-calendar-header[data-title='left'][data-with='close'] {
+  padding: var(--ref-spacing-06) var(--ref-spacing-06) var(--ref-spacing-06) var(--ref-spacing-11);
+}
+.bd-calendar-header[data-title='center'] { justify-content: center; padding: var(--ref-spacing-06); }
+/* ⚠️ 60px 은 토큰이 아니라 하드코딩된 값입니다 */
+.bd-calendar-header[data-title='center'][data-with='close'] {
+  padding: var(--ref-spacing-06) var(--ref-spacing-06) var(--ref-spacing-06) 60px;
+}
+
+/* Title 은 정렬뿐 아니라 **타이포 크기 자체가 다릅니다** */
+.bd-calendar-header__title { display: flex; align-items: center; gap: var(--ref-spacing-02); font-weight: var(--font-weight-semibold); }
+.bd-calendar-header[data-title='left'] .bd-calendar-header__title {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+}
+.bd-calendar-header[data-title='center'] .bd-calendar-header__title {
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+}
+.bd-calendar-header__spacer { flex: 1 1 auto; }
+.bd-calendar-header__btn {
+  display: flex;
+  padding: var(--ref-spacing-06);              /* 8px */
+  border: 0;
+  background: none;
+  border-radius: var(--ref-radius-06);         /* 12px */
+  cursor: pointer;
+  color: inherit;
+}
+
+/* ---------------- Year and Month Wheel (328×254px) ---------------- */
+/* 선택 행에서 멀어질수록 글자가 작아지고 옅어집니다 (거리 1→2→3) */
+.bd-ym-wheel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 328px;
+  height: 254px;
+  padding: var(--ref-spacing-14) var(--ref-spacing-06);   /* 32 / 8 */
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-800);
+}
+.bd-ym-wheel__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ref-spacing-08);
+  width: 100%;
+  border-radius: var(--ref-radius-06);
+  font-weight: var(--font-weight-regular);
+}
+.bd-ym-wheel__row[data-distance='3'] {
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  opacity: var(--ref-opacity-30);
+}
+.bd-ym-wheel__row[data-distance='2'] {
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  opacity: var(--ref-opacity-50);
+}
+.bd-ym-wheel__row[data-distance='1'] {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  opacity: var(--ref-opacity-70);
+}
+.bd-ym-wheel__row[data-distance='0'] {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  font-weight: var(--font-weight-medium);      /* 굵기만 Medium 으로 전환 */
+  background: var(--sys-color-brand-primary-lightest);
+}
+
+/* ---------------- Date Picker (352px 고정) ---------------- */
+.bd-date-picker {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 352px;
+  background: var(--sys-color-common-white-default);
+  font-family: var(--font-family-base);
+}
+.bd-date-picker__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ref-spacing-06);
+  padding: var(--ref-spacing-08);              /* 12px */
+}
+.bd-date-picker__time {
+  display: flex;
+  justify-content: center;
+  padding: var(--ref-spacing-08);
+}
+
+/* ---------------- Date Picker Group ---------------- */
+.bd-date-picker-group { display: flex; background: var(--sys-color-common-white-default); }
+.bd-date-picker-group[data-type='horizontal'] { flex-direction: row; align-items: stretch; }
+.bd-date-picker-group[data-type='vertical'] { flex-direction: column; width: 352px; }

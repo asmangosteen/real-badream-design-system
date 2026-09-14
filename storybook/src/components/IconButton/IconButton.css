@@ -1,0 +1,112 @@
+/* ============================================================
+   Icon Button — 스펙: components/button/icon-button/icon-button.md
+   Button 과 달리 고정 크기 프레임이 아니라 "패딩 × 2 + 아이콘" 으로 정사각형이 만들어집니다.
+   Ghost 와 Destructed-Subtle 은 Button 에는 없는 이 컴포넌트 고유 타입입니다.
+
+   ⚠️ 2026-09-14 Figma 재실측 정정: 이 컴포넌트에는 **On(Light/Dark) 축이 없습니다.**
+      어두운 배경용 변형은 `Icon Color=White` 로 표현됩니다 (Button 과 다른 점).
+      실제 존재하는 조합은 9개뿐이며, Icon Color 는 Tertiary 를 빼면 Type 이 결정합니다.
+   ============================================================ */
+.bd-icon-button {
+  --bd-ib-overlay: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;   /* 패딩 + 아이콘 = 외곽 정사각형 */
+  border: 0;
+  cursor: pointer;
+  background-image: linear-gradient(var(--bd-ib-overlay), var(--bd-ib-overlay));
+  background-color: var(--bd-ib-bg, transparent);
+  color: var(--bd-ib-fg);
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-icon-button:disabled { cursor: not-allowed; }
+
+/* ---------------- Size ----------------
+   S 만 padding 6px / radius 8px 이고, M·L 은 padding 8px / radius 12px 입니다 */
+.bd-icon-button[data-size='s'] { padding: var(--ref-spacing-05); border-radius: var(--ref-radius-04); } /* 28px */
+.bd-icon-button[data-size='m'] { padding: var(--ref-spacing-06); border-radius: var(--ref-radius-06); } /* 36px */
+.bd-icon-button[data-size='l'] { padding: var(--ref-spacing-06); border-radius: var(--ref-radius-06); } /* 40px */
+
+/* ---------------- Type ---------------- */
+.bd-icon-button[data-type='ghost'] {
+  --bd-ib-bg: transparent;
+  --bd-ib-fg: var(--sys-color-neutral-800);   /* Black — ⚠️ SVG baked 라 직접 검증 못함(추정) */
+}
+.bd-icon-button[data-type='primary'] {
+  --bd-ib-bg: var(--sys-color-brand-primary-default);
+  --bd-ib-fg: var(--sys-color-common-white-default);
+}
+.bd-icon-button[data-type='secondary'] {
+  --bd-ib-bg: var(--sys-color-brand-primary-lightest);
+  --bd-ib-fg: var(--sys-color-brand-primary-default);
+}
+.bd-icon-button[data-type='tertiary'] {
+  --bd-ib-bg: var(--sys-color-neutral-100);
+  --bd-ib-fg: var(--sys-color-neutral-800);
+}
+.bd-icon-button[data-type='tertiary'][data-icon-color='white'] {
+  --bd-ib-bg: var(--sys-color-neutral-600);
+  --bd-ib-fg: var(--sys-color-common-white-default);
+}
+.bd-icon-button[data-type='destructed'] {
+  --bd-ib-bg: var(--sys-color-theme-destructed-default);
+  --bd-ib-fg: var(--sys-color-common-white-default);
+}
+.bd-icon-button[data-type='destructed-subtle'] {
+  --bd-ib-bg: var(--sys-color-theme-destructed-bg);
+  --bd-ib-fg: var(--sys-color-theme-destructed-default);
+}
+
+/* ---------------- Stroke (Tertiary 에서만 관측) ----------------
+   ⚠️ Button 과 다릅니다: Button 은 Stroke 시 배경이 흰색이 되지만
+      Icon Button 은 neutral/100 배경을 그대로 유지하고 보더만 추가합니다. */
+.bd-icon-button[data-stroke='true'] {
+  border: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-10);
+}
+.bd-icon-button[data-stroke='true'][data-bold-stroke='true'] {
+  border-color: var(--sys-color-neutral-400);
+}
+
+/* ---------------- Hover / Pressed 오버레이 ---------------- */
+.bd-icon-button[data-type='primary']:hover:not(:disabled),
+.bd-icon-button[data-type='primary'][data-force-state='hover'] { --bd-ib-overlay: var(--interaction-blue-hover); }
+.bd-icon-button[data-type='primary']:active:not(:disabled),
+.bd-icon-button[data-type='primary'][data-force-state='pressed'] { --bd-ib-overlay: var(--interaction-blue-pressed); }
+
+.bd-icon-button[data-type='destructed']:hover:not(:disabled),
+.bd-icon-button[data-type='destructed'][data-force-state='hover'] { --bd-ib-overlay: var(--interaction-red-hover); }
+.bd-icon-button[data-type='destructed']:active:not(:disabled),
+.bd-icon-button[data-type='destructed'][data-force-state='pressed'] { --bd-ib-overlay: var(--interaction-red-pressed); }
+
+.bd-icon-button[data-type='secondary']:hover:not(:disabled),
+.bd-icon-button[data-type='secondary'][data-force-state='hover'] { --bd-ib-overlay: var(--interaction-light-blue-hover); }
+.bd-icon-button[data-type='secondary']:active:not(:disabled),
+.bd-icon-button[data-type='secondary'][data-force-state='pressed'] { --bd-ib-overlay: var(--interaction-light-blue-pressed); }
+
+.bd-icon-button[data-type='destructed-subtle']:hover:not(:disabled),
+.bd-icon-button[data-type='destructed-subtle'][data-force-state='hover'] { --bd-ib-overlay: var(--interaction-light-red-hover); }
+.bd-icon-button[data-type='destructed-subtle']:active:not(:disabled),
+.bd-icon-button[data-type='destructed-subtle'][data-force-state='pressed'] { --bd-ib-overlay: var(--interaction-light-red-pressed); }
+
+/* Tertiary · Ghost 는 light-gray */
+.bd-icon-button[data-type='tertiary']:hover:not(:disabled),
+.bd-icon-button[data-type='tertiary'][data-force-state='hover'],
+.bd-icon-button[data-type='ghost']:hover:not(:disabled),
+.bd-icon-button[data-type='ghost'][data-force-state='hover'] { --bd-ib-overlay: var(--interaction-light-gray-hover); }
+.bd-icon-button[data-type='tertiary']:active:not(:disabled),
+.bd-icon-button[data-type='tertiary'][data-force-state='pressed'],
+.bd-icon-button[data-type='ghost']:active:not(:disabled),
+.bd-icon-button[data-type='ghost'][data-force-state='pressed'] { --bd-ib-overlay: var(--interaction-light-gray-pressed); }
+
+/* Disabled — Button 과 동일하게 전체 opacity 20% */
+.bd-icon-button:disabled {
+  opacity: var(--ref-opacity-20);
+  --bd-ib-overlay: transparent;
+}
+
+/* ⚠️ Figma 에 Focused 정의가 없어 구현에서 추가 */
+.bd-icon-button:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+}

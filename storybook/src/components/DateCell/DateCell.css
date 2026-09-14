@@ -1,0 +1,58 @@
+/* Date — 스펙: components/date-time-picker/date/date.md (11개 전수 실측)
+   달력의 날짜 셀 하나. Size 축이 없고 전 변형 40×40px 원형입니다.
+   Date/Time Picker 패밀리의 최하위 아톰입니다. */
+.bd-date-cell {
+  --bd-date-overlay: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--ref-radius-12);       /* 999px — 완전한 원 */
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  background-image: linear-gradient(var(--bd-date-overlay), var(--bd-date-overlay));
+  background-color: var(--bd-date-bg, var(--sys-color-common-white-default));
+  color: var(--sys-color-neutral-800);
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+  font-weight: var(--font-weight-regular);
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-date-cell:disabled { cursor: not-allowed; }
+
+/* Current 는 테두리로만 구분됩니다 — 배경·글자색은 Default 와 같습니다 */
+.bd-date-cell[data-type='current'] {
+  border: var(--ref-borderwidth-02) solid var(--sys-color-neutral-600);
+}
+/* 범위(range) 구간 하이라이트 */
+.bd-date-cell[data-type='selected'] { --bd-date-bg: var(--sys-color-brand-primary-lightest); }
+/* 사용자가 직접 찍은 날짜(범위 앵커) — 유일하게 타이포가 다릅니다 */
+.bd-date-cell[data-type='pinned'] {
+  --bd-date-bg: var(--sys-color-brand-primary-default);
+  color: var(--sys-color-common-white-default);
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  letter-spacing: var(--typography-subtitle-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+/* Null 은 문자 그대로 빈 칸입니다 */
+.bd-date-cell[data-type='null'] { cursor: default; }
+
+/* Status — Default·Current 에서만 존재합니다.
+   ⚠️ Hover 가 2%, Pressed 가 5% 로 Button 계열(5%/10%)보다 옅습니다 */
+.bd-date-cell[data-type='default']:hover:not(:disabled),
+.bd-date-cell[data-type='current']:hover:not(:disabled),
+.bd-date-cell[data-force-state='hover'] { --bd-date-overlay: var(--ref-color-gray-900-2); }
+.bd-date-cell[data-type='default']:active:not(:disabled),
+.bd-date-cell[data-type='current']:active:not(:disabled),
+.bd-date-cell[data-force-state='pressed'] { --bd-date-overlay: var(--ref-color-gray-900-5); }
+
+/* Disabled 는 오버레이 없이 글자색만 옅어집니다 */
+.bd-date-cell:disabled { color: var(--sys-color-neutral-400); --bd-date-overlay: transparent; }
+.bd-date-cell[data-type='current']:disabled { border-color: var(--sys-color-neutral-300); }
+
+.bd-date-cell:focus-visible { outline: 2px solid var(--sys-color-brand-primary-default); outline-offset: 2px; }

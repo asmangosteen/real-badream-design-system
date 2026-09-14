@@ -1,0 +1,65 @@
+/* Footer — 스펙: components/footer/footer.md (2개 전수 실측)
+   ⚠️ **바드림 앱 홈 화면 최하단 전용**입니다 (사용자 확인, 강한 제약). 범용 재사용 금지.
+   Divider 를 Horizontal·Vertical 양쪽으로 재사용하는 실사용 예시이기도 합니다. */
+.bd-footer {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  gap: var(--ref-spacing-07);                  /* 10px — Main/Divider/Sub 간 */
+  /* 너비는 고정이 아니라 화면(부모) 폭에 맞춰 늘어나는 가변입니다
+     (Figma 의 390px 는 iPhone 14 진열 프레임 폭입니다) */
+  width: 100%;
+  /* ⚠️ 아래 120px 은 Footer 만의 의도된 예외입니다 —
+     스크롤 화면 하단 규칙(40px)이 아니라, 추후 추가될 Bottom Navigation Bar 자리를 미리 비워두는 값입니다. */
+  padding: var(--ref-spacing-11) var(--ref-spacing-11) var(--ref-spacing-22);
+  background: var(--sys-color-neutral-200);
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-500);
+}
+
+.bd-footer__main { display: flex; flex-direction: column; gap: var(--ref-spacing-04); }  /* 4px */
+
+.bd-footer__header {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-spacing-02);                  /* 2px */
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--typography-caption-1-size);
+  line-height: var(--typography-caption-1-line-height);
+  letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-medium);
+  align-self: flex-start;
+}
+
+/* <dl> 이라 브라우저 기본 상하 여백(1em=16px)이 붙습니다 — 반드시 지워야 Figma 높이(Open 334px)와 맞습니다 */
+.bd-footer__info { display: flex; flex-direction: column; gap: var(--ref-spacing-01); margin: 0; }  /* 1px */
+.bd-footer__row {
+  display: flex;
+  gap: var(--ref-spacing-04);                  /* 4px */
+  font-size: var(--typography-caption-2-size);
+  line-height: var(--typography-caption-2-line-height);
+  letter-spacing: var(--typography-caption-2-letter-spacing);
+}
+.bd-footer__row dt { font-weight: var(--font-weight-semibold); margin: 0; }
+.bd-footer__row dd { flex: 1 1 0; font-weight: var(--font-weight-regular); margin: 0; }
+
+.bd-footer__sub { display: flex; flex-direction: column; gap: var(--ref-spacing-01); }   /* 1px */
+.bd-footer__links {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-spacing-04);                  /* 4px */
+  font-size: var(--typography-caption-2-size);
+  line-height: var(--typography-caption-2-line-height);
+  font-weight: var(--font-weight-semibold);
+}
+.bd-footer__links a { color: inherit; text-decoration: none; }
+.bd-footer__copyright {
+  font-size: var(--typography-caption-2-size);
+  line-height: var(--typography-caption-2-line-height);
+  font-weight: var(--font-weight-regular);
+}

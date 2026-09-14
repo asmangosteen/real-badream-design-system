@@ -9,17 +9,32 @@
     "componentSetName": "Text Count",
     "totalVariantInstances": 6,
     "axes": ["Size(Small/Default)", "State(Default/Typing/Destructed)"],
-    "note": "글자 수 카운터('12/50' 형태) 아톰. Figma 소스에서 Default(Size) 그룹의 State가 State6/State5/State4로 미정리된 이름을 갖고 있음 — namingInconsistency 필드 참고."
+    "note": "글자 수 카운터('12/50' 형태) 아톰. 초판 조사 시 Default(Size) 그룹 State 이름이 State6/State5/State4로 미정리였으나 2026-09-14 디자이너가 Figma 원본을 정정해 해소됨 — namingInconsistency 필드 참고."
   },
   "sampling": {
     "method": "전수 실측 (get_design_context 6회 + get_variable_defs 1회(사전 확보값 재사용) + get_motion_context 1회(recursive))",
     "coverage": "6개 Size×State 조합 전체 개별 실측함. 추정/외삽 없음."
   },
   "namingInconsistency": {
-    "issue": "Small 그룹 State는 Default/Typing/Destructed로 의미가 드러나는 이름이지만, Default(Size) 그룹 State는 State6/State5/State4로 자동 생성된 이름 그대로 남아있음.",
-    "resolutionMethod": "get_design_context로 각 State6/5/4 노드의 실제 렌더링 색상(분자/슬래시/분모 각각)을 실측하고, Small 그룹의 Default/Typing/Destructed 색상 패턴과 대조하여 매칭. 추측이 아닌 색상 실측 기반 확정.",
+    "status": "해소됨 (2026-09-14)",
+    "issue": "초판 조사 시점에 Small 그룹 State 는 Default/Typing/Destructed 로 의미가 드러났으나, Default(Size) 그룹 State 는 State6/State5/State4 라는 자동 생성 이름이 그대로 남아 있었음.",
+    "resolutionMethod": "초판에서는 get_design_context 로 각 State6/5/4 노드의 실제 렌더링 색상(분자/슬래시/분모)을 실측하고 Small 그룹 색상 패턴과 대조해 매칭했음(추측 아님).",
     "resolvedMapping": { "State6": "Default", "State5": "Typing", "State4": "Destructed" },
-    "confidence": "확정 — 세 State 모두 '분자만 색상 override, 슬래시/분모는 항상 neutral/500 고정'이라는 동일 구조가 두 Size 그룹에서 정확히 일치함(State6↔Default: 분자도 neutral/500 그대로, State5↔Typing: 분자만 neutral/700, State4↔Destructed: 분자만 theme/destructed-default)."
+    "figmaCorrection": {
+      "correctedOn": "2026-09-14",
+      "correctedBy": "디자이너가 Figma 원본 변형 이름을 직접 정정",
+      "verifiedWith": "get_metadata(2114:3929) 재조회",
+      "currentVariantNames": [
+        "State=Default, Size=Small",
+        "State=Typing, Size=Small",
+        "State=Destructed, Size=Small",
+        "State=Default, Size=Default",
+        "State=Typing, Size=Default",
+        "State=Destructed, Size=Default"
+      ],
+      "inferenceOutcome": "초판의 색상 실측 추론 3건이 모두 정정된 이름과 일치함.",
+      "note": "노드 ID·값·구조는 전혀 바뀌지 않았고 변형 이름만 정리됨."
+    }
   },
   "variables": {
     "neutral/500": "#8c9199",
@@ -40,7 +55,7 @@
   "variants": {
     "Small,Default": {
       "sourceNodeId": "2114:3928",
-      "figmaStateNameInSource": "Default",
+      "figmaVariantName": "State=Default, Size=Small",
       "size": "42x16px",
       "typography": { "style": "Caption2 10px Medium(500)", "figmaStyle": "Caption 2/10 M", "lineHeight": "16px" },
       "numeratorColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "token": "sys-color-neutral-500", "tokenMatch": "정확히 일치" },
@@ -48,7 +63,7 @@
     },
     "Small,Typing": {
       "sourceNodeId": "2114:3927",
-      "figmaStateNameInSource": "Typing",
+      "figmaVariantName": "State=Typing, Size=Small",
       "size": "42x16px",
       "typography": { "style": "Caption2 10px Medium(500)", "figmaStyle": "Caption 2/10 M" },
       "numeratorColor": { "figmaVariable": "neutral/700", "value": "#454c58", "token": "sys-color-neutral-700", "tokenMatch": "정확히 일치" },
@@ -56,7 +71,7 @@
     },
     "Small,Destructed": {
       "sourceNodeId": "2114:3926",
-      "figmaStateNameInSource": "Destructed",
+      "figmaVariantName": "State=Destructed, Size=Small",
       "size": "42x16px",
       "typography": { "style": "Caption2 10px Medium(500)", "figmaStyle": "Caption 2/10 M" },
       "numeratorColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "token": "sys-color-theme-destructed-default", "tokenMatch": "정확히 일치" },
@@ -64,7 +79,7 @@
     },
     "Default,Default": {
       "sourceNodeId": "2114:4251",
-      "figmaStateNameInSource": "State6",
+      "figmaVariantName": "State=Default, Size=Default", "previousFigmaStateName": "State6",
       "resolvedState": "Default",
       "size": "49x18px",
       "typography": { "style": "Caption1 12px Regular(400)", "figmaStyle": "Caption 1/12 R", "lineHeight": "18px" },
@@ -73,7 +88,7 @@
     },
     "Default,Typing": {
       "sourceNodeId": "2114:4255",
-      "figmaStateNameInSource": "State5",
+      "figmaVariantName": "State=Typing, Size=Default", "previousFigmaStateName": "State5",
       "resolvedState": "Typing",
       "size": "49x18px",
       "typography": { "style": "Caption1 12px Regular(400)", "figmaStyle": "Caption 1/12 R" },
@@ -82,7 +97,7 @@
     },
     "Default,Destructed": {
       "sourceNodeId": "2114:4259",
-      "figmaStateNameInSource": "State4",
+      "figmaVariantName": "State=Destructed, Size=Default", "previousFigmaStateName": "State4",
       "resolvedState": "Destructed",
       "size": "49x18px",
       "typography": { "style": "Caption1 12px Regular(400)", "figmaStyle": "Caption 1/12 R" },

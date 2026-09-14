@@ -1,0 +1,88 @@
+/* Segmented Control — 스펙: components/segmented-control/segmented-control.md
+   _Item 을 가로로 배열한 조합 컴포넌트. 20개 변형(Size 5 × Count 2~5).
+   컨테이너 높이 = _Item 높이 + 컨테이너 padding×2 — 5개 Size 전부 성립합니다. */
+.bd-segmented-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  /* 너비는 고정이 아니라 부모 폭에 맞춰 늘어나는 가변입니다
+     (Figma 노드의 390px 는 진열 프레임 폭일 뿐입니다) */
+  width: 100%;
+  background-color: var(--ref-color-gray-200);   /* #F1F2F3 — 전 Size 공통 */
+}
+
+/* ============================================================
+   슬라이딩 인디케이터
+   선택된 항목마다 흰 배경을 켜고 끄는 대신, **흰 pill 하나가 이동**합니다.
+   항목 폭이 flex 균등분할이라 위치를 CSS 로 계산할 수 있습니다:
+     itemWidth = (100% − padding×2 − gap×(n−1)) / n
+     left(i)   = padding + i × (itemWidth + gap)
+   ============================================================ */
+.bd-segmented-control__indicator {
+  position: absolute;
+  top: var(--bd-sc-pad);
+  bottom: var(--bd-sc-pad);
+  left: calc(
+    var(--bd-sc-pad) +
+    var(--bd-sc-index) *
+    ((100% - var(--bd-sc-pad) * 2 - var(--bd-sc-gap) * (var(--bd-sc-count) - 1)) / var(--bd-sc-count) + var(--bd-sc-gap))
+  );
+  width: calc(
+    (100% - var(--bd-sc-pad) * 2 - var(--bd-sc-gap) * (var(--bd-sc-count) - 1)) / var(--bd-sc-count)
+  );
+  /* _Item 의 Selected 와 동일한 배경·그림자·radius */
+  background-color: var(--sys-color-common-white-default);
+  box-shadow: 0 2px 2px 0 var(--ref-color-gray-900-5);
+  border-radius: var(--bd-sc-item-radius);
+  transition: left 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: none;
+}
+
+/* 흰 배경은 인디케이터가 담당하므로, 항목 자체는 글자색만 전환합니다 */
+.bd-segmented-control .bd-seg-item {
+  position: relative;
+  z-index: 1;
+  transition: color 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.bd-segmented-control .bd-seg-item[data-selected='true'] {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* 누를 때 줄어드는(scale) 효과는 넣지 않습니다 (요청 사항) */
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-segmented-control__indicator,
+  .bd-segmented-control .bd-seg-item { transition: none; }
+}
+
+/* padding·gap·radius 가 XS+S / M / L+XL 로 묶입니다 (_Item 의 radius 계단과 같은 그룹핑).
+   ⚠️ 2026-09-14 재실측 정정: **gap 은 컨테이너 padding 과 같은 값**입니다(XS·S 2px, M·L·XL 4px).
+      초판 문서의 6px/8px 은 현재 Figma 와 맞지 않습니다. */
+.bd-segmented-control[data-size='xs'],
+.bd-segmented-control[data-size='s'] {
+  --bd-sc-pad: var(--ref-spacing-02);          /* 2px */
+  --bd-sc-gap: var(--ref-spacing-02);          /* 2px — padding 과 동일 */
+  --bd-sc-item-radius: var(--ref-radius-03);   /* 6px — _Item 의 radius */
+  padding: var(--bd-sc-pad);
+  gap: var(--bd-sc-gap);
+  border-radius: var(--ref-radius-04);         /* 8px */
+}
+.bd-segmented-control[data-size='m'] {
+  --bd-sc-pad: var(--ref-spacing-04);          /* 4px */
+  --bd-sc-gap: var(--ref-spacing-04);          /* 4px — padding 과 동일 */
+  --bd-sc-item-radius: var(--ref-radius-04);   /* 8px */
+  padding: var(--bd-sc-pad);
+  gap: var(--bd-sc-gap);
+  border-radius: var(--ref-radius-06);         /* 12px */
+}
+.bd-segmented-control[data-size='l'],
+.bd-segmented-control[data-size='xl'] {
+  --bd-sc-pad: var(--ref-spacing-04);          /* 4px */
+  --bd-sc-gap: var(--ref-spacing-04);          /* 4px — padding 과 동일 */
+  --bd-sc-item-radius: var(--ref-radius-06);   /* 12px */
+  padding: var(--bd-sc-pad);
+  gap: var(--bd-sc-gap);
+  border-radius: var(--ref-radius-07);         /* 16px */
+}

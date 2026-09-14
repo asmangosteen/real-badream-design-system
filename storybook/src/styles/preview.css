@@ -1,0 +1,49 @@
+/* 스토리북 캔버스(컴포넌트가 그려지는 영역)의 기본값.
+   컴포넌트 자체 스타일이 아니라 "미리보기 배경" 용도입니다. */
+body {
+  font-family: var(--font-family-base);
+  color: var(--sys-color-neutral-text-default, #202837);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 변형(variant)들을 격자로 펼쳐 보여줄 때 쓰는 레이아웃 유틸 */
+.bd-grid {
+  display: grid;
+  gap: 20px 28px;
+  align-items: center;
+  justify-items: start;
+}
+.bd-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20px 28px;
+}
+.bd-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+.bd-cell__label {
+  font-family: var(--font-family-base);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #8d9199;
+  white-space: nowrap;
+}
+.bd-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.bd-section__title {
+  font-family: var(--font-family-base);
+  font-size: 13px;
+  font-weight: 700;
+  color: #464d59;
+  margin: 0;
+}

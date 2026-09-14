@@ -1,0 +1,93 @@
+/* ============================================================
+   Checkbox — 스펙: components/checkbox/checkbox.md (24개 전수 실측)
+   Size 축 없음: Angular/Rounded 모두 16×16px 고정.
+   Hover/Pressed 는 Figma 와 동일하게 "베이스 위에 오버레이를 얹는" 방식으로 구현합니다.
+   ============================================================ */
+.bd-checkbox {
+  --bd-cb-overlay: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  flex: 0 0 auto;
+  -webkit-tap-highlight-color: transparent;
+}
+.bd-checkbox:disabled { cursor: not-allowed; }
+
+.bd-checkbox__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  /* Figma 와 동일한 2겹 합성: 오버레이(위) + 베이스(아래) */
+  background-image: linear-gradient(var(--bd-cb-overlay), var(--bd-cb-overlay));
+  background-color: var(--bd-cb-base);
+  color: var(--sys-color-common-white-default);
+}
+
+/* ---------- Type ---------- */
+.bd-checkbox[data-type='angular'] .bd-checkbox__box { border-radius: var(--ref-radius-02); }  /* 4px */
+.bd-checkbox[data-type='rounded'] .bd-checkbox__box { border-radius: var(--ref-radius-12); }  /* 999px */
+
+/* ---------- 베이스 색 ---------- */
+/* 미선택 기본: 흰 배경 + 10% 테두리 */
+.bd-checkbox[data-checked='false'] .bd-checkbox__box {
+  --bd-cb-base: var(--sys-color-common-white-default);
+  border: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-10);
+}
+/* Rounded · Outlined=False: 테두리 없는 연회색 원 */
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-outlined='false'] .bd-checkbox__box {
+  --bd-cb-base: var(--sys-color-neutral-100);
+  border: 0;
+}
+/* 선택됨: 브랜드 파랑, 테두리 없음 */
+.bd-checkbox[data-checked='true'] .bd-checkbox__box {
+  --bd-cb-base: var(--sys-color-brand-primary-default);
+  border: 0;
+}
+
+/* ---------- Hover / Pressed 오버레이 ---------- */
+/* Angular 미선택은 스펙상 Hover/Pressed 에 색 변화가 전혀 없습니다 (실측 확인) */
+.bd-checkbox[data-type='rounded'][data-checked='false']:hover:not(:disabled),
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-force-state='hover'] {
+  --bd-cb-overlay: var(--interaction-light-gray-hover);
+}
+.bd-checkbox[data-type='rounded'][data-checked='false']:active:not(:disabled),
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-force-state='pressed'] {
+  --bd-cb-overlay: var(--interaction-light-gray-pressed);
+}
+.bd-checkbox[data-checked='true']:hover:not(:disabled),
+.bd-checkbox[data-checked='true'][data-force-state='hover'] {
+  --bd-cb-overlay: var(--interaction-blue-hover);
+}
+.bd-checkbox[data-checked='true']:active:not(:disabled),
+.bd-checkbox[data-checked='true'][data-force-state='pressed'] {
+  --bd-cb-overlay: var(--interaction-blue-pressed);
+}
+
+/* ---------- Disabled ----------
+   Button 의 opacity 방식이 아닙니다.
+   미선택: 테두리 알파만 10%→5% 로 옅어짐 / 선택됨: 배경을 neutral/400 단색으로 교체 */
+.bd-checkbox:disabled[data-checked='false'] .bd-checkbox__box {
+  border-color: var(--ref-color-gray-900-5);
+}
+.bd-checkbox:disabled[data-checked='true'] .bd-checkbox__box {
+  --bd-cb-base: var(--sys-color-neutral-400);
+}
+.bd-checkbox:disabled { --bd-cb-overlay: transparent; }
+
+/* ⚠️ Figma 에 Focused 상태 정의가 없어 구현에서 추가했습니다 (스펙 7장) */
+.bd-checkbox:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+  border-radius: var(--ref-radius-02);
+}
+.bd-checkbox[data-type='rounded']:focus-visible { border-radius: var(--ref-radius-12); }

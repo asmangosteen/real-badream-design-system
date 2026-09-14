@@ -1,0 +1,76 @@
+/* Time Field · Time Picker · Time Picker Group
+   스펙: components/date-time-picker/{time-field,time-picker,time-picker-group}/*.md */
+
+/* ---------------- Time Field (56×40px) ---------------- */
+/* 폭 = 10×2 + 36 = 56 · 높이 = 8×2 + 24 = 40 */
+.bd-time-field {
+  --bd-tf-overlay: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: var(--ref-spacing-07);                 /* 10px */
+  padding: var(--ref-spacing-06) var(--ref-spacing-07);   /* 8 / 10 */
+  border: 0;
+  border-radius: var(--ref-radius-06);        /* 12px */
+  background-image: linear-gradient(var(--bd-tf-overlay), var(--bd-tf-overlay));
+  background-color: var(--sys-color-neutral-200);
+  font-family: var(--font-family-base);
+  /* 3개 State 전부 글자색이 같습니다 — placeholder 처리가 없습니다 */
+  color: var(--sys-color-neutral-800);
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  letter-spacing: var(--typography-body-1-letter-spacing);
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+}
+.bd-time-field__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;                                /* ⚠️ 내부 px-8 은 토큰 바인딩 없는 하드코딩입니다 */
+}
+.bd-time-field[data-state='hover']:not([data-state='typing']),
+.bd-time-field:hover:not([data-state='typing']) { --bd-tf-overlay: var(--ref-color-gray-900-5); }
+.bd-time-field[data-state='typing'] {
+  background-color: var(--sys-color-common-white-default);
+  border: var(--ref-borderwidth-02) solid var(--sys-color-brand-primary-default);
+  --bd-tf-overlay: transparent;
+}
+
+/* ---------------- Time Picker (56×116px) ---------------- */
+/* 36 + 2 + 40 + 2 + 36 = 116 */
+.bd-time-picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ref-spacing-02);                 /* 2px */
+}
+.bd-time-picker__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  padding: var(--ref-spacing-06);             /* 8px → 20+16 = 36px 정사각형 */
+  border: 0;
+  background: none;
+  border-radius: var(--ref-radius-06);        /* 12px */
+  cursor: pointer;
+  color: var(--sys-color-neutral-800);
+}
+/* 비활성 방향은 실제로 disabled 처리됩니다(사용자 확인) */
+.bd-time-picker__arrow:disabled { color: var(--sys-color-neutral-400); cursor: not-allowed; }
+.bd-time-picker .bd-time-field { width: 56px; }
+
+/* ---------------- Time Picker Group ---------------- */
+.bd-time-picker-group {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-family-base);
+}
+.bd-time-picker-group__sep {
+  font-size: var(--typography-subtitle-size);
+  line-height: var(--typography-subtitle-line-height);
+  color: var(--sys-color-neutral-800);
+  padding: 0 var(--ref-spacing-02);
+}

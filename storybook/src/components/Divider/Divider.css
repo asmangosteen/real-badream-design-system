@@ -1,0 +1,25 @@
+/* Divider — 스펙: components/divider/divider.md (16개 전수 실측)
+   Size 값과 ref-borderwidth-0N 토큰이 1:1 대응합니다 (1px→02 … 14px→09). */
+.bd-divider {
+  flex: 0 0 auto;
+  border: 0;
+  margin: 0;
+  background-color: var(--sys-color-neutral-100); /* #F6F7F7 — 오버라이드 가능 */
+}
+
+/* Horizontal: 두께=height, 너비는 부모를 꽉 채움 */
+.bd-divider[data-type='horizontal'] { width: 100%; }
+/* Vertical: 두께=width, 높이는 부모를 꽉 채움 */
+.bd-divider[data-type='vertical'] { height: 100%; align-self: stretch; }
+
+.bd-divider[data-size='1']  { --bd-divider-thickness: var(--ref-borderwidth-02); }
+.bd-divider[data-size='2']  { --bd-divider-thickness: var(--ref-borderwidth-03); }
+.bd-divider[data-size='4']  { --bd-divider-thickness: var(--ref-borderwidth-04); }
+.bd-divider[data-size='6']  { --bd-divider-thickness: var(--ref-borderwidth-05); }
+.bd-divider[data-size='8']  { --bd-divider-thickness: var(--ref-borderwidth-06); }
+.bd-divider[data-size='10'] { --bd-divider-thickness: var(--ref-borderwidth-07); }
+.bd-divider[data-size='12'] { --bd-divider-thickness: var(--ref-borderwidth-08); }
+.bd-divider[data-size='14'] { --bd-divider-thickness: var(--ref-borderwidth-09); }
+
+.bd-divider[data-type='horizontal'] { height: var(--bd-divider-thickness); }
+.bd-divider[data-type='vertical']   { width:  var(--bd-divider-thickness); }

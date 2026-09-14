@@ -1,0 +1,170 @@
+/* Tab — 스펙: components/tab/tab.md (10개 전수 실측)
+   Segmented Control 과 달리 배경 트랙·pill 이 없고, 하단 구분선 위에 탭이 놓입니다.
+   탭 바 높이 = _Item 높이 그대로 (컨테이너 padding 이 더해지지 않습니다). */
+.bd-tab {
+  position: relative;                          /* 페이드 오버레이의 기준 */
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  /* Figma Container 의 gap — 스크롤 영역(Leading) ↔ "+" 슬롯(Trailing) 사이 */
+  gap: var(--ref-spacing-08);                  /* 12px */
+
+  /* 탭 바 높이 = 페이드 폭 = "+" 버튼 한 변 */
+  --bd-tab-h: 42px;
+  /* 페이드가 붙을 자리 = 스크롤 영역의 좌·우 가장자리 */
+  --bd-tab-inset-l: 0px;
+  --bd-tab-inset-r: 0px;
+  /* 페이드가 녹아드는 바탕색 — 탭 바가 놓인 배경과 같아야 합니다 */
+  --bd-tab-fade-color: var(--sys-color-common-white-default);
+}
+.bd-tab[data-size='l'] { --bd-tab-h: 48px; }
+
+/* 하단 구분선 — 전체 폭, 1px, neutral/100 */
+.bd-tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--ref-borderwidth-02);
+  background-color: var(--sys-color-neutral-100);
+}
+
+.bd-tab__list {
+  position: relative;                          /* 선택 밑줄의 기준 */
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* ---------------- 선택 밑줄 ----------------
+   활성 탭 하나하나에 밑줄을 켜고 끄는 대신 **막대 하나가 이동**합니다
+   (Segmented Control 의 흰 pill 과 같은 방식 · 같은 200ms 곡선).
+   색은 활성 탭의 글자색을 따릅니다. */
+.bd-tab__underline {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: var(--bd-tab-ul-w, 0);
+  transform: translateX(var(--bd-tab-ul-x, 0));
+  background-color: var(--sys-color-neutral-800);
+  pointer-events: none;
+}
+.bd-tab__underline[data-tone='emphasize'] { background-color: var(--sys-color-theme-destructed-default); }
+.bd-tab__underline[data-tone='disabled']  { background-color: var(--sys-color-neutral-400); }
+.bd-tab__underline[data-animate='true'] {
+  transition:
+    transform 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    width 200ms cubic-bezier(0.32, 0.72, 0, 1),
+    background-color 200ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* 밑줄은 이 막대가 담당하므로 탭 자신의 밑줄은 끄고 글자색만 전환합니다.
+   (_Item 을 단독으로 쓸 때는 자기 밑줄을 그대로 씁니다) */
+.bd-tab .bd-tab-item[data-active='true']::after { display: none; }
+.bd-tab .bd-tab-item { transition: color 200ms cubic-bezier(0.32, 0.72, 0, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-tab__underline,
+  .bd-tab .bd-tab-item { transition: none; }
+}
+
+/* ---------------- Type = Hug ---------------- */
+/* 탭 로우 자체가 가로 스크롤 컨테이너입니다 (별도 래퍼로 감싸지 않습니다).
+   넘치는 만큼 tabs 를 더 넣으면 그대로 스크롤되고, 스크롤바는 감춥니다. */
+.bd-tab[data-type='hug'] .bd-tab__list {
+  gap: var(--ref-spacing-12);                 /* 24px */
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bd-tab[data-type='hug'] .bd-tab__list::-webkit-scrollbar { display: none; }
+/* Hug 의 전제 — 탭은 **콘텐츠 폭을 그대로 차지하고 줄어들지 않습니다.**
+   flex 기본값(shrink:1)이면 _Item 의 min-width(32px)까지 찌그러져서
+   "콘텐츠만큼 차지하고 넘치면 스크롤"이라는 동작 자체가 성립하지 않습니다. */
+.bd-tab[data-type='hug'] .bd-tab__list > * { flex: 0 0 auto; }
+
+/* Side Padding=True — S 만 gap 이 20px 로 줄고, L 은 24px 를 유지합니다(실측 예외) */
+.bd-tab[data-type='hug'][data-side-padding='true'] {
+  padding-left: var(--ref-spacing-11);
+  --bd-tab-inset-l: var(--ref-spacing-11);
+  --bd-tab-inset-r: var(--ref-spacing-11);
+}
+.bd-tab[data-type='hug'][data-side-padding='true'][data-tailing='false'] { padding-right: var(--ref-spacing-11); }
+/* ⚠️ Tailing Icon=True 일 때 오른쪽만 12px 하드코딩(변수 미바인딩) — Figma 실측 그대로 */
+.bd-tab[data-type='hug'][data-side-padding='true'][data-tailing='true'] { padding-right: 12px; }
+.bd-tab[data-type='hug'][data-side-padding='true'][data-size='s'] .bd-tab__list { gap: var(--ref-spacing-11); }
+
+/* "+" 버튼은 스크롤 영역 뒤에 고정되므로, 오른쪽 페이드는 그만큼 안쪽에 붙습니다 */
+.bd-tab[data-type='hug'][data-tailing='true'] {
+  --bd-tab-inset-r: calc(var(--ref-spacing-08) + var(--bd-tab-h));
+}
+.bd-tab[data-type='hug'][data-side-padding='true'][data-tailing='true'] {
+  --bd-tab-inset-r: calc(12px + var(--ref-spacing-08) + var(--bd-tab-h));
+}
+
+/* ---------------- 오버플로우 페이드 (Hug 전용) ----------------
+   숨겨진 탭이 남아 있는 쪽에만 나타나는 그라디언트 오버레이입니다.
+   폭은 탭 바 높이와 같고(S 42 · L 48px), 정지점은 Figma `Alpha Gradient Mask`(2262:1908)
+   실측 7개(0/15/30/50/70/85/100% → alpha 0/.08/.22/.42/.64/.82/1)를 그대로 옮겼습니다.
+   좌·우는 같은 정지점 배열을 방향만 뒤집어 씁니다.
+   클릭을 통과시켜야 하므로 pointer-events 를 끕니다.
+   ⚠️ 첫 정지점에 `transparent` 를 그냥 쓰면 '투명한 검정'이라 회색이 비칠 수 있어,
+      `rgb(from … / 0)` 으로 **같은 흰색의 알파 0** 을 명시합니다. */
+.bd-tab__fade {
+  position: absolute;
+  top: 0;
+  bottom: var(--ref-borderwidth-02);           /* 하단 구분선을 가리지 않습니다 */
+  width: var(--bd-tab-h);
+  opacity: 0;
+  transition: opacity 200ms ease;              /* 레이아웃 변화 없이 크로스페이드 */
+  pointer-events: none;
+}
+.bd-tab__fade[data-visible='true'] { opacity: 1; }
+
+.bd-tab__fade[data-edge='start'] {
+  left: var(--bd-tab-inset-l);
+  background-image: linear-gradient(
+    to left,
+    rgb(from var(--bd-tab-fade-color) r g b / 0) 0%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 8%, transparent) 15%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 22%, transparent) 30%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 42%, transparent) 50%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 64%, transparent) 70%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 82%, transparent) 85%,
+    var(--bd-tab-fade-color) 100%
+  );
+}
+.bd-tab__fade[data-edge='end'] {
+  right: var(--bd-tab-inset-r);
+  background-image: linear-gradient(
+    to right,
+    rgb(from var(--bd-tab-fade-color) r g b / 0) 0%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 8%, transparent) 15%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 22%, transparent) 30%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 42%, transparent) 50%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 64%, transparent) 70%,
+    color-mix(in srgb, var(--bd-tab-fade-color) 82%, transparent) 85%,
+    var(--bd-tab-fade-color) 100%
+  );
+}
+
+/* ---------------- Type = Fill ---------------- */
+/* 탭이 서로 맞닿고 폭을 균등 분할합니다. 스크롤·페이드 로직이 전혀 없습니다. */
+.bd-tab[data-type='fill'] .bd-tab__list { gap: 0; overflow: visible; }
+.bd-tab[data-type='fill'] .bd-tab__list > * { flex: 1 0 0; min-width: 0; }
+
+/* ---------------- Trailing "+" 슬롯 (Hug 전용) ----------------
+   탭 바 높이와 같은 정사각형 슬롯이고, 그 안에 Icon Button 컴포넌트가 가운데 놓입니다.
+   패딩 8px · radius 12px · 아이콘 20/24px 은 Icon Button 의 M/L 스펙과 정확히 같습니다. */
+.bd-tab__trailing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: var(--bd-tab-h);
+  height: var(--bd-tab-h);
+}
+

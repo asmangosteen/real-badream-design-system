@@ -87,7 +87,7 @@ Emphasize=On(강조)은 항상 Disabled=False와만 짝지어지고, Disabled=Tr
 
 **모션 데이터 없음.**
 
-`get_motion_context`를 컴포넌트 최상위(`2262:1461`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Active=Off→On 전환 시 밑줄이 슬라이딩하며 나타나는 애니메이션이 있는지 특히 주의 깊게 확인했으나(다른 탭에서 현재 탭으로 밑줄이 옮겨가는 인디케이터 모션을 기대할 만한 UI 패턴이므로), Figma 파일에 그런 트랜지션 정의는 없습니다. [Segmented Control Item](../segmented-control-item/segmented-control-item.md)·[Segmented Control](../../segmented-control/segmented-control.md)에서도 동일하게 모션 데이터가 없었던 것과 같은 패턴입니다. ([Tab](../../tab/tab.md) 조합 레벨에서도 별도로 확인했습니다 — tab.md 6장 참고, 마찬가지로 빈 결과.)
+`get_motion_context`를 컴포넌트 최상위(`2262:1461`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Active=Off→On 전환 시 밑줄이 슬라이딩하며 나타나는 애니메이션이 있는지 특히 주의 깊게 확인했으나(다른 탭에서 현재 탭으로 밑줄이 옮겨가는 인디케이터 모션을 기대할 만한 UI 패턴이므로), Figma 파일에 그런 트랜지션 정의는 없습니다. [Segmented Control Item](../segmented-control-item/segmented-control-item.md)·[Segmented Control](../../segmented-control/segmented-control.md)에서도 동일하게 모션 데이터가 없었던 것과 같은 패턴입니다. (조합 레벨의 밑줄 슬라이딩 역시 Figma 에는 정의가 없고, 2026-09-14 디자이너가 **쓰기로 확정**했습니다 — 값은 [tab.md](../../tab/tab.md) 6장 참고.)
 
 ## 7. 접근성
 

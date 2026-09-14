@@ -38,17 +38,31 @@ Segmented Control은 여러 개의 [`_Item`](../global/segmented-control-item/se
 
 | Size | 노드 | 배경 | radius | 컨테이너 padding | 세그먼트 간 gap | 컨테이너 전체 높이(실측) | 내부 `_Item` 크기 |
 |---|---|---|---|---|---|---|---|
-| **XS** | `2215:13505` | `color/gray/200`=`#f1f2f3` | `radius/04`=8px | `spacing/02`=2px | `spacing/05`=6px | 26px | **XS**-sized `_Item`(px 8 / py 3, `radius/03`, Caption2/10 SB) |
-| **S** | `2197:8776` | `color/gray/200`=`#f1f2f3` | `radius/04`=8px | `spacing/02`=2px | `spacing/05`=6px | 30px | **S**-sized `_Item`(px 8 / py 4, `radius/03`, Caption1/12 SB) |
-| **M** | `2197:8774` | `color/gray/200`=`#f1f2f3` | `radius/06`=12px | `spacing/04`=4px | `spacing/06`=8px | 42px | **M**-sized `_Item`(px 10 / py 6, `radius/04`, Body2/14 M) |
-| **L** | `2197:8772` | `color/gray/200`=`#f1f2f3` | `radius/07`=16px | `spacing/04`=4px | `spacing/06`=8px | 48px | **L**-sized `_Item`(px 12 / py 8, `radius/06`, Body1/16 M) |
-| **XL** | `2197:8773` | `color/gray/200`=`#f1f2f3` | `radius/07`=16px | `spacing/04`=4px | `spacing/06`=8px | 56px | **XL**-sized `_Item`(px 16 / py 12, `radius/06`, Subtitle/18 M) |
+| **XS** | `2215:13505` | `color/gray/200`=`#f1f2f3` | `radius/04`=8px | `spacing/02`=2px | `spacing/02`=2px | 26px | **XS**-sized `_Item`(px 8 / py 3, `radius/03`, Caption2/10 SB) |
+| **S** | `2197:8776` | `color/gray/200`=`#f1f2f3` | `radius/04`=8px | `spacing/02`=2px | `spacing/02`=2px | 30px | **S**-sized `_Item`(px 8 / py 4, `radius/03`, Caption1/12 SB) |
+| **M** | `2197:8774` | `color/gray/200`=`#f1f2f3` | `radius/06`=12px | `spacing/04`=4px | `spacing/04`=4px | 42px | **M**-sized `_Item`(px 10 / py 6, `radius/04`, Body2/14 M) |
+| **L** | `2197:8772` | `color/gray/200`=`#f1f2f3` | `radius/07`=16px | `spacing/04`=4px | `spacing/04`=4px | 48px | **L**-sized `_Item`(px 12 / py 8, `radius/06`, Body1/16 M) |
+| **XL** | `2197:8773` | `color/gray/200`=`#f1f2f3` | `radius/07`=16px | `spacing/04`=4px | `spacing/04`=4px | 56px | **XL**-sized `_Item`(px 16 / py 12, `radius/06`, Subtitle/18 M) |
 
 **핵심 발견**:
 1. **컨테이너 높이 = 내부 `_Item` 표준 높이 + 컨테이너 padding×2**가 5개 Size 전부에서 정확히 성립합니다(예: XS=22+2×2=26, S=26+2×2=30, M=34+4×2=42, L=40+4×2=48, XL=48+4×2=56). [`_Item`](../global/segmented-control-item/segmented-control-item.md) 단독 실측값과 완전히 정합합니다.
 2. **컨테이너 radius는 3단 계단**: XS·S 공유 `radius/04`(8px) → M 단독 `radius/06`(12px) → L·XL 공유 `radius/07`(16px). `_Item` 자체의 radius 계단(XS·S 공유 `radius/03` → M 단독 `radius/04` → L·XL 공유 `radius/06`, [_Item 문서](../global/segmented-control-item/segmented-control-item.md) 2장)과 실제 값은 다르지만, **그룹핑 패턴(XS+S 묶음 / M 단독 / L+XL 묶음)은 동일**합니다.
-3. **컨테이너 padding·gap도 같은 그룹핑**: XS·S만 2px/6px, M/L/XL은 전부 4px/8px로 동일합니다.
-4. **너비 390px는 고정값이 아닐 가능성이 높습니다 — 확인 필요.** Dropdown 문서에서 확인된 것과 같은 패턴(Figma 진열 프레임 표시값)으로 보이나, Segmented Control 자체에서 "화면 폭 가변"이 명시적으로 확인되지는 않았습니다(개별 노드 코드에 `w-[390px]`가 직접 박혀 있음). 실제 화면(다양한 컨테이너 폭)에서 어떻게 동작하는지는 이 조사 범위에서 확정할 수 없어 확인 필요로 남깁니다.
+3. **컨테이너 padding·gap도 같은 그룹핑이며, gap 은 항상 padding 과 같은 값입니다**: XS·S는 2px/2px, M/L/XL은 4px/4px입니다.
+
+> **2026-09-14 정정 — 세그먼트 간 gap 값을 바로잡았습니다.**
+>
+> 초판은 gap 을 XS·S `spacing/05`(6px), M/L/XL `spacing/06`(8px)로 기록했으나, `get_metadata` 로 각 변형의 `Item` 자식 좌표를 직접 재실측한 결과 **gap 은 컨테이너 padding 과 동일한 값**(XS·S 2px, M/L/XL 4px)이었습니다.
+>
+> | Size | 노드 | Item 1 (x/width) | Item 2 x | 계산된 gap |
+> |---|---|---|---|---|
+> | XS | `2215:13505` | 2 / 192 | 196 | **2px** |
+> | S | `2197:8776` | 2 / 192 | 196 | **2px** |
+> | M | `2197:8774` | — (`get_design_context` 가 `spacing/04` 반환) | — | **4px** |
+> | L | `2197:8772` | 4 / 189 | 197 | **4px** |
+> | XL | `2197:8773` | 4 / 189 | 197 | **4px** |
+>
+> Count 축에서도 동일함을 확인했습니다 — M Count=5(`2197:8769`)의 항목 폭이 73.2px 이고 `4 + 73.2×5 + 4×4 + 4 = 390px` 로 정확히 맞아떨어집니다(gap 4px 기준). 높이·radius·padding·배경 값은 초판 그대로이며 **gap 만** 정정되었습니다.
+4. **너비 390px는 고정값이 아닙니다 — 부모(화면) 폭에 맞춰 늘어나는 가변입니다.** (2026-09-14 디자이너 확정) 개별 노드 코드에 `w-[390px]`가 박혀 있는 것은 Dropdown 과 같은 패턴으로, Figma 진열 프레임 폭이 표시된 것일 뿐입니다. 세그먼트는 아래 3장의 flex 균등분할 공식대로 그 가변 폭을 나눠 갖습니다.
 
 ## 3. Count별 아이템 배치 규칙 (Size=M 기준 2/3/4/5 실측 + XS 2/3/4 실측)
 
@@ -73,9 +87,20 @@ Segmented Control은 여러 개의 [`_Item`](../global/segmented-control-item/se
 
 ## 5. 모션 스펙
 
-**모션 데이터 없음.**
+**Figma 에는 모션 데이터가 없습니다. 아래 값은 2026-09-14 디자이너가 별도로 확정한 것입니다.**
 
-`get_motion_context`를 최상위 프레임(`2197:8777`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. **Selected 세그먼트가 바뀔 때 흰 배경 pill이 슬라이딩(밀려서 이동)하는 애니메이션이 있는지 특히 주의 깊게 확인했으나, Figma 파일에는 그런 트랜지션이 정의되어 있지 않습니다.** `_Item` 자체의 모션 조사([segmented-control-item.md](../global/segmented-control-item/segmented-control-item.md) 4장)와 마찬가지로 빈 결과이며, 이는 곧 **Selected 전환이 Figma 스펙상 즉시(instant) 전환**이라는 뜻입니다. 실제 프로덕트에서 슬라이딩 인디케이터를 구현하고 싶다면 이는 Figma 디자인에 없는 별도의 구현 판단(모션 시스템 자체 결정)이 필요합니다.
+`get_motion_context`를 최상위 프레임(`2197:8777`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Selected 세그먼트가 바뀔 때 흰 배경 pill이 슬라이딩(밀려서 이동)하는 애니메이션이 있는지 특히 주의 깊게 확인했으나, Figma 파일에는 그런 트랜지션이 정의되어 있지 않습니다(`_Item` 자체의 모션 조사인 [segmented-control-item.md](../global/segmented-control-item/segmented-control-item.md) 4장도 마찬가지로 빈 결과). 따라서 아래 표는 **Figma 실측이 아니라 디자이너가 확정한 스펙**입니다.
+
+| 항목 | 값 |
+|---|---|
+| 동작 | Selected 가 바뀌면 **흰 pill 하나가** 새 위치로 이동합니다. 항목마다 배경을 켜고 끄지 않습니다 |
+| 이동 시간 | **200ms** |
+| 이징 | **`cubic-bezier(0.32, 0.72, 0, 1)`** |
+| 함께 전환되는 것 | 세그먼트 텍스트 색상 (같은 시간·이징) |
+| 누를 때 축소 | **없음** — 의도적으로 넣지 않습니다 |
+| `prefers-reduced-motion: reduce` | 전환 없이 즉시 이동 |
+
+pill 의 배경·그림자·radius 는 `_Item` 의 Selected 값과 동일합니다. 위치는 세그먼트가 flex 균등분할이므로 JS 측정 없이 CSS 로 계산됩니다 — `itemWidth = (컨테이너 폭 − padding×2 − gap×(Count−1)) / Count`, `left(i) = padding + i × (itemWidth + gap)`.
 
 ## 6. 접근성
 
@@ -97,7 +122,6 @@ Segmented Control은 여러 개의 [`_Item`](../global/segmented-control-item/se
 - 컨테이너 높이 = `_Item` 표준 높이 + 컨테이너 padding×2라는 합성 규칙 자체를 지정하는 토큰/문서 없음
 
 **확인 필요**
-- 컨테이너 너비 390px가 Dropdown처럼 화면 폭 가변인지, Segmented Control 자체에서는 확인되지 않음
 - `role="tablist"`/`role="tab"`/`aria-selected`/키보드 네비게이션 등 접근성 마크업 연결 규정
 - 개별 세그먼트 Disabled 상태의 존재 여부(현재 Figma에는 없음)
 
