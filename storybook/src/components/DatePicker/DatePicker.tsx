@@ -172,6 +172,14 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
      이미 손가락(또는 스냅)이 그 자리에 데려다 놨는데 프로그램 스크롤이 겹치면
      둘이 서로 밀어내며 엉뚱한 칸에 멈춥니다. */
   const selfScroll = useRef(false);
+  /* 반대 방향의 사고도 막아야 합니다 — **프로그램이 건 스크롤이 목표에 닿기 전에**
+     정착 타이머가 터지면, 지나가던 칸을 "사용자가 고른 값"으로 착각해 확정해 버립니다.
+     Date Picker Group 처럼 한쪽 휠을 고르면 **다른 쪽 휠이 따라 움직이는** 구조에서는
+     그 오작동 한 번이 기준 달을 통째로 밀어 버립니다.
+     목표 위치를 들고 있다가, 도착했거나 스크롤이 멈춰 버린 게 확실할 때만 가드를 풉니다. */
+  const syncingTo = useRef<number | null>(null);
+  /** 직전 정착 시점의 스크롤 위치 — 부드러운 스크롤이 중간에 끊겼는지 판별합니다 */
+  const settledAt = useRef(-1);
   const len = values.length;
   // 감기는 열은 같은 목록을 여러 벌 이어 붙이고, 멈출 때마다 가운데 벌로 되돌립니다
   const slots = loop ? Array.from({ length: len * LOOP_COPIES }, (_, i) => values[i % len]) : values;
@@ -202,12 +210,33 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
     settleRef.current = window.setTimeout(() => {
       const view = viewRef.current;
       if (!view) return;
-      const raw = Math.round(view.scrollTop / WHEEL.slot);
+      const top = view.scrollTop;
+
+      /* 프로그램 스크롤이 가는 중이면 값을 되돌려 보내지 않습니다.
+         · 목표에 닿았으면 어차피 바깥 값과 같은 자리이니 확정할 게 없습니다.
+         · 아직 가는 중이면 지금 위치는 **지나가던 칸**일 뿐입니다.
+         · 위치가 직전 정착 때와 똑같으면 스크롤이 끊긴 것이므로 가드를 풀고 평소대로 처리합니다. */
+      const target = syncingTo.current;
+      if (target !== null) {
+        const arrived = Math.abs(top - target) <= 1;
+        const stalled = top === settledAt.current;
+        settledAt.current = top;
+        if (arrived || stalled) syncingTo.current = null;
+        if (arrived || !stalled) return;
+      }
+      settledAt.current = top;
+
+      const raw = Math.round(top / WHEEL.slot);
       if (loop) {
         const value = ((raw % len) + len) % len;
         const canonical = LOOP_MIDDLE * len + value;
-        // 멈춘 뒤에 가운데 벌로 되돌립니다 — 같은 목록이라 눈에 보이지 않습니다
-        if (raw !== canonical) view.scrollTop = canonical * WHEEL.slot;
+        // 멈춘 뒤에 가운데 벌로 되돌립니다 — 같은 목록이라 눈에 보이지 않습니다.
+        // 이것도 프로그램 스크롤이라 가드를 걸어 둡니다.
+        if (raw !== canonical) {
+          syncingTo.current = canonical * WHEEL.slot;
+          settledAt.current = -1;
+          view.scrollTop = canonical * WHEEL.slot;
+        }
         if (value !== index) { selfScroll.current = true; onIndexChange(value); }
       } else {
         const next = Math.min(Math.max(raw, 0), len - 1);
@@ -229,6 +258,8 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
     }
     const top = rawIndex * WHEEL.slot;
     if (Math.abs(view.scrollTop - top) > 1) {
+      syncingTo.current = top;
+      settledAt.current = -1;
       view.scrollTo({ top, behavior: mounted.current ? 'smooth' : 'auto' });
     }
     mounted.current = true;
@@ -236,6 +267,11 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
   }, [rawIndex, paint]);
 
   useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
+
+  const takeOver = () => {
+    syncingTo.current = null;
+    settledAt.current = -1;
+  };
 
   return (
     <div
@@ -247,7 +283,13 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
       aria-label={ariaLabel}
       tabIndex={0}
       onScroll={handleScroll}
+      /* 사용자가 직접 잡으면 프로그램 스크롤 가드를 즉시 풉니다 —
+         안 그러면 따라가던 스크롤이 끝날 때까지 사용자의 조작이 먹히지 않습니다. */
+      onPointerDown={takeOver}
+      onWheel={takeOver}
+      onTouchStart={takeOver}
       onKeyDown={(e) => {
+        takeOver();
         if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
         e.preventDefault();
         const step = e.key === 'ArrowDown' ? 1 : -1;
