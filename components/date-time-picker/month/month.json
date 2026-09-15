@@ -6,11 +6,16 @@
     "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10947",
     "displayFrameNodeId": "2208:10947",
     "displayFrameName": "Month",
-    "displayFrameSize": { "width": "716px", "height": "310px" },
+    "displayFrameSize": {
+      "width": "716px",
+      "height": "310px"
+    },
     "displayFrameNote": "실제 컴포넌트가 아니라 두 변형 심볼을 나란히 진열한 Figma 진열용 컨테이너. get_metadata로 확인.",
     "familyGroupNodeId": "2497:13877",
     "totalVariantInstances": 2,
-    "axes": ["Week Number(5/6)"],
+    "axes": [
+      "Week Number(5/6)"
+    ],
     "note": "노드 이름 규칙(PropertyName=Value)과 get_design_context의 weekNumber prop 인식으로 볼 때 실제 variant 프로퍼티로 강하게 추정되나, COMPONENT_SET 여부까지 100% 확정하지는 못함 — 확인 필요"
   },
   "sampling": {
@@ -26,14 +31,20 @@
     "5": {
       "nodeId": "2208:10946",
       "weekRowCount": 5,
-      "size": { "width": "328px", "height": "224px" },
+      "size": {
+        "width": "328px",
+        "height": "224px"
+      },
       "heightFormula": "40px*5 + 6px*4 = 224px",
       "heightFormulaConfirmed": true
     },
     "6": {
       "nodeId": "2208:10945",
       "weekRowCount": 6,
-      "size": { "width": "328px", "height": "270px" },
+      "size": {
+        "width": "328px",
+        "height": "270px"
+      },
       "heightFormula": "40px*6 + 6px*5 = 270px",
       "heightFormulaConfirmed": true
     }
@@ -42,8 +53,92 @@
     "display": "flex",
     "direction": "column",
     "alignItems": "flex-start",
-    "rowGap": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "tokenMatch": "정확히 일치" },
+    "rowGap": {
+      "figmaVariable": "spacing/05",
+      "value": "6px",
+      "token": "ref-spacing-05",
+      "tokenMatch": "정확히 일치"
+    },
     "width": "328px (Week와 동일)"
+  },
+  "rangeBand": {
+    "source": "Figma 2612:16030 — Month 프레임 안의 사각형 7개 전수 실측(2026-09-15)",
+    "purpose": "Selected 셀은 지름 40px 원이라 칸 사이 spacing/06(8px)이 비어 기간이 토막나 보입니다. 그 사이를 메우는 사각형 — 2612:15933 'selected 항목 뒤에 동일한 배경색이 기간 사이를 채움'",
+    "fill": {
+      "figmaVariable": "brand/primary-lightest",
+      "value": "#eef4fc",
+      "tokenMatch": "정확히 일치(sys-color-brand-primary-lightest)",
+      "note": "Date Type=Selected 의 배경과 같은 변수라 원과 띠의 경계가 보이지 않음"
+    },
+    "radius": {
+      "value": "0",
+      "note": "Date 셀(999px 원)과 달리 각진 사각형"
+    },
+    "height": {
+      "value": "40px",
+      "note": "Date 셀 높이와 같음 — 원이 띠 안에 딱 들어감"
+    },
+    "zOrder": "Week 인스턴스보다 **뒤**(children 배열에서 Week 앞 = 아래 레이어)",
+    "geometry": {
+      "pitch": {
+        "value": "48px",
+        "derivation": "40(셀) + spacing/06(8px)"
+      },
+      "rule": "줄마다 사각형 하나. 좌우 끝은 각각 — 그 줄에 기간의 앵커(Pinned)가 있으면 그 칸의 **중앙**(48×칸번호 + 20), 기간이 그 줄을 지나가면 줄 끝(0 또는 328)",
+      "measured": [
+        {
+          "nodeId": "2612:15600",
+          "x": 116,
+          "y": 46,
+          "w": 212,
+          "check": "앵커 2번 칸 48×2+20=116 → 지나감 328"
+        },
+        {
+          "nodeId": "2612:15602",
+          "x": 0,
+          "y": 92,
+          "w": 328,
+          "check": "양쪽 다 지나감"
+        },
+        {
+          "nodeId": "2612:15603",
+          "x": 0,
+          "y": 138,
+          "w": 328,
+          "check": "양쪽 다 지나감"
+        },
+        {
+          "nodeId": "2612:15604",
+          "x": 0,
+          "y": 184,
+          "w": 328,
+          "check": "양쪽 다 지나감"
+        },
+        {
+          "nodeId": "2612:15605",
+          "x": 0,
+          "y": 0,
+          "w": 328,
+          "check": "양쪽 다 지나감"
+        },
+        {
+          "nodeId": "2612:15607",
+          "x": 0,
+          "y": 46,
+          "w": 164,
+          "check": "지나옴 0 → 앵커 3번 칸 48×3+20=164"
+        },
+        {
+          "nodeId": "2612:15620",
+          "x": 116,
+          "y": 46,
+          "w": 192,
+          "check": "앵커 2번·6번 칸 116 → 48×6+20=308"
+        }
+      ]
+    },
+    "nullCells": "Figma 예시는 35칸이 전부 차 있어 이 경우가 없음. 구현은 실제 날짜가 있는 칸까지만 칠함 — 마지막 줄이 [27 28 29 30 · · ·]이면 30일 칸 오른쪽 변에서 끝남. 확인 필요",
+    "implementationNote": "Figma 는 Week 가 인스턴스라 사각형을 넣을 수 없어 Month 의 자식으로 뒀지만, 구현에서는 좌표가 그 줄 안에서만 결정되므로 Week 안에 넣음(.bd-week__range). 규칙은 Calendar/calendar-data.ts 의 weekRangeBand() 한 함수"
   },
   "weekHeaderComposition": {
     "included": false,
@@ -53,7 +148,10 @@
   "subcomponentReuse": {
     "week": {
       "ref": "components/date-time-picker/week/week.md",
-      "instanceCountByVariant": { "5": 5, "6": 6 },
+      "instanceCountByVariant": {
+        "5": 5,
+        "6": 6
+      },
       "note": "week.md 실측 스펙(gap spacing/06=8px, Date 셀 7개, 328x40px)과 정확히 일치",
       "tokenMatch": "정확히 일치"
     },
@@ -64,7 +162,10 @@
   },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출한 결과가 이미 {\"nodes\":[]}로 확인되어 있어 재호출하지 않고 패밀리 공용으로 재사용.",
-  "weekNumberTransition": { "animated": false, "note": "사용자 확인 완료 — Week Number=5↔6 전환(월 이동 시 그리드 행 수 변화) 시 높이는 즉시 변경됨, 애니메이션 없음" },
+  "weekNumberTransition": {
+    "animated": false,
+    "note": "사용자 확인 완료 — Week Number=5↔6 전환(월 이동 시 그리드 행 수 변화) 시 높이는 즉시 변경됨, 애니메이션 없음"
+  },
   "accessibility": {
     "gridSemantics": "role=grid 또는 table 마크업, 각 Week가 role=row로 감싸이는지 규정 없음 — 확인 필요",
     "rowCountAnnouncement": "Week Number(5/6)에 따른 총 행 수를 스크린리더에 알리는 방법(예: aria-rowcount) 규정 없음 — 확인 필요",
@@ -76,6 +177,7 @@
   "openQuestions": [
     "Week Number=5/6가 진짜 Figma COMPONENT_SET variant인지 여부(100% 확정 아님)",
     "각 Week 행 Date 셀에 실제 날짜·Type이 매핑되는 규칙",
-    "접근성 마크업(role=grid, aria-rowcount) 연결 규정"
+    "접근성 마크업(role=grid, aria-rowcount) 연결 규정",
+    "기간 띠가 달의 빈 칸(Null)을 만났을 때 어디서 끊는지 — Figma 예시에 빈 칸이 없어 구현에서 정함"
   ]
 }

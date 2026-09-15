@@ -1,6 +1,8 @@
 # Date
 
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2208-10687) — Frame `2208:10687` ("Date"), 상위 그룹 `2497:13877`
+> 선택 상태(current/pinned/selected) 규칙의 출처는 **`2612:16030`("Group 2")** 입니다 — 세 가지 상태를
+> 예시 화면과 주석으로 직접 규정해 놓은 프레임으로, 2장의 규칙표는 전부 여기서 나왔습니다.
 > 기계 판독용 값은 [`date.json`](./date.json)을 함께 참고합니다. 이 문서와 date.json은 항상 같은 소스에서 나온 값이어야 합니다.
 > 이 컴포넌트는 `components/date-time-picker/`에 위치합니다 — [Week](../week/week.md) → [Month](../month/month.md) → [Date Picker](../date-picker/date-picker.md)로 이어지는 Date/Time Picker 컴포넌트 패밀리의 최하위 아톰(달력의 날짜 셀 1개)입니다. 다른 그룹(Text Input 등)에서 재사용되지 않으므로 `components/global/`이 아니라 이 패밀리 전용 폴더에 둡니다.
 
@@ -27,10 +29,33 @@ Date는 달력에서 날짜 하나(예: "14")를 나타내는 **40×40px 원형 
 | Type | 배경 | 테두리 | 텍스트 색상/타이포 | 비고 |
 |---|---|---|---|---|
 | **Default** | `common/white-default`(#fdfdfd, Status=Default·Hover·Pressed 공통 베이스) | 없음 | `neutral/800`(#202837), Body 1/16 R | 일반 날짜 |
-| **Current** | `common/white-default`(#fdfdfd) | `borderwidth/02`=1px, `neutral/600`(#5b616c) — Status=Default·Hover·Pressed 공통 | `neutral/800`(#202837), Body 1/16 R | 오늘. 테두리로만 구분되고 배경·텍스트 색은 Default와 동일 |
-| **Selected** | `brand/primary-lightest`(#eef4fc) | 없음 | `neutral/800`(#202837), Body 1/16 R | **범위(range) 선택 시 두 Pinned 날짜 사이의 날짜들에 쓰이는 구간 하이라이트**(사용자 확인 완료). 테두리 없이 옅은 파란 배경만으로 표현 |
-| **Pinned** | `brand/primary-default`(#2c7be2) | 없음 | `common/white-default`(#fdfdfd), **SubTitle/18 M**(다른 Type보다 크고 굵음) | **사용자가 직접 선택한 날짜(범위의 시작/끝 앵커)**(사용자 확인 완료). 유일하게 타이포가 다름 — 단일 날짜 선택 시에도 Pinned 하나만 찍힐 것으로 추정 |
+| **Current** | `common/white-default`(#fdfdfd) | `borderwidth/02`=1px, `neutral/600`(#5b616c) — Status=Default·Hover·Pressed 공통 | `neutral/800`(#202837), Body 1/16 R | **오늘**. 테두리로만 구분되고 배경·텍스트 색은 Default와 동일. **다른 날을 찍어도 이 테두리는 남습니다**(2.1장) |
+| **Selected** | `brand/primary-lightest`(#eef4fc) | 없음 | `neutral/800`(#202837), Body 1/16 R | **두 Pinned 사이의 날짜에만** 쓰입니다 — *"selected는 무조건 기간 사이 선택 시 적용됨"*(`2612:15933`). **단독으로는 쓰이지 않습니다.** 셀 뒤에 같은 색 띠가 깔려 칸 사이를 메웁니다(2.1장) |
+| **Pinned** | `brand/primary-default`(#2c7be2) | 없음 | `common/white-default`(#fdfdfd), **SubTitle/18 M**(다른 Type보다 크고 굵음) | **사용자가 직접 고른 날짜.** 단일 선택이면 하나, 기간이면 양끝 둘 다 Pinned입니다. **오늘을 골라도 Current가 아니라 Pinned가 됩니다**(`2612:15932`). 유일하게 타이포가 다름 |
 | **Null** | `common/white-default`(#fdfdfd) | 없음 | 텍스트 없음(빈 원) | **문자 그대로 빈 칸**(사용자 확인 완료). 달력 그리드에서 이전/다음 달의 빈 칸 등으로 쓰일 것으로 추정 |
+
+### 2.1 선택 상태 규칙 (Figma `2612:16030` 실측 + 주석)
+
+Type 다섯 개 중 **Current·Pinned·Selected 셋이 "선택"을 나타냅니다.** 이 셋이 언제 어떻게 쓰이는지는
+`2612:16030` 프레임이 예시 화면 6개와 주석 3개로 직접 규정해 놓았습니다.
+
+| 규칙 | 근거 |
+|---|---|
+| **오늘 = `current`** | `2612:15931` *"오늘 날짜 = current"* |
+| **사용자가 고른 날짜 = `pinned`.** 오늘을 골라도 `pinned` 로 바뀝니다 | `2612:15932` *"특정 날짜 선택 = pinned (오늘날짜를 선택해도 pinned로 바뀜)"* |
+| **다른 날을 골라도 오늘의 테두리는 남습니다** — 한 화면에 `pinned` 와 `current` 가 같이 있습니다 | `2612:15726` 실측(Pinned 1개 + Current 1개) |
+| **`selected` 는 기간 사이에만.** 단독으로 쓰이는 일이 없습니다 | `2612:15933` *"selected는 무조건 기간 사이 선택 시 적용됨"* |
+| **기간의 양끝은 둘 다 `pinned`**, 그 사이만 `selected` | `2612:15524`·`2612:15440` 실측(양끝 Pinned, 사이 전부 Selected) |
+| **`selected` 뒤에 같은 색 띠**가 깔려 칸 사이 8px을 메웁니다 | `2612:15933` *"selected 항목 뒤에 동일한 배경색이 기간 사이를 채움"* |
+| **기간은 패널 두 개에 걸쳐 이어집니다** | `2612:15933` *"기간은 패널 두개가 붙어도 계속 이어짐"* |
+
+**띠(band)는 Date 컴포넌트가 아니라 [Month](../month/month.md) 가 그립니다** — Selected 셀 자체는 지름 40px의
+원이라 칸 사이 8px이 비어 기간이 토막나 보이기 때문입니다. 띠의 정확한 형상과 양끝 규칙은 month.md 2.1장에 있습니다.
+
+**한 칸에 여러 개가 겹칠 때의 우선순위**는 `pinned` > `selected` > `current` > `default` 입니다.
+Type은 하나만 고르는 축이라 겹치면 하나로 정해야 합니다. 앞의 두 단계는 Figma 주석으로 확정돼 있지만
+(**오늘을 고르면 pinned**), **기간 안에 든 오늘**은 Figma에 예시가 없어 위 순서로 정한 것입니다 —
+그래서 기간에 걸린 오늘은 테두리를 잃습니다. → 확인 필요
 
 ## 3. Status별 스펙 (Type=Default·Current 한정, 4종 전수 실측)
 
@@ -45,7 +70,7 @@ Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disable
 
 > **사용자 확인 완료**: Pinned를 다시 클릭하면 별도의 Pressed 시각 효과 없이 배경색이 바로 빠지며 Type=Default로 전환(선택 해제)됩니다 — Hover/Pressed 변형이 없는 것은 의도된 설계입니다.
 
-> **사용자 확인 완료(Type의 의미)**: Pinned=사용자가 직접 선택한 날짜(범위 선택의 시작/끝 앵커), Selected=두 Pinned 날짜 사이의 기간(범위)이 잡혔을 때 그 사이 날짜들에 쓰이는 하이라이트, Null=문자 그대로 빈 칸. 이는 이 컴포넌트가 **단일 날짜뿐 아니라 기간(range) 선택을 지원하도록 설계**되었음을 확정해줍니다 — [Date Picker Group](../date-picker-group/date-picker-group.md)의 좌우 비대칭 헤더 구조(한쪽은 드롭다운만, 한쪽은 이전/다음 이동만)도 범위 선택 UI라는 맥락에서 재해석할 수 있습니다.
+> **확정(Type의 의미)**: Pinned=사용자가 직접 고른 날짜(기간이면 시작/끝 앵커), Selected=두 Pinned **사이**의 날짜, Null=문자 그대로 빈 칸. 2.1장 표에 근거 노드를 하나씩 달아 두었습니다. 이 컴포넌트가 **단일 날짜뿐 아니라 기간(range) 선택을 지원하도록 설계**되었음이 `2612:16030`으로 확정되었습니다.
 
 ## 4. 타이포그래피 상세
 
