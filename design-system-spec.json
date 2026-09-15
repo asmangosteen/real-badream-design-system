@@ -6,7 +6,6 @@
   "specVersionNote": "V3 (docs/DESIGN.md, 바드림 디자인시스템 V3.pdf 기준). 2026-08-21 V2에서 갱신 — 컬러 팔레트 HEX, border-width 스케일, destructed 컬러 롤, interaction 토큰 패밀리가 반영됨.",
   "description": "배달라이더를 위한 전기이륜차 구독 플랫폼 바드림의 디자인 시스템. 컬러, 타이포그래피, 스페이싱, 아이콘, 로고 등 UI 구현에 필요한 전체 자산과 원칙을 포함합니다.",
   "sourceOfTruth": "Figma (이 저장소는 파생본입니다. 값 충돌 시 Figma 우선). 문서 기준서는 docs/DESIGN.md.",
-
   "principles": [
     "색상/타이포/스페이싱/라운드/그림자는 항상 tokens/ 토큰을 참조하고 임의 값을 만들지 않는다",
     "컬러 역할은 고정: Blue=CTA/활성, Orange=경고, Red(destructed)=오류/파괴적 액션 전용",
@@ -15,7 +14,6 @@
     "UX 카피는 해요체, 사용자 관점, 행동 지향적으로 작성",
     "주 사용자층(40~50대 배달 라이더)의 가독성을 모든 화면 결정의 기준으로 둔다"
   ],
-
   "tokens": {
     "css": "tokens/tokens.css",
     "colors": "tokens/colors.json",
@@ -24,89 +22,359 @@
     "radius": "tokens/radius.json",
     "shadows": "tokens/shadows.json"
   },
-
   "colorRoles": {
-    "primary": { "token": "sys-color-brand-primary-default", "hex": "#2C7BE2", "usage": "CTA, 활성 상태, 링크, 스텝 인디케이터" },
-    "secondary": { "token": "sys-color-brand-secondary-default", "hex": "#36517E", "usage": "보조 CTA, 딥블루 강조" },
-    "warning": { "token": "sys-color-theme-warning-default", "hex": "#FF792C", "usage": "경고 상태 전용 (오류 아님)" },
-    "destructed": { "token": "sys-color-theme-destructed-default", "hex": "#E72F37", "usage": "오류, 파괴적 액션 전용. V2 명칭은 'error'이며 sys-color-theme-error-default alias로 하위호환 유지." },
-    "success": { "token": "sys-color-theme-success-default", "hex": "#1F8F30", "usage": "완료, 성공, 정상 상태" }
+    "primary": {
+      "token": "sys-color-brand-primary-default",
+      "hex": "#2C7BE2",
+      "usage": "CTA, 활성 상태, 링크, 스텝 인디케이터"
+    },
+    "secondary": {
+      "token": "sys-color-brand-secondary-default",
+      "hex": "#36517E",
+      "usage": "보조 CTA, 딥블루 강조"
+    },
+    "warning": {
+      "token": "sys-color-theme-warning-default",
+      "hex": "#FF792C",
+      "usage": "경고 상태 전용 (오류 아님)"
+    },
+    "destructed": {
+      "token": "sys-color-theme-destructed-default",
+      "hex": "#E72F37",
+      "usage": "오류, 파괴적 액션 전용. V2 명칭은 'error'이며 sys-color-theme-error-default alias로 하위호환 유지."
+    },
+    "success": {
+      "token": "sys-color-theme-success-default",
+      "hex": "#1F8F30",
+      "usage": "완료, 성공, 정상 상태"
+    }
   },
-
   "interactionTokens": {
     "ref": "tokens/colors.json 의 interaction 섹션, docs/DESIGN.md 12.3절",
     "usage": "hover/pressed/selected/disabled 피드백. 컴포넌트별 매핑 예: Primary=interaction/blue, Secondary=interaction/light-blue, Tertiary/중립=interaction/gray, Destructed=interaction/red",
-    "families": ["gray", "light-gray", "blue", "light-blue", "deep-blue", "light-deep-blue", "emerald", "light-emerald", "purple", "light-purple", "turquoise", "light-turquoise", "red", "light-red", "green", "light-green", "orange", "light-orange", "yellow", "light-yellow"]
+    "families": [
+      "gray",
+      "light-gray",
+      "blue",
+      "light-blue",
+      "deep-blue",
+      "light-deep-blue",
+      "emerald",
+      "light-emerald",
+      "purple",
+      "light-purple",
+      "turquoise",
+      "light-turquoise",
+      "red",
+      "light-red",
+      "green",
+      "light-green",
+      "orange",
+      "light-orange",
+      "yellow",
+      "light-yellow"
+    ]
   },
-
   "components": {
     "index": "components/README.md",
-    "button": { "spec": "components/button/button/button.md", "machineReadable": "components/button/button/button.json", "status": "문서화 완료" },
-    "textButton": { "spec": "components/button/text-button/text-button.md", "machineReadable": "components/button/text-button/text-button.json", "status": "문서화 완료", "note": "프로토타입 인터랙션 추가 반영(사용자 확인, 2026-08-29): While hovering→Hover(Smart animate, Slow, 150ms), While pressing→Pressed(Smart animate, Slow, 50ms), 전 Size×Text Color×Contents 조합 동일 적용" },
-    "iconButton": { "spec": "components/button/icon-button/icon-button.md", "machineReadable": "components/button/icon-button/icon-button.json", "status": "문서화 완료" },
-    "buttonSpinner": { "spec": "components/button/button-spinner/button-spinner.md", "machineReadable": "components/button/button-spinner/button-spinner.json", "status": "문서화 완료", "note": "Button/Text Button의 Loading 상태에서 쓰이는 스피너 아톰" },
-    "badge": { "spec": "components/badge/badge.md", "machineReadable": "components/badge/badge.json", "status": "문서화 완료", "note": "Figma상 4개 Component Set(Content/Basic, Content/Theme, Numeric/Basic, Numeric/Theme)으로 분리되어 있음, 총 210개 인스턴스" },
-    "checkbox": { "spec": "components/checkbox/checkbox.md", "machineReadable": "components/checkbox/checkbox.json", "status": "문서화 완료", "note": "Figma상 2개 Component Set(Angular, Rounded)으로 분리되어 있음, 총 24개 인스턴스, Size 축 없음" },
-    "chip": { "spec": "components/chip/chip.md", "machineReadable": "components/chip/chip.json", "status": "문서화 완료", "note": "Figma상 2개 Component Set(Selection, Filter)으로 분리되어 있음, 총 190개 인스턴스" },
-    "avatar": { "spec": "components/avatar/avatar.md", "machineReadable": "components/avatar/avatar.json", "status": "문서화 완료", "note": "Size 축(12~48px) 7개뿐, State 축 없는 순수 표시용 컴포넌트. Chip의 Avatar+Text 등에서 서브컴포넌트로 재사용됨" },
-    "divider": { "spec": "components/divider/divider.md", "machineReadable": "components/divider/divider.json", "status": "문서화 완료", "note": "Type(Horizontal/Vertical) × Size(1~14px) 16개 변형, State 축 없는 순수 표시용 구분선 컴포넌트. Horizontal은 너비, Vertical은 높이가 자유 치수(100%). 기본 색상 neutral/100은 고정 규칙이 아니라 사용 맥락에 따라 자유 오버라이드 가능(사용자 확인) — Footer가 실사용 예시" },
-    "radioButton": { "spec": "components/radio-button/radio-button.md", "machineReadable": "components/radio-button/radio-button.json", "status": "문서화 완료", "note": "Checked(False/True) × State(Default/Hover/Pressed/Disabled) × Size(S/M/L) 총 24개 인스턴스, 전수 실측. Checkbox와 달리 Size 축 있음, Indeterminate 축 없음" },
-    "toggle": { "spec": "components/toggle/toggle.md", "machineReadable": "components/toggle/toggle.json", "status": "문서화 완료", "note": "Size(S/L) × Status(Off/On) × Disabled(False/True) × Label(True/False) × Label Location(Left/Right/No, Label에 종속) 총 24개 인스턴스, 전수 실측. Checkbox/Radio Button과 달리 Hover/Pressed/Focused 축 자체가 없음. Disabled은 Off/On 공통으로 opacity 40% 전체 적용" },
-    "textBlinker": { "spec": "components/global/text-blinker/text-blinker.md", "machineReadable": "components/global/text-blinker/text-blinker.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰. Input/TextField 등 텍스트 입력 필드 내부 커서(caret) 표시용, State 축(On/Off) 2개뿐, 모션 데이터 없음" },
-    "label": { "spec": "components/global/label/label.md", "machineReadable": "components/global/label/label.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰. Input/TextField 필드 라벨, Size(S/M/L) × Essential(Off/On) 6개, S·M은 타이포 동일(padding만 다름)하고 L만 Body2로 전환됨" },
-    "textCount": { "spec": "components/global/text-count/text-count.md", "machineReadable": "components/global/text-count/text-count.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰. Input/TextArea 글자 수 카운터, Size(Small/Default) × State(Default/Typing/Destructed) 6개. Figma 소스의 State6/5/4 네이밍을 색상 실측으로 Default/Typing/Destructed에 매칭" },
-    "typeBox": { "spec": "components/global/type-box/type-box.md", "machineReadable": "components/global/type-box/type-box.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰. Input/TextField 내부에서 입력값의 타이포·캐럿을 미리보기하는 레이어, Size(S/M/L) × State(Selected/Placeholder/Typing/Done) 12개. Text Blinker를 캐럿 서브컴포넌트로 재사용" },
-    "supportingText": { "spec": "components/global/supporting-text/supporting-text.md", "machineReadable": "components/global/supporting-text/supporting-text.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰. Input/TextField 하단 헬퍼·에러·성공 텍스트, Size(S/M/L) × Theme(Gray/Black/Brand/Destructed/Success/Warning) × Text Count(True/False) 36개. 3개 축이 서로 독립적임을 확인해 10개 노드만 선택 샘플링, 나머지는 패턴 기반 추정" },
-    "dropdown": { "spec": "components/dropdown/dropdown.md", "machineReadable": "components/dropdown/dropdown.json", "status": "문서화 완료", "note": "Size(S/M/L) × State(Default/Hover/Selected/Disabled/Done) × Destructed(Selected 전용) × Show Button/Show Label/Supporting Text/Left Icon(각 True/False) 총 288개 인스턴스. Label/Type Box/Supporting Text를 서브 아톰으로 재사용, 13개 노드 전략적 샘플링" },
-    "segmentedControlItem": { "spec": "components/global/segmented-control-item/segmented-control-item.md", "machineReadable": "components/global/segmented-control-item/segmented-control-item.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰(Segmented Control 전용, 디자이너가 아토믹 디자인 목적으로 별도 분리). Size(XS/S/M/L/XL) × Selected(True/False) 총 10개 인스턴스, 전수 실측" },
-    "segmentedControl": { "spec": "components/segmented-control/segmented-control.md", "machineReadable": "components/segmented-control/segmented-control.json", "status": "문서화 완료", "note": "Size(XS/S/M/L/XL) × Count(2~5) 총 20개 인스턴스. _Item을 조합해 만들어짐, 5개 Size 전부 _Item과 1:1 대응 확인. 초기 조사 시 발견한 Size=S 노드 일부의 라벨-내용 불일치는 이후 Figma에서 Size=XS로 정정되어 해소됨" },
-    "tabItem": { "spec": "components/global/tab-item/tab-item.md", "machineReadable": "components/global/tab-item/tab-item.json", "status": "문서화 완료", "note": "components/global/ 소속 서브 아톰(Tab 전용, 디자이너가 아토믹 디자인 목적으로 별도 분리, Segmented Control Item과 레이어명은 동일하나 별개 컴포넌트). Size(S/L) × Active(On/Off) × Disabled(False/True) × Emphasize(Off/On) 12개 인스턴스(축 비직교, Disabled=True+Emphasize=On 조합은 Figma에 없음), 전수 실측" },
-    "tab": { "spec": "components/tab/tab.md", "machineReadable": "components/tab/tab.json", "status": "문서화 완료", "note": "Size(S/L) × Type(Hug/Fill) × Tailing Icon × Side Padding 10개 인스턴스(축 비직교, Fill은 Size당 1개뿐). Tab Item을 조합해 만들어짐 — Hug는 컴포넌트 인스턴스 재사용(최대 8슬롯 prop), Fill은 내부 구조를 5슬롯으로 인라인 복제. 오버플로우 마스크(Alpha Gradient Mask, node 2262:1908, 42px 고정 이징 커브)로 가로 스크롤 페이드 구현, 전수 실측" },
-    "textInput": { "spec": "components/text-input/text-input/text-input.md", "machineReadable": "components/text-input/text-input/text-input.json", "status": "문서화 완료", "note": "Size(S/M/L) × State(Default/Hover/Disabled/Done/Selected/Typing) × Destructed(Selected·Typing 전용) × Show Button/Show Label/Supporting Text/Left Icon/Right Icon(각 True/False) 총 768개 인스턴스 + 별도 boolean 프로퍼티 Show Unit(단위 텍스트 토글, 8개 variant 축과 별개인 9번째 축, 사용자 확인). Label/Type Box/Text Blinker/Supporting Text 4개 서브 아톰의 실 사용처로 확인됨(Type Box의 Selected/Typing 캐럿 상태가 실제로 쓰임). 15개 노드 전략적 샘플링" },
-    "textInputGroup": { "spec": "components/text-input/text-input-group/text-input-group.md", "machineReadable": "components/text-input/text-input-group/text-input-group.json", "status": "문서화 완료", "note": "Size(S/M/L) × Field(2/3) 총 6개 인스턴스, 전수 실측. Text Input 2~3개를 수직 정렬해 조합, 첫 번째 필드만 Label 표시, 인접 필드 간 테두리 병합 없음" },
-    "date": { "spec": "components/date-time-picker/date/date.md", "machineReadable": "components/date-time-picker/date/date.json", "status": "문서화 완료", "note": "Type(Default/Current/Selected/Pinned/Null) × Status(Default/Hover/Pressed/Disabled, Default·Current 한정) 총 11개 인스턴스, 축 비직교, 전수 실측. Date/Time Picker 패밀리 최하위 아톰(날짜 셀). Pinned=직접 선택한 날짜(범위 앵커)/Selected=두 Pinned 사이 구간 하이라이트/Null=빈 칸(사용자 확인) — 기간(range) 선택 지원 설계. Pinned 재클릭 시 Pressed 없이 즉시 색 빠짐(선택 해제, 사용자 확인)" },
-    "week": { "spec": "components/date-time-picker/week/week.md", "machineReadable": "components/date-time-picker/week/week.json", "status": "문서화 완료", "note": "변형 축 없는 단일 인스턴스. Date 7개를 가로로 묶은 한 주(週) 행" },
-    "weekHeader": { "spec": "components/date-time-picker/week-header/week-header.md", "machineReadable": "components/date-time-picker/week-header/week-header.json", "status": "문서화 완료", "note": "변형 축 없는 단일 인스턴스. 요일 라벨(일~토) 행, 일요일만 강조색, 토요일은 평일과 동일. Month와 실제로 조합되어 쓰임을 Date Picker 조사에서 후속 확인" },
-    "month": { "spec": "components/date-time-picker/month/month.md", "machineReadable": "components/date-time-picker/month/month.json", "status": "문서화 완료", "note": "Week Number(5/6) 총 2개 인스턴스, 전수 실측. Week를 5~6개 세로로 쌓은 달력 그리드 본체, Week Header는 미포함. Week Number 전환 시 높이는 애니메이션 없이 즉시 변경(사용자 확인)" },
-    "yearMonthWheel": { "spec": "components/date-time-picker/year-month-wheel/year-month-wheel.md", "machineReadable": "components/date-time-picker/year-month-wheel/year-month-wheel.json", "status": "문서화 완료", "note": "변형 축 없는 단일 인스턴스. 연/월 각각 독립적으로 스크롤되는 7행 휠 피커(사용자 확인), 거리 기반 타이포·투명도 감쇠(SubTitle18M 100%→70%→50%→30%)" },
-    "calendarHeader": { "spec": "components/date-time-picker/calendar-header/calendar-header.md", "machineReadable": "components/date-time-picker/calendar-header/calendar-header.json", "status": "문서화 완료", "note": "Title(Left/Center) × With(Arrows/Close/Nothing) 총 6개 인스턴스, 전수 실측 + 별도 boolean 프로퍼티 Show Dropdown(정식 프로퍼티, 사용자 확인)" },
-    "timeField": { "spec": "components/date-time-picker/time-field/time-field.md", "machineReadable": "components/date-time-picker/time-field/time-field.json", "status": "문서화 완료", "note": "State(Default/Hover/Typing) 총 3개 인스턴스, 전수 실측. 시간 값 2자리를 담는 필드, 직접 타이핑 가능(사용자 확인), Text Blinker 재사용, Disabled 없음(의도된 설계, 사용자 확인)" },
-    "timePicker": { "spec": "components/date-time-picker/time-picker/time-picker.md", "machineReadable": "components/date-time-picker/time-picker/time-picker.json", "status": "문서화 완료", "note": "Direction(Down Only/Up Only/Both) 총 3개 인스턴스, 전수 실측. Time Field를 조합한 스테퍼+타이핑 하이브리드 입력(사용자 확인), 비활성 방향 버튼은 실제 disabled 처리됨(사용자 확인)" },
-    "timePickerGroup": { "spec": "components/date-time-picker/time-picker-group/time-picker-group.md", "machineReadable": "components/date-time-picker/time-picker-group/time-picker-group.json", "status": "문서화 완료", "note": "Picker Count(2/3) 총 2개 인스턴스, 전수 실측. Time Picker 2~3개를 콜론(:, Figma 이미지 에셋 그대로 사용, 사용자 확인) 구분자로 조합, Count·Direction 모두 실제로 다양하게 쓰임(사용자 확인)" },
-    "datePicker": { "spec": "components/date-time-picker/date-picker/date-picker.md", "machineReadable": "components/date-time-picker/date-picker/date-picker.json", "status": "문서화 완료", "note": "State(Default/Wheel) × Time Picker(Off/On) 총 4개 인스턴스, 완전 직교, 전수 실측. Date/Week/Month/Calendar Header/Year and Month Wheel/Time Field/Time Picker/Time Picker Group을 전부 조합한 패밀리 플래그십 컴포넌트" },
-    "datePickerGroup": { "spec": "components/date-time-picker/date-picker-group/date-picker-group.md", "machineReadable": "components/date-time-picker/date-picker-group/date-picker-group.json", "status": "문서화 완료", "note": "Type(Horizontal/Vertical) 총 2개 인스턴스, 전수 실측. Date Picker 2개를 Divider로 구분해 나란히 배치, 두 패널은 동기화되지 않는 독립 캘린더(사용자 확인)" },
-    "pageControl": { "spec": "components/page-control/page-control.md", "machineReadable": "components/page-control/page-control.json", "status": "문서화 완료", "note": "Type(On Light/On Dark) × Dots(2/3/4/5/6/7/8+) × Selection(1~Dots) 총 70개 인스턴스, 비직교, 축별 전략적 샘플링(9개 노드). 캐러셀 페이지 인디케이터, 도트는 클릭 불가능한 순수 표시(사용자 확인), State 축 없음. Dots=8+는 Selection 5부터 반대쪽(좌측)으로 도트 축소가 전환됨(사용자 확인)" },
-    "statusBar": { "spec": "components/status-bar/status-bar.md", "machineReadable": "components/status-bar/status-bar.json", "status": "문서화 완료", "note": "OS(iOS/Android) × Mode(Light/Dark) × Background(Off/On) 총 8개 인스턴스, 완전 직교, 전수 실측. 기기 상태바 목업, State 축 없음. iOS/Android가 레이아웃 구조·아이콘 세트·타이포 전부 다름, Background=On은 Mode에 맞는 단색 배경만 채우고 콘텐츠 색은 Mode에만 의존" },
-    "navBarTopLeading": { "spec": "components/navigation-bar/top/leading/leading.md", "machineReadable": "components/navigation-bar/top/leading/leading.json", "status": "문서화 완료", "note": "Type(Back/Close/Big Title/Home) × Mode(Light/Dark) 총 8개 인스턴스, 완전 직교, 전수 실측(2026-09-09 Home 추가). Navigation Bar Top 좌측 영역 서브 아톰. Home Type은 홈 화면 전용(강한 제약사항, 사용자 확인) — 나머지 3개 Type과 달리 범용 재사용 불가" },
-    "navBarTopTrailingComponents": { "spec": "components/navigation-bar/top/trailing-components/trailing-components.md", "machineReadable": "components/navigation-bar/top/trailing-components/trailing-components.json", "status": "문서화 완료", "note": "Type(Icon/Button) × Mode(Light/Dark) 총 4개 인스턴스, 완전 직교, 전수 실측. Trailing이 1~3회 조합하는 최하위 서브 아톰(Figma 레이어명 _Trailing Components). Button 타입은 Text Button(Size=XL, Blue, Default)을 그대로 재사용" },
-    "navBarTopTrailing": { "spec": "components/navigation-bar/top/trailing/trailing.md", "machineReadable": "components/navigation-bar/top/trailing/trailing.json", "status": "문서화 완료", "note": "Number(1/2/3) 총 3개 인스턴스, 전수 실측. Trailing Components를 조합, 자체 Mode 축 없음(Top이 Mode 대응 담당)" },
-    "navBarTopSmalltitle": { "spec": "components/navigation-bar/top/smalltitle/smalltitle.md", "machineReadable": "components/navigation-bar/top/smalltitle/smalltitle.json", "status": "문서화 완료", "note": "Type(Default/Selection/Segmented Control/Caption) × Mode(Light/Dark) 총 8개 인스턴스, 완전 직교, 전수 실측. Navigation Bar Top 중앙 영역 서브 아톰. Segmented Control 타입은 기존 Segmented Control(Size=S, Count=2)을 재사용" },
-    "navBarTop": { "spec": "components/navigation-bar/top/top/top.md", "machineReadable": "components/navigation-bar/top/top/top.json", "status": "문서화 완료", "note": "Type(8종, 2026-09-09 Home 추가) × Mode(Light/Dark) × Background(Off/On) 총 32개 인스턴스, 완전 직교, 13개 노드 전략적 샘플링. Navigation Bar 패밀리 플래그십(사용자 확인 — 실제 쓰일 컴포넌트) — Leading/Trailing/Smalltitle 조합. 32개 변형이 전부가 아님(사용자 확인) — Trailing 개수는 Type별 최댓값(자유 조절+Icon/Button 혼용 가능), Back의 showLabel은 항상 자유 토글, 항목 hide 시 나머지 위치 고정, Background=On 배경색은 예시일 뿐 자유 교체 가능. Home Type은 홈 화면 전용(강한 제약사항) — 나머지 7종과 달리 범용 재사용 불가" },
-    "topBar": { "spec": "components/top-bar/top-bar.md", "machineReadable": "components/top-bar/top-bar.json", "status": "문서화 완료", "note": "Mode(Light/Dark) × Background(No/Default/Blur) × Line(Off/On) 총 10개 인스턴스, 비직교(Background=No엔 Line 없음, 사용자 확인). Status Bar + Navigation Bar Top을 세로로 쌓은 최종 합성 컴포넌트, components/navigation-bar/가 아닌 최상위 폴더(사용자 지정). 배경 3종(없음/실제 페이지 배경색/블러) — Default 배경색은 예시가 아니라 실제 페이지 배경을 반영하는 의도된 값(사용자 확인: Light=페이지 배경색과 동일한 white-default, Dark=검정 배경용 순수 black-emphasis). Status Bar·Navigation Bar 각각 독립 hide 가능하며 하위 속성(Status Bar OS 포함, Navigation Bar Top Type 8종 포함, 2026-09-09 Home 추가) 전부 자유 승계(사용자 확인, Home은 홈 화면 전용 제약 상속). 6개 노드 전략적 샘플링" },
-    "footer": { "spec": "components/footer/footer.md", "machineReadable": "components/footer/footer.json", "status": "문서화 완료", "note": "State(Close/Open) 총 2개 인스턴스, 전수 실측. 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용(색상 오버라이드 관련 내용은 components/divider/divider.md 참고). 하단 padding 120px은 Footer 전용 의도된 예외로, 홈 화면에 추후 추가될 Bottom Navigation Bar와 겹치지 않기 위한 여유 공간(사용자 확인)" }
+    "button": {
+      "spec": "components/button/button/button.md",
+      "machineReadable": "components/button/button/button.json",
+      "status": "문서화 완료"
+    },
+    "textButton": {
+      "spec": "components/button/text-button/text-button.md",
+      "machineReadable": "components/button/text-button/text-button.json",
+      "status": "문서화 완료",
+      "note": "프로토타입 인터랙션 추가 반영(사용자 확인, 2026-08-29): While hovering→Hover(Smart animate, Slow, 150ms), While pressing→Pressed(Smart animate, Slow, 50ms), 전 Size×Text Color×Contents 조합 동일 적용"
+    },
+    "iconButton": {
+      "spec": "components/button/icon-button/icon-button.md",
+      "machineReadable": "components/button/icon-button/icon-button.json",
+      "status": "문서화 완료"
+    },
+    "buttonSpinner": {
+      "spec": "components/button/button-spinner/button-spinner.md",
+      "machineReadable": "components/button/button-spinner/button-spinner.json",
+      "status": "문서화 완료",
+      "note": "Button/Text Button의 Loading 상태에서 쓰이는 스피너 아톰"
+    },
+    "badge": {
+      "spec": "components/badge/badge.md",
+      "machineReadable": "components/badge/badge.json",
+      "status": "문서화 완료",
+      "note": "Figma상 4개 Component Set(Content/Basic, Content/Theme, Numeric/Basic, Numeric/Theme)으로 분리되어 있음, 총 210개 인스턴스"
+    },
+    "checkbox": {
+      "spec": "components/checkbox/checkbox.md",
+      "machineReadable": "components/checkbox/checkbox.json",
+      "status": "문서화 완료",
+      "note": "Figma상 2개 Component Set(Angular, Rounded)으로 분리되어 있음, 총 24개 인스턴스, Size 축 없음"
+    },
+    "chip": {
+      "spec": "components/chip/chip.md",
+      "machineReadable": "components/chip/chip.json",
+      "status": "문서화 완료",
+      "note": "Figma상 2개 Component Set(Selection, Filter)으로 분리되어 있음, 총 190개 인스턴스"
+    },
+    "avatar": {
+      "spec": "components/avatar/avatar.md",
+      "machineReadable": "components/avatar/avatar.json",
+      "status": "문서화 완료",
+      "note": "Size 축(12~48px) 7개뿐, State 축 없는 순수 표시용 컴포넌트. Chip의 Avatar+Text 등에서 서브컴포넌트로 재사용됨"
+    },
+    "divider": {
+      "spec": "components/divider/divider.md",
+      "machineReadable": "components/divider/divider.json",
+      "status": "문서화 완료",
+      "note": "Type(Horizontal/Vertical) × Size(1~14px) 16개 변형, State 축 없는 순수 표시용 구분선 컴포넌트. Horizontal은 너비, Vertical은 높이가 자유 치수(100%). 기본 색상 neutral/100은 고정 규칙이 아니라 사용 맥락에 따라 자유 오버라이드 가능(사용자 확인) — Footer가 실사용 예시"
+    },
+    "radioButton": {
+      "spec": "components/radio-button/radio-button.md",
+      "machineReadable": "components/radio-button/radio-button.json",
+      "status": "문서화 완료",
+      "note": "Checked(False/True) × State(Default/Hover/Pressed/Disabled) × Size(S/M/L) 총 24개 인스턴스, 전수 실측. Checkbox와 달리 Size 축 있음, Indeterminate 축 없음"
+    },
+    "toggle": {
+      "spec": "components/toggle/toggle.md",
+      "machineReadable": "components/toggle/toggle.json",
+      "status": "문서화 완료",
+      "note": "Size(S/L) × Status(Off/On) × Disabled(False/True) × Label(True/False) × Label Location(Left/Right/No, Label에 종속) 총 24개 인스턴스, 전수 실측. Checkbox/Radio Button과 달리 Hover/Pressed/Focused 축 자체가 없음. Disabled은 Off/On 공통으로 opacity 40% 전체 적용"
+    },
+    "textBlinker": {
+      "spec": "components/global/text-blinker/text-blinker.md",
+      "machineReadable": "components/global/text-blinker/text-blinker.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰. Input/TextField 등 텍스트 입력 필드 내부 커서(caret) 표시용, State 축(On/Off) 2개뿐, 모션 데이터 없음"
+    },
+    "label": {
+      "spec": "components/global/label/label.md",
+      "machineReadable": "components/global/label/label.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰. Input/TextField 필드 라벨, Size(S/M/L) × Essential(Off/On) 6개, S·M은 타이포 동일(padding만 다름)하고 L만 Body2로 전환됨"
+    },
+    "textCount": {
+      "spec": "components/global/text-count/text-count.md",
+      "machineReadable": "components/global/text-count/text-count.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰. Input/TextArea 글자 수 카운터, Size(Small/Default) × State(Default/Typing/Destructed) 6개. Figma 소스의 State6/5/4 네이밍을 색상 실측으로 Default/Typing/Destructed에 매칭"
+    },
+    "typeBox": {
+      "spec": "components/global/type-box/type-box.md",
+      "machineReadable": "components/global/type-box/type-box.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰. Input/TextField 내부에서 입력값의 타이포·캐럿을 미리보기하는 레이어, Size(S/M/L) × State(Selected/Placeholder/Typing/Done) 12개. Text Blinker를 캐럿 서브컴포넌트로 재사용"
+    },
+    "supportingText": {
+      "spec": "components/global/supporting-text/supporting-text.md",
+      "machineReadable": "components/global/supporting-text/supporting-text.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰. Input/TextField 하단 헬퍼·에러·성공 텍스트, Size(S/M/L) × Theme(Gray/Black/Brand/Destructed/Success/Warning) × Text Count(True/False) 36개. 3개 축이 서로 독립적임을 확인해 10개 노드만 선택 샘플링, 나머지는 패턴 기반 추정"
+    },
+    "dropdown": {
+      "spec": "components/dropdown/dropdown.md",
+      "machineReadable": "components/dropdown/dropdown.json",
+      "status": "문서화 완료",
+      "note": "Size(S/M/L) × State(Default/Hover/Selected/Disabled/Done) × Destructed(Selected 전용) × Show Button/Show Label/Supporting Text/Left Icon(각 True/False) 총 288개 인스턴스. Label/Type Box/Supporting Text를 서브 아톰으로 재사용, 13개 노드 전략적 샘플링"
+    },
+    "segmentedControlItem": {
+      "spec": "components/global/segmented-control-item/segmented-control-item.md",
+      "machineReadable": "components/global/segmented-control-item/segmented-control-item.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰(Segmented Control 전용, 디자이너가 아토믹 디자인 목적으로 별도 분리). Size(XS/S/M/L/XL) × Selected(True/False) 총 10개 인스턴스, 전수 실측"
+    },
+    "segmentedControl": {
+      "spec": "components/segmented-control/segmented-control.md",
+      "machineReadable": "components/segmented-control/segmented-control.json",
+      "status": "문서화 완료",
+      "note": "Size(XS/S/M/L/XL) × Count(2~5) 총 20개 인스턴스. _Item을 조합해 만들어짐, 5개 Size 전부 _Item과 1:1 대응 확인. 초기 조사 시 발견한 Size=S 노드 일부의 라벨-내용 불일치는 이후 Figma에서 Size=XS로 정정되어 해소됨"
+    },
+    "tabItem": {
+      "spec": "components/global/tab-item/tab-item.md",
+      "machineReadable": "components/global/tab-item/tab-item.json",
+      "status": "문서화 완료",
+      "note": "components/global/ 소속 서브 아톰(Tab 전용, 디자이너가 아토믹 디자인 목적으로 별도 분리, Segmented Control Item과 레이어명은 동일하나 별개 컴포넌트). Size(S/L) × Active(On/Off) × Disabled(False/True) × Emphasize(Off/On) 12개 인스턴스(축 비직교, Disabled=True+Emphasize=On 조합은 Figma에 없음), 전수 실측"
+    },
+    "tab": {
+      "spec": "components/tab/tab.md",
+      "machineReadable": "components/tab/tab.json",
+      "status": "문서화 완료",
+      "note": "Size(S/L) × Type(Hug/Fill) × Tailing Icon × Side Padding 10개 인스턴스(축 비직교, Fill은 Size당 1개뿐). Tab Item을 조합해 만들어짐 — Hug는 컴포넌트 인스턴스 재사용(최대 8슬롯 prop), Fill은 내부 구조를 5슬롯으로 인라인 복제. 오버플로우 마스크(Alpha Gradient Mask, node 2262:1908, 42px 고정 이징 커브)로 가로 스크롤 페이드 구현, 전수 실측"
+    },
+    "textInput": {
+      "spec": "components/text-input/text-input/text-input.md",
+      "machineReadable": "components/text-input/text-input/text-input.json",
+      "status": "문서화 완료",
+      "note": "Size(S/M/L) × State(Default/Hover/Disabled/Done/Selected/Typing) × Destructed(Selected·Typing 전용) × Show Button/Show Label/Supporting Text/Left Icon/Right Icon(각 True/False) 총 768개 인스턴스 + 별도 boolean 프로퍼티 Show Unit(단위 텍스트 토글, 8개 variant 축과 별개인 9번째 축, 사용자 확인). Label/Type Box/Text Blinker/Supporting Text 4개 서브 아톰의 실 사용처로 확인됨(Type Box의 Selected/Typing 캐럿 상태가 실제로 쓰임). 15개 노드 전략적 샘플링"
+    },
+    "textInputGroup": {
+      "spec": "components/text-input/text-input-group/text-input-group.md",
+      "machineReadable": "components/text-input/text-input-group/text-input-group.json",
+      "status": "문서화 완료",
+      "note": "Size(S/M/L) × Field(2/3) 총 6개 인스턴스, 전수 실측. Text Input 2~3개를 수직 정렬해 조합, 첫 번째 필드만 Label 표시, 인접 필드 간 테두리 병합 없음"
+    },
+    "date": {
+      "spec": "components/date-time-picker/date/date.md",
+      "machineReadable": "components/date-time-picker/date/date.json",
+      "status": "문서화 완료",
+      "note": "Type(Default/Current/Selected/Pinned/Null) × Status(Default/Hover/Pressed/Disabled, Default·Current 한정) 총 11개 인스턴스, 축 비직교, 전수 실측. Date/Time Picker 패밀리 최하위 아톰(날짜 셀). Pinned=직접 선택한 날짜(범위 앵커)/Selected=두 Pinned 사이 구간 하이라이트/Null=빈 칸(사용자 확인) — 기간(range) 선택 지원 설계. Pinned 재클릭 시 Pressed 없이 즉시 색 빠짐(선택 해제, 사용자 확인)"
+    },
+    "week": {
+      "spec": "components/date-time-picker/week/week.md",
+      "machineReadable": "components/date-time-picker/week/week.json",
+      "status": "문서화 완료",
+      "note": "변형 축 없는 단일 인스턴스. Date 7개를 가로로 묶은 한 주(週) 행"
+    },
+    "weekHeader": {
+      "spec": "components/date-time-picker/week-header/week-header.md",
+      "machineReadable": "components/date-time-picker/week-header/week-header.json",
+      "status": "문서화 완료",
+      "note": "변형 축 없는 단일 인스턴스. 요일 라벨(일~토) 행, 일요일만 강조색, 토요일은 평일과 동일. Month와 실제로 조합되어 쓰임을 Date Picker 조사에서 후속 확인"
+    },
+    "month": {
+      "spec": "components/date-time-picker/month/month.md",
+      "machineReadable": "components/date-time-picker/month/month.json",
+      "status": "문서화 완료",
+      "note": "Week Number(5/6) 총 2개 인스턴스, 전수 실측. Week를 5~6개 세로로 쌓은 달력 그리드 본체, Week Header는 미포함. Week Number 전환 시 높이는 애니메이션 없이 즉시 변경(사용자 확인)"
+    },
+    "yearMonthWheel": {
+      "spec": "components/date-time-picker/year-month-wheel/year-month-wheel.md",
+      "machineReadable": "components/date-time-picker/year-month-wheel/year-month-wheel.json",
+      "status": "문서화 완료",
+      "note": "변형 축 없는 단일 인스턴스. 연/월 각각 독립적으로 스크롤되는 7행 휠 피커(사용자 확인), 거리 기반 타이포·투명도 감쇠(SubTitle18M 100%→70%→50%→30%)"
+    },
+    "calendarHeader": {
+      "spec": "components/date-time-picker/calendar-header/calendar-header.md",
+      "machineReadable": "components/date-time-picker/calendar-header/calendar-header.json",
+      "status": "문서화 완료",
+      "note": "Title(Left/Center) × With(Arrows/Close/Nothing) 총 6개 인스턴스, 전수 실측 + 별도 boolean 프로퍼티 Show Dropdown(정식 프로퍼티, 사용자 확인)"
+    },
+    "timeField": {
+      "spec": "components/date-time-picker/time-field/time-field.md",
+      "machineReadable": "components/date-time-picker/time-field/time-field.json",
+      "status": "문서화 완료",
+      "note": "State(Default/Hover/Typing) 총 3개 인스턴스, 전수 실측. 시간 값 2자리를 담는 필드, 직접 타이핑 가능(사용자 확인), Text Blinker 재사용, Disabled 없음(의도된 설계, 사용자 확인)"
+    },
+    "timePicker": {
+      "spec": "components/date-time-picker/time-picker/time-picker.md",
+      "machineReadable": "components/date-time-picker/time-picker/time-picker.json",
+      "status": "문서화 완료",
+      "note": "Direction(Down Only/Up Only/Both) 총 3개 인스턴스, 전수 실측. Time Field를 조합한 스테퍼+타이핑 하이브리드 입력(사용자 확인), 비활성 방향 버튼은 실제 disabled 처리됨(사용자 확인)"
+    },
+    "timePickerGroup": {
+      "spec": "components/date-time-picker/time-picker-group/time-picker-group.md",
+      "machineReadable": "components/date-time-picker/time-picker-group/time-picker-group.json",
+      "status": "문서화 완료",
+      "note": "Picker Count(2/3) 총 2개 인스턴스, 전수 실측. Time Picker 2~3개를 콜론(:, Figma 이미지 에셋 그대로 사용, 사용자 확인) 구분자로 조합, Count·Direction 모두 실제로 다양하게 쓰임(사용자 확인)"
+    },
+    "datePicker": {
+      "spec": "components/date-time-picker/date-picker/date-picker.md",
+      "machineReadable": "components/date-time-picker/date-picker/date-picker.json",
+      "status": "문서화 완료",
+      "note": "State(Default/Wheel) × Time Picker(Off/On) 총 4개 인스턴스, 완전 직교, 전수 실측. Date/Week/Month/Calendar Header/Year and Month Wheel/Time Field/Time Picker/Time Picker Group을 전부 조합한 패밀리 플래그십 컴포넌트"
+    },
+    "datePickerGroup": {
+      "spec": "components/date-time-picker/date-picker-group/date-picker-group.md",
+      "machineReadable": "components/date-time-picker/date-picker-group/date-picker-group.json",
+      "status": "문서화 완료",
+      "note": "Type(Horizontal/Vertical) 총 2개 인스턴스, 전수 실측. Date Picker 2개를 Divider로 구분해 나란히 배치, 두 패널은 동기화되지 않는 독립 캘린더(사용자 확인)"
+    },
+    "pageControl": {
+      "spec": "components/page-control/page-control.md",
+      "machineReadable": "components/page-control/page-control.json",
+      "status": "문서화 완료",
+      "note": "Type(On Light/On Dark) × Dots(2/3/4/5/6/7/8+) × Selection(1~Dots) 총 70개 인스턴스, 비직교, 축별 전략적 샘플링(9개 노드). 캐러셀 페이지 인디케이터, 도트는 클릭 불가능한 순수 표시(사용자 확인), State 축 없음. Dots=8+는 Selection 5부터 반대쪽(좌측)으로 도트 축소가 전환됨(사용자 확인)"
+    },
+    "statusBar": {
+      "spec": "components/status-bar/status-bar.md",
+      "machineReadable": "components/status-bar/status-bar.json",
+      "status": "문서화 완료",
+      "note": "OS(iOS/Android) × Mode(Light/Dark) × Background(Off/On) 총 8개 인스턴스, 완전 직교, 전수 실측. 기기 상태바 목업, State 축 없음. iOS/Android가 레이아웃 구조·아이콘 세트·타이포 전부 다름, Background=On은 Mode에 맞는 단색 배경만 채우고 콘텐츠 색은 Mode에만 의존"
+    },
+    "navBarTopLeading": {
+      "spec": "components/navigation-bar/top/leading/leading.md",
+      "machineReadable": "components/navigation-bar/top/leading/leading.json",
+      "status": "문서화 완료",
+      "note": "Type(Back/Close/Big Title/Home) × Mode(Light/Dark) 총 8개 인스턴스, 완전 직교, 전수 실측(2026-09-09 Home 추가). Navigation Bar Top 좌측 영역 서브 아톰. Home Type은 홈 화면 전용(강한 제약사항, 사용자 확인) — 나머지 3개 Type과 달리 범용 재사용 불가",
+      "lastVerified": "2026-09-15 (Plugin API 전수 재실측 — 구현·스펙 양쪽 정정, top.md 7-1장 참고)"
+    },
+    "navBarTopTrailingComponents": {
+      "spec": "components/navigation-bar/top/trailing-components/trailing-components.md",
+      "machineReadable": "components/navigation-bar/top/trailing-components/trailing-components.json",
+      "status": "문서화 완료",
+      "note": "Type(Icon/Button) × Mode(Light/Dark) 총 4개 인스턴스, 완전 직교, 전수 실측. Trailing이 1~3회 조합하는 최하위 서브 아톰(Figma 레이어명 _Trailing Components). Button 타입은 Text Button(Size=XL, Blue, Default)을 그대로 재사용",
+      "lastVerified": "2026-09-15 (Plugin API 전수 재실측 — 구현·스펙 양쪽 정정, top.md 7-1장 참고)"
+    },
+    "navBarTopTrailing": {
+      "spec": "components/navigation-bar/top/trailing/trailing.md",
+      "machineReadable": "components/navigation-bar/top/trailing/trailing.json",
+      "status": "문서화 완료",
+      "note": "Number(1/2/3) 총 3개 인스턴스, 전수 실측. Trailing Components를 조합, 자체 Mode 축 없음(Top이 Mode 대응 담당)",
+      "lastVerified": "2026-09-15 (Plugin API 전수 재실측 — 구현·스펙 양쪽 정정, top.md 7-1장 참고)"
+    },
+    "navBarTopSmalltitle": {
+      "spec": "components/navigation-bar/top/smalltitle/smalltitle.md",
+      "machineReadable": "components/navigation-bar/top/smalltitle/smalltitle.json",
+      "status": "문서화 완료",
+      "note": "Type(Default/Selection/Segmented Control/Caption) × Mode(Light/Dark) 총 8개 인스턴스, 완전 직교, 전수 실측. Navigation Bar Top 중앙 영역 서브 아톰. Segmented Control 타입은 기존 Segmented Control(Size=S, Count=2)을 재사용",
+      "lastVerified": "2026-09-15 (Plugin API 전수 재실측 — 구현·스펙 양쪽 정정, top.md 7-1장 참고)"
+    },
+    "navBarTop": {
+      "spec": "components/navigation-bar/top/top/top.md",
+      "machineReadable": "components/navigation-bar/top/top/top.json",
+      "status": "문서화 완료",
+      "note": "Type(8종, 2026-09-09 Home 추가) × Mode(Light/Dark) × Background(Off/On) 총 32개 인스턴스, 완전 직교, 13개 노드 전략적 샘플링. Navigation Bar 패밀리 플래그십(사용자 확인 — 실제 쓰일 컴포넌트) — Leading/Trailing/Smalltitle 조합. 32개 변형이 전부가 아님(사용자 확인) — Trailing 개수는 Type별 최댓값(자유 조절+Icon/Button 혼용 가능), Back의 showLabel은 항상 자유 토글, 항목 hide 시 나머지 위치 고정, Background=On 배경색은 예시일 뿐 자유 교체 가능. Home Type은 홈 화면 전용(강한 제약사항) — 나머지 7종과 달리 범용 재사용 불가",
+      "lastVerified": "2026-09-15 (Plugin API 전수 재실측 — 구현·스펙 양쪽 정정, top.md 7-1장 참고)"
+    },
+    "topBar": {
+      "spec": "components/top-bar/top-bar.md",
+      "machineReadable": "components/top-bar/top-bar.json",
+      "status": "문서화 완료",
+      "note": "Mode(Light/Dark) × Background(No/Default/Blur) × Line(Off/On) 총 10개 인스턴스, 비직교(Background=No엔 Line 없음, 사용자 확인). Status Bar + Navigation Bar Top을 세로로 쌓은 최종 합성 컴포넌트, components/navigation-bar/가 아닌 최상위 폴더(사용자 지정). 배경 3종(없음/실제 페이지 배경색/블러) — Default 배경색은 예시가 아니라 실제 페이지 배경을 반영하는 의도된 값(사용자 확인: Light=페이지 배경색과 동일한 white-default, Dark=검정 배경용 순수 black-emphasis). Status Bar·Navigation Bar 각각 독립 hide 가능하며 하위 속성(Status Bar OS 포함, Navigation Bar Top Type 8종 포함, 2026-09-09 Home 추가) 전부 자유 승계(사용자 확인, Home은 홈 화면 전용 제약 상속). 6개 노드 전략적 샘플링"
+    },
+    "footer": {
+      "spec": "components/footer/footer.md",
+      "machineReadable": "components/footer/footer.json",
+      "status": "문서화 완료",
+      "note": "State(Close/Open) 총 2개 인스턴스, 전수 실측. 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용(색상 오버라이드 관련 내용은 components/divider/divider.md 참고). 하단 padding 120px은 Footer 전용 의도된 예외로, 홈 화면에 추후 추가될 Bottom Navigation Bar와 겹치지 않기 위한 여유 공간(사용자 확인)"
+    }
   },
-
   "typography": {
     "fontFamily": "Pretendard, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
     "fontFiles": "assets/fonts/",
     "scaleRef": "tokens/typography.json",
-    "weights": ["regular", "medium", "semibold", "bold"],
+    "weights": [
+      "regular",
+      "medium",
+      "semibold",
+      "bold"
+    ],
     "rule": "12px 이하 사이즈 사용 지양, Weight는 4종만 사용"
   },
-
   "docs": {
     "designSpec": "docs/DESIGN.md",
     "screenFlows": "docs/SCREEN.md"
   },
-
   "assets": {
     "logo": {
       "path": "assets/logo/",
-      "note": "CI(사이클로이드)와 BI(바드림) 구분 있음. ci-signature-*=사이클로이드, bi-symbol-*/bi-signature-*=바드림"
+      "note": "CI(사이클로이드)와 BI(바드림) 구분 있음. ci-signature-*=사이클로이드, bi-symbol-*/bi-signature-*=바드림",
+      "monoVariant": {
+        "file": "assets/logo/bi/signature/bi-signature-horizontal-mono.svg",
+        "added": "2026-09-15",
+        "size": "104x24",
+        "fill": "currentColor",
+        "source": "Figma Navigation Bar / Leading / Type=Home 의 logo 프레임(2573:12738)을 그대로 내보낸 것",
+        "usage": "Navigation Bar Top 의 Type=Home Leading 전용. Figma 원본이 이 워드마크를 단색 벡터로 두고 채우기를 색상 변수에 바인딩합니다 — Light=neutral/600(#5b616c), Dark=common/white-default(#fdfdfd).",
+        "ruleException": "README 사용 원칙 3번 / llms.txt 의 '로고는 원본 그대로, 색상 변경 금지' 규칙의 **확정된 예외**입니다(2026-09-15 디자이너 확인). Figma 가 이 자리에서 쓰도록 정의해 둔 단색 전용 에셋이기 때문입니다. ⚠️ 예외는 Navigation Bar Top 의 Type=Home Leading **한 자리 한정** — 다른 곳에서 컬러 로고 대신 이 파일을 칠해 쓰면 안 됩니다."
+      }
     },
     "character": {
       "path": "assets/character/",
-      "items": ["dreamman", "dreamgirl"],
+      "items": [
+        "dreamman",
+        "dreamgirl"
+      ],
       "usage": "고객 A/S 및 문의 응대 프로필 전용"
     },
     "fonts": {
@@ -117,25 +385,90 @@
       "path": "assets/icons/",
       "manifest": "assets/icons/icons-manifest.json",
       "categories": {
-        "default/outlined": { "count": 101, "sizes": [12, 16, 20, 24] },
-        "default/filled": { "count": 20, "sizes": [12, 16, 20, 24] },
-        "colored": { "count": 10, "sizes": [12, 16, 20, 24] },
-        "maker": { "count": 20, "sizes": [16, 20, 24, 32], "note": "제조사 브랜드 아이콘, Profile 스타일은 의도적으로 제외" },
-        "bss": { "count": 8, "sizes": [16, 20, 24, 32] },
-        "service": { "count": 3, "sizes": [16, 20, 24, 32] }
+        "default/outlined": {
+          "count": 101,
+          "sizes": [
+            12,
+            16,
+            20,
+            24
+          ]
+        },
+        "default/filled": {
+          "count": 20,
+          "sizes": [
+            12,
+            16,
+            20,
+            24
+          ]
+        },
+        "colored": {
+          "count": 10,
+          "sizes": [
+            12,
+            16,
+            20,
+            24
+          ]
+        },
+        "maker": {
+          "count": 20,
+          "sizes": [
+            16,
+            20,
+            24,
+            32
+          ],
+          "note": "제조사 브랜드 아이콘, Profile 스타일은 의도적으로 제외"
+        },
+        "bss": {
+          "count": 8,
+          "sizes": [
+            16,
+            20,
+            24,
+            32
+          ]
+        },
+        "service": {
+          "count": 3,
+          "sizes": [
+            16,
+            20,
+            24,
+            32
+          ]
+        }
       }
+    },
+    "statusBar": {
+      "path": "assets/status-bar/",
+      "added": "2026-09-15",
+      "note": "Status Bar 의 아이콘·시각 벡터 8개(iOS 4 · Android 4). Figma 2551:9511 에서 그대로 내보냈고 fill=currentColor 라 Mode 색을 그대로 받습니다. 시각(9:41 / 9:30)도 윤곽선 벡터라 SF Pro·Roboto 없이도 모양이 정확합니다.",
+      "source": "components/status-bar/status-bar.md"
     }
   },
-
   "primaryUsers": {
     "demographic": "40~50대 남성 배달 라이더",
     "designImplication": "높은 가독성, 낮은 인지부하, 명확한 CTA 우선"
   },
-
   "productLines": [
-    { "name": "착한구독", "description": "전기이륜차 구독 (렌탈/리스)" },
-    { "name": "바이패스", "description": "전기이륜차 신차구매 + 정부 보조금 신청" },
-    { "name": "바드림연구소", "description": "직영 정비센터(Care Shop) 네트워크" },
-    { "name": "대차서비스", "description": "loaner vehicle 파일럿" }
+    {
+      "name": "착한구독",
+      "description": "전기이륜차 구독 (렌탈/리스)"
+    },
+    {
+      "name": "바이패스",
+      "description": "전기이륜차 신차구매 + 정부 보조금 신청"
+    },
+    {
+      "name": "바드림연구소",
+      "description": "직영 정비센터(Care Shop) 네트워크"
+    },
+    {
+      "name": "대차서비스",
+      "description": "loaner vehicle 파일럿"
+    }
   ]
 }

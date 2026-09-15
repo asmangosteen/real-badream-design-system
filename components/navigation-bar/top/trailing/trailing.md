@@ -1,6 +1,6 @@
 # Trailing
 
-> Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-11972) — Frame `2555:11972` ("Trailing"), 상위 그룹 `2555:16790`
+> Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-11972) — Frame `2555:11972` ("Trailing"), 상위 그룹 `2612:16631`
 > 기계 판독용 값은 [`trailing.json`](./trailing.json)을 함께 참고합니다. 이 문서와 trailing.json은 항상 같은 소스에서 나온 값이어야 합니다.
 > 이 컴포넌트는 `components/navigation-bar/top/`에 위치합니다 — [Trailing Components](../trailing-components/trailing-components.md)를 1~3개 조합해 만들어지는 서브 아톰이며, [Top](../top/top.md) Navigation Bar 우측 영역에 쓰입니다.
 
@@ -8,7 +8,7 @@
 
 Trailing은 **Number(1/2/3) 단일 축, 3-변형 컴포넌트**입니다. `get_metadata`로 3개 심볼을 전수 확인한 뒤, `get_design_context`를 최상위 프레임(`2555:11972`)에 1회 호출해 3개 변형 전체가 병합 코드로 반환된 것을 실측했습니다.
 
-- `get_variable_defs`·`get_motion_context`는 상위 그룹(`2555:16790`, Navigation Bar 전체)에서 확보한 값을 재사용했습니다.
+- `get_variable_defs`·`get_motion_context`는 상위 그룹(`2612:16631`, Navigation Bar 전체)에서 확보한 값을 재사용했습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소 `tokens/*.json`에 없는 값은 "확인 필요" 또는 "기존 토큰에 없음"으로 명시합니다.
 
 ## 1. 컴포넌트 개요
@@ -25,13 +25,28 @@ Trailing은 Navigation Bar 우측에 배치되는 **액션 아이템 묶음**입
 
 ## 2. Number별 스펙 (3개 전수 실측)
 
-| Number | 구성 | 컨테이너 |
-|---|---|---|
-| **1** | [Trailing Components](../trailing-components/trailing-components.md) × 1 | `items-center justify-end pr=spacing/08`(12px) |
-| **2** | × 2 | 동일 |
-| **3** | × 3 | 동일 |
+| Number | 구성 | 컨테이너 | 크기 |
+|---|---|---|---|
+| **1** | [Trailing Components](../trailing-components/trailing-components.md) × 1 | `items-center justify-end pr=spacing/08`(12px) | 52×48 |
+| **2** | × 2 | 동일 | 92×48 |
+| **3** | × 3 | 동일 | 132×48 |
 
-Trailing Components 인스턴스 간 별도 gap 클래스가 코드에 없어, 인스턴스 자체의 `py=spacing/04`(4px) 패딩이 서로 맞닿는 방식으로 배치됩니다.
+인스턴스 사이 **gap은 0**이라, 인스턴스 자체의 `py=spacing/04`(4px) 패딩이 서로 맞닿는 방식으로 배치됩니다(40×n + 우측 12px = 위 크기).
+
+**⚠️ 단 하나의 예외 — 버튼이 아이콘과 맞닿을 때는 그 쪽에 `spacing/06`(8px)을 더합니다** (2026-09-15 디자이너 확인).
+
+[Trailing Components](../trailing-components/trailing-components.md)의 `Button` 자리는 폭이 hug라서, 아이콘 옆에 그냥 붙이면 둘 사이가 8px(Icon Button 안쪽 여백)밖에 안 남아 **아이콘끼리(8+8=16px)보다 좁아 보입니다.** 8px을 더하면 아이콘↔버튼도 16px이 되어 아이콘끼리와 같아집니다.
+
+| 인접 쌍 | 박스 간격 | 실제 보이는 간격 |
+|---|---|---|
+| 아이콘 ↔ 아이콘 | 0px (Figma 그대로) | **16px** |
+| 아이콘 ↔ 버튼 | **8px** (`spacing/06`) | **16px** |
+
+실측: Icon+Button 묶음 = 40 + 8 + 31("완료") + 12 = **91px**. 아이콘 2개 + 버튼 = 131px.
+
+> Figma에서 `Number=1` 변형만 `itemSpacing: 10`이 남아 있지만 자식이 하나뿐이라 **효과가 없습니다**(Number 2·3은 0). 기본값 잔재이므로 구현에서는 0으로 통일합니다(2026-09-15 확인).
+
+**Top 안에서는 가로로 늘어납니다.** [Top](../top/top.md)의 Trailing 인스턴스는 `layoutGrow: 1`이라 남는 공간을 전부 차지하고, 그 안에서 `justify-end`로 오른쪽 끝에 붙습니다 — 예를 들어 Big Title에서는 132→**140px**, Seg_back에서는 52→**188px**로 늘어나지만 아이콘의 화면상 위치는 변하지 않습니다.
 
 ## 3. 서브컴포넌트 재사용 관계
 
@@ -40,9 +55,9 @@ Trailing Components 인스턴스 간 별도 gap 클래스가 코드에 없어, �
 
 ## 4. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**묶음 자체에는 반응이 없지만, 각 항목은 Icon Button·Text Button의 상태를 그대로 갖습니다** — [trailing-components.md](../trailing-components/trailing-components.md) 5장 참고.
 
-`get_motion_context`를 Navigation Bar 상위 그룹(`2555:16790`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다.
+> ⚠️ 예전 판의 "모션 데이터 없음"은 `get_motion_context`(키프레임 전용)만 보고 내린 결론이었습니다. 변형 사이 전환은 `node.reactions`에 있습니다([`docs/INTERACTION.md`](../../../../docs/INTERACTION.md)).
 
 ## 5. 접근성
 
@@ -57,6 +72,8 @@ Trailing Components 인스턴스 간 별도 gap 클래스가 코드에 없어, �
 
 **확인 완료**
 - Trailing 자체에는 Mode 축이 없고 Top이 Mode 대응을 담당함(1장)
+- 항목 사이 gap은 0이고, `Number=1`의 `itemSpacing: 10`은 자식이 하나뿐이라 효과 없는 잔재(2장, 2026-09-15)
+- Top 안에서는 `layoutGrow: 1`로 늘어나되 아이콘 위치는 그대로(2장, 2026-09-15)
 
 **확인 필요**
 - 여러 액션 항목의 접근성 그룹핑(`role="toolbar"` 등) 규정
@@ -69,4 +86,4 @@ Trailing Components 인스턴스 간 별도 gap 클래스가 코드에 없어, �
 | 2 | `2555:11970` |
 | 3 | `2555:11969` |
 
-3개 변형 전체가 `get_design_context` 1회 호출(`2555:11972`)로 병합 코드로 반환되었습니다. `get_variable_defs`·`get_motion_context`는 Navigation Bar 상위 그룹(`2555:16790`)에서 공용으로 확보했습니다.
+3개 변형 전체가 `get_design_context` 1회 호출(`2555:11972`)로 병합 코드로 반환되었습니다. `get_variable_defs`·`get_motion_context`는 Navigation Bar 상위 그룹(`2612:16631`)에서 공용으로 확보했습니다.

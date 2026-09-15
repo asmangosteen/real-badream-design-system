@@ -15,19 +15,30 @@ export const NAVBAR_TOP_TYPES = [
 ] as const;
 export type NavBarTopType = (typeof NAVBAR_TOP_TYPES)[number];
 
-/** Type 별 구성 — Trailing 개수는 **최댓값**이며 0~최댓값 사이로 자유 조절 가능합니다 */
+/**
+ * Type 별 구성 — Trailing 개수는 **최댓값**이며 0~최댓값 사이로 자유 조절 가능합니다.
+ *
+ * `showBackLabel` 은 Figma 각 Type 샘플의 `Show Label` 실측값입니다.
+ * 라벨은 **어느 Type 에서든 자유롭게 켜고 끌 수 있고**(사용자 확인), 여기 값은 기본값일 뿐입니다 —
+ * Seg 계열만 가운데 Segmented Control 에 자리를 내주려고 기본이 꺼져 있습니다.
+ */
 export const NAVBAR_TOP_CONFIG: Record<
   NavBarTopType,
-  { leading: 'back' | 'close' | 'big-title' | 'home'; center: 'none' | 'default' | 'segmented-control'; maxTrailing: number }
+  {
+    leading: 'back' | 'close' | 'big-title' | 'home';
+    center: 'none' | 'default' | 'segmented-control';
+    maxTrailing: number;
+    showBackLabel: boolean;
+  }
 > = {
-  'big-title': { leading: 'big-title', center: 'none', maxTrailing: 3 },
-  'notitle-back': { leading: 'back', center: 'none', maxTrailing: 3 },
-  'notitle-close': { leading: 'close', center: 'none', maxTrailing: 3 },
-  'smalltitle-back': { leading: 'back', center: 'default', maxTrailing: 2 },
-  'smalltitle-close': { leading: 'close', center: 'default', maxTrailing: 2 },
-  'seg-back': { leading: 'back', center: 'segmented-control', maxTrailing: 1 },
-  'seg-close': { leading: 'close', center: 'segmented-control', maxTrailing: 1 },
-  home: { leading: 'home', center: 'none', maxTrailing: 3 },
+  'big-title': { leading: 'big-title', center: 'none', maxTrailing: 3, showBackLabel: true },
+  'notitle-back': { leading: 'back', center: 'none', maxTrailing: 3, showBackLabel: true },
+  'notitle-close': { leading: 'close', center: 'none', maxTrailing: 3, showBackLabel: true },
+  'smalltitle-back': { leading: 'back', center: 'default', maxTrailing: 2, showBackLabel: true },
+  'smalltitle-close': { leading: 'close', center: 'default', maxTrailing: 2, showBackLabel: true },
+  'seg-back': { leading: 'back', center: 'segmented-control', maxTrailing: 1, showBackLabel: false },
+  'seg-close': { leading: 'close', center: 'segmented-control', maxTrailing: 1, showBackLabel: false },
+  home: { leading: 'home', center: 'none', maxTrailing: 3, showBackLabel: true },
 };
 
 export interface NavBarTopProps {
@@ -36,7 +47,10 @@ export interface NavBarTopProps {
   mode?: NavMode;
   /** `off` 는 투명 — 화면 콘텐츠 위에 겹쳐 쓰는 용도입니다 */
   background?: 'on' | 'off';
-  /** Back 의 라벨. **어느 Type 에서든 자유롭게 켜고 끌 수 있습니다** */
+  /**
+   * Back 의 라벨. **어느 Type 에서든 자유롭게 켜고 끌 수 있습니다.**
+   * 비워 두면 Type 별 Figma 기본값을 따릅니다(Seg 계열만 꺼짐 — `NAVBAR_TOP_CONFIG` 참고).
+   */
   showBackLabel?: boolean;
   backLabel?: string;
   title?: string;
@@ -53,8 +67,15 @@ export interface NavBarTopProps {
   smalltitleProps?: Partial<NavSmalltitleProps>;
   /** 우측 [Trailing](../NavTrailing/NavTrailing.tsx) 에 그대로 넘어갑니다 */
   trailingProps?: Partial<NavTrailingProps>;
+  /** Seg 계열의 가운데 [Segmented Control](/docs/components-segmented-control--docs) 항목 (Size=S · Count=2 고정) */
   segments?: [string, string];
+  /**
+   * 선택된 세그먼트. **주면 제어 모드**가 되므로 `onSegmentChange` 와 함께 써야 합니다.
+   * 비워 두면 내부 state 로 동작해 그냥 눌러서 전환됩니다(단독 Segmented Control 과 동일).
+   */
   segmentValue?: number;
+  /** 비제어 모드의 초기 선택값 */
+  defaultSegmentValue?: number;
   onSegmentChange?: (i: number) => void;
   className?: string;
 }
@@ -71,7 +92,7 @@ export function NavBarTop({
   type = 'notitle-back',
   mode = 'light',
   background = 'on',
-  showBackLabel = true,
+  showBackLabel,
   backLabel = 'Label',
   title = 'Subtitle',
   trailingItems,
@@ -82,7 +103,8 @@ export function NavBarTop({
   smalltitleProps,
   trailingProps,
   segments = ['Tab 1', 'Tab 2'],
-  segmentValue = 0,
+  segmentValue,
+  defaultSegmentValue,
   onSegmentChange,
   className,
 }: NavBarTopProps) {
@@ -104,7 +126,7 @@ export function NavBarTop({
         <NavLeading
           type={cfg.leading}
           mode={mode}
-          showLabel={showBackLabel}
+          showLabel={showBackLabel ?? cfg.showBackLabel}
           label={backLabel}
           title={type === 'big-title' ? title : undefined}
           {...leadingProps}
@@ -119,6 +141,7 @@ export function NavBarTop({
             title={title}
             segments={segments}
             segmentValue={segmentValue}
+            defaultSegmentValue={defaultSegmentValue}
             onSegmentChange={onSegmentChange}
             {...smalltitleProps}
           />

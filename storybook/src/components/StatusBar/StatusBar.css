@@ -1,63 +1,106 @@
 /* ============================================================
    Status Bar — 스펙: components/status-bar/status-bar.md (8개 전수 실측)
    화면 목업 상단에 얹는 기기 상태바입니다. 순수 표시용(장식)입니다.
-   ⚠️ 상태바 아이콘(셀룰러·와이파이·배터리)은 저장소 assets/ 에 없어
-      실측 치수에 맞춰 근사 재현한 것입니다 — 원본 SVG 추출이 필요합니다.
+
+   2026-09-15 — 디자이너가 Figma 에서 요소를 전부 오브젝트(벡터)로 만들어 줘서,
+   예전의 "근사 재현 SVG" 를 **Figma 원본 벡터**(`assets/status-bar/`)로 교체했습니다.
+   시각(Time)도 라이브 텍스트가 아니라 윤곽선 벡터라 폰트가 없어도 모양이 정확합니다.
    ============================================================ */
 .bd-status-bar {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  width: 390px;   /* 8개 변형 공통 고정 치수 */
+  /* 폭은 **화면(부모) 폭을 그대로 따릅니다.** 390px 은 Figma 기준 폭일 뿐입니다(2026-09-15 디자이너 확인).
+     iOS 는 Time·Levels 가 `flex: 1 0 0` 이라 Dynamic Island(125px 고정)를 가운데 두고 양쪽이 같이 늘어나고,
+     Android 는 `space-between` 이라 시각·아이콘이 각각 양 끝에 붙습니다. 높이 50px 은 고정입니다. */
+  width: 100%;
   height: 50px;
 }
 
 /* Background=On 은 Mode 와 같은 색의 단색 배경을 채웁니다.
-   Off 는 배경이 아예 없어 화면 콘텐츠 위에 겹쳐 씁니다. */
+   Off 는 배경이 아예 없어 화면 콘텐츠 위에 겹쳐 씁니다.
+   ⚠️ Navigation Bar Top 과 달리 **-emphasis** 토큰입니다(#ffffff / #000000). */
 .bd-status-bar[data-background='off'] { background: transparent; }
 .bd-status-bar[data-mode='light'][data-background='on'] { background: var(--sys-color-common-white-emphasis); }
 .bd-status-bar[data-mode='dark'][data-background='on']  { background: var(--sys-color-common-black-emphasis); }
 
+/* 벡터 채우기가 전부 `currentColor` 라 여기 한 줄로 Mode 가 결정됩니다 */
 .bd-status-bar[data-mode='light'] { color: var(--sys-color-common-black-emphasis); }
 .bd-status-bar[data-mode='dark']  { color: var(--sys-color-common-white-emphasis); }
 
-/* ---------------- iOS — Time / 노치 스페이서 / 아이콘 3분할 ---------------- */
+/* Figma 벡터를 실측 치수 그대로 놓는 껍데기 (크기는 인라인 style 로 지정) */
+.bd-status-bar__glyph { display: block; flex: 0 0 auto; }
+.bd-status-bar__glyph > svg { display: block; width: 100%; height: 100%; }
+
+/* ---------------- iOS — Time / 노치 스페이서 / 아이콘 3분할 ----------------
+   컨테이너 pad 11/16, gap 6 · Time 110.5×22(FILL) · Island 125×37 · Levels 110.5×22(FILL)
+   → 16 + 110.5 + 6 + 125 + 6 + 110.5 + 16 = 390 */
 .bd-status-bar[data-os='ios'] {
   justify-content: center;
   gap: 6px;
   padding: 11px 16px;
 }
-.bd-status-bar[data-os='ios'] .bd-status-bar__time {
+.bd-status-bar[data-os='ios'] .bd-status-bar__time,
+.bd-status-bar[data-os='ios'] .bd-status-bar__levels {
   flex: 1 0 0;
-  text-align: center;
-  /* ⚠️ SF Pro 는 저장소에 없습니다. weight 590 은 가변 폰트의 커스텀 굵기입니다 */
-  font-family: -apple-system, 'SF Pro Text', 'SF Pro', system-ui, sans-serif;
-  font-weight: 590;
-  font-size: 17px;
-  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* ⚠️ border-box 가 없으면 Levels 의 padding-top 1px 이 높이에 더해져 22 가 아니라 23px 이 됩니다 */
+  box-sizing: border-box;
+  height: 22px;
 }
-/* Dynamic Island 가 차지하는 공간을 레이아웃상 비워두는 빈 스페이서 */
+/* Levels 만 위쪽 패딩 1px 이 있습니다(Figma 실측) */
+.bd-status-bar[data-os='ios'] .bd-status-bar__levels {
+  gap: 7px;
+  padding-top: 1px;
+}
+/* Dynamic Island 가 차지하는 공간을 레이아웃상 비워두는 빈 스페이서
+   (Figma 에서도 채우기가 꺼진 125×37 · radius 100 프레임입니다) */
 .bd-status-bar__island {
   width: 125px;
   height: 37px;
   border-radius: 100px;
   flex: 0 0 auto;
 }
-.bd-status-bar[data-os='ios'] .bd-status-bar__levels {
-  flex: 1 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-}
 
-/* ---------------- Android — 양끝 정렬 + margin 오프셋 ---------------- */
+/* ---------------- Android — 양끝 정렬 + 고정 좌표 아이콘 묶음 ----------------
+   컨테이너 pad 10/24 · space-between · 우측 아이콘은 auto-layout 이 아니라
+   46×15 그룹 안에 좌표로 박혀 있습니다(간격이 0.42 / 6.41 로 불규칙). */
 .bd-status-bar[data-os='android'] {
   justify-content: space-between;
   padding: 10px 24px;
 }
 .bd-status-bar[data-os='android'] .bd-status-bar__time {
-  /* ⚠️ Roboto 도 저장소에 없습니다 */
+  display: flex;
+  align-items: center;
+}
+.bd-status-bar[data-os='android'] .bd-status-bar__levels {
+  position: relative;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 15px;
+}
+.bd-status-bar[data-os='android'] .bd-status-bar__levels > * { position: absolute; }
+.bd-status-bar[data-os='android'] .bd-status-bar__wifi    { left: 0;       top: 0.42px; }
+.bd-status-bar[data-os='android'] .bd-status-bar__signal  { left: 17.42px; top: 0.42px; }
+.bd-status-bar[data-os='android'] .bd-status-bar__battery { left: 38px;    top: 0; }
+
+/* ⚠️ Android 의 Wifi 만 **Mode 마다 투명도가 다릅니다** — Light 10% · Dark 20%(Figma 실측).
+   그래서 이 값만 SVG 파일에 굽지 않고 여기서 줍니다(배터리 30% 는 두 Mode 동일이라 파일에 있음). */
+.bd-status-bar[data-os='android'] .bd-status-bar__wifi { opacity: 0.1; }
+.bd-status-bar[data-os='android'][data-mode='dark'] .bd-status-bar__wifi { opacity: 0.2; }
+
+/* ---------------- `time` prop 으로 시각을 바꿨을 때만 쓰는 텍스트 경로 ----------------
+   ⚠️ SF Pro·Roboto 는 저장소에 없어 시스템 폰트로 대체됩니다 — 글자 모양이 Figma 와 달라집니다.
+      정확한 모습이 필요하면 `time` 을 비워 Figma 원본 벡터를 쓰세요. */
+.bd-status-bar[data-os='ios'] .bd-status-bar__time-text {
+  font-family: -apple-system, 'SF Pro Text', 'SF Pro', system-ui, sans-serif;
+  font-weight: 590;   /* 가변 폰트의 커스텀 굵기 */
+  font-size: 17px;
+  line-height: 22px;
+}
+.bd-status-bar[data-os='android'] .bd-status-bar__time-text {
   font-family: Roboto, 'Noto Sans KR', system-ui, sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -65,14 +108,3 @@
   letter-spacing: 0.14px;
   font-feature-settings: 'ss02' 1, 'dlig' 1, 'lnum' 1, 'pnum' 1;
 }
-/* iOS 의 gap 방식과 달리 개별 margin-left 로 위치를 잡습니다 */
-.bd-status-bar[data-os='android'] .bd-status-bar__levels {
-  display: inline-grid;
-  grid-auto-flow: column;
-  align-items: center;
-}
-.bd-status-bar[data-os='android'] .bd-status-bar__levels > :nth-child(1) { margin-left: 0; }
-.bd-status-bar[data-os='android'] .bd-status-bar__levels > :nth-child(2) { margin-left: 16px; }
-.bd-status-bar[data-os='android'] .bd-status-bar__levels > :nth-child(3) { margin-left: 38px; }
-
-.bd-status-bar svg { display: block; }

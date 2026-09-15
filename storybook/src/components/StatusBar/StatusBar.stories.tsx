@@ -21,7 +21,7 @@ const meta = {
           '| | iOS | Android |',
           '|---|---|---|',
           '| 정렬 | Time · 노치 스페이서 · 아이콘의 **3분할** | 좌우 **양끝 정렬** |',
-          '| 아이콘 간격 | flex `gap: 7px` | 개별 `margin-left` (0 / 16 / 38px) |',
+          '| 아이콘 배치 | flex `gap: 7px` (+ 위 패딩 1px) | auto-layout이 아닌 **고정 좌표** (0 / 17.42 / 38px) |',
           '| 패딩 | 16 / 11px | 24 / 10px |',
           '| 노치 공간 | Dynamic Island 스페이서 125×37px | **없음** |',
           '| 시각 | `9:41` (Apple 목업 표준) | `9:30` (Google 목업 표준) |',
@@ -32,13 +32,27 @@ const meta = {
           '`Off`는 배경이 아예 없어 화면 콘텐츠 위에 겹쳐 쓰는 용도입니다.',
           '**Background는 시간·아이콘 색이나 구조에 전혀 영향을 주지 않습니다** — Mode만 콘텐츠를 결정합니다.',
           '',
-          '## 🔴 이 컴포넌트는 원본 에셋이 필요합니다',
+          '## ✅ 2026-09-15 — 원본 에셋으로 교체했습니다',
           '',
-          '- **상태바 아이콘(셀룰러·와이파이·배터리)이 저장소 `assets/`에 없습니다.**',
-          '  여기 보이는 아이콘은 문서에 실측된 치수(19.2×12.2 등)에 맞춰 **근사 재현한 것**이며 원본과 모양이 다릅니다.',
-          '  Figma에서 Light/Dark 각각의 SVG를 추출해 저장소에 넣으면 교체해야 합니다.',
-          '- **SF Pro와 Roboto 폰트도 저장소에 없습니다.** 시스템 폰트로 대체되어 실제 기기와 글자 모양이 다를 수 있습니다.',
-          '  (저장소에는 Pretendard만 있습니다.)',
+          '디자이너가 Figma에서 상태바 요소를 전부 **오브젝트(벡터)로 만들어 주어**,',
+          '예전의 "실측 치수에 맞춰 근사 재현한 SVG"를 **원본 벡터**로 교체했습니다 →',
+          '`assets/status-bar/` 8개 파일(`fill="currentColor"`).',
+          '',
+          '**시각(9:41 / 9:30)도 라이브 텍스트가 아니라 윤곽선 벡터입니다.**',
+          '저장소에 SF Pro·Roboto가 없어 폰트로는 절대 똑같이 나오지 않던 부분이 이걸로 해소됐습니다.',
+          '모든 요소가 Figma와 **0.01px 이내로 일치**합니다.',
+          '',
+          '> `time` prop으로 시각을 바꾸면 텍스트로 그립니다 — 그때는 시스템 폰트로 대체되어 글자 모양이 달라집니다.',
+          '> 정확한 모습이 필요하면 비워 두세요.',
+          '',
+          '## ⚠️ 눈여겨볼 두 가지',
+          '',
+          '**1. 아이콘은 Mode별 별도 파일이 아닙니다.** 파일 하나이고 벡터의 채우기가 색상 변수에 바인딩되어',
+          '`common/black-emphasis` ↔ `common/white-emphasis`로 값만 바뀝니다. (예전 문서의 "다크 전용 별도 SVG"는 오기였습니다)',
+          '',
+          '**2. Android의 Wifi만 Mode마다 투명도가 다릅니다** — Light **10%** · Dark **20%**.',
+          '나머지 투명도(iOS 배터리 테두리 35%·캡 40%, Android 배터리 몸통 30%)는 두 Mode가 같습니다.',
+          '',
           '- Android의 펀치홀 카메라 표현 여부는 Figma에 정의가 없습니다 — 확인 필요.',
           '',
           '스펙 원본: [`components/status-bar/status-bar.md`](https://github.com/asmangosteen/real-badream-design-system/blob/main/components/status-bar/status-bar.md)',
@@ -72,13 +86,13 @@ export const AllVariants: Story = {
           {(['light', 'dark'] as const).map((mode) => (
             <div key={mode} style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 16 }}>
               <span className="bd-cell__label">{`Mode=${mode} · Background=On`}</span>
-              <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+              <div style={{ outline: '1px solid #EDEEF0', width: 390 }}>
                 <StatusBar os={os} mode={mode} background="on" />
               </div>
               <span className="bd-cell__label">{`Mode=${mode} · Background=Off (투명 — 아래 배경이 비칩니다)`}</span>
               <div
                 style={{
-                  width: 'fit-content',
+                  width: 390,
                   outline: '1px solid #EDEEF0',
                   background:
                     mode === 'dark'

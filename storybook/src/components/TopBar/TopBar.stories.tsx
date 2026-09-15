@@ -18,6 +18,24 @@ const meta = {
           '두 서브 컴포넌트를 **각각 독립적으로 켜고 끌 수 있고**, 하위 속성은 전부 자유롭게 승계됩니다',
           '(Status Bar의 OS, Navigation Bar Top의 Type 8종 — Home의 홈 전용 제약도 그대로 상속).',
           '',
+          '## ⚠️ Line 은 높이를 바꾸지 않습니다',
+          'Figma는 Line=On이면 98 → **99px**이 됩니다(`strokeAlign: INSIDE`인데도 HUG 프레임이라 스트로크가 크기에 포함됨).',
+          '**구현은 전 변형 98px로 고정합니다** — 선을 켰다고 상단 바 높이가 달라지면 아래 콘텐츠가 밀리기 때문입니다',
+          '(디자이너 결정, 2026-09-15 — 여기만 일부러 Figma를 따르지 않습니다). `box-shadow: inset`으로 같은 자리에 같은 선을 그립니다.',
+          '',
+          '## ⚠️ 딱 두 축만 예외입니다 — `mode` · `background`',
+          '',
+          '**Top Bar 안에서 쓸 때는 Top Bar 설정만 따릅니다.** 두 서브 컴포넌트의 `mode`·`background`는',
+          '`navProps`·`statusProps`로 따로 지정할 수 없습니다 (2026-09-15 디자이너 확인).',
+          '',
+          '| 축 | 이유 |',
+          '|---|---|',
+          '| **background** | 배경은 Top Bar 컨테이너가 **통째로** 칠합니다. 안쪽까지 켜면 **두 겹**이 됩니다 |',
+          '| **mode** | 상태바와 내비게이션 바의 색을 **한 화면 안에서 맞추는 값**이라 따로 놀면 안 됩니다 |',
+          '',
+          '개별 컴포넌트로 쓸 때는 각자의 `mode`·`background`를 그대로 씁니다 — 이 제약은 Top Bar 안에서만 적용됩니다.',
+          '나머지 축(OS, Type 8종, Trailing 구성, showLabel, 개별 hide …)은 전부 그대로 열려 있습니다.',
+          '',
           '## Background 3종',
           '',
           '| Background | 처리 | Light | Dark |',
@@ -64,10 +82,13 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/** Figma 기준 폭. 컴포넌트 자체는 `width: 100%` 라 실제로는 화면 폭을 따릅니다 */
+const FRAME = 390;
+
 export const Playground: Story = {
   args: { mode: 'light', background: 'default', line: false, showStatusBar: true, showNavigationBar: true, os: 'ios' },
   render: (args) => (
-    <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+    <div style={{ outline: '1px solid #EDEEF0', width: FRAME }}>
       <TopBar {...args} navProps={{ type: 'smalltitle-back', title: '착한구독', backLabel: '뒤로' }} />
     </div>
   ),
@@ -92,7 +113,7 @@ export const AllVariants: Story = {
               <span className="bd-cell__label">{label}</span>
               <div
                 style={{
-                  width: 'fit-content',
+                  width: FRAME,
                   background:
                     mode === 'dark'
                       ? 'linear-gradient(135deg, #202837 0%, #36517E 100%)'
@@ -128,7 +149,7 @@ export const 개별숨김: Story = {
       ] as const).map(([label, extra]) => (
         <div key={label} style={{ marginBottom: 14 }}>
           <span className="bd-cell__label">{label}</span>
-          <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <div style={{ outline: '1px solid #EDEEF0', width: FRAME }}>
             <TopBar line navProps={{ type: 'smalltitle-back', title: '착한구독' }} {...extra} />
           </div>
         </div>

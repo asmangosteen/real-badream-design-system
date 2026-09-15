@@ -41,6 +41,8 @@ Top Bar는 [Status Bar](../status-bar/status-bar.md)(기기 상태바)와 [Navig
 
 즉 두 값은 "같은 규칙의 반전"이 아니라 각각 **"실제 이 Mode에서 쓰이는 페이지 배경색이 무엇이냐"**에 대한 서로 다른 답입니다 — 토큰 계열이 다른 것 자체가 의도이므로 정정하거나 통일할 필요가 없습니다.
 
+> ⚠️ **`blur(40px)`을 80으로 "고치지" 마세요.** Plugin API 로 `effects` 를 직접 읽으면 `BACKGROUND_BLUR` 의 `radius` 가 **80** 으로 나옵니다. Figma 의 내부 반경은 CSS `blur()` 의 **2배** 이고, Figma 자신의 Dev Mode CSS 출력도 `backdrop-blur-[40px]` 입니다(2026-09-15 `get_design_context` 로 교차 확인). **CSS 에 쓸 값은 40px 이 맞습니다.**
+
 **핵심 발견 2 — Blur의 오버레이 색상·불투명도가 Mode마다 다릅니다.** Light는 흰색 60% 오버레이, Dark는 검정 40% 오버레이로, 오버레이 자체의 톤과 강도가 Mode에 맞춰 별도로 튜닝되어 있습니다(단순히 같은 규칙을 색만 반전한 것이 아님). `backdrop-blur` 반경(40px)은 Mode·조합 전체 공통입니다.
 
 **참고 — Top Bar의 Background 색상은 Navigation Bar Top의 "예시일 뿐" 배경색과 성격이 다릅니다.** [Navigation Bar Top](../navigation-bar/top/top/top.md)에서는 Background=On 배경색이 진짜 예시값(자유 교체 가능)이었지만, Top Bar의 `white-default`/`black-emphasis`는 위에서 확인했듯 **실제 페이지 배경 규칙을 그대로 반영한 의도된 값**입니다. 따라서 Light Default는 사실상 "그 화면의 실제 배경색"과 항상 같아야 하고, 화면 배경이 바뀌면 이 토큰도 함께 따라가야 합니다 — 임의로 다른 색으로 교체하는 자유도가 있는 슬롯이 아닙니다.
@@ -74,6 +76,25 @@ Top Bar가 실측 샘플에서 보여준 값(`os=iOS`, `type=Smalltitle_back`)�
 
 정리하면 Top Bar는 두 서브 컴포넌트를 "특정 값으로 고정해서 담는 그릇"이 아니라, **두 서브 컴포넌트를 세로로 배치하는 레이아웃 껍데기**이고 내용물(Status Bar의 OS, Navigation Bar Top의 Type 등)은 각 서브 컴포넌트 문서에 있는 자유도를 그대로 물려받습니다.
 
+### 5-0. 폭 — 화면 폭을 그대로 따릅니다 (2026-09-15 디자이너 확인)
+
+Figma 프레임 폭 390px은 **기준 폭이고 고정값이 아닙니다.** 모바일 전용이라 화면(부모) 폭을 그대로 따르고, 안에 쌓이는 Status Bar·Navigation Bar Top도 같이 따라옵니다. Navigation Bar 쪽은 Trailing이 고정이고 Leading/Smalltitle이 늘어납니다([top.md](../navigation-bar/top/top/top.md) 2-1장). 390/412/430에서 실측 확인했습니다.
+
+### 5-1. 예외 — `Mode`·`Background` 두 축은 Top Bar가 가져갑니다 (2026-09-15 디자이너 확인)
+
+**Top Bar 안에서 쓸 때는 Top Bar 설정만 따릅니다. 개별 컴포넌트의 `Mode`·`Background`를 따로 지정하는 것은 금지입니다.**
+
+| 축 | 이유 |
+|---|---|
+| **Background** | 배경은 Top Bar 컨테이너가 **통째로** 칠합니다(2장의 No/Default/Blur). 안쪽 Status Bar·Navigation Bar의 배경까지 켜면 **두 겹**이 됩니다 — 그래서 둘 다 항상 투명(`Background=Off`)으로 얹힙니다. |
+| **Mode** | Light/Dark는 상태바와 내비게이션 바의 색을 **한 화면 안에서 맞추는 값**입니다. 따로 놀면 같은 바 안에서 아이콘 색이 어긋납니다. |
+
+나머지 축은 전부 자유입니다 — Status Bar의 OS, Navigation Bar Top의 Type 8종과 그 안의 모든 자유도(5장).
+
+**개별로 쓸 때는 각 컴포넌트의 `Mode`·`Background`를 그대로 씁니다.** 이 제약은 "Top Bar 안에 들어갔을 때"만 적용됩니다.
+
+> 구현 메모: `storybook/src/components/TopBar/TopBar.tsx`의 `navProps`·`statusProps`가 `Omit<…, 'mode' | 'background'>`로 이 두 축을 막고 있습니다. 저장소 규칙 11("조합 컴포넌트는 자식의 속성을 좁히지 않습니다")의 **명시된 예외**이며, 규칙 위반으로 보고 되돌리면 안 됩니다.
+
 ## 6. 인터랙션(모션) 스펙
 
 **모션 데이터 없음.**
@@ -104,6 +125,46 @@ Top Bar가 실측 샘플에서 보여준 값(`os=iOS`, `type=Smalltitle_back`)�
 - Default의 Light(`white-default`)/Dark(`black-emphasis`) 배경 토큰이 다른 것은 의도된 설계 — Light는 실제 페이지 배경색, Dark는 검정 배경 화면용 순수 검정(2장)이며, 따라서 이 색상은 자유 교체 가능한 예시가 아니라 실제 페이지 배경을 그대로 반영해야 하는 값(2장 참고)
 - Status Bar·Navigation Bar Top 모두 각자 문서화된 하위 속성(Status Bar의 OS 포함, Navigation Bar Top의 Type 8종 포함)을 전부 자유롭게 승계·적용 가능(5장)
 - (2026-09-09) Navigation Bar Top에 Home Type이 추가됨 — Top Bar도 이를 그대로 승계하되, Home은 홈 화면 전용이라는 제약을 함께 상속(5장)
+- **(2026-09-15) `Mode`·`Background` 두 축만은 예외로 Top Bar가 가져갑니다** — Top Bar 안에서는 Top Bar 설정만 따르고, 개별 컴포넌트의 값을 따로 지정할 수 없습니다. 개별로 쓸 때만 각 컴포넌트 속성을 따릅니다(5-1장)
+
+## 9. 2026-09-15 Figma 전수 대조 (10개 변형)
+
+Plugin API 로 10개 변형을 전부 다시 읽어 구현과 대조했습니다. **레이아웃·색·선·크기 전부 일치했고 고칠 것이 없었습니다.**
+
+| 항목 | Figma | 구현 |
+|---|---|---|
+| 컨테이너 | VERTICAL · padding 0 · gap 0 · `MIN/MIN` · `clipsContent: false` | 동일 |
+| 크기 | Line=Off **390×98** / Line=On **390×99** | **전 변형 390×98 고정** — 아래 참고 |
+| 자식 높이 | Status Bar 50 · Navigation Bar 48 (둘 다 폭 FILL) | 동일 |
+| Default 배경 | Light `common/white-default`(#fdfdfd) · Dark `common/black-emphasis`(#000000) | 동일 |
+| No 배경 | `fills: []` | `transparent` |
+| Blur | Light `color/gray/50-60` · Dark `color/gray/900-40` + `backdrop-blur 40px` | 동일 |
+| Line | **아래쪽만** 1px(`borderwidth/02`) · Light `color/gray/900-5` · Dark `color/gray/50-5` · `strokeAlign: INSIDE` | 색·두께·위치 동일, **높이에는 영향 없음** |
+| 자식 인스턴스 | Status Bar `Background=Off` · Navigation Bar `Background=Off`, Mode 는 Top Bar 를 따름 | 동일 |
+| 프로토타입 반응 | 0건 | 모션 없음 |
+
+### ⚠️ Line 은 높이를 바꾸지 않습니다 — 여기만 Figma 를 따르지 않습니다 (디자이너 결정, 2026-09-15)
+
+Figma 는 `strokeAlign: INSIDE` 인데도 **auto-layout 프레임이 HUG 라 스트로크를 hug 크기에 더합니다** — 그래서 Line=On 이면 98 → **99px** 이 됩니다. CSS `border-bottom` 도 높이가 auto 면 똑같이 1px 이 붙으므로 그대로 두면 Figma 와 같은 99px 이 나옵니다.
+
+**하지만 구현은 전 변형 98px 로 고정합니다.** 선을 켰다고 상단 바 높이가 달라지면 그 아래 콘텐츠가 1px 씩 밀리기 때문입니다. `box-shadow: inset 0 -1px 0 0` 으로 그리면 border-box 안쪽 같은 자리에 같은 두께·같은 색으로 그려지면서 레이아웃에는 영향이 없습니다.
+
+```css
+.bd-top-bar[data-line='true'] {
+  box-shadow: inset 0 calc(var(--ref-borderwidth-02) * -1) 0 0 var(--bd-top-bar-line);
+}
+```
+
+Button·Icon Button·Badge·Text Input·Chip 에서 쓰는 방식과 같습니다(`storybook/README.md` 지켜야 할 규칙 5~7). 다만 그쪽은 **Figma 와 크기를 맞추려고** 바꾼 것이고, 여기는 **Figma 와 일부러 다르게 가려고** 바꾼 것이라 이유가 다릅니다.
+
+**개별 숨김 조합도 확인했습니다** — 둘 다 표시 99 / Status Bar 만 51 / Navigation Bar 만 49 (Line=On 기준).
+
+### 구현이 Figma 샘플과 다른 곳 2가지 (둘 다 "기본값"이라 버그는 아님)
+
+1. **컴포넌트 세트 기본 변형이 `Background=No` 인데 구현 기본값은 `default` 입니다.** Mode=Light · Line=Off 는 같습니다. Navigation Bar Top 때와 같은 성격이라(스토리북에서 바로 보이도록) 그대로 두었습니다 — 바꾸길 원하시면 알려주세요.
+2. **Figma 10개 변형이 전부 안쪽 Navigation Bar 를 `Type=Smalltitle_back` 으로 쓰지만, 구현은 `navProps` 를 안 주면 Navigation Bar Top 자체 기본값인 `notitle-back` 이 나옵니다.** 5장에서 "샘플의 `type=Smalltitle_back` 은 진열용 예시일 뿐 고정값이 아니다(사용자 확인)" 로 이미 정리된 항목이라 규칙 위반은 아닙니다. 기본값을 Figma 샘플에 맞추길 원하시면 알려주세요.
+
+## 10. 남은 확인 사항
 
 **확인 필요**
 - Background=Blur일 때 Line=On의 구분선 색상이 Default와 동일한 패턴인지(3장, 미실측)

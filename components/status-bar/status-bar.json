@@ -7,7 +7,11 @@
     "displayFrameNodeId": "2551:9511",
     "displayFrameName": "Status Bar",
     "totalVariantInstances": 8,
-    "axes": ["OS(iOS/Android)", "Mode(Light/Dark)", "Background(Off/On)"],
+    "axes": [
+      "OS(iOS/Android)",
+      "Mode(Light/Dark)",
+      "Background(Off/On)"
+    ],
     "note": "완전 직교(2x2x2=8). 기기 상태바(시간·통신·배터리) 목업, State 축 없는 순수 표시용 컴포넌트."
   },
   "sampling": {
@@ -24,10 +28,21 @@
       "Android_Dark_On": "2551:9505"
     }
   },
-  "containerSize": { "width": "390px", "height": "50px", "note": "8개 변형 공통 고정값, 모바일 화면 목업 표준 폭(iPhone 12~14 계열 논리 해상도와 동일)" },
+  "containerSize": {
+    "width": "390px",
+    "height": "50px",
+    "note": "8개 변형 공통 고정값, 모바일 화면 목업 표준 폭(iPhone 12~14 계열 논리 해상도와 동일)"
+  },
   "layoutByOS": {
     "iOS": {
-      "container": { "display": "flex-row", "justifyContent": "center", "alignItems": "center", "gap": "6px", "paddingX": "16px", "paddingY": "11px" },
+      "container": {
+        "display": "flex-row",
+        "justifyContent": "center",
+        "alignItems": "center",
+        "gap": "6px",
+        "paddingX": "16px",
+        "paddingY": "11px"
+      },
       "time": {
         "layout": "flex-[1_0_0], 컨테이너 좌측 절반 내 중앙 정렬",
         "text": "9:41",
@@ -40,18 +55,52 @@
         "lineHeight": "22px",
         "fontVariationSettings": "wdth 100"
       },
-      "dynamicIslandSpacer": { "width": "125px", "height": "37px", "radius": "100px", "content": "없음(빈 사각형)", "purpose": "Dynamic Island/노치 영역을 레이아웃상으로 비워두는 스페이서" },
+      "dynamicIslandSpacer": {
+        "width": "125px",
+        "height": "37px",
+        "radius": "100px",
+        "content": "없음(빈 사각형)",
+        "purpose": "Dynamic Island/노치 영역을 레이아웃상으로 비워두는 스페이서"
+      },
       "levels": {
         "layout": "flex-[1_0_0], gap 7px, items-center justify-center, 컨테이너 우측 절반 내 중앙 정렬",
         "icons": [
-          { "name": "Cellular Connection", "size": { "width": "19.2px", "height": "12.226px" }, "type": "SVG" },
-          { "name": "Wifi", "size": { "width": "17.142px", "height": "12.328px" }, "type": "SVG" },
-          { "name": "Battery", "size": { "width": "27.328px", "height": "13px" }, "type": "SVG" }
+          {
+            "name": "Cellular Connection",
+            "size": {
+              "width": "19.2px",
+              "height": "12.226px"
+            },
+            "type": "SVG"
+          },
+          {
+            "name": "Wifi",
+            "size": {
+              "width": "17.142px",
+              "height": "12.328px"
+            },
+            "type": "SVG"
+          },
+          {
+            "name": "Battery",
+            "size": {
+              "width": "27.328px",
+              "height": "13px"
+            },
+            "type": "SVG"
+          }
         ]
       }
     },
     "Android": {
-      "container": { "display": "flex-row", "justifyContent": "space-between", "alignItems": "center", "gap": "0", "paddingX": "24px", "paddingY": "10px" },
+      "container": {
+        "display": "flex-row",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "gap": "0",
+        "paddingX": "24px",
+        "paddingY": "10px"
+      },
       "time": {
         "text": "9:30",
         "textNote": "Google이 목업에 전통적으로 쓰는 데모 시각",
@@ -65,9 +114,33 @@
       "rightIcons": {
         "layout": "inline-grid, 자식들을 margin-left 오프셋으로 배치(gap 없이 겹치지 않게 배열)",
         "icons": [
-          { "name": "Wifi", "size": { "width": "17px", "height": "17px" }, "marginLeft": "0px", "type": "SVG" },
-          { "name": "Signal", "size": { "width": "17px", "height": "17px" }, "marginLeft": "16px", "type": "SVG" },
-          { "name": "Battery", "size": { "width": "8px", "height": "15px" }, "marginLeft": "38px", "type": "SVG" }
+          {
+            "name": "Wifi",
+            "size": {
+              "width": "17px",
+              "height": "17px"
+            },
+            "marginLeft": "0px",
+            "type": "SVG"
+          },
+          {
+            "name": "Signal",
+            "size": {
+              "width": "17px",
+              "height": "17px"
+            },
+            "marginLeft": "16px",
+            "type": "SVG"
+          },
+          {
+            "name": "Battery",
+            "size": {
+              "width": "8px",
+              "height": "15px"
+            },
+            "marginLeft": "38px",
+            "type": "SVG"
+          }
         ]
       },
       "note": "iOS와 레이아웃 방식 자체가 다름 — 3분할+flex gap이 아니라 양끝 정렬+개별 margin 오프셋. Dynamic Island 스페이서 같은 노치 표현 없음(펀치홀 카메라 등 미표현, 확인 필요)"
@@ -75,17 +148,88 @@
   },
   "colorsByModeBackground": {
     "note": "8개 변형 전수. Background 축은 컨테이너 배경 유무만 결정하고 Time/아이콘 색은 Mode에만 의존함(핵심 규칙)",
-    "iOS_Light_Off": { "containerBg": null, "timeColor": { "figmaVariable": "common/black-emphasis", "value": "#000000" }, "iconSet": "light" },
-    "iOS_Light_On": { "containerBg": { "figmaVariable": "common/white-emphasis", "value": "#ffffff" }, "timeColor": { "figmaVariable": "common/black-emphasis", "value": "#000000" }, "iconSet": "light" },
-    "iOS_Dark_Off": { "containerBg": null, "timeColor": { "figmaVariable": "common/white-emphasis", "value": "#ffffff" }, "iconSet": "dark(별도 SVG 에셋, CSS 색반전 아님)" },
-    "iOS_Dark_On": { "containerBg": { "figmaVariable": "common/black-emphasis", "value": "#000000" }, "timeColor": { "figmaVariable": "common/white-emphasis", "value": "#ffffff" }, "iconSet": "dark(별도 SVG 에셋)" },
-    "Android_Light_Off": { "containerBg": null, "timeColor": { "figmaVariable": "common/black-emphasis", "value": "#000000" }, "iconSet": "light" },
-    "Android_Light_On": { "containerBg": { "figmaVariable": "common/white-emphasis", "value": "#ffffff" }, "timeColor": { "figmaVariable": "common/black-emphasis", "value": "#000000" }, "iconSet": "light" },
-    "Android_Dark_Off": { "containerBg": null, "timeColor": { "figmaVariable": "common/white-emphasis", "value": "#ffffff" }, "iconSet": "dark(별도 SVG 에셋)" },
-    "Android_Dark_On": { "containerBg": { "figmaVariable": "common/black-emphasis", "value": "#000000" }, "timeColor": { "figmaVariable": "common/white-emphasis", "value": "#ffffff" }, "iconSet": "dark(별도 SVG 에셋)" }
+    "iOS_Light_Off": {
+      "containerBg": null,
+      "timeColor": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000"
+      },
+      "iconSet": "light"
+    },
+    "iOS_Light_On": {
+      "containerBg": {
+        "figmaVariable": "common/white-emphasis",
+        "value": "#ffffff"
+      },
+      "timeColor": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000"
+      },
+      "iconSet": "light"
+    },
+    "iOS_Dark_Off": {
+      "containerBg": null,
+      "timeColor": {
+        "figmaVariable": "common/white-emphasis",
+        "value": "#ffffff"
+      },
+      "iconSet": "dark(별도 SVG 에셋, CSS 색반전 아님)"
+    },
+    "iOS_Dark_On": {
+      "containerBg": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000"
+      },
+      "timeColor": {
+        "figmaVariable": "common/white-emphasis",
+        "value": "#ffffff"
+      },
+      "iconSet": "dark(별도 SVG 에셋)"
+    },
+    "Android_Light_Off": {
+      "containerBg": null,
+      "timeColor": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000"
+      },
+      "iconSet": "light"
+    },
+    "Android_Light_On": {
+      "containerBg": {
+        "figmaVariable": "common/white-emphasis",
+        "value": "#ffffff"
+      },
+      "timeColor": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000"
+      },
+      "iconSet": "light"
+    },
+    "Android_Dark_Off": {
+      "containerBg": null,
+      "timeColor": {
+        "figmaVariable": "common/white-emphasis",
+        "value": "#ffffff"
+      },
+      "iconSet": "dark(별도 SVG 에셋)"
+    },
+    "Android_Dark_On": {
+      "containerBg": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000"
+      },
+      "timeColor": {
+        "figmaVariable": "common/white-emphasis",
+        "value": "#ffffff"
+      },
+      "iconSet": "dark(별도 SVG 에셋)"
+    }
   },
   "unusedVariable": {
-    "neutral/200": { "value": "#f1f2f3", "note": "get_variable_defs에 포함되나 8개 변형 코드 어디에도 바인딩된 요소 없음 — 진열 프레임(캔버스) 배경색으로 추정, 컴포넌트 자체 스펙과 무관" }
+    "neutral/200": {
+      "value": "#f1f2f3",
+      "note": "get_variable_defs에 포함되나 8개 변형 코드 어디에도 바인딩된 요소 없음 — 진열 프레임(캔버스) 배경색으로 추정, 컴포넌트 자체 스펙과 무관"
+    }
   },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 진열 프레임(2551:9511, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. State 축 자체가 없는 순수 표시용 목업 컴포넌트.",
@@ -109,5 +253,62 @@
   "openQuestions": [
     "Android의 펀치홀 카메라 등 다른 노치 형태를 이 컴포넌트가 표현하는지(iOS만 Dynamic Island spacer 있음)",
     "실제 구현 시 이 컴포넌트를 코드로 옮길지, 목업 전용으로만 쓸지에 대한 접근성/사용 가이드"
-  ]
+  ],
+  "widthBehavior": {
+    "confirmed": "2026-09-15 디자이너 확인",
+    "figmaFrameWidth": "390px (모바일 목업 기준 폭)",
+    "implementedWidth": "100% — 화면(부모) 폭을 그대로 따릅니다. 390 은 고정값이 아닙니다.",
+    "height": "50px 고정",
+    "detail": "iOS 는 Time·아이콘 칸이 flex:1 0 0 이라 Dynamic Island(125px 고정)를 가운데 두고 양쪽이 같이 늘어나고, Android 는 space-between 이라 시각·아이콘이 양 끝에 붙습니다. 390/412/430 실측 확인 — Island 는 어떤 폭에서도 정중앙."
+  },
+  "assets": {
+    "objectified": "2026-09-15 — 디자이너가 Figma(2551:9511)에서 상태바 요소를 전부 오브젝트(벡터)로 만들어 주어, 근사 재현 SVG 를 원본 벡터로 교체했습니다.",
+    "path": "assets/status-bar/",
+    "files": [
+      "ios-time-941.svg",
+      "ios-cellular.svg",
+      "ios-wifi.svg",
+      "ios-battery.svg",
+      "android-time-930.svg",
+      "android-wifi.svg",
+      "android-signal.svg",
+      "android-battery.svg"
+    ],
+    "fill": "currentColor — Mode 는 컨테이너의 color 한 줄로 결정됩니다(common/black-emphasis ↔ common/white-emphasis)",
+    "time": "시각도 라이브 텍스트가 아니라 윤곽선 벡터입니다. SF Pro·Roboto 가 저장소에 없어 폰트로는 정확히 재현되지 않던 문제가 해소됩니다. `time` prop 을 주면 텍스트로 그리지만 그때는 시스템 폰트로 대체됩니다.",
+    "bakedOpacity": {
+      "ios-battery border": 0.35,
+      "ios-battery cap": 0.4,
+      "android-battery base": 0.3
+    },
+    "cssOpacity": {
+      "android-wifi": "Light 0.1 / Dark 0.2 — Mode 마다 달라서 파일에 굽지 않고 CSS 에서 줍니다"
+    }
+  },
+  "geometry": {
+    "note": "2026-09-15 실측 — 구현이 0.01px 이내로 일치함을 브라우저에서 확인",
+    "ios": {
+      "container": "390x50 pad 11/16 gap 6",
+      "time": "110.5x22 @16,14 (글리프 33.33x12.58 @54.59,18.71)",
+      "island": "125x37 @132.5,6.5 radius 100 (채우기 꺼짐)",
+      "levels": "110.5x22 @263.5,14 pad-top 1 gap 7 — cellular 19.2x12.23 @279.92 · wifi 17.14x12.33 @306.12 · battery 27.33x13 @330.26"
+    },
+    "android": {
+      "container": "390x50 pad 10/24 space-between",
+      "time": "26.9x10.23 @24,19.89",
+      "levels": "46x15 @320,17.5 (고정 좌표) — wifi 17x14.17 @0,0.42 · signal 14.17x14.17 @17.42,0.42 · battery 8x15 @38,0"
+    }
+  },
+  "iconsByMode": {
+    "note": "2026-09-15 정정 — Light/Dark 별도 SVG 에셋이 아닙니다. 파일은 하나이고 벡터의 fills 가 색상 변수에 바인딩되어 값만 바뀝니다.",
+    "Light": {
+      "figmaVariable": "common/black-emphasis",
+      "value": "#000000"
+    },
+    "Dark": {
+      "figmaVariable": "common/white-emphasis",
+      "value": "#ffffff"
+    },
+    "⚠️androidWifiOpacity": "Android 의 Wifi 만 Mode 마다 투명도가 다릅니다 — Light 10% / Dark 20%. 나머지 투명도는 두 Mode 동일."
+  }
 }

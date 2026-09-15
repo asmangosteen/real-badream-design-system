@@ -7,10 +7,15 @@
     "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2555-12827",
     "frameNodeId": "2555:12827",
     "frameName": "Top",
-    "familyGroupNodeId": "2555:16790",
+    "familyGroupNodeId": "2612:16631",
     "totalVariantInstances": 32,
-    "axes": ["Type(8종)", "Mode(Light/Dark)", "Background(Off/On)"],
-    "note": "완전 직교 8x2x2=32(2026-09-09 Home 타입 추가로 7x2x2=28에서 확장). 플래그십 컴포넌트 — Leading/Trailing(+Trailing Components)/Smalltitle을 조합. 사용자 확인: Navigation Bar 그룹 안에서 Leading/Trailing/Trailing Components/Smalltitle은 하위항목(서브 아톰), 이 Top 프레임이 실제 쓰일 컴포넌트."
+    "axes": [
+      "Type(8종)",
+      "Mode(Light/Dark)",
+      "Background(Off/On)"
+    ],
+    "note": "완전 직교 8x2x2=32(2026-09-09 Home 타입 추가로 7x2x2=28에서 확장). 플래그십 컴포넌트 — Leading/Trailing(+Trailing Components)/Smalltitle을 조합. 사용자 확인: Navigation Bar 그룹 안에서 Leading/Trailing/Trailing Components/Smalltitle은 하위항목(서브 아톰), 이 Top 프레임이 실제 쓰일 컴포넌트.",
+    "familyGroupNodeIdNote": "예전 판의 2555:16790은 더 이상 존재하지 않습니다. 현재 그룹은 2612:16631(레이어명 'Group 1', 페이지 '❖ Navigation Bar')입니다. 컴포넌트 셋 ID(2555:12827 등)는 그대로입니다. (2026-09-15 확인)"
   },
   "sampling": {
     "method": "get_metadata로 32개 심볼 전수 확인 후, 8개 Type 전부 + Background/Mode 조합 일부를 포함한 13개 노드를 get_design_context로 개별 실측. Home 4개 변형(Light/Dark x Off/On)은 2026-09-09 전수 실측.",
@@ -29,19 +34,110 @@
       "Home_Dark_On": "2573:12842",
       "Home_Dark_Off": "2573:12845"
     },
-    "notSampled": "Smalltitle_close 전체(단, 사용자 제공 스크린샷으로 구조 확인됨), 대부분의 Dark×Off 조합(Big Title·Home 외) — 대칭 구조로 추정, 확인 필요"
+    "notSampled": "없음 — 2026-09-15 기준 32개 변형 전수 실측 완료",
+    "recheck2026_09_15": "Plugin API로 32개 변형 전수 + 서브 아톰 4개 컴포넌트 셋 전체를 재실측했습니다(레이아웃·fills 배열 전체·boundVariables·instance componentProperties·mainComponent·reactions)."
   },
-  "containerSize": { "width": "390px", "note": "전 변형 공통 고정, 모바일 목업 표준 폭(Status Bar와 동일)" },
+  "containerSize": {
+    "figmaFrameWidth": "390px (모바일 목업 기준 폭)",
+    "implementedWidth": "100% — 화면(부모) 폭을 그대로 따릅니다. 390 은 고정값이 아닙니다 (2026-09-15 디자이너 확인)",
+    "height": "48px (컨테이너는 hug — 자식 높이 48에서 결정)",
+    "padding": "0",
+    "counterAxisAlign": "CENTER",
+    "clipsContent": false
+  },
   "typeStructure": {
-    "note": "trailingMaxIcons는 정확한 개수가 아니라 사용자 확인된 Type별 최대 허용치. 실제로는 0~최댓값 사이로 자유 조절 가능하며 Icon·Button을 섞어 쓸 수 있음(constraints 참고). showLabel은 Back 타입이면 Type 무관하게 항상 자유 토글(사용자 확인 — 최초 Seg 샘플의 false는 그 샘플의 설정값일 뿐 강제 규칙이 아니었음, 정정됨).",
-    "BigTitle": { "containerAlign": "justify-between(gap 없음)", "leading": { "type": "Big Title" }, "trailingMaxIcons": 3, "smalltitle": null },
-    "Home": { "containerAlign": "justify-between(gap 없음, Big Title과 동일 패턴)", "leading": { "type": "Home" }, "trailingMaxIcons": 3, "smalltitle": null, "usageScope": "홈 화면 전용(사용자 확인, 강한 제약사항) — Back/Close/Big Title/Seg 등 나머지 7개 Type과 달리 다른 화면에서 범용 재사용하지 않음. 2026-09-09 추가", "realWorldExample": "사용자 제공 스크린샷 — Trailing 최대 3개 중 실제로는 2개(알림 벨+햄버거 메뉴)만 사용, 나머지 7개 Type과 동일한 '최대치는 자유 조절 가능' 규칙 적용(constraints.trailingIsMaximum 참고)" },
-    "NoTitle_back": { "containerAlign": "gap-166px(고정)", "leading": { "type": "Back", "showLabelToggle": "자유" }, "trailingMaxIcons": 3, "smalltitle": null },
-    "NoTitle_close": { "containerAlign": "gap-166px", "leading": { "type": "Close" }, "trailingMaxIcons": 3, "smalltitle": null },
-    "Smalltitle_back": { "containerAlign": "gap-166px", "leading": { "type": "Back", "showLabelToggle": "자유" }, "trailingMaxIcons": 2, "smalltitle": { "type": "Default", "position": "absolute, 컨테이너 중앙" } },
-    "Smalltitle_close": { "containerAlign": "gap-166px(추정)", "leading": { "type": "Close" }, "trailingMaxIcons": 2, "smalltitle": { "type": "Default" }, "verified": "구조는 사용자 제공 스크린샷으로 확인, gap-166px/leading 세부는 대칭 추정" },
-    "Seg_back": { "containerAlign": "gap-166px", "leading": { "type": "Back", "showLabelToggle": "자유(최초 샘플은 false였으나 강제 아님, 사용자 확인)" }, "trailingMaxIcons": 1, "smalltitle": { "type": "Segmented Control", "size": "S", "count": 2, "position": "absolute, 컨테이너 중앙" } },
-    "Seg_close": { "containerAlign": "gap-166px", "leading": { "type": "Close", "showLabelToggle": "해당 없음(Close는 라벨 자체가 없음)" }, "trailingMaxIcons": 1, "smalltitle": { "type": "Segmented Control", "size": "S", "count": 2, "position": "absolute, 컨테이너 중앙" } }
+    "note": "trailingMaxIcons는 정확한 개수가 아니라 사용자 확인된 Type별 최대 허용치. 실제로는 0~최댓값 사이로 자유 조절 가능하며 Icon·Button을 섞어 쓸 수 있음(constraints 참고). showLabel은 Back 타입이면 Type 무관하게 항상 자유 토글(사용자 확인 — 최초 Seg 샘플의 false는 그 샘플의 설정값일 뿐 강제 규칙이 아니었음, 정정됨). 2026-09-15 추가 — Figma 각 Type 샘플의 Show Label 실측 기본값은 Seg_back/Seg_close만 false이고 나머지는 true입니다(showLabelFigmaDefault). 어디까지나 기본값이며 자유 토글이라는 점은 그대로입니다.",
+    "BigTitle": {
+      "containerAlign": "justify-between(gap 없음)",
+      "leading": {
+        "type": "Big Title"
+      },
+      "trailingMaxIcons": 3,
+      "smalltitle": null
+    },
+    "Home": {
+      "containerAlign": "justify-between(gap 없음, Big Title과 동일 패턴)",
+      "leading": {
+        "type": "Home"
+      },
+      "trailingMaxIcons": 3,
+      "smalltitle": null,
+      "usageScope": "홈 화면 전용(사용자 확인, 강한 제약사항) — Back/Close/Big Title/Seg 등 나머지 7개 Type과 달리 다른 화면에서 범용 재사용하지 않음. 2026-09-09 추가",
+      "realWorldExample": "사용자 제공 스크린샷 — Trailing 최대 3개 중 실제로는 2개(알림 벨+햄버거 메뉴)만 사용, 나머지 7개 Type과 동일한 '최대치는 자유 조절 가능' 규칙 적용(constraints.trailingIsMaximum 참고)"
+    },
+    "NoTitle_back": {
+      "containerAlign": "gap-166px(고정)",
+      "leading": {
+        "type": "Back",
+        "showLabelToggle": "자유",
+        "showLabelFigmaDefault": true
+      },
+      "trailingMaxIcons": 3,
+      "smalltitle": null
+    },
+    "NoTitle_close": {
+      "containerAlign": "gap-166px",
+      "leading": {
+        "type": "Close"
+      },
+      "trailingMaxIcons": 3,
+      "smalltitle": null
+    },
+    "Smalltitle_back": {
+      "containerAlign": "gap-166px",
+      "leading": {
+        "type": "Back",
+        "showLabelToggle": "자유",
+        "showLabelFigmaDefault": true
+      },
+      "trailingMaxIcons": 2,
+      "smalltitle": {
+        "type": "Default",
+        "position": "absolute, 컨테이너 중앙"
+      }
+    },
+    "Smalltitle_close": {
+      "containerAlign": "gap-166px",
+      "leading": {
+        "type": "Close"
+      },
+      "trailingMaxIcons": 2,
+      "smalltitle": {
+        "type": "Default"
+      },
+      "verified": "2026-09-15 전수 실측으로 확인 완료(추정 아님)"
+    },
+    "Seg_back": {
+      "containerAlign": "gap-166px",
+      "leading": {
+        "type": "Back",
+        "showLabelToggle": "자유(최초 샘플은 false였으나 강제 아님, 사용자 확인)",
+        "showLabelFigmaDefault": false
+      },
+      "trailingMaxIcons": 1,
+      "smalltitle": {
+        "type": "Segmented Control",
+        "size": "S",
+        "count": 2,
+        "position": "absolute, 컨테이너 중앙"
+      }
+    },
+    "Seg_close": {
+      "containerAlign": "gap-166px",
+      "leading": {
+        "type": "Close",
+        "showLabelToggle": "해당 없음(Close는 라벨 자체가 없음)",
+        "showLabelFigmaDefault": false
+      },
+      "trailingMaxIcons": 1,
+      "smalltitle": {
+        "type": "Segmented Control",
+        "size": "S",
+        "count": 2,
+        "position": "absolute, 컨테이너 중앙"
+      }
+    },
+    "darkModeSmalltitleNote": "Seg_back/Seg_close의 Dark 변형은 Mode=Light Smalltitle 인스턴스를 그대로 씁니다(Segmented Control은 Light/Dark 값이 동일해 시각 차이 없음). Smalltitle_back/close의 Dark 변형은 Mode=Dark Smalltitle을 씁니다. (2026-09-15 실측)"
   },
   "constraints": {
     "note": "사용자가 확인해준 Figma 변형 밖의 실사용 제약/자유도. 이 컴포넌트가 지원하는 variation은 Figma에 진열된 28개가 전부가 아님.",
@@ -61,21 +157,82 @@
   ],
   "colorsByModeBackground": {
     "note": "Background=On만 배경 채움, Off는 투명. 텍스트/아이콘 색은 Mode에만 의존(Background 무관). 아래 On의 배경색은 Figma 예시값이며 사용자 확인 완료 — 고정 규칙이 아니라 실제 화면에 맞게 자유롭게 교체 가능(constraints.backgroundColorIsExample 참고)",
-    "Light_Off": { "containerBg": null, "contentColor": { "figmaVariable": "neutral/800", "value": "#202837" } },
-    "Light_On": { "containerBg": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치(예시값, 교체 가능)" }, "contentColor": { "figmaVariable": "neutral/800", "value": "#202837" } },
-    "Dark_Off": { "containerBg": null, "contentColor": { "figmaVariable": "common/white-default", "value": "#fdfdfd" }, "verified": false, "note": "Light Off와 대칭 구조로 추정, 직접 미측정" },
-    "Dark_On": { "containerBg": { "figmaVariable": "common/black-default", "value": "#03091a", "tokenMatch": "정확히 일치(예시값, 교체 가능)" }, "contentColor": { "figmaVariable": "common/white-default", "value": "#fdfdfd" } },
+    "Light_Off": {
+      "containerBg": null,
+      "contentColor": {
+        "figmaVariable": "neutral/800",
+        "value": "#202837"
+      }
+    },
+    "Light_On": {
+      "containerBg": {
+        "figmaVariable": "common/white-default",
+        "value": "#fdfdfd",
+        "tokenMatch": "정확히 일치(예시값, 교체 가능)"
+      },
+      "contentColor": {
+        "figmaVariable": "neutral/800",
+        "value": "#202837"
+      }
+    },
+    "Dark_Off": {
+      "containerBg": null,
+      "contentColor": {
+        "figmaVariable": "common/white-default",
+        "value": "#fdfdfd"
+      },
+      "verified": false,
+      "note": "Light Off와 대칭 구조로 추정, 직접 미측정"
+    },
+    "Dark_On": {
+      "containerBg": {
+        "figmaVariable": "common/black-default",
+        "value": "#03091a",
+        "tokenMatch": "정확히 일치(예시값, 교체 가능)"
+      },
+      "contentColor": {
+        "figmaVariable": "common/white-default",
+        "value": "#fdfdfd"
+      }
+    },
     "comparisonWithStatusBar": "참고 — components/status-bar/status-bar.md의 Background=On은 common/white-emphasis(#ffffff)/common/black-emphasis(#000000)를 쓰지만, Navigation Bar Top의 예시값은 common/white-default(#fdfdfd)/common/black-default(#03091a). 둘 다 흰색/검정에 가까우나 정확한 HEX가 다름 — 컴포넌트별 실측값을 그대로 참고하되, Top의 경우 이마저도 고정이 아닌 예시임에 유의",
     "homeTypeNote": "Home Type도 위 표와 동일한 토큰(Light On=common/white-default, Dark On=common/black-default)을 그대로 씀 — Big Title과 완전히 동일한 배경 처리(실측 확인, 2026-09-09). 단 Home의 Leading 콘텐츠는 CSS 색상 텍스트가 아니라 Mode별 별도 로고 SVG 이미지(leading.md 3장 참고)이므로 'contentColor' 개념이 문자 그대로 적용되지 않음"
   },
   "subcomponentReuse": {
-    "leading": { "ref": "components/navigation-bar/top/leading/leading.md", "usedTypes": ["Back", "Close", "Big Title", "Home"], "note": "showLabel은 Back 타입이면 Type 무관하게 항상 자유 토글(사용자 확인). Home은 홈 화면 전용(usageScope 참고)" },
-    "trailing": { "ref": "components/navigation-bar/top/trailing/trailing.md", "usedMaxIcons": [1, 2, 3], "note": "Mode 대응은 Top이 내부 Trailing Components를 개별 재정의. 실사용은 최댓값 이하로 자유 조절, Icon·Button 혼용 가능(사용자 확인)" },
-    "smalltitle": { "ref": "components/navigation-bar/top/smalltitle/smalltitle.md", "usedTypes": ["Default", "Segmented Control"], "note": "Selection/Caption 타입은 Top에서 관찰되지 않음" },
-    "segmentedControl": { "ref": "components/segmented-control/segmented-control.md", "usedVia": "Smalltitle의 Segmented Control 타입을 통해 간접 재사용, Size=S Count=2" }
+    "leading": {
+      "ref": "components/navigation-bar/top/leading/leading.md",
+      "usedTypes": [
+        "Back",
+        "Close",
+        "Big Title",
+        "Home"
+      ],
+      "note": "showLabel은 Back 타입이면 Type 무관하게 항상 자유 토글(사용자 확인). Home은 홈 화면 전용(usageScope 참고)"
+    },
+    "trailing": {
+      "ref": "components/navigation-bar/top/trailing/trailing.md",
+      "usedMaxIcons": [
+        1,
+        2,
+        3
+      ],
+      "note": "Mode 대응은 Top이 내부 Trailing Components를 개별 재정의. 실사용은 최댓값 이하로 자유 조절, Icon·Button 혼용 가능(사용자 확인)"
+    },
+    "smalltitle": {
+      "ref": "components/navigation-bar/top/smalltitle/smalltitle.md",
+      "usedTypes": [
+        "Default",
+        "Segmented Control"
+      ],
+      "note": "Selection/Caption 타입은 Top에서 관찰되지 않음"
+    },
+    "segmentedControl": {
+      "ref": "components/segmented-control/segmented-control.md",
+      "usedVia": "Smalltitle의 Segmented Control 타입을 통해 간접 재사용, Size=S Count=2"
+    }
   },
   "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 Navigation Bar 상위 그룹(2555:16790, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. Type 전환(collapsing header 등) 애니메이션 값 없음.",
+  "interactionsNote": "Navigation Bar의 5개 컴포넌트 셋(Top·Leading·Smalltitle·Trailing·_Trailing Components) 전부 프로토타입 reactions가 0건입니다(2026-09-15 Plugin API 전수 확인). 상태 피드백은 내부 인스턴스가 담당합니다 — 우측 Icon은 Icon Button Ghost(검정 5%/10% 오버레이), 우측 Button은 Text Button Blue(텍스트 색 합성), 중앙은 Segmented Control 인디케이터. 좌측 Leading에는 색 변화가 없습니다(Icon Button 인스턴스가 아님) — 의도된 상태(디자이너 확인). 다만 아이콘+라벨 전체가 하나의 <button>이라 커서·키보드 포커스는 동작합니다(leading.json 참고). 전환 시간·이징은 docs/INTERACTION.md 공통 규칙(Hover 150ms · Pressed 50ms · Figma Slow). Type 전환(collapsing header) 애니메이션은 여전히 Figma에 정의 없음. ⚠️ 예전 판의 '모션 데이터 없음'은 get_motion_context(키프레임 전용)만 보고 내린 결론이었습니다.",
   "accessibility": {
     "landmarkRole": "header/role=banner 마크업 규정 없음 — 확인 필요",
     "headingLevel": "Big Title의 헤딩 레벨(h1 등) 연결 규정 없음 — 확인 필요",
@@ -94,10 +251,161 @@
     "(2026-09-09) \"홈 화면에만 쓴다\"는 제약을 문서에서 어느 강도로 명시할지 — 사용자 확인 완료, 강한 제약사항으로 명시(constraints.homeIsScreenSpecific 참고)"
   ],
   "openQuestions": [
-    "Dark·Background=Off 조합의 배경 처리(Light·Off와 대칭 추정)",
     "gap-166px의 설계 근거",
     "Trailing에서 Icon·Button 혼용 시 Smalltitle을 침범하지 않는 정확한 폭 계산 규칙",
     "header/role=banner/헤딩 레벨 등 접근성 마크업 연결 규정",
     "Type 전환(collapsing header) 시 모션 처리 여부"
-  ]
+  ],
+  "childLayout": {
+    "note": "전 Type 공통 (2026-09-15 32개 변형 전수 실측). ⚠️ trailing 의 layoutGrow 만 구현에서 반대로 뒤집었습니다 — widthBehavior 참고.",
+    "leading": {
+      "layoutGrow": 0,
+      "sizing": "HUG/HUG",
+      "positioning": "AUTO"
+    },
+    "trailing": {
+      "layoutGrow": 1,
+      "sizing": "FILL/HUG",
+      "positioning": "AUTO",
+      "note": "남는 공간을 전부 차지한 뒤 내부 justify-end로 오른쪽 끝에 붙습니다. Type마다 폭이 140/188px로 달라져도 아이콘의 화면상 위치는 같습니다."
+    },
+    "smalltitle": {
+      "layoutPositioning": "ABSOLUTE",
+      "sizing": "FIXED(190)/HUG",
+      "constraints": "CENTER/MIN",
+      "x": 100,
+      "note": "흐름에서 빠져 컨테이너 정중앙에 놓입니다(100+95=195=390÷2)."
+    },
+    "geometryByType": {
+      "Big Title": {
+        "leading": "250@0",
+        "trailing": "140@250"
+      },
+      "Home": {
+        "leading": "250@0",
+        "trailing": "140@250"
+      },
+      "NoTitle_back": {
+        "leading": "84@0",
+        "trailing": "140@250"
+      },
+      "NoTitle_close": {
+        "leading": "84@0",
+        "trailing": "140@250"
+      },
+      "Smalltitle_back": {
+        "leading": "84@0",
+        "trailing": "140@250",
+        "smalltitle": "190@100"
+      },
+      "Smalltitle_close": {
+        "leading": "84@0",
+        "trailing": "140@250",
+        "smalltitle": "190@100"
+      },
+      "Seg_back": {
+        "leading": "36@0",
+        "trailing": "188@202",
+        "smalltitle": "190@100"
+      },
+      "Seg_close": {
+        "leading": "84@0",
+        "trailing": "140@250",
+        "smalltitle": "190@100"
+      }
+    }
+  },
+  "modeBackground": {
+    "note": "2026-09-15 32개 변형 전수 실측. Background=On의 색은 고정 규칙이 아니라 예시입니다(constraints.backgroundColorIsExample).",
+    "Light_Off": {
+      "background": "없음(fills: [])",
+      "foreground": "neutral/800 #202837"
+    },
+    "Light_On": {
+      "background": {
+        "figmaVariable": "common/white-default",
+        "value": "#fdfdfd",
+        "variableId": "VariableID:61:8370"
+      },
+      "foreground": "neutral/800 #202837"
+    },
+    "Dark_Off": {
+      "background": "없음(fills: []) — 2026-09-15 직접 확인(예전엔 '대칭 추정')",
+      "foreground": "common/white-default #fdfdfd"
+    },
+    "Dark_On": {
+      "background": {
+        "figmaVariable": "common/black-default",
+        "value": "#03091a",
+        "variableId": "VariableID:61:8372"
+      },
+      "foreground": "common/white-default #fdfdfd",
+      "implBug": "구현이 neutral/800(#202837)으로 칠하고 있었습니다 — 2026-09-15 교정."
+    },
+    "vsStatusBar": "Status Bar는 common/white-emphasis(#ffffff)/common/black-emphasis(#000000)를 씁니다. Navigation Bar는 *-default 입니다."
+  },
+  "designerDecisions_2026_09_15": [
+    "Figma에 고정 폭으로 박힌 값(Back 라벨 48 · Big Title 230 · Home 로고칸 230)은 그대로 고정 폭으로 구현한다(hug 아님)",
+    "Dark의 hover/pressed 오버레이는 Figma 원본대로 interaction/light-gray를 유지한다(어두운 배경에서 잘 안 보이는 것을 감수)",
+    "Leading에는 hover/pressed를 넣지 않는다",
+    "가운데 Segmented Control은 기존 컴포넌트를 그대로 넣은 것이므로 인터랙션도 그대로 동작해야 한다",
+    "좌측 Leading은 아이콘+라벨 영역 전체가 선택(클릭) 가능해야 한다 — 커서가 바뀌어야 한다",
+    "폭은 화면 폭을 따른다(390은 기준 폭). 넓어질 때 Trailing 은 고정, 중앙이 없으면 Leading 이·있으면 Smalltitle 이 늘어난다",
+    "중앙이 늘어날 때도 좌우 여백을 같게 유지해 화면 정중앙을 지킨다",
+    "우측 아이콘 개수는 Type 별 최댓값이지 고정 개수가 아니며, 아이콘 자리에 버튼이 들어갈 수 있다",
+    "단 Trailing 의 Button 자리는 예외로 hug — 버튼이 들어가면 글자 폭만큼만 차지한다 (2026-09-15 정정)"
+  ],
+  "fixedIn_2026_09_15": [
+    "Top: Dark·On 배경 neutral/800 → common/black-default",
+    "Top: 컨테이너 gap 166px / justify-between 구분 반영",
+    "Leading: 아이콘↔라벨 gap 8px → 0 (Back 전체 92→84px)",
+    "Leading: Home 로고를 흰 배경 컬러 이미지 → 단색 워드마크 + 토큰 색(에셋 신규 추가)",
+    "Smalltitle: Selection 화살표 neutral/800 → neutral/600",
+    "Smalltitle: Caption 보조 텍스트 weight Regular → Medium(500)",
+    "Smalltitle: Caption의 음수 gap이 CSS gap이라 무시됨 → 음수 margin (높이 50→48px)",
+    "Trailing Components: 버튼을 흉내만 내던 것 → Icon Button·Text Button 인스턴스 재사용(hover/pressed 복구)",
+    "전 문서: 상위 그룹 ID 2555:16790 → 2612:16631",
+    "전 문서: 'Mode는 별도 다크 SVG 에셋' 서술 → 변수 바인딩된 채우기 색 변경으로 정정",
+    "전 문서: '모션 데이터 없음' 서술 → 셋 자체는 반응 0건이나 내부 인스턴스 인터랙션은 살아 있음으로 정정",
+    "Smalltitle: 가운데 Segmented Control이 제어 모드로 꽂혀 눌러도 전환되지 않던 것 → 비제어 지원 추가",
+    "Leading: 커서도 바뀌지 않는 <div>였던 Back·Close → 아이콘+라벨을 묶은 <button>으로 교체(색 오버레이는 없음)",
+    "Top: 폭이 390px 로 박혀 있고 Figma 대로 Trailing 이 늘어나는 구조였던 것 → 화면 폭을 따르게 바꾸고 늘어나는 쪽을 Leading/Smalltitle 로 뒤집음"
+  ],
+  "widthBehavior": {
+    "confirmed": "2026-09-15 디자이너 확인",
+    "rule": "모바일 전용. 390px 은 Figma 기준 폭이고 실제로는 화면 폭을 따릅니다. 390 을 넘어갈 때 Trailing 은 항상 고정이고, 중앙이 없는 Type 은 Leading 이, 중앙이 있는 Type 은 Smalltitle(과 그 안의 Segmented Control)이 남는 폭을 가져갑니다.",
+    "trailing": "고정 — 내용만큼만(아이콘 40×n · 버튼은 글자 폭 hug · 우측 12). 아이콘은 늘 오른쪽 끝에서 12px 안쪽.",
+    "leading": "중앙이 없는 Type(Big Title·Home·NoTitle_back·NoTitle_close)에서 fill. Big Title 텍스트가 같이 늘어납니다.",
+    "smalltitle": "중앙이 있는 Type 에서 fill. 좌우 여백 100px 을 똑같이 유지 → 어떤 폭에서도 화면 정중앙.",
+    "unchanged": "Back 라벨(48px)·Home 로고칸(230px)은 내용이 왼쪽 정렬이라 고정 폭 그대로.",
+    "figmaDivergence⚠️": "Figma 원본은 Trailing 이 layoutGrow:1 로 남는 공간을 먹고 Leading 은 hug 입니다. 프레임이 390 고정이라 그 안에서는 렌더링 결과가 같지만, 넓어지면 늘어나야 할 것이 늘어나지 않아 반대로 뒤집었습니다. 390 에서는 아이콘·제목의 화면상 위치가 Figma 와 픽셀 단위로 동일하고, 보이지 않는 박스 폭 배분만 다릅니다.",
+    "boxWidthsAt390": {
+      "Big Title / Home": {
+        "figma": "leading 250 / trailing 140@250",
+        "impl": "leading 258 / trailing 132@258",
+        "icons": "258~378 동일"
+      },
+      "NoTitle_*": {
+        "figma": "leading 84 / trailing 140@250",
+        "impl": "leading 92 / trailing 132@258",
+        "icons": "258~378 동일"
+      },
+      "Smalltitle_*": {
+        "figma": "leading 84 / trailing 140@250",
+        "impl": "leading 132 / trailing 92@298",
+        "icons": "298~378 동일"
+      },
+      "Seg_back": {
+        "figma": "leading 36 / trailing 188@202",
+        "impl": "leading 172 / trailing 52@338",
+        "icons": "338~378 동일"
+      },
+      "bigTitleText": "Figma 230 / 구현 238 — 텍스트가 왼쪽 정렬이라 글자 위치는 x=20 로 동일"
+    },
+    "verified": {
+      "390": "아이콘 스팬·중앙 190@100 모두 변경 전과 픽셀 동일",
+      "412": "중앙 212(여백 100/100) · Big Title 260 · Trailing 그대로",
+      "430": "중앙 230(여백 100/100) · Big Title 278 · Trailing 그대로"
+    }
+  }
 }

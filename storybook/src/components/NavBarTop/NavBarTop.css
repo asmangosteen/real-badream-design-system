@@ -1,32 +1,70 @@
 /* Navigation Bar Top — 스펙: components/navigation-bar/top/top/top.md (32개 변형)
-   Leading / Trailing / Smalltitle 을 조합한 **이 패밀리의 플래그십**입니다. */
+   Leading / Trailing / Smalltitle 을 조합한 **이 패밀리의 플래그십**입니다.
+
+   2026-09-15 Figma 재실측(`2555:12827`, 32개 변형 전수) 정정
+   - Dark·Background=On 의 배경이 neutral/800(#202837)이 아니라 **common/black-default(#03091a)** 입니다.
+   - 컨테이너 정렬이 Type 에 따라 두 갈래입니다 — Big Title·Home 만 `space-between`,
+     나머지 6개는 `flex-start + gap 166px`(Navigation Bar 전용 리터럴).
+
+   ⚠️ 어느 쪽이 늘어나는지는 Figma 와 **반대로** 구현했습니다 — 아래 `__leading` / `__trailing` 주석 참고. */
+/* 폭은 **화면(부모) 폭을 그대로 따릅니다.** 390px 은 Figma 기준 폭일 뿐 고정값이 아닙니다 —
+   모바일 전용이라 실제 기기 폭(390·393·412·430…)에 그대로 붙습니다(디자이너 확인, 2026-09-15).
+   ⚠️ 390 을 넘어갈 때의 규칙: **Trailing 은 항상 고정**이고,
+      중앙이 없는 Type 은 **Leading** 이, 중앙이 있는 Type 은 **Smalltitle** 이 남는 폭을 가져갑니다. */
 .bd-navbar-top {
   position: relative;
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  width: 390px;                 /* 전 변형 공통 고정 폭 */
+  width: 100%;                  /* 높이는 내용에 맞춰 48px */
+}
+
+/* Big Title·Home 만 justify-between(gap 0), 나머지 6개는 gap 166px 고정 */
+.bd-navbar-top[data-type='big-title'],
+.bd-navbar-top[data-type='home'] { justify-content: space-between; }
+.bd-navbar-top:not([data-type='big-title']):not([data-type='home']) {
+  justify-content: flex-start;
+  /* ⚠️ 166px 은 spacing 토큰 체계(8/12/16/20…)에 없는 Navigation Bar 전용 리터럴 값입니다 */
+  gap: 166px;
 }
 
 /* Background=On 은 Mode 에 맞는 단색을 채웁니다.
-   ⚠️ 이 색은 고정 규칙이 아니라 **예시**이며 실제 화면 배경에 맞게 교체 가능합니다(사용자 확인) */
+   ⚠️ 이 색은 고정 규칙이 아니라 **예시**이며 실제 화면 배경에 맞게 교체 가능합니다(사용자 확인).
+   ⚠️ Status Bar 와 다른 토큰입니다 — Status Bar 는 *-emphasis(#ffffff/#000000), 여기는 *-default. */
 .bd-navbar-top[data-background='off'] { background: transparent; }
 .bd-navbar-top[data-mode='light'][data-background='on'] { background: var(--sys-color-common-white-default); }
-.bd-navbar-top[data-mode='dark'][data-background='on'] { background: var(--sys-color-neutral-800); }
+.bd-navbar-top[data-mode='dark'][data-background='on'] { background: var(--sys-color-common-black-default); }
 
-/* Trailing 래퍼가 남는 공간을 전부 차지하고 그 안에서 오른쪽 끝에 붙습니다.
-   그래서 Figma 의 justify-between / gap-166px 차이가 렌더링 결과에는 나타나지 않습니다(스펙 2장 정정 참고). */
-.bd-navbar-top__leading { flex: 0 0 auto; }
-.bd-navbar-top__trailing { flex: 1 1 auto; display: flex; justify-content: flex-end; }
+/* ⚠️ Figma 원본은 Trailing 이 `layoutGrow: 1` 로 남는 공간을 먹는 구조지만, **반대로 뒤집었습니다.**
+   Figma 프레임이 390 고정이라 그 안에서는 어느 쪽이 늘어나든 결과가 같지만,
+   390 을 넘어가면 달라집니다 — 늘어나야 하는 건 Trailing 이 아니라 Leading/Smalltitle 입니다.
+   Trailing 은 내용만큼만 차지하고(40×n + 우측 12), Leading 이 남는 폭을 전부 가져가
+   Trailing 을 오른쪽 끝으로 밀어냅니다. **390 에서는 아이콘 위치가 예전과 픽셀 단위로 동일합니다.**
+   `min-width: 0` 은 390 보다 좁은 화면에서 Leading 이 gap 안쪽으로 비어져 나갈 수 있게 해 둔 것입니다. */
+.bd-navbar-top__leading { flex: 1 1 auto; min-width: 0; }
+.bd-navbar-top__trailing { flex: 0 0 auto; display: flex; justify-content: flex-end; }
 
-/* Smalltitle 은 컨테이너 정중앙에 절대 배치됩니다 */
+/* 중앙이 없는 Type 은 Leading 이 가져간 폭을 **제목이 그대로 씁니다**(390 에서는 Figma 와 동일).
+   Back 라벨·Home 로고칸은 내용이 왼쪽 정렬이라 늘릴 이유가 없어 고정 폭 그대로 둡니다. */
+.bd-navbar-top[data-type='big-title'] .bd-nav-leading__big-title {
+  width: auto;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Smalltitle 은 흐름에서 빠져 **좌우 100px 를 남기고** 놓입니다
+   (Figma layoutPositioning: ABSOLUTE · constraints CENTER/MIN · x=100 · w=190 → 390-190=200, 양쪽 100).
+   좌우 여백이 같으므로 **어떤 폭에서도 화면 정중앙**이고(디자이너 확인, 2026-09-15),
+   폭이 넓어지면 중앙 블록이 같이 넓어져 제목·Segmented Control 이 늘어납니다. */
 .bd-navbar-top__center {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: 100px;
+  right: 100px;
+  top: 0;
   pointer-events: auto;
 }
+/* 단독으로 쓰는 Smalltitle 은 Figma 대로 190px 고정이고, Top 안에서만 칸을 채웁니다 */
+.bd-navbar-top__center .bd-nav-smalltitle { --bd-nav-smalltitle-width: 100%; }
 
 /* 항목을 숨겨도 나머지 위치가 고정됩니다(reflow 없음, 사용자 확인) */
 .bd-navbar-top__leading[hidden] { display: block; visibility: hidden; }

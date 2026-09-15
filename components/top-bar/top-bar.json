@@ -8,7 +8,11 @@
     "frameNodeId": "2555:13875",
     "frameName": "Top Bar",
     "totalVariantInstances": 10,
-    "axes": ["Mode(Light/Dark)", "Background(No/Default/Blur)", "Line(Off/On, Background=No 한정 존재하지 않음)"],
+    "axes": [
+      "Mode(Light/Dark)",
+      "Background(No/Default/Blur)",
+      "Line(Off/On, Background=No 한정 존재하지 않음)"
+    ],
     "note": "비직교. 2(Mode)x3(Background)x2(Line)=12 아니라 10 — Background=No일 때 Line=On 조합이 Figma에 존재하지 않음(사용자 확인). 최상위 합성 컴포넌트 — Status Bar + Navigation Bar Top을 세로로 조합."
   },
   "sampling": {
@@ -22,19 +26,46 @@
       "Dark_Default_On": "2555:13873",
       "Dark_Blur_Off": "2555:13870"
     },
-    "notSampled": ["Dark_Default_Off(2555:13872)", "Dark_No_Off(2555:14383)", "Light_Blur_On(2555:13868)", "Dark_Blur_On(2555:13867)"]
+    "notSampled": [
+      "Dark_Default_Off(2555:13872)",
+      "Dark_No_Off(2555:14383)",
+      "Light_Blur_On(2555:13868)",
+      "Dark_Blur_On(2555:13867)"
+    ]
   },
   "backgroundTypes": {
     "note": "사용자 확인 완료 — 배경은 No(없음)/Default(단색 채움)/Blur(반투명+backdrop blur) 3가지",
-    "No": { "treatment": "배경 클래스 자체 없음(완전 투명)" },
+    "No": {
+      "treatment": "배경 클래스 자체 없음(완전 투명)"
+    },
     "Default": {
-      "Light": { "figmaVariable": "common/white-default", "value": "#fdfdfd", "tokenMatch": "정확히 일치", "meaning": "사용자 확인 완료 — 실제 페이지 바탕색과 동일한 값. Top Bar를 얹는 화면의 실제 배경 토큰을 그대로 사용" },
-      "Dark": { "figmaVariable": "common/black-emphasis", "value": "#000000", "tokenMatch": "정확히 일치", "meaning": "사용자 확인 완료 — 검정 배경 화면(자주 쓰이진 않음)에 맞춰 쓰는 순수 검정. Light/Dark가 대칭 토큰 페어가 아닌 것은 의도된 설계" }
+      "Light": {
+        "figmaVariable": "common/white-default",
+        "value": "#fdfdfd",
+        "tokenMatch": "정확히 일치",
+        "meaning": "사용자 확인 완료 — 실제 페이지 바탕색과 동일한 값. Top Bar를 얹는 화면의 실제 배경 토큰을 그대로 사용"
+      },
+      "Dark": {
+        "figmaVariable": "common/black-emphasis",
+        "value": "#000000",
+        "tokenMatch": "정확히 일치",
+        "meaning": "사용자 확인 완료 — 검정 배경 화면(자주 쓰이진 않음)에 맞춰 쓰는 순수 검정. Light/Dark가 대칭 토큰 페어가 아닌 것은 의도된 설계"
+      }
     },
     "Blur": {
       "backdropBlurRadius": "40px(Mode·조합 공통)",
-      "Light": { "figmaVariable": "color/gray/50-60", "value": "rgba(253,253,253,0.6)", "tokenMatch": "정확히 일치", "note": "흰색 60% 오버레이" },
-      "Dark": { "figmaVariable": "color/gray/900-40", "value": "rgba(3,9,26,0.4)", "tokenMatch": "정확히 일치", "note": "검정 40% 오버레이" },
+      "Light": {
+        "figmaVariable": "color/gray/50-60",
+        "value": "rgba(253,253,253,0.6)",
+        "tokenMatch": "정확히 일치",
+        "note": "흰색 60% 오버레이"
+      },
+      "Dark": {
+        "figmaVariable": "color/gray/900-40",
+        "value": "rgba(3,9,26,0.4)",
+        "tokenMatch": "정확히 일치",
+        "note": "검정 40% 오버레이"
+      },
       "note": "오버레이 색상·불투명도가 Mode마다 다르게 튜닝됨(단순 반전 아님)"
     },
     "colorIsNotArbitraryExample": "사용자 확인 완료 — Navigation Bar Top의 Background=On 배경색(진짜 예시, 자유 교체 가능)과 달리, Top Bar의 Default 배경색은 실제 페이지 배경 규칙을 그대로 반영한 의도된 값. 화면 배경이 바뀌면 이 토큰도 함께 따라가야 하며, 임의로 다른 색으로 교체하는 자유 슬롯이 아님"
@@ -42,28 +73,68 @@
   "lineRule": {
     "note": "사용자 확인 완료 — Background=No일 때는 Line이 존재하지 않음. get_metadata 실측으로 확인: No 조합은 Light/Dark 각 1개(Line 축 자체 없음, 2개), Default/Blur는 각 Light/Dark x Off/On 4개씩(8개) = 총 10개",
     "onSpec": {
-      "Light_Default": { "borderSide": "bottom", "width": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "color": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치" } },
-      "Dark_Default": { "borderSide": "bottom", "width": { "figmaVariable": "borderwidth/02", "value": "1px", "tokenMatch": "정확히 일치" }, "color": { "figmaVariable": "color/gray/50-5", "value": "rgba(253,253,253,0.05)", "tokenMatch": "정확히 일치" } },
-      "Blur_variants": { "verified": false, "note": "Light/Dark + Blur + Line=On 조합은 미실측. Default와 동일 패턴(반대 톤 뉴트럴 5%)으로 추정 — 확인 필요" }
+      "Light_Default": {
+        "borderSide": "bottom",
+        "width": {
+          "figmaVariable": "borderwidth/02",
+          "value": "1px",
+          "tokenMatch": "정확히 일치"
+        },
+        "color": {
+          "figmaVariable": "color/gray/900-5",
+          "value": "rgba(3,9,26,0.05)",
+          "tokenMatch": "정확히 일치"
+        }
+      },
+      "Dark_Default": {
+        "borderSide": "bottom",
+        "width": {
+          "figmaVariable": "borderwidth/02",
+          "value": "1px",
+          "tokenMatch": "정확히 일치"
+        },
+        "color": {
+          "figmaVariable": "color/gray/50-5",
+          "value": "rgba(253,253,253,0.05)",
+          "tokenMatch": "정확히 일치"
+        }
+      },
+      "Blur_variants": {
+        "verified": false,
+        "note": "Light/Dark + Blur + Line=On 조합은 미실측. Default와 동일 패턴(반대 톤 뉴트럴 5%)으로 추정 — 확인 필요"
+      }
     },
     "colorRule": "구분선 색상은 Mode의 반대 톤 뉴트럴을 5% 불투명도로 사용(Light 배경엔 gray-900 5%, Dark 배경엔 gray-50 5%)"
   },
   "independentHide": {
     "note": "사용자 확인 완료 — Status Bar와 Navigation Bar는 각각 독립적으로 hide 가능",
-    "props": { "statusBar": { "type": "boolean", "default": true }, "navigationBar": { "type": "boolean", "default": true } },
+    "props": {
+      "statusBar": {
+        "type": "boolean",
+        "default": true
+      },
+      "navigationBar": {
+        "type": "boolean",
+        "default": true
+      }
+    },
     "behavior": "하나를 hide해도 다른 하나는 flex-col 컨테이너 안에서 자연스럽게 그 자리를 채움(별도 absolute 배치가 아니므로 reflow가 자연스럽게 일어남 — Navigation Bar Top 내부 요소들의 hide는 reflow 없음이었던 것과는 다른 레벨의 동작)"
   },
   "subcomponentReuse": {
     "note": "사용자 확인 완료 — 샘플에 관찰된 값(os=iOS, type=Smalltitle_back)은 진열용 예시일 뿐 고정값이 아님. Top Bar는 두 서브 컴포넌트를 세로로 배치하는 레이아웃 껍데기이고, 각 서브 컴포넌트의 문서화된 하위 속성을 전부 자유롭게 승계·적용 가능",
     "statusBar": {
       "ref": "components/status-bar/status-bar.md",
-      "sampleValueObserved": { "os": "iOS" },
+      "sampleValueObserved": {
+        "os": "iOS"
+      },
       "freelyApplicable": "OS(iOS/Android)·Mode(Light/Dark) 축 전부 자유 적용 가능(사용자 확인) — Android로도 바꿔 쓸 수 있음",
       "note": "Mode는 Top Bar의 Mode를 따르는 것이 자연스러우나 OS는 화면 타겟에 맞게 독립 결정. Status Bar 자체의 Background 축은 Top Bar 안에서 쓰이지 않음(항상 투명, 실제 배경은 Top Bar 컨테이너가 담당)"
     },
     "navigationBarTop": {
       "ref": "components/navigation-bar/top/top/top.md",
-      "sampleValueObserved": { "type": "Smalltitle_back" },
+      "sampleValueObserved": {
+        "type": "Smalltitle_back"
+      },
       "freelyApplicable": "Type 8종(2026-09-09 Home 추가로 7종에서 확장) 전부 + top.json에 문서화된 모든 자유도(Trailing 최대치 이하 조절+Icon/Button 혼용, Back showLabel 토글, 각 영역 개별 hide 등) 그대로 적용 가능(사용자 확인)",
       "homeTypeCaveat": "단, Type=Home은 나머지 7종과 달리 범용 재사용 Type이 아니라 홈 화면 전용입니다(top.json constraints.homeIsScreenSpecific 참고) — Top Bar 안에서 Navigation Bar Top을 Home으로 구성하는 조합도 이 제약을 그대로 상속하며, 홈 화면 용도로만 사용해야 합니다."
     }
@@ -85,5 +156,58 @@
     "Background=Blur + Line=On 조합의 구분선 색상이 Default와 동일 패턴인지",
     "Blur의 backdrop-blur 진입/이탈 모션 처리 여부",
     "Blur 배경 위 텍스트/아이콘의 실제 명암비"
-  ]
+  ],
+  "inheritanceExceptions": {
+    "confirmed": "2026-09-15 디자이너 확인",
+    "lockedAxes": [
+      "mode",
+      "background"
+    ],
+    "rule": "Top Bar 안에서 쓸 때는 Top Bar 설정만 따릅니다. 개별 컴포넌트의 Mode·Background를 따로 지정하는 것은 금지입니다. 개별로 쓸 때만 각 컴포넌트 속성을 따릅니다.",
+    "why": {
+      "background": "배경은 Top Bar 컨테이너가 통째로 칠합니다(No/Default/Blur). 안쪽 Status Bar·Navigation Bar의 배경까지 켜면 두 겹이 됩니다 — 둘 다 항상 Background=Off 로 얹힙니다.",
+      "mode": "Light/Dark 는 상태바와 내비게이션 바의 색을 한 화면 안에서 맞추는 값이라 따로 놀면 안 됩니다."
+    },
+    "freeAxes": "나머지는 전부 자유 — Status Bar 의 OS, Navigation Bar Top 의 Type 8종과 그 안의 모든 자유도",
+    "implementation": "storybook/src/components/TopBar/TopBar.tsx 의 navProps·statusProps 가 Omit<…, 'mode' | 'background'> 로 막고 있습니다.",
+    "⚠️": "저장소 규칙 11('조합 컴포넌트는 자식의 속성을 좁히지 않습니다')의 명시된 예외입니다. 규칙 위반으로 보고 되돌리지 마세요."
+  },
+  "widthBehavior": {
+    "confirmed": "2026-09-15 디자이너 확인",
+    "figmaFrameWidth": "390px (모바일 목업 기준 폭)",
+    "implementedWidth": "100% — 화면(부모) 폭을 그대로 따릅니다. 390 은 고정값이 아닙니다.",
+    "height": "내용에 따름(Status Bar 50 + Navigation Bar 48)",
+    "detail": "안에 쌓이는 Status Bar·Navigation Bar Top 이 둘 다 100% 라 그대로 따라옵니다. Navigation Bar 의 Trailing 은 고정이고 Leading/Smalltitle 이 늘어납니다(navigation-bar/top/top.md 2-1장). 390/412/430 실측 확인."
+  },
+  "blurRadius": {
+    "css": "40px",
+    "figmaRawRadius": 80,
+    "note": "⚠️ Plugin API 의 BACKGROUND_BLUR radius 는 80 이지만 Figma 내부 반경은 CSS blur() 의 2배입니다. Figma 자신의 Dev Mode CSS 출력도 backdrop-blur-[40px] 입니다(2026-09-15 get_design_context 교차 확인). CSS 에 쓸 값은 40px 이 맞습니다 — 80 으로 '고치지' 마세요."
+  },
+  "figmaAudit_2026_09_15": {
+    "scope": "10개 변형 전수 (Plugin API)",
+    "result": "레이아웃·색·선·크기 전부 일치 — 고칠 것 없음",
+    "sizes": {
+      "figma": {
+        "Line=Off": "390x98",
+        "Line=On": "390x99"
+      },
+      "implemented": "전 변형 390x98 고정 — lineDoesNotChangeHeight 참고",
+      "children": "Status Bar 50 / Navigation Bar 48"
+    },
+    "strokeNote": "Figma 는 strokeAlign INSIDE 인데도 HUG 프레임이라 스트로크를 hug 크기에 더합니다(98→99). 구현은 여기만 Figma 를 따르지 않습니다 — lineDoesNotChangeHeight 참고.",
+    "hideCombos": "둘 다 98 / Status Bar 만 50 / Navigation Bar 만 48 — 선이 높이에 영향을 주지 않습니다",
+    "reactions": 0,
+    "differencesFound": [
+      "컴포넌트 세트 기본 변형은 Background=No 인데 구현 기본값은 'default' (Mode·Line 은 동일). Navigation Bar Top 과 같은 성격이라 유지 — 버그 아님",
+      "Figma 10개 변형이 모두 안쪽 Navigation Bar 를 Type=Smalltitle_back 으로 쓰지만 구현 기본값은 notitle-back. 5장에서 '샘플값일 뿐 고정 아님' 으로 확인된 항목 — 버그 아님"
+    ]
+  },
+  "lineDoesNotChangeHeight": {
+    "decided": "2026-09-15 디자이너 결정 — Figma 를 따르지 않는 지점",
+    "rule": "Line=On 이어도 Top Bar 높이는 98px 그대로입니다. 선을 켰다고 높이가 달라지면 아래 콘텐츠가 1px 씩 밀리기 때문입니다.",
+    "figma": "Figma 는 Line=On 에서 99px (strokeAlign INSIDE 이지만 HUG 프레임이라 스트로크가 hug 크기에 포함됨)",
+    "implementation": "box-shadow: inset 0 calc(var(--ref-borderwidth-02) * -1) 0 0 var(--bd-top-bar-line) — 색·두께·위치는 그대로, 레이아웃 영향 없음",
+    "note": "Button·Icon Button·Badge·Text Input·Chip 과 같은 기법이지만, 그쪽은 Figma 와 크기를 맞추려고 쓴 것이고 여기는 Figma 와 일부러 다르게 가려고 쓴 것입니다."
+  }
 }

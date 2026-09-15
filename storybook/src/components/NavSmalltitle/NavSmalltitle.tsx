@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Icon } from '../Icon/Icon';
 import { SegmentedControl, type SegmentedControlProps } from '../SegmentedControl/SegmentedControl';
 import type { NavMode } from '../NavLeading/NavLeading';
@@ -13,7 +14,14 @@ export interface NavSmalltitleProps {
   caption?: string;
   /** `segmented-control` 타입의 항목 (Size=S · Count=2 고정) */
   segments?: [string, string];
+  /**
+   * 선택된 세그먼트. **주면 제어 모드**가 되어 이 값이 그대로 표시되므로,
+   * 바꾸려면 `onSegmentChange` 를 함께 넘겨야 합니다.
+   * 비워 두면 내부 state 로 동작해 그냥 눌러서 전환됩니다.
+   */
   segmentValue?: number;
+  /** 비제어 모드의 초기 선택값 */
+  defaultSegmentValue?: number;
   onSegmentChange?: (index: number) => void;
   /** 가운데 [Segmented Control](../SegmentedControl/SegmentedControl.tsx) 에 그대로 넘어갑니다 */
   segmentedControlProps?: Partial<SegmentedControlProps>;
@@ -35,11 +43,22 @@ export function NavSmalltitle({
   title = 'Subtitle',
   caption = 'Caption 1',
   segments = ['Tab 1', 'Tab 2'],
-  segmentValue = 0,
+  segmentValue,
+  defaultSegmentValue = 0,
   onSegmentChange,
   segmentedControlProps,
   className,
 }: NavSmalltitleProps) {
+  /* Segmented Control 은 완전 제어형이라 value 만 꽂아 두면 눌러도 움직이지 않습니다.
+     비제어로 쓸 때는 여기서 상태를 들고 있어야 **단독으로 쓸 때와 똑같이** 동작합니다. */
+  const [innerSegment, setInnerSegment] = useState(defaultSegmentValue);
+  const isSegmentControlled = segmentValue !== undefined;
+  const currentSegment = isSegmentControlled ? segmentValue : innerSegment;
+  const handleSegmentChange = (index: number) => {
+    if (!isSegmentControlled) setInnerSegment(index);
+    onSegmentChange?.(index);
+  };
+
   return (
     <div
       className={['bd-nav-smalltitle', className].filter(Boolean).join(' ')}
@@ -59,8 +78,8 @@ export function NavSmalltitle({
         <SegmentedControl
           size="s"
           items={[...segments]}
-          value={segmentValue}
-          onChange={onSegmentChange}
+          value={currentSegment}
+          onChange={handleSegmentChange}
           {...segmentedControlProps}
         />
       )}

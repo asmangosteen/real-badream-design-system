@@ -22,7 +22,11 @@ Status Bar는 화면 목업/프로토타입 상단에 얹는 **기기 상태바(
 | **Mode** | Light / Dark | 밝은/어두운 화면 배경에 맞춘 아이콘·텍스트 색상 |
 | **Background** | Off / On | Off=투명(배경 없음, 화면 콘텐츠 위에 바로 얹는 용도), On=Mode에 맞는 단색 배경이 채워짐(3장) |
 
-**공통 치수**: 8개 변형 모두 컨테이너 크기 **390×50px**로 고정되어 있습니다(모바일 화면 목업 표준 폭인 390px, iPhone 12~14 계열 논리 해상도와 동일).
+**공통 치수**: Figma 8개 변형 모두 **390×50px**입니다(모바일 화면 목업 표준 폭인 390px, iPhone 12~14 계열 논리 해상도와 동일).
+
+⚠️ **구현에서 폭 390은 고정값이 아니라 기준 폭입니다**(2026-09-15 디자이너 확인). 모바일 전용이라 화면(부모) 폭을 그대로 따릅니다 — 실제 기기(390·393·412·430…)에 맞춰 늘어납니다. **높이 50px은 고정**입니다.
+
+넓어질 때의 동작은 이미 Figma 구조가 그대로 받아 줍니다 — iOS는 Time·아이콘 칸이 `flex: 1 0 0`이라 Dynamic Island(125px 고정)를 가운데 두고 양쪽이 똑같이 늘어나고, Android는 `space-between`이라 시각·아이콘이 각각 양 끝에 붙습니다. (390/412/430 실측 확인 — Island는 어떤 폭에서도 정중앙)
 
 ## 2. OS별 레이아웃 구조 (전수 실측)
 
@@ -31,9 +35,9 @@ Status Bar는 화면 목업/프로토타입 상단에 얹는 **기기 상태바(
 | 요소 | 스펙 |
 |---|---|
 | **컨테이너** | `flex` row, `justify-center items-center`, gap 6px, padding `px=16px py=11px` |
-| **Time** | `flex-[1_0_0]`(좌측 절반 폭 안에서 중앙 정렬), 텍스트 "9:41"(Apple 데모 표준 시각), `SF Pro Semibold`, **font-weight 590**(가변 폰트의 커스텀 굵기 — 일반 Semibold 600과 다른 값), 17px/22px, `fontVariationSettings: "wdth" 100` |
+| **Time** | `flex-[1_0_0]` 110.5×22px(좌측 절반 폭 안에서 중앙 정렬) — 안에 **"9:41" 윤곽선 벡터 33.33×12.58px**. 원래는 `SF Pro Semibold` **font-weight 590** 17px/22px 텍스트였습니다(2026-09-15 오브젝트화) |
 | **Dynamic Island spacer** | 125×37px, `radius=100px`(완전 캡슐형), 내용 없는 빈 사각형 — 노치/Dynamic Island가 차지하는 중앙 공간을 레이아웃상으로만 비워두는 스페이서 |
-| **Levels(우측 아이콘 그룹)** | `flex-[1_0_0]`, gap 7px, `items-center justify-center` — Cellular Connection(19.2×12.2px) → Wifi(17.1×12.3px) → Battery(27.3×13px) 순서, 3개 모두 SVG 이미지 에셋 |
+| **Levels(우측 아이콘 그룹)** | `flex-[1_0_0]` 110.5×22px, **`padding-top 1px`**, gap 7px, `items-center justify-center` — Cellular Connection(19.2×12.23) → Wifi(17.14×12.33) → Battery(27.33×13) 순서 |
 
 Time과 Levels가 각각 `flex-1`로 컨테이너 좌/우 절반을 차지하고 그 안에서 중앙 정렬되며, 사이의 Dynamic Island spacer(고정 폭)가 실제 아이폰의 노치 영역만큼 공간을 벌려주는 3분할 구조입니다.
 
@@ -42,10 +46,10 @@ Time과 Levels가 각각 `flex-1`로 컨테이너 좌/우 절반을 차지하고
 | 요소 | 스펙 |
 |---|---|
 | **컨테이너** | `flex` row, `justify-between items-center`(gap 없음), padding `px=24px py=10px` |
-| **Time** | 텍스트 "9:30"(Google 데모 표준 시각), `Roboto Medium`, 14px/20px, `tracking 0.14px`, `fontFeatureSettings: "ss02" 1, "dlig" 1, "lnum" 1, "pnum" 1`(Roboto의 테이블형 숫자 스타일리스틱 세트) |
-| **right icons** | `inline-grid`(grid 컨테이너에 자식들을 `margin-left` 오프셋으로 겹치지 않게 배치) — Wifi(17×17px, ml 0) → Signal(17×17px, ml 16px) → Battery(8×15px, ml 38px) 순서 |
+| **Time** | **"9:30" 윤곽선 벡터 26.9×10.23px** @ x=24, y=19.89. 원래는 `Roboto Medium` 14px/20px `tracking 0.14px` 텍스트였습니다(2026-09-15 오브젝트화) |
+| **right icons** | **46×15px 그룹** @ x=320, y=17.5 — auto-layout이 아니라 **고정 좌표**입니다. Wifi(17×14.17 @ 0, 0.42) → Signal(14.17×14.17 @ 17.42, 0.42) → Battery(8×15 @ 38, 0). 간격이 0.42 / 6.41로 불규칙합니다 |
 
-**핵심 발견**: iOS와 Android는 **레이아웃 방식 자체가 다릅니다.** iOS는 Time-Spacer-Icons 3분할 + flex `gap`이지만, Android는 좌우 양끝 정렬(`justify-between`)에 아이콘 그룹은 `gap` 없이 개별 `margin-left`로 위치를 잡는 grid 구조입니다. Dynamic Island spacer 같은 노치 공간도 Android에는 없습니다(펀치홀 카메라 등은 이 컴포넌트가 별도로 표현하지 않음 — 확인 필요).
+**핵심 발견**: iOS와 Android는 **레이아웃 방식 자체가 다릅니다.** iOS는 Time-Spacer-Icons 3분할 + flex `gap`이지만, Android는 좌우 양끝 정렬(`justify-between`)에 우측 아이콘 묶음은 auto-layout이 아닌 **고정 좌표 그룹**입니다. Dynamic Island spacer 같은 노치 공간도 Android에는 없습니다(펀치홀 카메라 등은 이 컴포넌트가 별도로 표현하지 않음 — 확인 필요).
 
 **데모 시각도 OS 관례를 따릅니다**: iOS는 애플이 마케팅·목업에 전통적으로 쓰는 "9:41", Android는 구글이 쓰는 "9:30"으로, 실제 각 OS 공식 목업 표준을 그대로 재현했습니다.
 
@@ -65,7 +69,9 @@ Time과 Levels가 각각 `flex-1`로 컨테이너 좌/우 절반을 차지하고
 **핵심 규칙**:
 1. **Background=On은 Mode와 같은 색의 단색 배경을 채웁니다**(Light→흰색, Dark→검정). Background=Off는 배경이 아예 없어(투명) 실제 화면 콘텐츠 위에 겹쳐 쓰는 용도로 설계된 것으로 보입니다.
 2. **Background 축은 Time·아이콘 색이나 구조에 영향을 주지 않습니다** — On/Off 전환은 순수하게 컨테이너 배경 유무만 바뀌며, 콘텐츠(시간·아이콘) 스펙은 Mode에 의해서만 결정됩니다.
-3. **아이콘은 색상 반전(CSS filter 등)이 아니라 Light/Dark 각각 별도의 SVG 에셋**입니다. Cellular/Wifi/Battery(iOS), Wifi/Signal/Battery(Android) 전부 Light·Dark 두 세트의 벡터 아이콘이 개별 준비되어 있습니다.
+3. **정정(2026-09-15 재실측) — 아이콘은 Light/Dark 별도 에셋이 아닙니다.** 파일은 하나이고 벡터의 `fills`가 색상 변수(`common/black-emphasis` ↔ `common/white-emphasis`)에 바인딩되어 값만 바뀝니다. 예전 판의 "다크 전용 별도 SVG 파일" 서술은 사실과 다릅니다 — 위 표의 "다크 전용 별도 아이콘 에셋"도 같은 오기입니다.
+
+4. **⚠️ Android의 Wifi만 Mode마다 투명도가 다릅니다 — Light 10% · Dark 20%.** 나머지 투명도(iOS 배터리 테두리 35% · 캡 40%, Android 배터리 몸통 30%)는 두 Mode가 같습니다. 이 한 값만 에셋 파일에 굽지 않고 CSS에서 Mode별로 줍니다.
 
 ## 4. 토큰 매칭
 
@@ -92,13 +98,19 @@ Time과 Levels가 각각 `flex-1`로 컨테이너 좌/우 절반을 차지하고
 **정확히 일치**
 - `common/black-emphasis`(#000000) → `sys-color-common-black-emphasis`(`ref-color-gray-1000`)
 - `common/white-emphasis`(#ffffff) → `sys-color-common-white-emphasis`(`ref-color-gray-0`)
-- 컨테이너 크기 390×50px(모바일 목업 표준 폭)
+- 컨테이너 높이 50px · Figma 기준 폭 390px(모바일 목업 표준 폭 — 구현에서는 화면 폭을 따름, 1장 참고)
 
 **기존 토큰에 없음**
 - iOS `font-weight 590`(SF Pro의 커스텀 가변 굵기 값) — 저장소 `tokens/typography.json`의 4종 웨이트(regular/medium/semibold/bold, 대응 weight 400/500/600/700) 체계에 없는 값. Status Bar가 시스템 폰트(SF Pro/Roboto)를 그대로 쓰는 목업이라 저장소 타이포 스케일 대상이 아닌 것으로 보임
 - Android `Roboto` 폰트, `tracking 0.14px`, 테이블형 숫자 스타일리스틱 세트 — 저장소 폰트 정책(Pretendard 고정)과 무관한 시스템 목업 전용 값
 - iOS Dynamic Island spacer 125×37px, radius 100px — 특정 기기(노치가 있는 iPhone) 전용 고정값, 범용 토큰 대상 아님
-- Android 아이콘 그룹의 개별 오프셋(16px/38px) — 저장소 spacing 토큰과 무관한 아이콘 조합 전용 고정값
+- Android 우측 아이콘 그룹의 고정 좌표(0 / 17.42 / 38px) — 저장소 spacing 토큰과 무관한 아이콘 조합 전용 값
+- iOS Levels의 `padding-top 1px`
+
+**확인 완료(2026-09-15)**
+- **아이콘·시각이 전부 Figma 오브젝트(벡터)가 되었습니다.** 디자이너가 `2551:9511`에서 요소를 오브젝트화해 주어, 예전의 "실측 치수에 맞춰 근사 재현한 SVG"를 **원본 벡터**로 교체했습니다 — `assets/status-bar/` 8개 파일(`fill="currentColor"`). 시각도 윤곽선 벡터라 SF Pro·Roboto가 저장소에 없어도 모양이 정확합니다.
+- 아이콘은 Mode별 별도 파일이 아니라 **변수 바인딩된 채우기 색**만 바뀝니다(5장 3번).
+- Android Wifi의 투명도만 Mode별로 다릅니다(Light 10% / Dark 20%, 5장 4번).
 
 **확인 필요**
 - Android의 펀치홀 카메라 등 다른 노치 형태를 이 컴포넌트가 표현하는지(iOS만 Dynamic Island spacer가 있음)

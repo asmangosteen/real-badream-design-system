@@ -1,11 +1,17 @@
 /* Navigation Bar Top / Smalltitle — 스펙: components/navigation-bar/top/smalltitle/smalltitle.md (8개 전수 실측)
-   중앙 영역. 폭 190px 고정이 전 Type 공통입니다. */
+   중앙 영역. 폭 190px · 높이 48px 이 전 Type 공통입니다.
+
+   2026-09-15 Figma 재실측(`2555:12097`) 정정
+   - Selection 의 화살표 아이콘은 제목 색(neutral/800)이 아니라 **neutral/600** 입니다.
+   - Caption 보조 텍스트의 굵기는 **Medium(500)** 입니다(Caption 1/12 M). */
 .bd-nav-smalltitle {
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 190px;
+  /* 단독으로 쓸 때는 Figma 대로 190px 고정. Navigation Bar Top 안에서는 Top 이 100% 로 덮어써서
+     화면이 390 보다 넓어질 때 제목·Segmented Control 이 같이 늘어납니다(NavBarTop.css 참고). */
+  width: var(--bd-nav-smalltitle-width, 190px);
   font-family: var(--font-family-base);
   color: var(--sys-color-neutral-800);
 }
@@ -16,25 +22,40 @@
   gap: var(--ref-spacing-02);                                                    /* 2px */
   padding: var(--ref-spacing-08) 0;
 }
-/* ⚠️ 9px 은 토큰이 아니라 Figma 에 박힌 리터럴 값입니다 */
+/* ⚠️ 9px 은 토큰이 아니라 Figma 에 박힌 리터럴 값입니다 (12 - 30px 컨트롤의 3px 차) */
 .bd-nav-smalltitle[data-type='segmented-control'] { padding: 9px 0; }
+/* ⚠️ Caption 의 세로 간격은 **음수(-2px)** 입니다 — 두 줄을 바짝 붙이려는 의도(`spacing/00`).
+   `gap` 은 음수를 받지 않아 선언이 통째로 무시됩니다(높이가 48 대신 50px 이 됐었습니다).
+   음수 margin 으로 옮겨야 Figma 와 같은 48px 이 나옵니다. */
 .bd-nav-smalltitle[data-type='caption'] {
   flex-direction: column;
-  gap: var(--ref-spacing-00);                                                    /* -2px — 두 줄을 바짝 붙입니다 */
+  align-items: stretch;                                                          /* 두 줄 모두 190px 을 채웁니다(Figma FILL) */
   padding: var(--ref-spacing-04) 0;                                              /* 4px */
   text-align: center;
 }
+.bd-nav-smalltitle[data-type='caption'] .bd-nav-smalltitle__caption {
+  margin-top: var(--ref-spacing-00);
+}
 
+/* Default·Caption 의 제목은 폭 전체를 채우고(FILL) 가운데 정렬, Selection 만 내용에 맞춥니다(HUG) */
 .bd-nav-smalltitle__title {
   font-size: var(--typography-subtitle-size);
   line-height: var(--typography-subtitle-line-height);
   letter-spacing: var(--typography-subtitle-letter-spacing);
   font-weight: var(--font-weight-medium);
 }
+/* Default 는 가로 배치라 남는 가로 공간을 채웁니다. Caption 은 세로 배치라 `align-items: stretch` 가 폭을 맡습니다. */
+.bd-nav-smalltitle[data-type='default'] .bd-nav-smalltitle__title { flex: 1 1 auto; text-align: center; }
+
+/* Selection 의 화살표만 한 단계 옅은 neutral/600 입니다 (Dark 에서는 제목과 같은 흰색) */
+.bd-nav-smalltitle[data-type='selection'] .bd-icon { color: var(--sys-color-neutral-600); }
+.bd-nav-smalltitle[data-type='selection'][data-mode='dark'] .bd-icon { color: var(--sys-color-common-white-default); }
+
 /* Caption 보조 텍스트는 Mode 와 무관하게 항상 neutral/500 입니다 (WCAG 미검증) */
 .bd-nav-smalltitle__caption {
   font-size: var(--typography-caption-1-size);
   line-height: var(--typography-caption-1-line-height);
   letter-spacing: var(--typography-caption-1-letter-spacing);
+  font-weight: var(--font-weight-medium);
   color: var(--sys-color-neutral-500);
 }

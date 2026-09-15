@@ -6,13 +6,16 @@
     "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2551-10163",
     "frameNodeId": "2551:10163",
     "frameName": "_Trailing Components",
-    "familyGroupNodeId": "2555:16790",
+    "familyGroupNodeId": "2612:16631",
     "totalVariantInstances": 4,
-    "axes": ["Type(Icon/Button)", "Mode(Light/Dark)"],
+    "axes": [
+      "Type(Icon/Button)",
+      "Mode(Light/Dark)"
+    ],
     "note": "완전 직교 2x2=4. 레이어명 밑줄 접두(_)는 아토믹 디자인 목적의 내부 서브 아톰 표기(Segmented Control Item의 _Item과 동일 컨벤션). Trailing이 이 컴포넌트를 1~3회 조합."
   },
   "sampling": {
-    "method": "get_design_context 1회 호출(2551:10163)로 4개 변형 전체가 병합 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2555:16790)에서 패밀리 공용으로 확보.",
+    "method": "get_design_context 1회 호출(2551:10163)로 4개 변형 전체가 병합 코드로 반환됨. get_variable_defs·get_motion_context는 상위 그룹(2612:16631)에서 패밀리 공용으로 확보.",
     "coverage": "4개 변형 전수",
     "sampledNodeIds": {
       "Icon_Light": "2551:10162",
@@ -23,27 +26,110 @@
   },
   "types": {
     "Icon": {
-      "layout": { "alignItems": "center", "justifyContent": "center", "paddingY": { "figmaVariable": "spacing/04", "value": "4px", "tokenMatch": "정확히 일치" } },
-      "iconButtonWrapper": { "padding": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" }, "radius": { "figmaVariable": "radius/06", "value": "12px", "tokenMatch": "정확히 일치" } },
-      "content": "Icon / Default / 24px / plus — 플레이스홀더 글리프, 자유 교체 슬롯으로 추정"
+      "layout": {
+        "alignItems": "center",
+        "justifyContent": "center",
+        "paddingY": {
+          "figmaVariable": "spacing/04",
+          "value": "4px",
+          "tokenMatch": "정확히 일치"
+        }
+      },
+      "iconButtonWrapper": {
+        "deprecated": true,
+        "note": "위 subcomponentReuse로 대체됨. padding 8px(spacing/06)·radius 12px(radius/06)은 Icon Button Size=L의 값입니다."
+      },
+      "content": "Icon / Default / 24px / plus — 플레이스홀더 글리프, 자유 교체 슬롯으로 추정",
+      "frameSize": "40x48",
+      "subcomponentReuse": {
+        "ref": "components/button/icon-button/icon-button.md",
+        "variantUsed": "Size=L, Type=Ghost, State=Default, Icon Color=Black, Stroke=False, Bold Stroke=False",
+        "instanceNodeId": "2551:10115",
+        "size": "40x40",
+        "note": "2026-09-15 정정 — 내부가 '래퍼'가 아니라 Icon Button 인스턴스입니다(node.type==='INSTANCE' + getMainComponentAsync 확인). 예전 판이 래퍼처럼 적어 두어 구현이 버튼을 흉내만 내고 hover/pressed 피드백을 통째로 빠뜨리고 있었습니다."
+      }
     },
     "Button": {
-      "layout": { "display": "flex-col", "alignItems": "flex-start", "paddingY": { "figmaVariable": "spacing/08", "value": "12px", "tokenMatch": "정확히 일치" } },
-      "textButtonWrapper": { "width": "64px", "textAlign": "right" },
+      "layout": {
+        "display": "flex-col",
+        "alignItems": "flex-start",
+        "paddingY": {
+          "figmaVariable": "spacing/08",
+          "value": "12px",
+          "tokenMatch": "정확히 일치"
+        }
+      },
+      "textButtonWrapper": {
+        "width": "hug (auto) — 2026-09-15 정정. 앞서 '64px 고정'으로 정했던 것을 이 항목만 뒤집었습니다.",
+        "figmaValue": "64px 고정",
+        "why": "실제로는 버튼이 들어가면 그 자리가 글자 폭만큼만 차지합니다(디자이너 확인).",
+        "example": "\"완료\" ≈ 31px → Icon+Button 조합의 Trailing 폭 = 40 + 31 + 12 = 83px",
+        "labelLength": "라벨이 두 글자를 넘는 일은 거의 없어(완료·저장·편집…) 줄바꿈 대비는 두지 않았습니다. Text Button 자체가 white-space: nowrap 입니다.",
+        "implementation": "--bd-nav-trailing-button-width (기본 auto). 폭을 고정해야 하면 이 변수를 덮어씁니다."
+      },
       "content": "\"Button\" 텍스트",
       "subcomponentReuse": {
         "ref": "components/button/text-button/text-button.md",
         "variantUsed": "Size=XL, Text Color=Blue, State=Default, Contents=Text",
         "note": "실측 타이포·색상이 Text Button 문서의 Size=XL·Text Color=Blue·State=Default 스펙과 정확히 일치. Mode=Dark에서도 텍스트 색이 brand/primary-default 그대로 유지됨(변경 없음)"
-      }
+      },
+      "frameSize": "높이 48 · 폭 hug (Figma 샘플은 64×48)",
+      "adjacentSpacing": "아이콘과 맞닿는 쪽에 spacing/06(8px) 을 더합니다 — 아이콘끼리와 같은 16px 로 맞추기 위해서입니다. trailing.json 의 itemSpacing 참고 (2026-09-15 디자이너 확인)."
     }
   },
   "iconsByMode": {
-    "Light": { "asset": "plus 기본 SVG 에셋" },
-    "Dark": { "asset": "plus 별도 다크 SVG 에셋(색반전 아님)" }
+    "note": "2026-09-15 정정 — Light/Dark 별도 SVG 에셋이 아닙니다. 파일은 하나이고 벡터의 fills가 색상 변수에 바인딩되어 값만 바뀝니다.",
+    "Light": {
+      "figmaVariable": "neutral/800",
+      "value": "#202837",
+      "source": "Icon Button Ghost·Black의 기본값"
+    },
+    "Dark": {
+      "figmaVariable": "common/white-default",
+      "value": "#fdfdfd",
+      "source": "Icon Button 기본값이 아니라 인스턴스 오버라이드",
+      "implNote": "구현에서도 Icon Button의 Ghost 기본색을 Navigation Bar CSS에서만 덮어쓰는 방식이어야 합니다(Calendar Header가 neutral/600을 덮어쓰는 것과 같은 패턴)."
+    }
   },
-  "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 Navigation Bar 상위 그룹(2555:16790, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — Navigation Bar/Top 전체 공용 확인.",
+  "interactions": [
+    {
+      "type": "Icon",
+      "from": "Default",
+      "to": "Hover",
+      "effect": "interaction/light-gray/hover (gray-900 5%) 오버레이",
+      "duration": "150ms",
+      "easing": "Figma Slow",
+      "source": "Icon Button Ghost"
+    },
+    {
+      "type": "Icon",
+      "from": "Hover",
+      "to": "Pressed",
+      "effect": "interaction/light-gray/pressed (gray-900 10%) 오버레이",
+      "duration": "50ms",
+      "easing": "Figma Slow",
+      "source": "Icon Button Ghost"
+    },
+    {
+      "type": "Button",
+      "from": "Default",
+      "to": "Hover",
+      "effect": "텍스트 색 #2c7be2 → #276fcd",
+      "duration": "150ms",
+      "easing": "Figma Slow",
+      "source": "Text Button Blue"
+    },
+    {
+      "type": "Button",
+      "from": "Hover",
+      "to": "Pressed",
+      "effect": "텍스트 색 → #2364b8",
+      "duration": "50ms",
+      "easing": "Figma Slow",
+      "source": "Text Button Blue"
+    }
+  ],
+  "interactionsNote": "2026-09-15 정정 — 이 컴포넌트 셋 자체에는 반응이 없지만, 안에 든 Icon Button·Text Button 인스턴스의 인터랙션이 그대로 살아 있습니다. 예전 판의 '모션 데이터 없음'은 get_motion_context(키프레임 전용)만 보고 내린 잘못된 결론이었습니다 — 변형 전환은 node.reactions에 있습니다(docs/INTERACTION.md). ⚠️ Dark에서는 오버레이가 검정 5%/10%라 hover/pressed가 사실상 보이지 않지만, Figma에 Nav 전용 다크 hover 정의가 없어 원본 그대로 둡니다(디자이너 확인).",
   "accessibility": {
     "iconOnlyButtonLabel": "Icon 타입의 aria-label 연결 규정 없음 — 확인 필요",
     "buttonA11yInherited": "Button 타입은 text-button.md 7장의 접근성 요구사항을 그대로 따름",
@@ -53,5 +139,10 @@
     "Dark 배경 위 브랜드 블루 Button 텍스트의 WCAG 명암비",
     "아이콘 전용 버튼 aria-label 연결 규정",
     "Icon 타입의 plus 아이콘이 고정 글리프인지 자유 교체 슬롯인지"
+  ],
+  "resolvedQuestions": [
+    "Icon·Button 모두 기존 버튼 컴포넌트의 인스턴스이며 상태·인터랙션을 그대로 갖는다 (2026-09-15)",
+    "Dark 아이콘 흰색은 인스턴스 오버라이드이고, hover/pressed 오버레이는 Light와 동일하게 유지 (2026-09-15 디자이너 확인)",
+    "Button 폭은 hug (2026-09-15 디자이너 확인 — 앞선 '고정 폭 + 우측 정렬' 결정을 이 항목만 정정)"
   ]
 }

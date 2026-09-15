@@ -5,7 +5,9 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  width: 390px;
+  /* 폭은 **화면(부모) 폭을 그대로 따릅니다.** 390px 은 Figma 기준 폭일 뿐입니다(2026-09-15 디자이너 확인).
+     안에 쌓이는 Status Bar·Navigation Bar Top 도 100% 라 그대로 따라옵니다. */
+  width: 100%;
 }
 
 /* Background 3종 — No / Default / Blur */
@@ -25,10 +27,16 @@
 .bd-top-bar[data-mode='dark'][data-background='blur'] { background: var(--ref-color-gray-900-40); }   /* 검정 40% */
 
 /* Line — Background=No 에는 이 축 자체가 존재하지 않습니다.
-   색은 Mode 의 '반대 톤' 뉴트럴 5% 입니다. */
-.bd-top-bar[data-line='true'][data-mode='light'] {
-  border-bottom: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-5);
+   색은 Mode 의 '반대 톤' 뉴트럴 5% 입니다.
+
+   ⚠️ **선이 높이를 바꾸지 않습니다** (디자이너 결정, 2026-09-15 — Figma 를 따르지 않는 지점).
+   Figma 는 `strokeAlign: INSIDE` 인데도 auto-layout 프레임이 HUG 라 스트로크를 hug 크기에 더해서
+   Line=On 이면 98 → 99px 이 됩니다. CSS `border-bottom` 도 똑같이 1px 이 붙지만,
+   **선을 켰다고 상단 바 높이가 달라지면 아래 콘텐츠가 밀리므로** 그렇게 두지 않습니다.
+   `box-shadow: inset` 은 border-box 안쪽 같은 자리에 같은 두께로 그려지면서 레이아웃에 영향이 없습니다
+   (Button·Icon Button·Badge·Text Input·Chip 에서 쓰는 방식과 동일 — storybook/README.md 규칙 5~7). */
+.bd-top-bar[data-line='true'] {
+  box-shadow: inset 0 calc(var(--ref-borderwidth-02) * -1) 0 0 var(--bd-top-bar-line);
 }
-.bd-top-bar[data-line='true'][data-mode='dark'] {
-  border-bottom: var(--ref-borderwidth-02) solid var(--ref-color-gray-50-5);
-}
+.bd-top-bar[data-line='true'][data-mode='light'] { --bd-top-bar-line: var(--ref-color-gray-900-5); }
+.bd-top-bar[data-line='true'][data-mode='dark']  { --bd-top-bar-line: var(--ref-color-gray-50-5); }
