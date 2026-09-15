@@ -195,6 +195,29 @@
 }
 
 /* ---------------- Date Picker Group ---------------- */
-.bd-date-picker-group { display: flex; background: var(--sys-color-common-white-default); }
+.bd-date-picker-group { display: flex; width: fit-content; background: var(--sys-color-common-white-default); }
+/* ⚠️ 그룹 안의 패널은 **단독 Date Picker 와 크기가 다릅니다**(Figma 전수 실측).
+   Figma 에서 인스턴스를 리사이즈해 쓴 결과라 그룹 안에서만 덮어씁니다.
+
+   |          | 패널 폭 | 달력 여백      | 패널 높이 | 그룹      |
+   |----------|--------|--------------|---------|----------|
+   | 단독      | 352    | 12           | 334     | —        |
+   | 가로 그룹  | 360    | 16           | 342     | 721×342  |
+   | 세로 그룹  | 352    | 세로 8 / 가로 12 | 326     | 352×661  |
+
+   가로 = 360 + 1(구분선) + 360 = 721 · 세로 = 326 + 4 + 1 + 4 + 326 = 661 */
 .bd-date-picker-group[data-type='horizontal'] { flex-direction: row; align-items: stretch; }
-.bd-date-picker-group[data-type='vertical'] { flex-direction: column; width: 352px; }
+.bd-date-picker-group[data-type='horizontal'] .bd-date-picker { width: 360px; }
+.bd-date-picker-group[data-type='horizontal'] .bd-date-picker__body { padding: var(--ref-spacing-10); }
+
+.bd-date-picker-group[data-type='vertical'] {
+  flex-direction: column;
+  width: 352px;
+  gap: var(--ref-spacing-04);                  /* 4px — 구분선 양옆으로 들어갑니다 */
+}
+.bd-date-picker-group[data-type='vertical'] .bd-date-picker__body {
+  padding: var(--ref-spacing-06) var(--ref-spacing-08);   /* 8 / 12 */
+}
+
+/* 헤더는 패널 폭을 그대로 따릅니다 — 그룹 안에서는 패널이 360px 이라 352 로 못 박으면 어긋납니다 */
+.bd-date-picker .bd-calendar-header { width: 100%; }

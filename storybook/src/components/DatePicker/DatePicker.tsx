@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '../Icon/Icon';
 import { IconButton } from '../IconButton/IconButton';
 import { Divider } from '../Divider/Divider';
 import { WeekHeader, Month, type WeekCell } from '../Calendar/Calendar';
-import { buildMonthWeeks, addMonths, formatYearMonth } from '../Calendar/calendar-data';
+import { buildMonthWeeks, addMonths, formatYearMonth, formatMonth } from '../Calendar/calendar-data';
 import { TimePickerGroup } from '../TimePicker/TimePicker';
 import './DatePicker.css';
 
@@ -501,7 +501,10 @@ export function DatePicker({
     <div className={['bd-date-picker', className].filter(Boolean).join(' ')} data-state={effState}>
       <CalendarHeader
         title="left"
-        with={headerWith ?? (effState === 'wheel' ? 'close' : 'arrows')}
+        /* 휠이 열려 있으면 `headerWith` 와 무관하게 닫기 버튼입니다 (Figma: State=Wheel → With=Close).
+           Group 은 패널마다 `headerWith` 를 고정해 넘기는데, 그 값이 휠 상태까지 덮으면
+           휠을 열어 놓고 닫을 방법이 없어집니다. */
+        with={effState === 'wheel' ? 'close' : (headerWith ?? 'arrows')}
         showDropdown={headerShowDropdown}
         expanded={effState === 'wheel'}
         label={label ?? formatYearMonth(shownYear, shownMonth)}
@@ -540,30 +543,129 @@ export function DatePicker({
 }
 
 export interface DatePickerGroupProps {
+  /** `horizontal` = 좌우 두 달 · `vertical` = 위아래 두 달 */
   type?: 'horizontal' | 'vertical';
-  labels?: [string, string];
+
+  /* ---- 실제 달력으로 동작시킬 때 쓰는 값들 ---- */
+  /** **첫 패널**이 보여줄 연도. 다음 패널은 자동으로 그 다음 달입니다 */
+  year?: number;
+  /** 첫 패널이 보여줄 달 (1~12) */
+  month?: number;
+  defaultYear?: number;
+  defaultMonth?: number;
+  /** 기준 달이 움직일 때마다 **첫 패널 기준**으로 알려 줍니다 */
+  onMonthChange?: (year: number, month: number) => void;
+  /** 선택된 날짜. 두 패널이 **하나를 나눠 씁니다** */
+  value?: Date | null;
+  defaultValue?: Date | null;
+  onChange?: (date: Date) => void;
+  today?: Date | null;
+
+  /**
+   * 패널마다 시:분 스테퍼를 답니다 — 두 패널이 **각자의 시간 값**을 가집니다.
+   * `vertical` 에서는 무시됩니다 (부수 화면 없이 달력만 씁니다).
+   */
+  showTimePicker?: boolean;
   className?: string;
 }
 
+/** Figma 가로 그룹은 두 달, 세로 그룹도 두 달입니다 */
+const GROUP_PANELS = 2;
+
 /**
- * Date Picker 2개를 Divider 로 구분해 배치합니다. **2개 변형**(전수 실측).
+ * Date Picker 두 개를 이어 붙여 **연속된 두 달**을 한 번에 보여 줍니다. **2개 변형**(전수 실측).
+ * 가로 721×342 · 세로 352×661.
  *
- * ⚠️ **두 패널은 동기화되지 않는 독립 캘린더**입니다 (사용자 확인).
- * 진열 샘플의 좌우 헤더 비대칭(좌=드롭다운만 / 우=화살표만)은 고정 규칙이 아니라
- * 각 패널이 Calendar Header 6개 변형 중 원하는 것을 독립적으로 고른 결과입니다.
+ * ## 두 패널은 독립적이지 않습니다
+ *
+ * 그룹이 **기준 달 하나**를 들고, 첫 패널이 기준 달을 · 다음 패널이 그 다음 달을 그립니다.
+ * 그래서 어느 쪽에서 달을 옮기든(화살표든 휠이든) 둘이 **같이** 움직이고 제목도 함께 바뀝니다.
+ * 날짜 선택도 하나를 나눠 쓰므로, 9월 패널에서 고르든 10월 패널에서 고르든 같은 값이 됩니다.
+ *
+ * ## 두 변형이 서로 꽤 다릅니다
+ *
+ * | | Horizontal | Vertical |
+ * |---|---|---|
+ * | 제목 | `2000년 1월` | **`1월`** — 연도 없음 |
+ * | 제목 옆 펼침 화살표 | 양쪽 다 있음 | 없음 |
+ * | 연·월 휠 | 패널마다 따로 열림 | 없음 |
+ * | 이전/다음 화살표 | **마지막 패널에만** | 없음 |
+ * | Time Picker | 패널마다 따로 | 없음 |
+ * | 패널 크기 | 360px · 달력 여백 16 | 352px · 달력 여백 세로 8 / 가로 12 |
+ *
+ * 세로형은 **특정 상황에서만 쓰는 고정 표시**라 부수 화면이 전부 빠져 있습니다(사용자 확인).
  *
  * 스펙 원본: `components/date-time-picker/date-picker-group/date-picker-group.md`
  */
 export function DatePickerGroup({
   type = 'horizontal',
-  labels = ['2000년 1월', '2000년 2월'],
+  year,
+  month,
+  defaultYear,
+  defaultMonth,
+  onMonthChange,
+  value,
+  defaultValue = null,
+  onChange,
+  today = new Date(),
+  showTimePicker = false,
   className,
 }: DatePickerGroupProps) {
+  const base = today ?? new Date();
+  /* 두 패널이 **기준 달 하나**를 나눠 씁니다 — 패널 i 는 기준 달 + i 개월. */
+  const [cursor, setCursor] = useState(() => ({
+    year: defaultYear ?? base.getFullYear(),
+    month: defaultMonth ?? base.getMonth() + 1,
+  }));
+  const shownYear = year ?? cursor.year;
+  const shownMonth = month ?? cursor.month;
+
+  const [picked, setPicked] = useState<Date | null>(defaultValue);
+  const selected = value !== undefined ? value : picked;
+
+  const vertical = type === 'vertical';
+  const panels = Array.from({ length: GROUP_PANELS }, (_, i) => addMonths(shownYear, shownMonth, i));
+
+  /**
+   * 패널이 "이제 이 달을 보여주고 싶다" 고 알려오면 **그 패널의 자리만큼 빼서** 기준 달을 옮깁니다.
+   * 화살표든 휠이든 똑같이 이 길로 들어오므로, 어느 쪽을 건드려도 둘이 같은 간격을 유지한 채 따라옵니다.
+   */
+  const moveTo = (index: number, y: number, m: number) => {
+    const next = addMonths(y, m, -index);
+    if (year === undefined && month === undefined) setCursor(next);
+    onMonthChange?.(next.year, next.month);
+  };
+
+  const selectDate = (date: Date) => {
+    if (value === undefined) setPicked(date);
+    onChange?.(date);
+  };
+
   return (
     <div className={['bd-date-picker-group', className].filter(Boolean).join(' ')} data-type={type}>
-      <DatePicker label={labels[0]} headerWith="nothing" />
-      <Divider type={type === 'horizontal' ? 'vertical' : 'horizontal'} color="var(--sys-color-neutral-200)" />
-      <DatePicker label={labels[1]} headerWith="arrows" headerShowDropdown={false} />
+      {panels.map((panel, i) => (
+        <Fragment key={i}>
+          {i > 0 && (
+            <Divider type={vertical ? 'horizontal' : 'vertical'} color="var(--sys-color-neutral-200)" />
+          )}
+          <DatePicker
+            year={panel.year}
+            month={panel.month}
+            value={selected}
+            today={today}
+            onChange={selectDate}
+            onMonthChange={(y, m) => moveTo(i, y, m)}
+            /* 이전/다음 화살표는 **마지막 패널에만** 답니다(Figma). 하나만 있어도 둘이 같이 움직이므로
+               패널마다 달면 같은 일을 하는 화살표가 두 벌 생깁니다. 세로형은 아예 없습니다. */
+            headerWith={!vertical && i === GROUP_PANELS - 1 ? 'arrows' : 'nothing'}
+            /* 가로형은 양쪽 다 제목을 눌러 각자의 휠을 엽니다. 세로형은 휠이 없습니다. */
+            headerShowDropdown={!vertical}
+            /* 세로형만 연도를 빼고 달만 씁니다 (Figma "1월"/"2월") */
+            label={vertical ? formatMonth(panel.month) : undefined}
+            showTimePicker={!vertical && showTimePicker}
+          />
+        </Fragment>
+      ))}
     </div>
   );
 }

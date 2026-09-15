@@ -32,6 +32,11 @@ export function formatYearMonth(year: number, month: number): string {
   return `${year}년 ${month}월`;
 }
 
+/** 연도를 뺀 달만. Date Picker Group 의 Vertical 이 이 형식을 씁니다(Figma "1월"/"2월"). */
+export function formatMonth(month: number): string {
+  return `${month}월`;
+}
+
 /** 시·분을 버리고 날짜만 비교합니다 */
 export function isSameDay(a: Date | null | undefined, b: Date | null | undefined): boolean {
   if (!a || !b) return false;

@@ -55,10 +55,14 @@ const meta = {
           '',
           '> 연과 월은 **각각 독립적으로 스크롤**됩니다 (사용자 확인).',
           '',
-          '## ⚠️ Date Picker Group의 두 패널은 동기화되지 않습니다',
-          '좌우(또는 상하) 패널은 **서로 독립적인 캘린더**입니다 (사용자 확인).',
-          '진열 샘플의 헤더 비대칭(좌=드롭다운만 / 우=화살표만)은 고정 규칙이 아니라,',
-          '각 패널이 Calendar Header 6개 변형 중 원하는 것을 독립적으로 고른 결과입니다.',
+          '## Date Picker Group의 두 패널은 함께 움직입니다',
+          '',
+          '⚠️ **2026-09-15 정정.** 이전 판은 "두 패널은 서로 독립적인 캘린더입니다(사용자 확인)" 였는데,',
+          '**반대입니다** — 그룹이 기준 달 하나를 들고 첫 패널이 기준 달을, 다음 패널이 그 다음 달을 그립니다.',
+          '어느 쪽에서 달을 옮기든(화살표든 휠이든) 둘이 같이 움직이고 제목도 함께 바뀝니다.',
+          '가로형에서 화살표가 오른쪽 패널에만 있는 것도 **고정 규칙**입니다 — 하나로 두 달을 함께 옮기니까요.',
+          '',
+          '휠과 Time Picker 만 패널마다 따로입니다. 자세한 건 [Date Picker Group](#date-picker-group) 참고.',
           '',
           '## ⚠️ Figma 레이어 이름 오류',
           'Arrow Box·닫기 버튼 안 아이콘 레이어명이 전부 `Icon / Default / 24px / plus`로 되어 있지만,',
@@ -211,20 +215,28 @@ export const Wheel: Story = {
 };
 
 /** Date Picker 2개를 Divider로 구분해 배치합니다. */
+/** 진열이 날마다 흔들리지 않게 오늘을 고정합니다 */
+const TODAY = new Date(2026, 8, 15);
+
 export const Group: Story = {
   name: 'Date Picker Group',
   args: { weeks: WEEKS },
   parameters: { controls: { disable: true } },
   render: () => (
     <div>
-      <Section title="Type = Horizontal (두 패널은 서로 독립적입니다)">
+      <Section title="Type = Horizontal · 721×342 — 오른쪽 화살표 하나가 두 달을 함께 옮깁니다">
         <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
-          <DatePickerGroup type="horizontal" labels={['2026년 9월', '2026년 10월']} />
+          <DatePickerGroup type="horizontal" defaultYear={2026} defaultMonth={9} today={TODAY} />
         </div>
       </Section>
-      <Section title="Type = Vertical">
+      <Section title="Type = Horizontal · Time Picker — 패널마다 각자의 시간 값을 가집니다">
         <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
-          <DatePickerGroup type="vertical" labels={['2026년 9월', '2026년 10월']} />
+          <DatePickerGroup type="horizontal" defaultYear={2026} defaultMonth={9} today={TODAY} showTimePicker />
+        </div>
+      </Section>
+      <Section title="Type = Vertical · 352×661 — 연도 없이 달만, 휠·Time Picker 없음">
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePickerGroup type="vertical" defaultYear={2026} defaultMonth={9} today={TODAY} />
         </div>
       </Section>
     </div>
