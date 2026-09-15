@@ -88,7 +88,7 @@ Icon Button은 **고정 width/height 프레임이 아니라**, 정사각형 아�
 | White | `sys-color-common-white-default`(`common/white-default`) | `#fdfdfd`(`ref-color-gray-50`) | 높음(변수맵에 존재, 배경 대비 명확) |
 | Blue | `sys-color-brand-primary-default`(`brand/primary-default`) | `#2c7be2`(`ref-color-blue-500`) | 높음 |
 | Red | `sys-color-theme-destructed-default`(`theme/destructed-default`) | `#e72f37`(`ref-color-red-500`) | 높음 |
-| Black | `sys-color-neutral-800`(`neutral/800`) | `#202837`(`ref-color-gray-800`) | **확인 필요** — 변수맵에 `neutral/800 #202837`가 있고 어떤 배경에도 쓰이지 않아 Black 아이콘 색으로 추정하나, SVG baked라 직접 검증 못함 |
+| Black | `sys-color-neutral-800`(`neutral/800`) | `#202837`(`ref-color-gray-800`) | **확정(2026-09-15)** — Plugin API 로 `Size=L, Type=Ghost, Icon Color=Black` 변형의 내부 VECTOR 를 직접 읽었더니 fill `#202837` 이고 `boundVariables.fills` 가 **`neutral/800`** 에 바인딩돼 있었습니다. 코드 문자열로는 못 읽어도 `node.fills` / `boundVariables` 로는 읽힙니다 |
 
 ## 4. Stroke / Bold Stroke 규칙 (Size=M, Type=Tertiary, Icon Color=Black로 실측: `2209:2286`, `2209:2285`)
 
@@ -166,7 +166,9 @@ State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 �
 - Icon Color White `#fdfdfd` → `sys-color-common-white-default`(`ref-color-gray-50`)
 
 **추정(SVG baked라 직접 검증 불가) — 확인 필요**
-- Icon Color Black → `sys-color-neutral-800`(`#202837`) (변수맵상 존재로 추정)
+- Icon Color Black → `sys-color-neutral-800`(`#202837`) — **2026-09-15 확정** (VECTOR 의 `boundVariables.fills` 가 `neutral/800`)
+
+> ⚠️ **인스턴스 오버라이드 주의** — Calendar Header 가 쓰는 Icon Button(Size=L · Type=Ghost · Icon Color=Black) 인스턴스는 아이콘 색이 **`neutral/600`(#5B616C)로 오버라이드**돼 있습니다. 컴포넌트 기본값이 아니라 그 사용처에서만 바뀐 값입니다 — [calendar-header.md](../../date-time-picker/calendar-header/calendar-header.md) 참고.
 
 **정정 완료 (2026-08-26)**
 - hover/pressed 오버레이 `color/interaction/*` 변수의 실측값이 정답으로 확정되어 저장소 `tokens/colors.json`·`docs/DESIGN.md`에 반영됨(5-2절 표 참조).

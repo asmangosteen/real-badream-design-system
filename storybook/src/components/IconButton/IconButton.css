@@ -31,7 +31,7 @@
 /* ---------------- Type ---------------- */
 .bd-icon-button[data-type='ghost'] {
   --bd-ib-bg: transparent;
-  --bd-ib-fg: var(--sys-color-neutral-800);   /* Black — ⚠️ SVG baked 라 직접 검증 못함(추정) */
+  --bd-ib-fg: var(--sys-color-neutral-800);   /* Black — 2026-09-15 확정: 벡터 fill 이 neutral/800 변수에 바인딩돼 있음 */
 }
 .bd-icon-button[data-type='primary'] {
   --bd-ib-bg: var(--sys-color-brand-primary-default);
