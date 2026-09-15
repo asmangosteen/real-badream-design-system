@@ -20,12 +20,13 @@
 - tokens/spacing.json: 스페이싱 스케일 및 그리드 값
 - tokens/radius.json: 라운드, 보더 두께, 오퍼시티 값
 - tokens/shadows.json: 그림자 7종 및 컴포넌트별 매핑
-- hover/pressed/selected 등 입력 피드백은 colors.json의 interaction/* 토큰을 우선 사용 (Primary=interaction/blue, Secondary=interaction/light-blue, Tertiary/중립=interaction/gray, Destructed=interaction/red)
+- hover/pressed/selected 등 입력 피드백의 **색**은 colors.json의 interaction/* 토큰을 우선 사용 (Primary=interaction/blue, Secondary=interaction/light-blue, Tertiary/중립=interaction/gray, Destructed=interaction/red). 그 색으로 **바뀌는 시간과 곡선**은 docs/INTERACTION.md 참고 — 모션 값은 Figma Variables가 아니라 프로토타입 설정이라 tokens/에 없습니다.
 
 ## 원칙 및 가이드 (docs/)
 
 - docs/DESIGN.md: **현재 기준(V3) 디자인 기준서** — 브랜드 아이덴티티, UX 라이팅 원칙, Foundation 토큰(컬러/스페이싱/라운드/보더/그림자/타이포/opacity), interaction 토큰 패밀리, 컴포넌트 적용 가이드, 아이콘 제작 규칙 (바드림 디자인시스템 V3.pdf 기준). tokens/*.json·tokens.css는 이 문서를 소스로 갱신됩니다.
 - docs/SCREEN.md: 착한구독·신차구매 두 핵심 플로우의 화면 흐름, 상태 머신, UX 패턴 (통합본)
+- docs/INTERACTION.md: **상태 전환(모션) 기준서** — Figma 프로토타입 반응 전수 실측값. Default→Hover 150ms / Hover→Pressed·선택·입력 50ms, Smart animate "Slow"(= 오버슈트 없는 임계감쇠 스프링, CSS 근사 cubic-bezier(0.17, 0, 0.19, 1)). 컴포넌트별 적용 현황, 시간 토큰, CSS 구현 규칙(@property 등록 필수), 값 재확인 방법.
 
 ## 컴포넌트 스펙 (components/)
 
@@ -42,4 +43,5 @@
 
 - 주요 CTA 컬러가 필요하면 → tokens/tokens.css의 --sys-color-brand-primary-default
 - 화면 하나를 새로 만들 때 → docs/SCREEN.md에서 유사 플로우 패턴 확인 후 tokens/tokens.css로 스타일링
+- hover/pressed 전환이 뚝 끊길 때 → docs/INTERACTION.md 7장 (커스텀 속성은 @property로 등록해야 보간됩니다)
 - 아이콘이 필요하면 → assets/icons/icons-manifest.json에서 이름과 사이즈 확인 후 해당 경로 사용
