@@ -5,16 +5,24 @@ import { Icon } from '../Icon/Icon';
 // Figma 실측상 Input 박스·버튼의 패딩·radius·타이포 값이 Text Input 과 완전히 동일해
 // 값을 복제하지 않고 같은 스타일시트를 씁니다 (한 곳만 고치면 둘 다 반영됩니다).
 import '../TextInput/TextInput.css';
+// Dropdown 에서만 다른 것(트리거 버튼·Chevron 색)만 따로 둡니다
+import './Dropdown.css';
 
 export type DropdownSize = 's' | 'm' | 'l';
 export type DropdownState = 'default' | 'hover' | 'selected' | 'disabled' | 'done';
 
 const ICON_SIZE: Record<DropdownSize, number> = { s: 16, m: 16, l: 20 };
-/** ⚠️ Text Input 과 달리 **캐럿 상태(selected/typing)를 쓰지 않습니다** */
+/**
+ * ⚠️ Text Input 과 달리 **캐럿 상태를 쓰지 않습니다** — 직접 타이핑하는 필드가 아닙니다.
+ *
+ * `selected`(열림)가 `done` 인 것은 오타가 아닙니다. Figma 의 Selected 변형은 Type Box 가
+ * `State=Done` 이라 **값이 채워진 채로** 열립니다(`2292:7243` 실측). 열려 있는 동안
+ * placeholder 로 되돌아가면 "무엇을 골라 뒀는지" 가 사라집니다.
+ */
 const TYPE_BOX_STATE: Record<DropdownState, TypeBoxState> = {
   default: 'placeholder',
   hover: 'placeholder',
-  selected: 'placeholder',
+  selected: 'done',
   disabled: 'placeholder',
   done: 'done',
 };
@@ -44,8 +52,15 @@ export interface DropdownProps {
  * 클릭하면 선택지 목록을 펼치는 **선택형 입력**입니다. **288개 변형.**
  *
  * Text Input 과 레이아웃이 거의 같지만 세 가지가 다릅니다 —
- * ① 우측 아이콘이 **축 없이 `chevron_down` 고정**, ② Destructed 가 **Selected 에서만** 존재,
- * ③ **Type Box 의 캐럿 상태를 쓰지 않습니다.**
+ * ① 우측 아이콘이 **교체 축 없는 Chevron 고정**(단, 열리면 `chevron_up` 으로 뒤집힙니다),
+ * ② Destructed 가 **Selected 에서만** 존재, ③ **Type Box 의 캐럿 상태를 쓰지 않습니다.**
+ *
+ * ## 아직 목록(Menu)이 없습니다
+ *
+ * `state='selected'` 는 "열린 모습" 만 그립니다 — 실제로 아래에 뜨는 선택지 목록은
+ * Figma 의 **`❖ Menu` 페이지**에 따로 있고 아직 옮기지 않았습니다.
+ * 트리거 쪽 계약(`<button>` · `aria-haspopup="listbox"` · `aria-expanded`)은 미리 맞춰 뒀으니
+ * 나중에 목록 컴포넌트와 `onOpenChange` 만 붙이면 됩니다.
  *
  * 스펙 원본: `components/dropdown/dropdown.md`
  */
@@ -70,6 +85,8 @@ export function Dropdown({
   const iconSize = ICON_SIZE[size];
   // Destructed 는 selected 에서만 유효합니다
   const isError = destructed && state === 'selected';
+  // 열려 있는 동안만 화살표가 뒤집힙니다 — Done(닫힘)은 값이 있어도 아래를 봅니다
+  const open = state === 'selected';
 
   return (
     <div
@@ -86,14 +103,36 @@ export function Dropdown({
       )}
 
       <div className="bd-text-input__row">
-        <div className="bd-text-input__box">
-          {showLeftIcon && <Icon name={leftIconName} category="filled" size={iconSize} />}
+        {/* 누르면 목록이 열리는 트리거입니다. 목록은 아직 없지만(위 주석) 계약은 미리 맞춰 둡니다. */}
+        <button
+          type="button"
+          className="bd-text-input__box bd-dropdown__trigger"
+          disabled={state === 'disabled'}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+        >
+          {showLeftIcon && (
+            <Icon
+              name={leftIconName}
+              category="filled"
+              size={iconSize}
+              /* ⚠️ 이 class 가 없으면 아이콘이 상자 글자색(neutral/800)을 그대로 물려받아
+                 모든 State 에서 새까맣게 나옵니다. State 별 색은 공유 CSS 가 갖고 있습니다. */
+              className="bd-text-input__icon bd-text-input__icon--left"
+            />
+          )}
           <span className="bd-text-input__value">
             <TypeBox size={size} state={TYPE_BOX_STATE[state]} value={value} placeholder={placeholder} />
           </span>
-          {/* 우측 아이콘은 축이 없는 고정 슬롯입니다 */}
-          <Icon name="chevron_down" category="outlined" size={iconSize} />
-        </div>
+          {/* 교체 축이 없는 고정 슬롯이지만 **방향은 열림/닫힘을 따릅니다**(Figma `2292:7249` 실측).
+              색도 열려 있을 때만 테두리와 같은 색이 됩니다 — 규칙은 Dropdown.css 에. */}
+          <Icon
+            name={open ? 'chevron_up' : 'chevron_down'}
+            category="outlined"
+            size={iconSize}
+            className="bd-text-input__icon bd-text-input__icon--right"
+          />
+        </button>
 
         {showButton && (
           <button type="button" className="bd-text-input__button" disabled={state === 'disabled'}>

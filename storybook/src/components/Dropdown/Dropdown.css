@@ -1,0 +1,52 @@
+/* Dropdown — 스펙: components/dropdown/dropdown.md (288개 변형)
+
+   상자·버튼의 패딩·radius·타이포·State별 테두리색은 Text Input 과 **값이 완전히 같아**
+   `TextInput.css` 를 그대로 공유합니다. 이 파일에는 **Dropdown 에서만 다른 것**만 둡니다. */
+
+/* ---------------- 선택 상자는 진짜 버튼입니다 ----------------
+   Text Input 의 상자는 글자를 담는 자리지만 Dropdown 의 상자는 **누르면 목록이 열리는 트리거**입니다.
+   <div> 로 두면 키보드로 닿지도, 스크린리더가 "펼침" 을 읽지도 못합니다.
+   목록(Menu)은 아직 만들지 않았지만, 트리거 쪽 계약(`aria-haspopup`·`aria-expanded`·포커스)은
+   지금 맞춰 둡니다 — 나중에 목록만 붙이면 되도록. */
+.bd-dropdown__trigger {
+  appearance: none;
+  /* 테두리는 TextInput.css 가 `box-shadow: inset` 으로 그립니다 — border 는 0 이어야 합니다 */
+  border: 0;
+  margin: 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.bd-dropdown__trigger:disabled { cursor: not-allowed; }
+.bd-dropdown__trigger:focus-visible {
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+}
+/* 실제로 마우스를 올려도 Figma 의 Hover 변형과 같은 테두리가 됩니다.
+   Text Input 의 `data-auto` 규칙은 `cursor: text` 를 함께 걸어서 여기서는 쓸 수 없습니다. */
+.bd-text-input[data-kind='dropdown'][data-state='default'] .bd-dropdown__trigger:hover,
+.bd-text-input[data-kind='dropdown'][data-state='done'] .bd-dropdown__trigger:hover {
+  --bd-ti-border: var(--ref-color-gray-900-20);
+}
+
+/* ---------------- Chevron 색 (Figma 원본 SVG 실측) ----------------
+   좌측 아이콘은 Text Input 과 규칙이 같지만(공유 CSS 가 처리), **Chevron 만 다릅니다.**
+   열려 있는 동안 회색이 아니라 **테두리와 같은 색**이 됩니다 — 테두리·화살표가 한 덩어리로 읽힙니다.
+
+   | State              | 좌측 아이콘 | Chevron                      |
+   |--------------------|-------------|------------------------------|
+   | Default · Hover    | neutral/500 | neutral/500                  |
+   | Done               | neutral/500 | neutral/500                  |
+   | Disabled           | neutral/400 | neutral/400                  |
+   | Selected           | neutral/800 | **brand/primary-default**    |
+   | Selected+Destructed| neutral/800 | **theme/destructed-default** |
+
+   근거 노드(Size=M, 좌측/Chevron) — Default `2292:7123`/`7125` · Hover `2292:7217`/`7219` ·
+   Selected `2292:7247`/`7249` · Selected+Destructed `2292:7256`/`7258` ·
+   Disabled `2292:7187`/`7189` · Done `2292:7154`/`7156` */
+.bd-text-input[data-kind='dropdown'][data-state='selected'] .bd-text-input__icon--right {
+  color: var(--sys-color-brand-primary-default);
+}
+.bd-text-input[data-kind='dropdown'][data-destructed='true'][data-state='selected'] .bd-text-input__icon--right {
+  color: var(--sys-color-theme-destructed-default);
+}
