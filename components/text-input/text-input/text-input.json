@@ -461,7 +461,8 @@
     "Right Icon 기본 아이콘명 — arrowhead_down으로 확인(Dropdown의 chevron_down과 다름)",
     "State=Typing에서 Right Icon 슬롯이 close_in_circle로 강제 대체됨을 확인 완료",
     "Show Unit이 8개 공식 축 밖의 별도 요소인지 여부 — 사용자가 Figma 프로퍼티 패널에서 정식 boolean 컴포넌트 프로퍼티임을 확인. 8개 variant 축과 별개의 9번째 축(source.additionalNonVariantProperty 참고)",
-    "Destructed 에서 Supporting Text Theme 을 함께 전환할지 — 확정(2026-09-15), 전환함(빨강). Figma 는 디자이너가 맞출 예정"
+    "Destructed 에서 Supporting Text Theme 을 함께 전환할지 — 확정(2026-09-15), 전환함(빨강). Figma 는 디자이너가 맞출 예정",
+    "입력 양식(inputMode/maxLength 등) 축을 열지 — 확정(2026-09-15), 네이티브 속성 전부 열기로 함. Figma 근거 없이 사용자 지시가 출처"
   ],
   "openQuestions": [
     "캐럿 깜빡임 애니메이션 duration/easing/반복 주기",
@@ -624,5 +625,29 @@
     ],
     "destructedImplication": "Destructed는 Selected·Typing에서만 노출되므로, 에러 상태에서는 단위가 표시되지 않음",
     "evidence": "Typing 실측 노드 2개(2119:10121, 2119:18818) 모두 단위 레이어가 없고 showUnit prop 자체가 코드 출력에 나타나지 않음"
+  },
+  "inputFormat": {
+    "source": "사용자 지시(2026-09-15). Figma 에 근거 없음 — 컴포넌트는 생김새만 정의하고 입력 규칙은 담지 않음",
+    "prop": "inputProps — 네이티브 <input> 속성을 통째로 넘김",
+    "opened": [
+      "inputMode",
+      "maxLength",
+      "type",
+      "pattern",
+      "autoComplete",
+      "name",
+      "id",
+      "required",
+      "readOnly",
+      "aria-*",
+      "그 밖의 네이티브 속성 전부"
+    ],
+    "excluded": {
+      "value/defaultValue/onChange/placeholder/disabled": "Text Input 이 State 와 함께 관리 — 전용 prop 사용",
+      "className/ref": "스타일·포커스 제어가 깨짐"
+    },
+    "composed": "onFocus/onBlur 는 막지 않고 같이 호출 — 덮어쓰면 자동 State 전환이 죽음",
+    "displayModeNote": "state 를 고정한 진열 모드에서는 <input> 자체가 놓이지 않아 적용되지 않음",
+    "inheritedBy": "Text Input Group — 행 타입이 TextInputProps 라 행마다 다른 양식을 줄 수 있음"
   }
 }

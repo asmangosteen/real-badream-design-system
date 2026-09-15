@@ -139,7 +139,7 @@ Figma 6개 변형이 전부 그 모습이고, 단독 기본값 `'Input Text'`를
 - Field=2/3 각 필드의 실제 의미·사용 맥락(예: 주소 1줄/2줄 여부, 6장)
 - Destructed 등 Default 외 State가 그룹 내부에서 어떻게 동작하는지(6개 샘플 전부 Default만 관찰됨)
 - 어느 행이든 에러면 하단 문구를 빨강으로 바꾸는 규칙(4.1장) — Figma에 근거 없는 파생 규칙
-- 행마다 다른 **입력 양식**(숫자만·최대 길이 등) — Text Input 자체에 `inputMode`/`maxLength` 축이 아직 없어, 필요하면 Text Input을 먼저 늘려야 합니다
+- ~~행마다 다른 **입력 양식**(숫자만·최대 길이 등)~~ → **해결(2026-09-15)**: Text Input 에 `inputProps`(네이티브 `<input>` 속성 전부)를 열었고 행 타입이 `TextInputProps` 라 그대로 닿습니다. [text-input.md](../text-input/text-input.md) 5.1장
 
 ## 8. 샘플링에 사용한 6개 노드 (부록, 전수)
 

@@ -126,6 +126,41 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 - **Text Blinker**: [`components/global/text-blinker/text-blinker.md`](../../global/text-blinker/text-blinker.md)의 `On` 변형이 TypeBox의 Selected/Typing 상태를 통해 간접적으로 인스턴스화됩니다. 크기(1.5×20px)·radius(2px)는 문서 스펙과 일치하지만, **채우기 색상은 Destructed 여부에 따라 `brand/primary-default`↔`theme/destructed-default`로 오버라이드**됩니다(3장 핵심 발견 3 참고) — text-blinker.md 자체에는 없는, 상위 컴포넌트 레벨의 활용 사례입니다.
 - **Supporting Text**: [`components/global/supporting-text/supporting-text.md`](../../global/supporting-text/supporting-text.md)의 Size S/M/L, **Theme=Gray**(기본), **Text Count=False** 조합을 그대로 사용. 아이콘은 `warning_filled`로, Supporting Text 문서에서 이미 확인된 "자유 교체 placeholder" 패턴과 동일합니다. Figma 변형에서는 Destructed 여도 Supporting Text 가 `Theme=Gray` 그대로입니다(Input 테두리·Button 만 색이 바뀜). **디자이너 확정(2026-09-15)** — 하단 Supporting Text 는 Destructed 와 함께 `Theme=Destructed`(빨강)로 바뀝니다. Figma 변형은 아직 `Theme=Gray` 이지만 **디자이너가 Figma 쪽을 맞추기로 했습니다** — 이 경우만 구현이 먼저 가 있는 상태입니다. (7장 참고)
 
+## 5.1 입력 양식 (사용자 지시, 2026-09-15 — Figma 근거 없음)
+
+**Figma 에는 이 영역의 근거가 없습니다.** 컴포넌트는 생김새만 정의하고 *"이 칸은 숫자만 받는다"*
+같은 입력 규칙은 담지 않습니다. 잴 대상 자체가 없어 실측으로 채울 수 없는 항목이라,
+출처는 **사용자 지시**입니다.
+
+구현은 실제 `<input>` 에 **네이티브 속성을 통째로** 흘려보냅니다:
+
+    inputProps?: Omit<React.InputHTMLAttributes<HTMLInputElement>,
+      'value' | 'defaultValue' | 'onChange' | 'placeholder' | 'disabled' | 'className' | 'ref'>
+
+| 쓰임 | 예 |
+|---|---|
+| 키패드 종류 | `inputMode: 'numeric'` · `'tel'` · `'email'` |
+| 글자 수 제한 | `maxLength: 5` |
+| 형식·타입 | `type` · `pattern` |
+| 자동완성·폼 연결 | `autoComplete: 'postal-code'` · `name` · `id` · `required` · `readOnly` |
+| 접근성 | `aria-*` |
+
+**뺀 것과 그 이유**
+
+| 뺀 속성 | 이유 |
+|---|---|
+| `value`·`defaultValue`·`onChange` | Text Input 이 State 와 함께 관리합니다 — 전용 prop 을 씁니다 |
+| `placeholder`·`disabled` | 위와 같음 |
+| `className`·`ref` | 스타일·포커스 제어가 깨집니다 |
+
+`onFocus`/`onBlur` 는 **막지 않고 같이 호출**합니다. 덮어쓰게 두면 포커스가 들어가도
+Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
+
+⚠️ `state` 를 고정한 **진열 모드에서는 `<input>` 자체가 놓이지 않아 적용되지 않습니다.**
+
+이 통로는 [Text Input Group](../text-input-group/text-input-group.md) 에서도 그대로 닿습니다 —
+행 타입이 `TextInputProps` 라 **행마다 다른 양식**을 줄 수 있습니다(우편번호 칸만 숫자 5자리 등).
+
 ## 6. 인터랙션(모션) 스펙
 
 **모션 데이터 없음.**

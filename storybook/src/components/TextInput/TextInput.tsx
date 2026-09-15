@@ -62,6 +62,22 @@ export interface TextInputProps {
   supportingProps?: SupportingTextProps;
   /** 값 표시칸([Type Box](../TypeBox/TypeBox.tsx))에 그대로 넘어갑니다 — 캐럿 색 등 */
   typeBoxProps?: Partial<TypeBoxProps>;
+  /**
+   * **실제 `<input>` 에 그대로 넘어가는 속성 전부**입니다 — 입력 양식(`inputMode`·`maxLength`·
+   * `type`·`pattern`·`autoComplete`), 폼 연결(`name`·`id`·`required`·`readOnly`),
+   * 접근성(`aria-*`)까지 네이티브가 받는 것은 다 됩니다.
+   *
+   * Figma 에는 **근거가 없는 영역**입니다 — 컴포넌트는 생김새만 정의하고 "이 칸은 숫자만" 같은
+   * 입력 규칙은 담지 않습니다. 실제로 필요해서 여는 것이라 출처는 **사용자 지시**입니다(2026-09-15).
+   *
+   * ⚠️ `state` 를 고정한 **진열 모드에서는 `<input>` 자체가 놓이지 않아 적용되지 않습니다.**
+   * 값·placeholder·비활성은 Text Input 이 State 로 관리하므로 여기서 뺐습니다(위의 전용 prop 을 쓰세요).
+   * `onFocus`/`onBlur` 는 **막지 않고 같이 호출**합니다 — 자동 State 전환을 유지한 채 바깥 핸들러도 받습니다.
+   */
+  inputProps?: Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'value' | 'defaultValue' | 'onChange' | 'placeholder' | 'disabled' | 'className' | 'ref'
+  >;
   showLeftIcon?: boolean;
   leftIconName?: string;
   /**
@@ -114,6 +130,7 @@ export function TextInput({
   labelProps,
   supportingProps,
   typeBoxProps,
+  inputProps,
   showLeftIcon = true,
   leftIconName = 'profile_filled',
   showRightIcon = true,
@@ -215,18 +232,29 @@ export function TextInput({
               <input
                 ref={inputRef}
                 className="bd-text-input__input"
+                /* 브라우저 맞춤법 검사 밑줄(빨간 점선)을 끕니다 — 디자인 요소가 아닙니다.
+                   기본값이므로 `inputProps` 로 다시 켤 수 있습니다. */
+                spellCheck={false}
+                {...inputProps}
                 value={typed}
                 placeholder={placeholder}
                 disabled={disabled}
-                /* 브라우저 맞춤법 검사 밑줄(빨간 점선)을 끕니다 — 디자인 요소가 아닙니다 */
-                spellCheck={false}
-                style={{ caretColor }}
+                /* 캐럿 색은 State 가 정하지만 나머지 style 은 바깥 것을 이어 붙입니다 */
+                style={{ caretColor, ...inputProps?.style }}
                 onChange={(e) => {
                   setTyped(e.target.value);
                   onChange?.(e.target.value);
                 }}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
+                /* 자동 State 전환을 유지한 채 바깥 핸들러도 함께 호출합니다 —
+                   덮어쓰게 두면 포커스가 들어가도 Selected/Typing 으로 넘어가지 않습니다. */
+                onFocus={(e) => {
+                  setFocused(true);
+                  inputProps?.onFocus?.(e);
+                }}
+                onBlur={(e) => {
+                  setFocused(false);
+                  inputProps?.onBlur?.(e);
+                }}
               />
             )}
           </span>

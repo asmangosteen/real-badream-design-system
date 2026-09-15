@@ -65,9 +65,13 @@ const meta = {
           '어느 행이든 `destructed`면 그 문구가 빨강이 됩니다. 안내 문구가 한 자리뿐이라',
           '위쪽 행의 에러를 알릴 길이 그것밖에 없기 때문입니다.',
           '',
-          '## ⚠️ 확인이 필요한 것',
-          '- **입력 양식(숫자만·최대 길이 등)은 아직 축이 없습니다.** Text Input 자체에 `inputMode`/',
-          '  `maxLength` 같은 속성이 없어서, 행마다 다른 양식을 주려면 Text Input을 먼저 늘려야 합니다.',
+          '### 입력 양식도 행마다 다르게',
+          '',
+          '`inputProps` 로 네이티브 `<input>` 속성이 그대로 넘어갑니다 — `inputMode`(키패드 종류),',
+          '`maxLength`(글자 수 제한), `autoComplete`, `name` 까지. 우편번호 칸만 숫자 5자리로 두는 식이 됩니다.',
+          '',
+          '> ⚠️ Figma에는 **근거가 없는 영역**입니다. 컴포넌트는 생김새만 정의하고 "이 칸은 숫자만" 같은',
+          '> 입력 규칙은 담지 않습니다 — 출처는 **사용자 지시**(2026-09-15)입니다.',
           '',
           '스펙 원본: [`components/text-input/text-input-group/text-input-group.md`](https://github.com/asmangosteen/real-badream-design-system/blob/main/components/text-input/text-input-group/text-input-group.md)',
         ].join('\n'),
@@ -218,6 +222,41 @@ export const 자식속성: Story = {
           showSupportingText
         />
       </div>
+    </div>
+  ),
+};
+
+/**
+ * **입력 양식도 행마다 다르게** 줄 수 있습니다 (사용자 지시, 2026-09-15).
+ *
+ * `inputProps` 로 네이티브 `<input>` 속성이 그대로 넘어갑니다 — 키패드 종류(`inputMode`),
+ * 글자 수 제한(`maxLength`), 자동완성(`autoComplete`), 폼 이름(`name`)까지.
+ * 아래 우편번호 칸은 **숫자 키패드 · 5자리 제한**입니다. 직접 쳐보세요 — 6자리째가 안 들어갑니다.
+ *
+ * ⚠️ Figma 에는 근거가 없는 영역입니다. 컴포넌트는 생김새만 정의하고 "이 칸은 숫자만" 같은
+ * 입력 규칙은 담지 않습니다.
+ */
+export const 입력양식: Story = {
+  name: '입력 양식 · 행마다 다르게',
+  args: { fields: [] },
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={{ width: 340 }}>
+      <span className="bd-cell__label">우편번호 = 숫자 5자리 · 나머지는 일반 텍스트</span>
+      <TextInputGroup
+        label="주소"
+        essential
+        fields={[
+          {
+            placeholder: '우편번호',
+            inputProps: { inputMode: 'numeric', maxLength: 5, autoComplete: 'postal-code', name: 'zip' },
+          },
+          { placeholder: '기본 주소', inputProps: { autoComplete: 'address-line1', name: 'addr1' } },
+          { placeholder: '상세 주소', inputProps: { autoComplete: 'address-line2', name: 'addr2' } },
+        ]}
+        supportingText="도로명 주소로 입력해주세요"
+        showSupportingText
+      />
     </div>
   ),
 };
