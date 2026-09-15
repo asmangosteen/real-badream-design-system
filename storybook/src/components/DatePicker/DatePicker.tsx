@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '../Icon/Icon';
 import { IconButton } from '../IconButton/IconButton';
 import { Divider } from '../Divider/Divider';
@@ -128,25 +128,85 @@ export function CalendarHeader({
    1999년 12월 → 1998년 11월 같은 잘못된 조합이 나왔습니다) */
 const WHEEL = {
   viewport: 190,
+  /** 가운데 칸에서 한 칸 떨어진 자리까지의 **보이는 간격** — Figma 실측 32px. 이 값은 디자인입니다. */
   slot: 32,
+  /**
+   * 한 칸을 넘기는 데 필요한 **스크롤 거리**. 보이는 간격과 별개입니다. **민감도 손잡이가 여기입니다.**
+   *
+   * `slot` 과 같은 값(32)이면 트랙패드를 한 번 튕길 때 1년치가 지나갑니다.
+   * 이 값만 키우면 보이는 모양은 그대로 두고 민감도만 낮출 수 있습니다(지금은 2배 둔감).
+   * 브라우저 네이티브 스크롤·관성·스냅을 그대로 쓰므로 부드러움에는 손대지 않습니다.
+   */
+  step: 64,
 } as const;
-const WHEEL_PAD = (WHEEL.viewport - WHEEL.slot) / 2;   // 79px — 첫·마지막 항목도 가운데에 올 수 있게
+/** 첫·마지막 항목도 가운데에 올 수 있게 위아래를 비워 둡니다 */
+const WHEEL_PAD = (WHEEL.viewport - WHEEL.step) / 2;   // 63px
 /** 거리별 중심 오프셋 — Figma 실측 0/32/60/84. 간격이 32→28→24 로 4씩 줄어드는 패턴이라
  *  바깥쪽은 20 을 이어 붙여 104 로 둡니다. 원통 공식(R·sin)으로는 84 가 나오지 않아
  *  실측 정지점을 그대로 쓰고 사이만 이어 줍니다. */
 const OFFSET_STOPS = [0, 32, 60, 84, 104];
 const OPACITY_STOPS = [1, 0.7, 0.5, 0.3, 0];
 const FONT_STOPS = [18, 18, 16, 14, 14];
-/** 월 열은 무한히 감깁니다 — 같은 목록을 이만큼 반복해 이어 붙이고 가운데 벌에서 시작합니다 */
-const LOOP_COPIES = 5;
-const LOOP_MIDDLE = 2;
+/** 월 열은 무한히 감깁니다 — 같은 목록을 이만큼 반복해 이어 붙이고 가운데 벌에서 시작합니다.
+ *  ⚠️ 벌 수가 곧 **한 번에 굴릴 수 있는 거리**입니다. 5벌(=60칸, 가운데에서 위아래 944px)이었을 때
+ *  세게 튕기면 목록 끝까지 가서 항목이 바닥났고, 멈춘 뒤에야 가운데로 되돌아와 **튕기는 것처럼** 보였습니다.
+ *  9벌로 늘리고(아래 `recenter` 와 함께) 끝에 닿을 일이 실질적으로 없게 만듭니다.
+ *  늘어난 DOM 은 `paint` 가 보이는 칸만 그리도록 해서 상쇄합니다. */
+const LOOP_COPIES = 9;
+const LOOP_MIDDLE = 4;
+/** 이 거리(칸)를 넘어가면 어차피 투명도 0 이라 그리지 않습니다 */
+const PAINT_RANGE = 6;
 
-/** 거리(실수)에 따라 두 정지점 사이를 이어 줍니다 */
-function lerpStops(stops: readonly number[], x: number): number {
-  const c = Math.min(Math.max(x, 0), stops.length - 1);
-  const i = Math.floor(c);
-  return stops[i] + (stops[Math.min(i + 1, stops.length - 1)] - stops[i]) * (c - i);
+/**
+ * 정지점 사이의 **기울기**(= 각 정지점에서의 속도). 단조 3차 보간(Fritsch–Carlson)용입니다.
+ * 이웃한 두 구간의 증감 방향이 다르면 0 으로 눕혀 곡선이 정지점을 넘어 튀지 않게 합니다.
+ */
+function tangentsOf(y: readonly number[]): number[] {
+  const n = y.length;
+  const d = Array.from({ length: n - 1 }, (_, i) => y[i + 1] - y[i]);
+  const m = new Array<number>(n);
+  m[0] = d[0];
+  m[n - 1] = d[n - 2];
+  for (let i = 1; i < n - 1; i++) {
+    if (d[i - 1] * d[i] <= 0) {
+      m[i] = 0;
+      continue;
+    }
+    const avg = (d[i - 1] + d[i]) / 2;
+    const limit = 3 * Math.min(Math.abs(d[i - 1]), Math.abs(d[i]));
+    m[i] = Math.sign(avg) * Math.min(Math.abs(avg), limit);
+  }
+  return m;
 }
+
+/**
+ * 거리(실수)에 따라 두 정지점 사이를 **기울기가 끊기지 않게** 이어 줍니다.
+ *
+ * ⚠️ 예전에는 직선으로 이었습니다(`lerpStops`). 정지점마다 간격이 32 → 28 → 24 → 20 으로 줄어드는데,
+ * 직선으로 이으면 정지점을 지날 때마다 **속도가 뚝 바뀝니다.** 한 칸을 넘기는 거리가 32px 일 때는
+ * 순식간에 지나가 티가 안 났지만, 민감도를 낮춰 같은 구간을 두 배 천천히 지나가게 하자 그 꺾임이 그대로 보였습니다 —
+ * 이웃한 글자끼리 속도가 달라 **서로 밀어내는 것처럼** 보이고 스크롤이 뚝뚝 끊겨 보인 원인입니다.
+ *
+ * 정지점 값(Figma 실측)은 그대로 지나가고 그 사이만 매끄럽게 잇습니다. 단조 보간이라 값이 튀지 않습니다.
+ */
+function smoothStops(stops: readonly number[], tangents: readonly number[], x: number): number {
+  const n = stops.length;
+  const c = Math.min(Math.max(x, 0), n - 1);
+  const i = Math.min(Math.floor(c), n - 2);
+  const t = c - i;
+  const t2 = t * t;
+  const t3 = t2 * t;
+  return (
+    (2 * t3 - 3 * t2 + 1) * stops[i] +
+    (t3 - 2 * t2 + t) * tangents[i] +
+    (-2 * t3 + 3 * t2) * stops[i + 1] +
+    (t3 - t2) * tangents[i + 1]
+  );
+}
+
+const OFFSET_TANGENTS = tangentsOf(OFFSET_STOPS);
+const OPACITY_TANGENTS = tangentsOf(OPACITY_STOPS);
+const FONT_TANGENTS = tangentsOf(FONT_STOPS);
 
 interface WheelColumnProps {
   values: number[];
@@ -166,12 +226,17 @@ interface WheelColumnProps {
 function WheelColumn({ values, index, onIndexChange, format, align, width, ariaLabel, loop = false }: WheelColumnProps) {
   const viewRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const rafRef = useRef(0);
   const settleRef = useRef<number | undefined>(undefined);
   /* 사용자가 돌려서 값이 바뀐 경우에는 아래 layout effect 가 **다시 스크롤을 걸면 안 됩니다.**
      이미 손가락(또는 스냅)이 그 자리에 데려다 놨는데 프로그램 스크롤이 겹치면
-     둘이 서로 밀어내며 엉뚱한 칸에 멈춥니다. */
-  const selfScroll = useRef(false);
+     둘이 서로 밀어내며 엉뚱한 칸에 멈춥니다.
+
+     ⚠️ 불리언 플래그로는 부족합니다. 플래그를 켜고 값을 올려보냈는데 **바깥이 그 값을 받아들이지 않으면**
+     (범위로 잘리거나 무시되거나) `rawIndex` 가 그대로라 effect 가 아예 실행되지 않습니다.
+     그러면 플래그가 켜진 채로 남아, 나중에 들어오는 **정당한 동기화 한 번을 통째로 잡아먹습니다** —
+     값은 바뀌었는데 휠은 제자리에 굳습니다. 연도 열이 `lo`/`hi` 로 값을 자르므로 실제로 닿을 수 있는 경로입니다.
+     그래서 "어느 자리로 갔는지"까지 적어 두고, **그 자리가 그대로 돌아온 렌더에서만** 건너뜁니다. */
+  const selfScrollTo = useRef<number | null>(null);
   /* 반대 방향의 사고도 막아야 합니다 — **프로그램이 건 스크롤이 목표에 닿기 전에**
      정착 타이머가 터지면, 지나가던 칸을 "사용자가 고른 값"으로 착각해 확정해 버립니다.
      Date Picker Group 처럼 한쪽 휠을 고르면 **다른 쪽 휠이 따라 움직이는** 구조에서는
@@ -191,21 +256,61 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
     const center = view.scrollTop + WHEEL.viewport / 2;
     itemRefs.current.forEach((item, i) => {
       if (!item) return;
-      const natural = WHEEL_PAD + i * WHEEL.slot + WHEEL.slot / 2;
-      const d = (natural - center) / WHEEL.slot;
+      const natural = WHEEL_PAD + i * WHEEL.step + WHEEL.step / 2;
+      const d = (natural - center) / WHEEL.step;
       const ad = Math.abs(d);
+      /* 거리 4 를 넘으면 투명도가 이미 0 입니다. 목록을 9벌이나 이어 붙였으므로
+         보이지도 않는 칸까지 매 프레임 건드리면 빠르게 굴릴 때 그만큼 손해입니다. */
+      if (ad > PAINT_RANGE) {
+        if (item.style.opacity !== '0') {
+          item.style.opacity = '0';
+          item.dataset.center = 'false';
+        }
+        return;
+      }
       // 실측 오프셋으로 옮긴 위치 − 원래 자리 = 안쪽으로 당겨야 할 만큼
-      const curved = lerpStops(OFFSET_STOPS, ad) * Math.sign(d);
-      item.style.transform = `translateY(${(curved - d * WHEEL.slot).toFixed(2)}px)`;
-      item.style.opacity = lerpStops(OPACITY_STOPS, ad).toFixed(3);
-      item.style.fontSize = `${lerpStops(FONT_STOPS, ad).toFixed(2)}px`;
+      const curved = smoothStops(OFFSET_STOPS, OFFSET_TANGENTS, ad) * Math.sign(d);
+      /* 실제로 놓인 자리(d × step)에서 실측 오프셋(curved) 자리로 끌어당깁니다 —
+         그래서 스크롤 거리를 바꿔도 **보이는 간격은 Figma 실측 그대로** 유지됩니다. */
+      item.style.transform = `translateY(${(curved - d * WHEEL.step).toFixed(2)}px)`;
+      item.style.opacity = smoothStops(OPACITY_STOPS, OPACITY_TANGENTS, ad).toFixed(3);
+      item.style.fontSize = `${smoothStops(FONT_STOPS, FONT_TANGENTS, ad).toFixed(2)}px`;
       item.dataset.center = ad < 0.5 ? 'true' : 'false';
     });
   }, []);
 
+  /**
+   * 감기는 열을 **굴리는 도중에** 가운데 벌로 되돌립니다.
+   *
+   * 한 벌(=`len`칸) 단위로만 옮기므로 보이는 내용이 완전히 같아 눈에 띄지 않습니다.
+   * 멈춘 뒤에 되돌리던 기존 방식은, 세게 튕겨 목록 끝까지 갔을 때 **항목이 바닥난 뒤에야**
+   * 제자리를 찾아서 튕기는 것처럼 보였습니다.
+   */
+  const recenter = useCallback(() => {
+    const view = viewRef.current;
+    if (!view || !loop) return;
+    const period = len * WHEEL.step;
+    const top = view.scrollTop;
+    const limit = view.scrollHeight - view.clientHeight;
+    /* **실제 끝에 다가왔을 때만** 되돌립니다. 위치를 바꾸면 그 순간 브라우저의 관성이 흔들릴 수 있어서,
+       되돌리는 횟수 자체를 최소로 가져갑니다 — 평범한 스크롤에서는 한 번도 일어나지 않습니다.
+       한 벌 반(=18칸)을 남겨 두므로 아무리 빨라도 다음 스크롤 이벤트 전에 끝에 닿지 않습니다. */
+    const margin = period * 1.5;
+    if (top > margin && top < limit - margin) return;
+    view.scrollTop = (((top % period) + period) % period) + period * LOOP_MIDDLE;
+    // 자리를 옮겼으니 바로 다시 그립니다 — 한 프레임이라도 옛 자리로 남아 있으면 눈에 띕니다
+    paint();
+  }, [loop, len, paint]);
+
   const handleScroll = useCallback(() => {
-    cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(paint);
+    recenter();
+    /* ⚠️ `requestAnimationFrame` 으로 미루지 않고 **그 자리에서** 그립니다.
+       미루면 스크롤 위치는 이미 움직였는데 글자는 아직 옛 자리에 그려진 프레임이 생깁니다.
+       게다가 스크롤 이벤트마다 이전 rAF 를 취소하는 구조라, 이벤트가 프레임보다 잦으면
+       그리기가 계속 뒤로 밀립니다 — 세게 굴렸을 때 **강조된 칸이 파란 알약을 벗어나** 보이던 원인입니다.
+       (밀린 거리만큼 어긋나므로 어긋나는 방향이 스크롤 방향을 따라갑니다.)
+       그리는 비용은 보이는 13칸 남짓이라 스크롤 이벤트마다 바로 해도 부담이 없습니다. */
+    paint();
     window.clearTimeout(settleRef.current);
     settleRef.current = window.setTimeout(() => {
       const view = viewRef.current;
@@ -226,37 +331,62 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
       }
       settledAt.current = top;
 
-      const raw = Math.round(top / WHEEL.slot);
+      const raw = Math.round(top / WHEEL.step);
+      const targetIndex = loop
+        ? LOOP_MIDDLE * len + (((raw % len) + len) % len)
+        : Math.min(Math.max(raw, 0), len - 1);
+      const targetTop = targetIndex * WHEEL.step;
+
+      /* 감기는 열은 **한 벌 단위 차이만** 먼저 하드 점프로 지웁니다 — 같은 목록이라 눈에 보이지 않습니다.
+         (`recenter` 가 굴리는 도중에 이미 가운데로 데려다 놓으므로 평소에는 여기서 움직일 일이 없습니다.) */
       if (loop) {
-        const value = ((raw % len) + len) % len;
-        const canonical = LOOP_MIDDLE * len + value;
-        // 멈춘 뒤에 가운데 벌로 되돌립니다 — 같은 목록이라 눈에 보이지 않습니다.
-        // 이것도 프로그램 스크롤이라 가드를 걸어 둡니다.
-        if (raw !== canonical) {
-          syncingTo.current = canonical * WHEEL.slot;
-          settledAt.current = -1;
-          view.scrollTop = canonical * WHEEL.slot;
+        const period = len * WHEEL.step;
+        const shift = Math.round((view.scrollTop - targetTop) / period) * period;
+        if (shift !== 0) {
+          view.scrollTop = view.scrollTop - shift;
+          paint();
         }
-        if (value !== index) { selfScroll.current = true; onIndexChange(value); }
-      } else {
-        const next = Math.min(Math.max(raw, 0), len - 1);
-        if (next !== index) { selfScroll.current = true; onIndexChange(next); }
       }
+
+      /* 브라우저 스냅은 **격자에 정확히 맞춰 주지 않습니다.** 휠이 반픽셀 자리에 놓이면
+         (예: 컨테이너 top 이 147.5px) 스냅도 0.5px 쯤 벗어난 곳에 멈추고, `paint` 는 그 위치를
+         그대로 반영하므로 선택된 칸이 알약 정중앙에서 미세하게 어긋난 채로 남습니다.
+         멈춘 뒤 한 번 격자에 정확히 올려 둡니다 — 보정량이 1px 도 안 되므로 움직임으로 보이지 않습니다.
+         (스크롤이 끝나고 110ms 뒤에만 도는 자리라 사용자의 스크롤과 싸우지 않습니다.) */
+      /* **멈춘 자리는 반드시 격자 위여야 합니다.**
+         `paint` 는 칸의 화면 위치를 오로지 거리 `d` 로만 계산하므로, 선택된 칸이 알약 정중앙에
+         오는 조건은 `scrollTop` 이 정확히 `칸번호 × step` 인 것 하나뿐입니다.
+         브라우저 스냅은 거기까지 보장하지 않습니다 — 레이아웃이 반픽셀에 놓이면 그만큼 어긋나고,
+         위의 한 벌 단위 정규화처럼 **우리가 직접 쓴 위치는 다시 스냅되지도 않습니다.**
+         스크롤이 끝나고 110ms 뒤인 이 자리에서 한 번 정확히 올려놓습니다. */
+      if (view.scrollTop !== targetTop) {
+        // 스냅을 켠 채로 고치면 브라우저가 자기 기준 지점으로 도로 당깁니다 — 쓰는 순간만 끕니다
+        const snap = view.style.scrollSnapType;
+        view.style.scrollSnapType = 'none';
+        view.scrollTop = targetTop;
+        paint();
+        window.setTimeout(() => { view.style.scrollSnapType = snap; }, 0);
+      }
+
+      const value = loop ? targetIndex - LOOP_MIDDLE * len : targetIndex;
+      if (value !== index) { selfScrollTo.current = targetIndex; onIndexChange(value); }
     }, 110);
-  }, [paint, index, onIndexChange, len, loop]);
+  }, [paint, recenter, index, onIndexChange, len, loop]);
 
   // 바깥에서 값이 바뀌면 스크롤 위치를 맞춥니다. 첫 그림은 애니메이션 없이.
   const mounted = useRef(false);
   useLayoutEffect(() => {
     const view = viewRef.current;
     if (!view) return;
-    if (selfScroll.current) {
-      // 사용자가 직접 돌려서 바뀐 값 — 이미 제자리에 있으므로 그리기만 합니다
-      selfScroll.current = false;
+    if (selfScrollTo.current === rawIndex) {
+      // 사용자가 직접 돌려서 도달한 바로 그 자리 — 이미 제자리에 있으므로 그리기만 합니다
+      selfScrollTo.current = null;
       paint();
       return;
     }
-    const top = rawIndex * WHEEL.slot;
+    // 그 밖에는(바깥에서 다른 값이 온 경우 포함) 기록을 버리고 정상적으로 맞춥니다
+    selfScrollTo.current = null;
+    const top = rawIndex * WHEEL.step;
     if (Math.abs(view.scrollTop - top) > 1) {
       syncingTo.current = top;
       settledAt.current = -1;
@@ -266,7 +396,6 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
     paint();
   }, [rawIndex, paint]);
 
-  useEffect(() => () => cancelAnimationFrame(rafRef.current), []);
 
   const takeOver = () => {
     syncingTo.current = null;
@@ -277,7 +406,7 @@ function WheelColumn({ values, index, onIndexChange, format, align, width, ariaL
     <div
       ref={viewRef}
       className="bd-ym-wheel__col"
-      style={{ width }}
+      style={{ width, '--bd-wheel-step': `${WHEEL.step}px`, '--bd-wheel-pad': `${WHEEL_PAD}px` } as React.CSSProperties}
       data-align={align}
       role="listbox"
       aria-label={ariaLabel}

@@ -134,13 +134,17 @@
 .bd-ym-wheel__col::-webkit-scrollbar { display: none; }
 .bd-ym-wheel__col:focus-visible { border-radius: var(--ref-radius-04); box-shadow: 0 0 0 2px var(--sys-color-brand-primary-default); }
 
-/* 첫·마지막 항목도 가운데에 올 수 있도록 위아래를 비워 둡니다 ((190 − 32) / 2) */
-.bd-ym-wheel__pad { height: 79px; flex: 0 0 auto; }
+/* 첫·마지막 항목도 가운데에 올 수 있도록 위아래를 비워 둡니다.
+   높이는 컴포넌트가 `--bd-wheel-pad` 로 내려줍니다 — 스크롤 계산과 어긋나면 안 되는 값이라
+   CSS 에 따로 적지 않고 한 곳(WHEEL 상수)에서만 정합니다. */
+.bd-ym-wheel__pad { height: var(--bd-wheel-pad); flex: 0 0 auto; }
 
 .bd-ym-wheel__item {
   display: flex;
   align-items: center;
-  height: 32px;                      /* 스크롤 계산용 한 칸 — 글자 크기와 무관하게 고정 */
+  /* **스크롤 거리**로서의 한 칸입니다(`--bd-wheel-step`). 보이는 간격(32px)과 다릅니다 —
+     보이는 위치는 컴포넌트가 transform 으로 다시 잡아 줍니다. 이 값이 클수록 휠이 덜 예민합니다. */
+  height: var(--bd-wheel-step);
   flex: 0 0 auto;
   scroll-snap-align: center;
   white-space: nowrap;
