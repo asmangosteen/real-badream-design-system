@@ -30,14 +30,14 @@ Text Input Group은 [Text Input](../text-input/text-input.md) 인스턴스를 �
 | **내부 Text Input Size** | S | M | L |
 | **내부 Input 컨테이너**(각 필드) | radius `radius/05`=10px, border `borderwidth/02`=1px, padding px `spacing/07`=10px / py `spacing/05`=6px, 내부 gap `spacing/06`=8px | radius `radius/05`=10px, border 1px, padding px `spacing/08`=12px / py `spacing/06`=8px, 내부 gap `spacing/06`=8px | radius `radius/06`=12px, border 1px, padding px `spacing/09`=14px / py `spacing/08`=12px, 내부 gap `spacing/07`=10px |
 | **첫 번째 필드 Label** | 있음, pb `spacing/02`=2px, Caption1/12 SB | 있음, pb `spacing/04`=4px, Caption1/12 SB | 있음, pb `spacing/05`=6px, Body2/14 M |
-| **전체 컨테이너 너비**(실측 샘플값) | `w-[280px]` | `w-[280px]` | `w-[280px]` |
+| **전체 컨테이너 너비** | **가변(fluid)** — `w-[280px]`는 진열 프레임 표시값 | 〃 | 〃 |
 | **전체 높이**(Field=2, `get_metadata`) | 84px | 104px | 132px |
 
 **핵심 발견**: 각 Size의 **필드 간 세로 gap 값이 [Text Input 문서](../text-input/text-input.md) 2장의 "Input-Button 사이 gap" 값과 정확히 동일**합니다(S=`spacing/04`=4px, M=`spacing/05`=6px, L=`spacing/06`=8px). 우연의 일치일 수도 있으나, 동일한 Size 스케일 토큰 체계를 그대로 재사용한 결과로 보입니다.
 
 내부 Input 컨테이너의 radius·border·padding·gap 값은 [text-input.md](../text-input/text-input.md) 2장의 Size별 스펙과 **정확히 일치**합니다 — Text Input Group은 Size만 맞춰 Text Input을 그대로 인스턴스로 쌓아 쓰고 있습니다.
 
-**너비**: 6개 노드 전부 `w-[280px]`(고정 Tailwind 클래스)로 표시되지만, Dropdown·Supporting Text 문서에서 이미 확인된 것과 동일한 Figma 진열 프레임 컨벤션으로 보이며 실제로는 화면 폭에 따른 가변(fluid) 너비일 가능성이 높습니다 — 이 컴포넌트 자체로 재검증하지는 않아 **확인 필요**로 남깁니다.
+**너비**: 6개 노드 전부 `w-[280px]`(고정 Tailwind 클래스)로 표시되지만 **고정폭이 아니라 화면 폭에 따른 가변(fluid)입니다**(디자이너 확인 완료, 2026-09-15). Figma 진열 프레임의 표시값일 뿐이며, [Text Input](../text-input/text-input.md)·[Dropdown](../../dropdown/dropdown.md)과 같은 규칙입니다. 구현은 `width: 100%`입니다.
 
 ## 3. Field=2 / Field=3 차이
 
@@ -55,7 +55,7 @@ Text Input Group은 [Text Input](../text-input/text-input.md) 인스턴스를 �
 |---|---|
 | **Show Label** | **첫 번째 필드만 True**(Label 표시), 두 번째·세 번째 필드는 **False**(Label 없음) |
 | **Show Button** | 모든 필드 **False**(확정 버튼 없음) |
-| **Supporting Text** | 모든 필드 **False**(하단 헬퍼 텍스트 없음) |
+| **Supporting Text** | Figma 6개 변형은 모든 필드 **False**. 실사용 규칙은 다릅니다 — **4.1장** 참고 |
 | **Left Icon** | 모든 필드 **False** |
 | **Right Icon** | 모든 필드 **False** |
 | **State** | 전부 `Default`(Placeholder 표시), Destructed 등 다른 State는 6개 샘플에서 관찰되지 않음 |
@@ -63,6 +63,44 @@ Text Input Group은 [Text Input](../text-input/text-input.md) 인스턴스를 �
 즉 Text Input Group 안의 각 필드는 [text-input.md](../text-input/text-input.md) 4장에서 "5개 토글 전부 False"로 문서화한 최소 형태(`2115:9089`, TypeBox만 담긴 Input 한 줄)와 동일한 구조이며, 유일한 예외가 **첫 번째 필드에만 Label을 붙인다는 규칙**입니다. 이는 그룹 전체에 필드별 개별 라벨을 달지 않고 그룹 상단에 대표 라벨 하나만 두는 디자인 의도로 추정됩니다(예: "주소" 라벨 하나 아래 1줄/2줄 입력 필드).
 
 내부 코드에서 두 번째·세 번째 필드가 참조하는 컴포넌트 노드 id(예: M 기준 `2115:9090`)가 첫 번째 필드가 참조하는 id(`2114:6337`)와 다른 것도 이 규칙과 일치합니다 — 서로 다른 Show Label 변형의 Text Input 인스턴스를 각각 가져다 쓰고 있는 것으로 확인됩니다.
+
+### 4.1 실사용 규칙 (사용자 지시, 2026-09-15)
+
+Figma의 6개 변형은 **모든 토글이 꺼진 진열용 최소 형태**입니다. 실제로 쓸 때의 규칙은 따로 정해졌습니다.
+
+**1. 행은 그냥 Text Input입니다. 속성을 하나도 빼지 않습니다.**
+Text Input Group은 단순하게 보면 **Text Input 2~3개를 합쳐 놓은 것**이고, 각 행은 Text Input
+그 자체입니다. 구현의 행 타입도 `TextInputGroupField = TextInputProps` — **Omit이 없습니다.**
+그래서 Text Input에 속성이 늘어나면 행도 자동으로 따라갑니다.
+
+그룹이 주는 값(`size`·`label`·`essential`·`supportingText`·`supportingTheme`)은 전부
+**행의 기본값**일 뿐입니다. 행에서 주면 행 쪽이 이깁니다(`f.size ?? size` 꼴).
+
+**그룹이 강제하는 것은 자리 두 개뿐입니다** — 속성을 막는 게 아니라 **어디에 그릴지**만 정합니다.
+
+| | 규칙 | 근거 |
+|---|---|---|
+| **라벨** | **첫 행에만** 그림 | Figma 실측 — 두·세 번째 행은 `Show Label=False` 변형(4장) |
+| **안내 문구** | **맨 아래 행 아래에만** 그림 | 사용자 지시(아래 2번) |
+
+행이 `showLabel`/`showSupportingText`를 켜도 그 자리가 아니면 그리지 않습니다 —
+중간 행에 라벨이 끼면 그룹으로 읽히지 않기 때문입니다.
+
+**2. 안내 문구(Supporting Text)는 맨 아래 행 아래에만 나옵니다.**
+그룹이 하나만 갖습니다. 행마다 붙이면 칸 사이가 벌어져 한 덩어리로 읽히지 않습니다.
+
+> **구현 결정**: 어느 행이든 `destructed`면 그 문구가 빨강이 됩니다. 안내 문구가 한 자리뿐이라
+> 위쪽 행의 에러를 알릴 길이 그것밖에 없기 때문입니다. Figma에 근거가 없는 파생 규칙이라
+> 여기 적어 둡니다 — 디자이너 확인이 필요하면 이 항목입니다.
+
+**3. 기본값 세 개만 Text Input 단독일 때와 다릅니다.**
+버튼·좌우 아이콘이 **꺼진 채로 시작**하고 값은 **빈 문자열**입니다.
+Figma 6개 변형이 전부 그 모습이고, 단독 기본값 `'Input Text'`를 그대로 두면 빈 칸이어야 할 행에
+글자가 미리 채워지기 때문입니다. **기본값만 다를 뿐 속성은 그대로라** 행에서 켜면 켜집니다.
+
+**4. 실제로 입력됩니다.** 행에 `state`를 주지 않으면 Text Input이 자동 모드로 들어가
+마우스·키보드 조작을 그대로 따라갑니다. 예전 구현은 `state ?? 'default'`로 고정해 버려
+**어떤 행도 입력이 되지 않았습니다.**
 
 ## 5. 인터랙션(모션) 스펙
 
@@ -86,11 +124,15 @@ Text Input Group은 [Text Input](../text-input/text-input.md) 인스턴스를 �
 - "Text Input Group엔 이 gap을 쓴다"는 Size별 시맨틱 토큰 자체는 저장소에 없음(개별 spacing 값 자체는 토큰과 일치)
 - 첫 번째 필드에만 Label을 붙이는 규칙을 명시하는 토큰/문서 없음
 
+**확인 완료(디자이너 확인, 2026-09-15)**
+- 컴포넌트 너비: 고정 280px가 아니라 **화면 폭에 따른 가변(fluid)**
+
 **확인 필요**
-- 컴포넌트 너비: Dropdown처럼 화면 폭에 따른 가변(fluid)일 가능성이 높으나 재검증하지 않음(2장)
 - 필드 간 시맨틱 그룹핑(`fieldset`/`aria-labelledby`) 마크업 규정(6장)
 - Field=2/3 각 필드의 실제 의미·사용 맥락(예: 주소 1줄/2줄 여부, 6장)
 - Destructed 등 Default 외 State가 그룹 내부에서 어떻게 동작하는지(6개 샘플 전부 Default만 관찰됨)
+- 어느 행이든 에러면 하단 문구를 빨강으로 바꾸는 규칙(4.1장) — Figma에 근거 없는 파생 규칙
+- 행마다 다른 **입력 양식**(숫자만·최대 길이 등) — Text Input 자체에 `inputMode`/`maxLength` 축이 아직 없어, 필요하면 Text Input을 먼저 늘려야 합니다
 
 ## 8. 샘플링에 사용한 6개 노드 (부록, 전수)
 
