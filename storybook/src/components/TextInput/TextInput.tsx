@@ -81,7 +81,9 @@ export interface TextInputProps {
   showLeftIcon?: boolean;
   leftIconName?: string;
   /**
-   * ⚠️ **State=Typing 에서는 이 슬롯이 강제로 `close_in_circle`(지우기) 로 대체됩니다.**
+   * ⚠️ **State=Typing 에서는 이 값과 무관하게 `close_in_circle`(지우기) 이 우측에 뜹니다** —
+   * **꺼 두어도 뜹니다**(사용자 확인, 2026-09-15). 지우기는 슬롯을 켜고 끄는 스위치가 아니라
+   * **State 가 불러내는 액션 버튼**이라서입니다.
    * ⚠️ **`showUnit` 을 켜면 단위에 자리를 내주고 표시되지 않습니다** — 우측은 한 자리입니다.
    */
   showRightIcon?: boolean;
@@ -179,12 +181,15 @@ export function TextInput({
      변형을 한눈에 보여주려는 **진열용**이고, 실제 사용에서는 둘 중 하나만 씁니다.
 
      그 한 자리에 무엇이 놓이는지 — 위에서부터 우선합니다:
-     1. **입력 중(Typing)** → `close_in_circle` **지우기 버튼**(Figma 고정, 자유 슬롯 아님)
+     1. **입력 중(Typing)** → `close_in_circle` **지우기 버튼**.
+        **`showRightIcon` 과 무관하게 언제나 뜹니다**(사용자 확인, 2026-09-15) — 자유 교체 슬롯을
+        켜고 끄는 스위치가 아니라 **State 가 불러내는 액션 버튼**이기 때문입니다. 평소 우측 아이콘을
+        두지 않는 칸(구독 신청정보입력 화면의 이메일·주소·비상연락처 등)도 입력 중에는 지우기가 뜹니다.
      2. **`showUnit` 이 켜져 있으면** → 단위 텍스트가 우측 아이콘을 **대신**합니다.
         단, **포커스가 들어간 동안(Selected·Typing)에는 감춥니다** — 입력에 방해되지 않도록.
      3. 그 외 → 우측 아이콘 */
   const rightSlot: 'clear' | 'unit' | 'icon' | 'none' =
-    effState === 'typing' && showRightIcon
+    effState === 'typing'
       ? 'clear'
       : showUnit
         ? isFocused

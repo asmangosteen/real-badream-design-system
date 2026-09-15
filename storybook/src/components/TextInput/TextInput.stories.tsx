@@ -30,10 +30,16 @@ const meta = {
           '',
           '| 우선순위 | 조건 | 우측에 놓이는 것 |',
           '|---|---|---|',
-          '| 1 | **입력 중**(Typing) | **`close_in_circle` 지우기 버튼** (Figma 고정, 자유 슬롯 아님) |',
+          '| 1 | **입력 중**(Typing) | **`close_in_circle` 지우기 버튼** — `Right Icon` 과 **무관하게 항상** |',
           '| 2 | `Show Unit` = True · **포커스 없음** | 단위 텍스트 (예: `km`) |',
           '| 2 | `Show Unit` = True · **포커스 있음**(Selected) | **비움** — 입력 중에는 단위를 감춥니다 |',
           '| 3 | 그 외 | 우측 아이콘 (`arrowhead_down`) |',
+          '',
+          '> **지우기 버튼은 `Right Icon` 을 꺼도 뜹니다**(사용자 확인, 2026-09-15).',
+          '> 자유 교체 슬롯을 켜고 끄는 스위치가 아니라 **State 가 불러내는 액션 버튼**이라서입니다.',
+          '> 평소 우측 아이콘을 두지 않는 칸(구독 신청정보입력 화면의 이메일·주소·비상연락처 등)도',
+          '> 입력 중에는 `close_in_circle` 이 뜹니다. 크기는 우측 아이콘과 같고(S·M 16px / L 20px),',
+          '> 색은 `neutral/500` 그대로입니다.',
           '',
           '**2. Destructed는 Selected·Typing에서만 존재합니다.**',
           'Default/Hover/Disabled/Done에는 `Destructed=True` 조합 자체가 Figma에 없습니다.',
@@ -167,7 +173,7 @@ export const Playground: Story = {
   ),
 };
 
-/** State 6종입니다. Typing에서 우측 아이콘이 지우기 버튼으로 바뀝니다. */
+/** State 6종입니다. Typing에서 우측 자리가 지우기 버튼이 됩니다(Right Icon 과 무관). */
 export const States: Story = {
   args: {},
   parameters: { controls: { disable: true } },
@@ -179,7 +185,7 @@ export const States: Story = {
         ['disabled', '배경 5% · 테두리 없음 · 글자 neutral/400'],
         ['done', '값 채워짐 · 캐럿 없음'],
         ['selected', '파란 테두리 · 캐럿 앞'],
-        ['typing', '파란 테두리 · 캐럿 뒤 · 아이콘이 지우기로 강제 대체'],
+        ['typing', '파란 테두리 · 캐럿 뒤 · 우측은 지우기 (Right Icon 무관)'],
       ] as const).map(([state, desc]) => (
         <div key={state} style={{ marginBottom: 20 }}>
           <span className="bd-cell__label">{state} · {desc}</span>
@@ -251,6 +257,7 @@ export const Toggles: Story = {
         ['Supporting Text = False', { showSupportingText: false }],
         ['Left Icon = False', { showLeftIcon: false }],
         ['Right Icon = False', { showRightIcon: false }],
+        ['Right Icon = False · 입력 중 — 지우기는 그대로 뜹니다', { showRightIcon: false, state: 'typing' }],
         ['전부 끔', { showButton: false, showLabel: false, showSupportingText: false, showLeftIcon: false, showRightIcon: false }],
         ['Show Unit = True — 단위가 우측 아이콘을 대신합니다 (같이 쓰지 않음)', { showUnit: true }],
       ] as const).map(([label, extra]) => (

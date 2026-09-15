@@ -36,7 +36,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **Show Label** | False / True | 상단 [Label](../../global/label/label.md) 표시 여부 |
 | **Supporting Text** | False / True | 하단 [Supporting Text](../../global/supporting-text/supporting-text.md) 표시 여부 |
 | **Left Icon** | False / True | Input 왼쪽 아이콘(기본 `profile_filled`, 자유 교체 슬롯) 표시 여부 |
-| **Right Icon** | False / True | Input 오른쪽 아이콘(기본 `arrowhead_down`, 자유 교체 슬롯) 표시 여부. **단, State=Typing에서는 이 슬롯이 강제로 `close_in_circle`(지우기 버튼)로 대체됨 — 4장 참고** |
+| **Right Icon** | False / True | Input 오른쪽 아이콘(기본 `arrowhead_down`, 자유 교체 슬롯) 표시 여부. **단, State=Typing에서는 이 축과 무관하게 우측 자리에 `close_in_circle`(지우기 버튼)이 항상 표시됨 — 4장 참고** |
 | **Show Unit**(9번째, variant 축 아님) | False / True | 우측 아이콘 뒤에 단위 텍스트(예: "km") 표시 여부. Size×State×Destructed×5토글로 계산한 **768개(variant 조합 수)에는 포함되지 않는 별도 boolean 프로퍼티**(사용자 확인, Figma 프로퍼티 패널) — 3장 핵심 발견 5 참고 |
 
 ## 2. Size별 스펙 (3개 전체 실측, State=Default·나머지 토글 전부 True 기준)
@@ -71,8 +71,8 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **Done** | `common/white-default` | `color/gray/900-10`(Default와 동일) | `brand/primary-default` | `Done`(값 채워짐, `neutral/800`, 캐럿 없음) | `arrowhead_down` | `neutral/500` / `neutral/500` | 우측 아이콘 뒤 단위 텍스트("km") 슬롯 — **`Show Unit`이라는 별도 boolean 컴포넌트 프로퍼티로 확인됨**(사용자 확인, Figma 프로퍼티 패널). 8개 변형 축과는 다른 종류의 속성이라 축 개수(768개)에는 포함되지 않음 — 아래 핵심 발견 5 참고 |
 | **Selected**(Destructed=False) | `common/white-default` | `brand/primary-default`(#2c7be2) — 파란 강조 | `brand/primary-default`(변화 없음) | **`Selected`**(값 없음, `neutral/500` placeholder + **캐럿이 텍스트 앞에 표시**, 캐럿 색상 `brand/primary-default`) | `arrowhead_down`(변화 없음) | **`neutral/800`** / **`neutral/800`** | 포커스 + 값 없음(빈 필드에 커서만 깜빡이는 상태로 추정) |
 | **Selected + Destructed=True** | `common/white-default` | `theme/destructed-default`(#e72f37) | **`theme/destructed-default`**(#e72f37로 변경) | `Selected`(값 없음 + 캐럿, 단 **캐럿 색상이 `theme/destructed-default`로 오버라이드**됨) | `arrowhead_down`(변화 없음) | **`neutral/800`** / **`neutral/800`** | — |
-| **Typing**(Destructed=False) | `common/white-default` | `brand/primary-default`(Selected와 동일) | `brand/primary-default`(변화 없음) | **`Typing`**(값 "Input Text", `neutral/800` + **캐럿이 텍스트 뒤에 표시**, 캐럿 색상 `brand/primary-default`) | **`close_in_circle`로 강제 대체**(자유 교체 슬롯이 아님 — 4장 참고) | **`neutral/800`** / `neutral/500` | 포커스 + 값 있음(입력 중) |
-| **Typing + Destructed=True** | `common/white-default` | `theme/destructed-default` | **`theme/destructed-default`** | `Typing`(값 있음 + 캐럿, 캐럿 색상 `theme/destructed-default`로 오버라이드) | `close_in_circle`(강제, 변화 없음) | **`neutral/800`** / `neutral/500` | — |
+| **Typing**(Destructed=False) | `common/white-default` | `brand/primary-default`(Selected와 동일) | `brand/primary-default`(변화 없음) | **`Typing`**(값 "Input Text", `neutral/800` + **캐럿이 텍스트 뒤에 표시**, 캐럿 색상 `brand/primary-default`) | **`close_in_circle`**(지우기 — **Right Icon 토글과 무관하게 항상 표시**, 4장 참고) | **`neutral/800`** / `neutral/500` | 포커스 + 값 있음(입력 중) |
+| **Typing + Destructed=True** | `common/white-default` | `theme/destructed-default` | **`theme/destructed-default`** | `Typing`(값 있음 + 캐럿, 캐럿 색상 `theme/destructed-default`로 오버라이드) | `close_in_circle`(변화 없음 — Right Icon 무관) | **`neutral/800`** / `neutral/500` | — |
 
 **핵심 발견**:
 1. **Destructed는 Selected·Typing 두 State에서만 노출되는 변형입니다(직접 실측으로 확인 완료).** Default/Hover/Disabled/Done 상태에는 Destructed=True 조합 자체가 Figma 컴포넌트에 존재하지 않습니다(0장 축 계산 근거). Dropdown이 "Selected 하나"였던 것과 달리 Text Input은 "포커스가 가 있는 두 State(Selected·Typing) 모두"에서 에러를 노출한다는 것이 이 컴포넌트의 확정 스펙입니다. 비포커스 상태(Default/Hover/Disabled/Done)에서 에러를 알려야 한다면, 현재 컴포넌트가 제공하는 유일한 경로는 하단 [Supporting Text](../../global/supporting-text/supporting-text.md)의 `Theme=Destructed`뿐입니다.
@@ -96,7 +96,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 8. **포커스가 들어간 동안(Selected·Typing)에는 단위를 감춥니다(디자이너 확인, 2026-09-15).** 입력에 방해되지 않도록 하는 규칙입니다.
    - Typing에서는 우측 자리가 `close_in_circle`(지우기)로 바뀌므로 단위가 설 자리 자체가 없습니다. 실측 노드 2개(`2119:10121`·`2119:18818`)에 단위 레이어가 없고 `showUnit` prop도 코드 출력에 나타나지 않는 것과 일치합니다.
    - Selected에서도 같은 규칙을 적용해 감춥니다. **Destructed는 Selected·Typing에서만 노출되므로, 에러 상태에서는 단위가 보이지 않습니다.**
-   - 정리하면 우측 한 자리의 우선순위는 **① 입력 중이면 지우기 버튼 → ② `Show Unit`이 켜져 있고 포커스가 없으면 단위 → ③ 그 외에는 우측 아이콘** 입니다.
+   - 정리하면 우측 한 자리의 우선순위는 **① 입력 중이면 지우기 버튼(Right Icon 과 무관) → ② `Show Unit`이 켜져 있고 포커스가 없으면 단위 → ③ 그 외에는 우측 아이콘** 입니다.
 
 ## 4. 토글 축(Show Button / Show Label / Supporting Text / Left Icon / Right Icon)
 
@@ -108,11 +108,22 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 | **Show Label** | 상단 [Label](../../global/label/label.md) 요소가 사라지고 컨테이너가 바로 Input Box로 시작 |
 | **Supporting Text** | 하단 [Supporting Text](../../global/supporting-text/supporting-text.md) 요소가 사라짐 |
 | **Left Icon** | Input 내부 왼쪽 아이콘(`profile_filled`)이 완전히 사라짐(코드상 `leftM` prop 자체가 타입에서 빠짐). TypeBox·우측 아이콘 위치·gap은 변화 없음 |
-| **Right Icon** | Input 내부 오른쪽 아이콘(`arrowhead_down`)이 완전히 사라짐(`rightM` prop 자체가 타입에서 빠짐). TypeBox가 `flex-[1_0_0]`로 남은 공간을 차지. **`Show Unit=True`이면 이 축과 무관하게 단위가 그 자리를 대신합니다**(3장 핵심 발견 7) |
+| **Right Icon** | Input 내부 오른쪽 아이콘(`arrowhead_down`)이 완전히 사라짐(`rightM` prop 자체가 타입에서 빠짐). TypeBox가 `flex-[1_0_0]`로 남은 공간을 차지. **`Show Unit=True`이면 이 축과 무관하게 단위가 그 자리를 대신하고**(3장 핵심 발견 7), **State=Typing에서도 이 축과 무관하게 지우기 버튼이 그 자리에 뜹니다**(아래 확정 스펙) |
 
 5개 전부 False로 두면(`2115:9089`, M 기준) Label·Button·Supporting Text·좌우 아이콘이 모두 사라지고 **TypeBox 하나만 담긴 Input 박스 한 줄**만 남습니다.
 
-**Right Icon과 State=Typing의 상호작용(중요)**: Typing 상태에서 샘플링한 두 노드(`2119:10121`, `2119:18818`)는 둘 다 `rightIcon` prop 타입은 존재하지만 `rightM`(자유 교체 슬롯) prop이 코드에 없고, 대신 `close_in_circle` 아이콘이 하드코딩되어 있습니다. 즉 **Typing 상태에서는 Right Icon 토글이 "arrowhead_down을 자유 아이콘으로 교체하는 슬롯"이 아니라 "입력값 지우기 버튼(고정 아이콘)을 켜고 끄는 스위치"로 의미가 바뀌는 것으로 보입니다.** 다만 Typing 상태에서 Right Icon=False인 노드는 이번 샘플링 범위에 포함되지 않아 그 경우 지우기 버튼이 완전히 사라지는지, 여전히 표시되는지는 **확인 필요**입니다.
+**Right Icon과 State=Typing의 관계(확정 — 2026-09-15 사용자 확인)**
+
+**State=Typing의 지우기 버튼(`close_in_circle`)은 Right Icon 설정과 무관하게 항상 표시됩니다.** 지우기 버튼은 "자유 교체 슬롯을 켜고 끄는 스위치"가 아니라 **State가 불러내는 액션 버튼**이기 때문입니다. 따라서 평소 우측 아이콘을 두지 않는 칸(예: 구독 신청정보입력 화면의 이메일·주소·비상연락처)도 입력 중에는 `close_in_circle`이 뜹니다.
+
+| 항목 | 값 |
+|---|---|
+| **표시 조건** | State=Typing이면 무조건 — `Right Icon=False`여도 표시 |
+| **크기** | Size별 우측 아이콘과 동일 — S/M 16px, L 20px(2장) |
+| **색** | `neutral/500` 유지 — 같은 노드의 좌측 아이콘이 `neutral/800`으로 진해지는 것과 달리 지우기 버튼만 예외(3장 핵심 발견 6) |
+| **단위(`Show Unit`)와의 관계** | 우측은 한 자리이므로 지우기 버튼이 단위보다 우선(3장 핵심 발견 8의 우선순위 ①) |
+
+Figma가 말해 주는 범위는 여기까지였습니다: Typing 상태에서 샘플링한 두 노드(`2119:10121`, `2119:18818`)는 둘 다 `rightIcon` prop 타입은 존재하지만 `rightM`(자유 교체 슬롯) prop이 코드에 없고, 대신 `close_in_circle` 아이콘이 하드코딩되어 있습니다. **Typing + Right Icon=False** 조합 노드는 샘플에 없어 Figma만으로는 판정할 수 없었고, 위 규칙은 **사용자 확인으로 확정**된 것입니다.
 
 ## 5. 서브컴포넌트 재사용 관계
 
@@ -172,7 +183,7 @@ Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
 ## 7. 접근성
 
 - **캐럿(Text Blinker) 접근성**: [text-blinker.md](../../global/text-blinker/text-blinker.md) 4장에서 이미 확인 필요로 명시된 `aria-hidden` 처리, 네이티브 브라우저 캐럿과의 중복 방지가 Text Input에도 그대로 적용됩니다. 실제 구현 시 이 캐럿이 네이티브 `<input>`의 진짜 캐럿을 대체하는 커스텀 UI라면 네이티브 캐럿은 투명 처리(`caret-color: transparent`)하는 등의 처리가 필요할 수 있습니다 — 확인 필요.
-- **Typing 상태의 지우기 버튼(`close_in_circle`)**: 4장에서 확인한 대로 이 아이콘은 자유 교체 슬롯이 아니라 상태에 따라 강제로 나타나는 액션 버튼으로 보입니다. 스크린리더 사용자를 위한 `aria-label="입력값 지우기"` 등의 레이블 연결 규정이 Figma 파일에 없어 확인 필요입니다.
+- **Typing 상태의 지우기 버튼(`close_in_circle`)**: 4장 확정대로 이 아이콘은 자유 교체 슬롯이 아니라 State가 불러내는 액션 버튼이며, **Right Icon 설정과 무관하게 항상 뜹니다**(2026-09-15 사용자 확인). 우측 아이콘을 꺼 둔 칸에서도 눌러서 지울 수 있는 버튼이 새로 생기는 것이므로, 구현은 이를 아이콘이 아니라 `<button aria-label="입력 지우기">`로 감쌌습니다. 다만 그 레이블 문구를 포함한 연결 규정 자체가 Figma 파일에 없다는 점은 그대로 확인 필요입니다.
 - **Disabled 상태**: `pointer-events`/`aria-disabled`/`disabled` 속성 부여는 Figma 디자인만으로 확인 불가 — Dropdown 문서와 동일하게 확인 필요.
 - **Destructed(에러) 상태**: Figma 변형은 테두리·버튼·캐럿 색상 변화로만 표현하고 하단 Supporting Text 를 Gray 로 남깁니다(5장). 색상에만 의존하지 않기(WCAG 1.4.1) 관점에서 문제가 되어 **디자이너 확정(2026-09-15)** — 하단 Supporting Text 는 Destructed 와 함께 `Theme=Destructed`(빨강)로 바뀝니다. Figma 변형은 아직 `Theme=Gray` 이지만 **디자이너가 Figma 쪽을 맞추기로 했습니다** — 이 경우만 구현이 먼저 가 있는 상태입니다. **구현은 `Theme=Destructed` 로 함께 전환합니다.** Dropdown 도 같은 결정입니다([dropdown.md](../../dropdown/dropdown.md) 7장).
 - **Label 연결**(`<label for>`), 필수 입력 여부 등은 [Label 문서](../../global/label/label.md) 5장의 확인 필요 사항과 동일하게 적용됩니다. Text Input에는 Essential 토글 자체가 없으므로(5장), 필수 입력 표시가 필요하다면 별도 처리 방식이 필요합니다 — 확인 필요.
@@ -194,7 +205,7 @@ Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
 **기존 토큰에 없음**
 - Size(S/M/L)별로 "Text Input엔 이 padding+radius+아이콘크기 조합을 쓴다"는 시맨틱 토큰 자체는 저장소에 없음(개별 값은 토큰과 일치)
 - Destructed가 Selected·Typing 두 State에서만 노출되는 규칙을 명시하는 토큰/문서 없음
-- Typing 상태에서 Right Icon이 "자유 아이콘 슬롯"에서 "지우기 버튼"으로 의미가 바뀌는 규칙을 명시하는 토큰/문서 없음
+- Typing 상태에서 Right Icon 설정과 무관하게 지우기 버튼이 우측 한 자리를 차지하는 규칙을 명시하는 토큰/문서 없음
 - `Show Unit` 단위 텍스트 슬롯 자체가 디자인 토큰이 아니라 컴포넌트 구조 영역(boolean 프로퍼티)
 
 **확인 완료(사용자 확인)**
@@ -203,11 +214,11 @@ Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
 - **우측 아이콘과 단위는 같이 쓰지 않습니다** — 우측은 한 자리이고, `Show Unit=True`이면 단위가 우측 아이콘을 대신합니다. Figma에 둘 다 그려진 노드가 있는 것은 변형 진열용입니다(2026-09-15 확인, 3장 핵심 발견 7)
 - **포커스가 들어간 동안(Selected·Typing)에는 단위를 감춥니다** — Destructed가 Selected·Typing 전용이므로 에러 상태에서도 단위는 보이지 않습니다(2026-09-15 확인, 3장 핵심 발견 8)
 - **좌·우 아이콘 색상**: State마다 다릅니다 — 3장 표의 "아이콘 색" 열 참고(2026-09-15 Figma 원본 SVG 전수 실측)
+- **Typing의 지우기 버튼(`close_in_circle`)은 Right Icon 설정과 무관하게 항상 표시됩니다** — 자유 교체 슬롯을 켜고 끄는 스위치가 아니라 State가 불러내는 액션 버튼입니다. 크기는 Size별 우측 아이콘과 동일(S/M 16px, L 20px), 색은 `neutral/500` 유지(2026-09-15 확인, 4장)
 
 **확인 필요**
 - 캐럿 깜빡임 애니메이션의 duration/easing/반복 주기(Figma에 모션 데이터 없음, text-blinker.md·type-box.md와 동일)
 - `Show Unit=True`를 Done 외 다른 State·Size와 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계) — 이번 15개 표본에는 Done 1건만 있어 확정하지 못함(3장 핵심 발견 5)
-- Typing 상태에서 Right Icon=False일 때 지우기 버튼이 사라지는지 여부(4장)
 - 접근성 마크업(`aria-hidden`, `aria-label`, `disabled`, `<label for>`) 연결 규정(7장)
 - ~~Destructed 상태에서 Supporting Text의 Theme이 함께 전환되어야 하는지~~ → **확정(2026-09-15)**: 전환합니다(빨강). Figma 는 디자이너가 맞출 예정 — 7장
 
