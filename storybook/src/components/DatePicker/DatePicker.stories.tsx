@@ -106,7 +106,12 @@ export const Playground: Story = {
   },
 };
 
-/** 달마다 주(週) 수가 달라지는 것을 확인하는 진열입니다. 6주·5주·4주 케이스를 나란히 둡니다. */
+/**
+ * 달마다 주(週) 수가 달라지는 것을 확인하는 진열입니다.
+ * **4·5·6주가 모두 나오고, 그만큼 패널 높이도 달라집니다.**
+ * Figma 의 Month 에는 `Week Number=5/6` 만 있지만 평년 2월이 일요일에 시작하면 4주로 끝납니다 —
+ * 빈 줄로 5주를 맞추지 않고 그대로 4줄로 그립니다(디자이너 확인).
+ */
 export const 실제달력: Story = {
   name: '실제 달력 · 주 수 변화',
   parameters: { controls: { disable: true } },
@@ -116,7 +121,7 @@ export const 실제달력: Story = {
         {([
           [2026, 8, '2026년 8월 — 6주 (토요일 시작, 31일)'],
           [2026, 9, '2026년 9월 — 5주'],
-          [2026, 2, '2026년 2월 — ⚠️ 4주지만 5주로 맞춤'],
+          [2026, 2, '2026년 2월 — 4주 (일요일 시작 28일)'],
         ] as const).map(([y, m, label]) => (
           <Cell key={label} label={label}>
             <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>

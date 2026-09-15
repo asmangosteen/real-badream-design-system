@@ -64,8 +64,10 @@ export interface MonthGridOptions {
  * - Type 우선순위: `pinned` > `selected`(기간) > `current`(오늘) > `default`.
  *   Figma 의 Type 은 하나만 고를 수 있는 축이라 겹치면 위 순서로 정합니다.
  *   ⚠️ 그래서 **기간 안에 든 오늘은 `current` 테두리를 잃습니다**(기간 표시를 우선).
- * - ⚠️ Figma 의 Month 는 **5주 또는 6주만** 정의돼 있습니다. 2월이 일요일에 시작하면
- *   4주로 끝나는데(예: 2026년 2월), 그 경우 빈 주를 한 줄 더해 5주로 맞춥니다.
+ * - 주(週) 수는 그 달이 실제로 차지하는 만큼입니다 — **4·5·6주 모두 나옵니다.**
+ *   Figma 의 Month 에는 `Week Number=5/6` 만 있지만, 평년 2월이 일요일에 시작하면
+ *   4주로 끝납니다(예: 2026년 2월). 그럴 땐 **그대로 4줄로 그립니다**(디자이너 확인, 2026-09-15).
+ *   빈 줄로 5주를 맞추지 않으므로 그런 달에는 패널이 그만큼 짧아집니다.
  */
 export function buildMonthWeeks(year: number, month: number, options: MonthGridOptions = {}): WeekCell[][] {
   const { today = new Date(), selected, rangeStart, rangeEnd, min, max, onSelect } = options;
@@ -97,6 +99,5 @@ export function buildMonthWeeks(year: number, month: number, options: MonthGridO
 
   const weeks: WeekCell[][] = [];
   for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
-  while (weeks.length < 5) weeks.push(Array.from({ length: 7 }, blank));
   return weeks;
 }
