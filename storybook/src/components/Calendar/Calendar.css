@@ -3,6 +3,11 @@
 
 /* Week — Date 셀 7개 가로 배열. 328 = 40×7 + 8×6 */
 .bd-week {
+  --bd-cell: 40px;
+  --bd-pitch: calc(var(--bd-cell) + var(--ref-spacing-06));   /* 48px — 칸 하나가 차지하는 간격 */
+  position: relative;
+  /* 띠와 셀의 z-index 를 이 줄 안에서만 쓰게 가둡니다 */
+  isolation: isolate;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -10,6 +15,36 @@
   width: 328px;
   height: 40px;
 }
+
+/* 기간(range) 띠 — 두 Pinned 날짜 **사이**를 잇는 배경입니다.
+   Figma 주석: *"selected 항목 뒤에 동일한 배경색이 기간 사이를 채움"*.
+
+   Selected 셀 자체는 지름 40px 의 **원**이라 칸 사이 8px 이 비어 기간이 토막나 보입니다.
+   그래서 Figma 도 Month 프레임 안에 **줄마다 사각형 하나**를 Week 보다 뒤에 깔아 두었습니다
+   (`2612:15600` 등 7개 실측). 여기서도 같은 구조입니다 — 원을 늘리는 게 아니라 뒤에 띠를 깝니다.
+
+   양끝 규칙(`--bd-range-*-half` = 1 이면 그 칸 **중앙**에서 끊음):
+     · 앵커가 그 줄에 있으면 앵커 칸 중앙까지만   (예: 116 → 328)
+     · 기간이 줄을 지나가면 줄 전체              (0 → 328)
+   앵커 칸은 Pinned(진한 파란 원)라 띠가 원 중앙에서 뻗어 나오는 것처럼 보입니다. */
+.bd-week__range {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  height: var(--bd-cell);
+  left: calc(var(--bd-range-from) * var(--bd-pitch) + var(--bd-range-from-half) * var(--bd-cell) / 2);
+  width: calc(
+    (var(--bd-range-to) - var(--bd-range-from)) * var(--bd-pitch) + var(--bd-cell) -
+      (var(--bd-range-from-half) + var(--bd-range-to-half)) * var(--bd-cell) / 2
+  );
+  /* Selected 셀의 배경과 **같은 색**이라 원과 띠의 경계가 보이지 않습니다 */
+  background: var(--sys-color-brand-primary-lightest);
+  /* 모서리는 각지게 — Figma 의 사각형도 radius 0 입니다 */
+  border-radius: 0;
+  pointer-events: none;
+}
+/* 띠는 항상 셀 **뒤**입니다 */
+.bd-week > .bd-date-cell { position: relative; z-index: 1; }
 
 /* Week Header — 요일 라벨 행. Week 와 같은 40px 칸·8px gap 이라 열이 맞습니다 */
 .bd-week-header {

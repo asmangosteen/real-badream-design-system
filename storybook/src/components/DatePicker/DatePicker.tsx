@@ -3,7 +3,15 @@ import { Icon } from '../Icon/Icon';
 import { IconButton } from '../IconButton/IconButton';
 import { Divider } from '../Divider/Divider';
 import { WeekHeader, Month, type WeekCell } from '../Calendar/Calendar';
-import { buildMonthWeeks, addMonths, formatYearMonth, formatMonth } from '../Calendar/calendar-data';
+import {
+  buildMonthWeeks,
+  addMonths,
+  formatYearMonth,
+  formatMonth,
+  nextRange,
+  EMPTY_RANGE,
+  type DateRange,
+} from '../Calendar/calendar-data';
 import { TimePickerGroup } from '../TimePicker/TimePicker';
 import './DatePicker.css';
 
@@ -543,11 +551,18 @@ export interface DatePickerProps {
   defaultYear?: number;
   /** 처음 보여줄 달 (비제어, 1~12) */
   defaultMonth?: number;
-  /** 선택된 날짜. 주면 외부가 제어합니다 */
+  /** `single` = 날짜 하나 · `range` = 기간(시작·끝 두 날짜) */
+  selection?: 'single' | 'range';
+  /** 선택된 날짜. 주면 외부가 제어합니다. `selection='range'` 에서는 무시됩니다 */
   value?: Date | null;
   /** 처음 선택된 날짜 (비제어) */
   defaultValue?: Date | null;
   onChange?: (date: Date) => void;
+  /** 선택된 기간. 주면 외부가 제어합니다 (`selection='range'` 전용) */
+  range?: DateRange | null;
+  /** 처음 선택된 기간 (비제어) */
+  defaultRange?: DateRange | null;
+  onRangeChange?: (range: DateRange) => void;
   onMonthChange?: (year: number, month: number) => void;
   /** `current`(테두리 셀)로 표시할 오늘. `null` 이면 표시하지 않습니다 */
   today?: Date | null;
@@ -584,9 +599,13 @@ export function DatePicker({
   month,
   defaultYear,
   defaultMonth,
+  selection = 'single',
   value,
   defaultValue = null,
   onChange,
+  range,
+  defaultRange = null,
+  onRangeChange,
   onMonthChange,
   today = new Date(),
   headerWith,
@@ -606,6 +625,9 @@ export function DatePicker({
   const [picked, setPicked] = useState<Date | null>(defaultValue);
   const selected = value !== undefined ? value : picked;
 
+  const [pickedRange, setPickedRange] = useState<DateRange>(defaultRange ?? EMPTY_RANGE);
+  const effRange = range !== undefined ? (range ?? EMPTY_RANGE) : pickedRange;
+
   // state 를 주지 않으면 제목 옆 화살표로 휠을 여닫습니다
   const [wheelOpen, setWheelOpen] = useState(false);
   const effState: DatePickerState = state ?? (wheelOpen ? 'wheel' : 'default');
@@ -616,15 +638,32 @@ export function DatePicker({
     onMonthChange?.(next.year, next.month);
   };
   const selectDate = (date: Date) => {
-    if (value === undefined) setPicked(date);
+    if (selection === 'range') {
+      const next = nextRange(effRange, date);
+      if (range === undefined) setPickedRange(next);
+      onRangeChange?.(next);
+    } else if (value === undefined) {
+      setPicked(date);
+    }
     onChange?.(date);
   };
 
   /* weeks 를 직접 주면 그 값을 그대로 그립니다(변형 진열용).
-     주지 않으면 연·월로 실제 날짜를 계산합니다. */
+     주지 않으면 연·월로 실제 날짜를 계산합니다.
+
+     ⚠️ `single` 과 `range` 는 **섞이지 않습니다** — Figma 주석이
+     *"selected는 무조건 기간 사이 선택 시 적용됨"* 이라, 기간이 아닌 단일 선택에서
+     `selected`(연한 파랑) 가 나오면 안 되기 때문입니다. */
+  const ranged = selection === 'range';
   const grid =
     weeks ??
-    buildMonthWeeks(shownYear, shownMonth, { today, selected, onSelect: selectDate });
+    buildMonthWeeks(shownYear, shownMonth, {
+      today,
+      selected: ranged ? null : selected,
+      rangeStart: ranged ? effRange.start : null,
+      rangeEnd: ranged ? effRange.end : null,
+      onSelect: selectDate,
+    });
 
   return (
     <div className={['bd-date-picker', className].filter(Boolean).join(' ')} data-state={effState}>
@@ -684,10 +723,16 @@ export interface DatePickerGroupProps {
   defaultMonth?: number;
   /** 기준 달이 움직일 때마다 **첫 패널 기준**으로 알려 줍니다 */
   onMonthChange?: (year: number, month: number) => void;
+  /** `single` = 날짜 하나 · `range` = 기간. 기간은 **두 패널에 걸쳐 이어집니다** */
+  selection?: 'single' | 'range';
   /** 선택된 날짜. 두 패널이 **하나를 나눠 씁니다** */
   value?: Date | null;
   defaultValue?: Date | null;
   onChange?: (date: Date) => void;
+  /** 선택된 기간. 이것도 두 패널이 **하나를 나눠 씁니다** */
+  range?: DateRange | null;
+  defaultRange?: DateRange | null;
+  onRangeChange?: (range: DateRange) => void;
   today?: Date | null;
 
   /**
@@ -711,6 +756,12 @@ const GROUP_PANELS = 2;
  * 그래서 어느 쪽에서 달을 옮기든(화살표든 휠이든) 둘이 **같이** 움직이고 제목도 함께 바뀝니다.
  * 날짜 선택도 하나를 나눠 쓰므로, 9월 패널에서 고르든 10월 패널에서 고르든 같은 값이 됩니다.
  *
+ * **기간도 두 패널에 걸쳐 이어집니다** — Figma 주석 *"기간은 패널 두개가 붙어도 계속 이어짐"*.
+ * 왼쪽 패널에서 시작해 오른쪽 패널에서 끝나면, 왼쪽은 시작 앵커부터 달 끝까지 · 오른쪽은
+ * 달 첫날부터 끝 앵커까지 칠해집니다. 다만 **띠가 두 패널 사이를 건너뛰지는 않습니다** —
+ * 각 패널의 띠는 자기 격자(328px) 안에서 끝납니다. Figma 실측도 왼쪽 띠가 2924~3252,
+ * 오른쪽 띠가 3285~3613 으로 가운데 33px(여백 16 + 구분선 1 + 여백 16)이 비어 있습니다.
+ *
  * ## 두 변형이 서로 꽤 다릅니다
  *
  * | | Horizontal | Vertical |
@@ -733,9 +784,13 @@ export function DatePickerGroup({
   defaultYear,
   defaultMonth,
   onMonthChange,
+  selection = 'single',
   value,
   defaultValue = null,
   onChange,
+  range,
+  defaultRange = null,
+  onRangeChange,
   today = new Date(),
   showTimePicker = false,
   className,
@@ -751,6 +806,11 @@ export function DatePickerGroup({
 
   const [picked, setPicked] = useState<Date | null>(defaultValue);
   const selected = value !== undefined ? value : picked;
+
+  /* 기간은 **그룹이 하나만** 들고 두 패널에 똑같이 내려 줍니다 — 이게 "패널이 붙어도
+     기간이 이어진다" 는 규칙의 전부입니다. 각 패널은 받은 기간을 자기 달에 맞게 잘라 그립니다. */
+  const [pickedRange, setPickedRange] = useState<DateRange>(defaultRange ?? EMPTY_RANGE);
+  const effRange = range !== undefined ? (range ?? EMPTY_RANGE) : pickedRange;
 
   const vertical = type === 'vertical';
   const panels = Array.from({ length: GROUP_PANELS }, (_, i) => addMonths(shownYear, shownMonth, i));
@@ -770,6 +830,11 @@ export function DatePickerGroup({
     onChange?.(date);
   };
 
+  const changeRange = (next: DateRange) => {
+    if (range === undefined) setPickedRange(next);
+    onRangeChange?.(next);
+  };
+
   return (
     <div className={['bd-date-picker-group', className].filter(Boolean).join(' ')} data-type={type}>
       {panels.map((panel, i) => (
@@ -780,7 +845,10 @@ export function DatePickerGroup({
           <DatePicker
             year={panel.year}
             month={panel.month}
+            selection={selection}
             value={selected}
+            range={effRange}
+            onRangeChange={changeRange}
             today={today}
             onChange={selectDate}
             onMonthChange={(y, m) => moveTo(i, y, m)}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DatePicker, DatePickerGroup, CalendarHeader, YearMonthWheel } from './DatePicker';
 import type { WeekCell } from '../Calendar/Calendar';
+import type { DateRange } from '../Calendar/calendar-data';
 import { Cell, Row, Section } from '../../shared/story-helpers';
 
 const w = (start: number, len = 7): WeekCell[] =>
@@ -241,4 +242,82 @@ export const Group: Story = {
       </Section>
     </div>
   ),
+};
+
+/**
+ * **날짜 선택 상태 3종**입니다 — Figma `2612:16030` 의 주석을 그대로 옮겼습니다.
+ *
+ * | 상태 | 모습 | 언제 |
+ * |---|---|---|
+ * | `current` | 회색 **테두리**만 | 오늘 |
+ * | `pinned` | 진한 파란 원 + 흰 글자 | 사용자가 찍은 날짜. **오늘을 찍어도 pinned 로 바뀝니다** |
+ * | `selected` | 옅은 파란 배경 | **두 pinned 사이의 날짜들에만.** 단독으로는 절대 쓰이지 않습니다 |
+ *
+ * 기간일 때는 셀 뒤에 **같은 색 띠**가 깔려 칸 사이 8px 을 메웁니다. 띠는 앵커 칸의
+ * **중앙**에서 시작/끝나고, 지나가는 줄은 격자 전체를 채웁니다.
+ */
+export const 선택상태: Story = {
+  name: '선택 상태 · current / pinned / selected',
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div>
+      <Section title="오늘만 — current (테두리)">
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePicker year={2026} month={9} today={TODAY} />
+        </div>
+      </Section>
+      <Section title="날짜 하나 찍음 — pinned. 오늘의 테두리는 그대로 남습니다">
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePicker year={2026} month={9} today={TODAY} defaultValue={new Date(2026, 8, 8)} />
+        </div>
+      </Section>
+      <Section title="기간 — 양끝이 pinned, 사이가 selected. 뒤에 띠가 깔립니다">
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePicker
+            year={2026}
+            month={9}
+            today={TODAY}
+            selection="range"
+            defaultRange={{ start: new Date(2026, 8, 8), end: new Date(2026, 8, 19) }}
+          />
+        </div>
+      </Section>
+    </div>
+  ),
+};
+
+/**
+ * 기간은 **두 패널에 걸쳐 이어집니다** (Figma: *"기간은 패널 두개가 붙어도 계속 이어짐"*).
+ * 날짜를 눌러 직접 잡아 보세요 — 첫 클릭이 시작, 둘째가 끝, 셋째면 처음부터 다시입니다.
+ *
+ * 띠는 **패널 사이를 건너뛰지 않습니다.** 각 패널의 띠는 자기 격자 안에서 끝나고,
+ * 가운데 33px(여백 16 + 구분선 1 + 여백 16)은 비워 둡니다 — Figma 실측도 같습니다.
+ */
+export const 기간선택: Story = {
+  name: '기간 선택 · 두 패널에 걸침',
+  parameters: { controls: { disable: true } },
+  render: function Ranged() {
+    const [range, setRange] = useState<DateRange>({
+      start: new Date(2026, 8, 24),
+      end: new Date(2026, 9, 7),
+    });
+    const fmt = (d: Date | null) => (d ? `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}` : '—');
+    return (
+      <div>
+        <Section title={`선택된 기간 — ${fmt(range.start)} ~ ${fmt(range.end)}`}>
+          <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+            <DatePickerGroup
+              type="horizontal"
+              defaultYear={2026}
+              defaultMonth={9}
+              today={TODAY}
+              selection="range"
+              range={range}
+              onRangeChange={setRange}
+            />
+          </div>
+        </Section>
+      </div>
+    );
+  },
 };

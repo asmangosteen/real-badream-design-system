@@ -1,4 +1,5 @@
 import { DateCell, type DateCellType } from '../DateCell/DateCell';
+import { weekRangeBand } from './calendar-data';
 import './Calendar.css';
 
 export interface WeekCell {
@@ -18,12 +19,31 @@ export interface WeekProps {
  * 달력의 **한 주(週) 행**입니다. `Date` 셀 7개를 가로로 배열합니다.
  * 변형 축이 없는 단일 인스턴스이며, 328×40px 고정입니다 (= 40×7 + 8×6).
  *
+ * 기간(range)이 이 줄을 지나면 셀 **뒤에 사각형 띠 하나**를 깝니다 — 칸 사이 8px 을 메워야
+ * 기간이 한 덩어리로 읽히기 때문입니다. 어디서 시작해 어디서 끊을지는
+ * `weekRangeBand` 가 셀 종류만 보고 정합니다(규칙은 그 함수의 주석에).
+ *
  * 스펙 원본: `components/date-time-picker/week/week.md`
  */
 export function Week({ cells = [], className }: WeekProps) {
   const filled: WeekCell[] = Array.from({ length: 7 }, (_, i) => cells[i] ?? { type: 'null' });
+  const band = weekRangeBand(filled);
   return (
     <div className={['bd-week', className].filter(Boolean).join(' ')} role="row">
+      {band && (
+        <span
+          className="bd-week__range"
+          aria-hidden="true"
+          style={
+            {
+              '--bd-range-from': band.from,
+              '--bd-range-to': band.to,
+              '--bd-range-from-half': band.fromHalf ? 1 : 0,
+              '--bd-range-to-half': band.toHalf ? 1 : 0,
+            } as React.CSSProperties
+          }
+        />
+      )}
       {filled.map((c, i) => (
         <DateCell key={i} type={c.type} disabled={c.disabled} onClick={c.onClick}>
           {c.label}
