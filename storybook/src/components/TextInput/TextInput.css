@@ -191,3 +191,40 @@
 /* Disabled 는 placeholder 글자와 라벨도 한 단계 흐려집니다 */
 .bd-text-input[data-state='disabled'] .bd-type-box { color: var(--sys-color-neutral-400); }
 .bd-text-input[data-state='disabled'] .bd-label { color: var(--sys-color-neutral-500); }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Text Input 셋(768개 변형) 192개 반응 + Dropdown 셋(288개 변형) 96개 반응 —
+   둘 다 값이 완전히 같습니다.
+     Default → Hover           Smart animate · Slow · 150ms
+     Hover   → Pressed(Selected/Typing)  Smart animate · Slow · 50ms
+   Dropdown 은 이 CSS 를 그대로 공유하므로 여기서 함께 처리됩니다.
+
+   State 가 바뀌면 테두리뿐 아니라 좌우 아이콘·단위·Type Box·Label 의 색까지
+   같이 움직여야 한 덩어리로 보입니다. 각 서브 아톰은 자기 CSS 에서 color 를 전환하고,
+   `--bd-motion-duration` 은 상속되므로 여기서 한 번만 정해 주면 전부 따라옵니다. */
+.bd-text-input__box {
+  transition-property: background-color, border-color;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-text-input__icon,
+.bd-text-input__unit,
+.bd-text-input__input,
+.bd-text-input__clear {
+  transition-property: color;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-text-input__button {
+  transition-property: --bd-ti-btn-overlay, background-color, opacity;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+/* 선택·입력으로 들어갈 때 = 50ms */
+.bd-text-input[data-state='selected'],
+.bd-text-input[data-state='typing'] { --bd-motion-duration: var(--bd-motion-pressed); }
+/* 마우스가 올라와 있는 동안 = 150ms */
+.bd-text-input[data-state='hover'],
+.bd-text-input[data-auto='true']:hover { --bd-motion-duration: var(--bd-motion-hover); }
+/* 우측 확정 버튼을 누르는 중 = 50ms (Button Primary 와 같은 규칙) */
+.bd-text-input__button:active:not(:disabled) { --bd-motion-duration: var(--bd-motion-pressed); }

@@ -56,21 +56,20 @@
 .bd-tab__underline[data-tone='emphasize'] { background-color: var(--sys-color-theme-destructed-default); }
 .bd-tab__underline[data-tone='disabled']  { background-color: var(--sys-color-neutral-400); }
 .bd-tab__underline[data-animate='true'] {
+  /* 밑줄은 **탭이 선택될 때만** 움직입니다. 인디케이터 이동이므로
+     Segmented Control 알약과 같은 --bd-motion-slide(기존 값 200ms) 를 씁니다. */
   transition:
-    transform 200ms cubic-bezier(0.32, 0.72, 0, 1),
-    width 200ms cubic-bezier(0.32, 0.72, 0, 1),
-    background-color 200ms cubic-bezier(0.32, 0.72, 0, 1);
+    transform var(--bd-motion-slide) var(--bd-motion-slide-easing),
+    width var(--bd-motion-slide) var(--bd-motion-slide-easing),
+    background-color var(--bd-motion-slide) var(--bd-motion-slide-easing);
 }
 
 /* 밑줄은 이 막대가 담당하므로 탭 자신의 밑줄은 끄고 글자색만 전환합니다.
    (_Item 을 단독으로 쓸 때는 자기 밑줄을 그대로 씁니다) */
 .bd-tab .bd-tab-item[data-active='true']::after { display: none; }
-.bd-tab .bd-tab-item { transition: color 200ms cubic-bezier(0.32, 0.72, 0, 1); }
-
-@media (prefers-reduced-motion: reduce) {
-  .bd-tab__underline,
-  .bd-tab .bd-tab-item { transition: none; }
-}
+/* 글자색은 밑줄과 한 덩어리로 움직여야 하므로 같은 값을 씁니다.
+   선택되는 탭과 해제되는 탭이 어긋나지 않도록 --bd-motion-duration 대신 고정값을 씁니다. */
+.bd-tab .bd-tab-item { transition: color var(--bd-motion-slide) var(--bd-motion-slide-easing); }
 
 /* ---------------- Type = Hug ---------------- */
 /* 탭 로우 자체가 가로 스크롤 컨테이너입니다 (별도 래퍼로 감싸지 않습니다).
@@ -119,7 +118,8 @@
   bottom: var(--ref-borderwidth-02);           /* 하단 구분선을 가리지 않습니다 */
   width: var(--bd-tab-h);
   opacity: 0;
-  transition: opacity 200ms ease;              /* 레이아웃 변화 없이 크로스페이드 */
+  /* 이 페이드만 곡선이 다릅니다 — 원래 쓰던 `ease` 를 그대로 유지합니다 */
+  transition: opacity var(--bd-motion-slide) ease;   /* 레이아웃 변화 없이 크로스페이드 */
   pointer-events: none;
 }
 .bd-tab__fade[data-visible='true'] { opacity: 1; }

@@ -110,3 +110,15 @@
   outline: 2px solid var(--sys-color-brand-primary-default);
   outline-offset: 2px;
 }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Icon Button 셋 — 54개 반응 전부
+     Default → Hover   Smart animate · Slow · 150ms
+     Hover   → Pressed Smart animate · Slow · 50ms   (`styles/motion.css`) */
+.bd-icon-button {
+  transition-property: --bd-ib-overlay, background-color, border-color, color, opacity;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-icon-button:active:not(:disabled),
+.bd-icon-button[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }

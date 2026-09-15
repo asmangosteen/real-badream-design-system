@@ -35,7 +35,9 @@
   background-color: var(--sys-color-common-white-default);
   box-shadow: 0 2px 2px 0 var(--ref-color-gray-900-5);
   border-radius: var(--bd-sc-item-radius);
-  transition: left 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  /* 알약이 자리를 옮기는 움직임 — **이미 정해져 있던 값(200ms + 전용 곡선)** 을 그대로 유지합니다.
+     이 값이 Tab 밑줄·Page Control 도트 등 다른 인디케이터의 기준이 됩니다. */
+  transition: left var(--bd-motion-slide) var(--bd-motion-slide-easing);
   pointer-events: none;
 }
 
@@ -43,7 +45,7 @@
 .bd-segmented-control .bd-seg-item {
   position: relative;
   z-index: 1;
-  transition: color 200ms cubic-bezier(0.32, 0.72, 0, 1);
+  transition: color var(--bd-motion-slide) var(--bd-motion-slide-easing);   /* 알약과 같은 값 */
 }
 .bd-segmented-control .bd-seg-item[data-selected='true'] {
   background-color: transparent;
@@ -51,11 +53,6 @@
 }
 
 /* 누를 때 줄어드는(scale) 효과는 넣지 않습니다 (요청 사항) */
-
-@media (prefers-reduced-motion: reduce) {
-  .bd-segmented-control__indicator,
-  .bd-segmented-control .bd-seg-item { transition: none; }
-}
 
 /* padding·gap·radius 가 XS+S / M / L+XL 로 묶입니다 (_Item 의 radius 계단과 같은 그룹핑).
    ⚠️ 2026-09-14 재실측 정정: **gap 은 컨테이너 padding 과 같은 값**입니다(XS·S 2px, M·L·XL 4px).

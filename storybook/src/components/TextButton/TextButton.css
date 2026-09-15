@@ -86,3 +86,18 @@
   outline-offset: 2px;
   border-radius: var(--ref-radius-02);
 }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Text Button 셋 — 72개 반응 전부 Button 과 같은 값입니다
+     Default → Hover 150ms · Hover → Pressed 50ms · Smart animate · Slow
+
+   배경이 없는 컴포넌트라 오버레이 대신 **글자색 합성 비율**을 움직입니다.
+   `--bd-tb-overlay-amount` 는 `@property` 로 `<percentage>` 등록돼 있어야 보간됩니다
+   (등록은 `styles/motion.css`). 등록이 없으면 15%→30% 가 뚝 끊깁니다. */
+.bd-text-button {
+  transition-property: --bd-tb-overlay-amount, color, opacity;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-text-button:active:not(:disabled),
+.bd-text-button[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }

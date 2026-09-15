@@ -24,3 +24,13 @@
 .bd-text-count__current { color: var(--sys-color-neutral-500); }
 .bd-text-count[data-state='typing'] .bd-text-count__current { color: var(--sys-color-neutral-700); }
 .bd-text-count[data-state='destructed'] .bd-text-count__current { color: var(--sys-color-theme-destructed-default); }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   이 컴포넌트 자체에는 Figma 프로토타입 반응이 없습니다. Text Input·Dropdown 안에서
+   State 가 바뀔 때 글자색이 함께 움직이도록 상위가 정한 `--bd-motion-duration` 을
+   그대로 따라갑니다(단독으로 쓰면 기본 150ms). */
+.bd-text-count__current {
+  transition-property: color;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}

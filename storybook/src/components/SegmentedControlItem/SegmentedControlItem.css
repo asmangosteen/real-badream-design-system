@@ -71,3 +71,17 @@
   outline: 2px solid var(--sys-color-brand-primary-default);
   outline-offset: -2px;
 }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma _Item 셋에는 Hover/Pressed 축도 프로토타입 반응도 없습니다.
+   단독으로 쓸 때는 이 항목이 직접 흰 알약을 그리므로, Segmented Control 안에서
+   부모 인디케이터가 움직이는 것과 같은 --bd-motion-slide(200ms) 를 씁니다
+   (2026-09-15 디자이너 확인 — Segmented Control 의 기존 값이 기준).
+   Segmented Control 안에서는 흰 알약을 부모의 인디케이터가 그리므로
+   SegmentedControl.css 가 글자색만 남겨 덮어씁니다. */
+.bd-seg-item {
+  transition:
+    background-color var(--bd-motion-slide) var(--bd-motion-slide-easing),
+    box-shadow var(--bd-motion-slide) var(--bd-motion-slide-easing),
+    color var(--bd-motion-slide) var(--bd-motion-slide-easing);
+}

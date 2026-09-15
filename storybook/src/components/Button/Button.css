@@ -170,3 +170,19 @@
   outline: 2px solid var(--sys-color-brand-primary-default);
   outline-offset: 2px;
 }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Button 셋 `409:6752` — 반응이 걸린 440개 변형이 **전부 동일**합니다.
+     Default → Hover    While hovering · Smart animate · Slow · 150ms
+     Hover   → Pressed  While pressing · Smart animate · Slow · 50ms
+   duration·easing 의 근거와 유도 과정은 `styles/motion.css` 주석에 있습니다.
+
+   transition-property 를 명시적으로 나열한 이유: `all` 을 쓰면 Controls 에서
+   Size 를 바꿀 때 padding·font-size 까지 애니메이션돼 글자가 꿈틀거립니다. */
+.bd-button {
+  transition-property: --bd-btn-overlay, background-color, border-color, color, opacity;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-button:active:not(:disabled),
+.bd-button[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }

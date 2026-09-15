@@ -35,7 +35,10 @@
   padding: var(--ref-spacing-02);              /* 2px, 전 Size 공통 */
   border-radius: var(--ref-radius-12);         /* 999px */
   background-color: var(--sys-color-neutral-300); /* Off: gray/300 #DBDCDF */
-  transition: background-color 150ms ease;
+  /* Figma Toggle 셋에는 프로토타입 반응이 걸려 있지 않습니다.
+     이 컴포넌트에 **이미 정해져 있던 값(150ms + ease)을 duration·easing 모두 그대로 유지**합니다
+     (2026-09-15 디자이너 확인). duration 만 토큰으로 빼서 '움직임 최소화' 설정을 따르게 했습니다. */
+  transition: background-color var(--bd-motion-hover) ease;
 }
 
 /* 트랙 크기: 토큰에 없는 컴포넌트 고정값 (스펙 8장 "기존 토큰에 없음") */
@@ -52,7 +55,7 @@
   flex: 0 0 auto;
   border-radius: var(--ref-radius-12);
   background-color: var(--sys-color-common-white-default); /* Off/On 공통 #FDFDFD */
-  transition: transform 150ms ease;
+  transition: transform var(--bd-motion-hover) ease;   /* 트랙과 같은 값 */
 }
 
 /* thumb = 트랙 높이 − padding×2 (스펙 2장 핵심 규칙) */
@@ -84,7 +87,5 @@
   border-radius: var(--ref-radius-12);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bd-toggle__track,
-  .bd-toggle__thumb { transition: none; }
-}
+/* 움직임 최소화 설정은 styles/motion.css 에서 duration 토큰을 0 으로 만들어 일괄 처리합니다
+   (컴포넌트마다 @media 를 중복 선언하지 않습니다). */

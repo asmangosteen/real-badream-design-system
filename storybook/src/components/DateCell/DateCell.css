@@ -56,3 +56,20 @@
 .bd-date-cell[data-type='current']:disabled { border-color: var(--sys-color-neutral-300); }
 
 .bd-date-cell:focus-visible { outline: 2px solid var(--sys-color-brand-primary-default); outline-offset: 2px; }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Date 셋 — 4개 반응 전부
+     Default → Hover 150ms · Hover → Pressed 50ms · Smart animate · Slow
+
+   Pinned 는 배경·글자색과 **함께 타이포(Body1 → Subtitle)** 도 바뀌지만,
+   글자 크기·굵기는 전환 대상에서 뺐습니다. 전환 도중 글자가 늘어나 보여서입니다. */
+.bd-date-cell {
+  transition-property: --bd-date-overlay, background-color, border-color, color;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-date-cell[data-type='selected'],
+.bd-date-cell[data-type='pinned'] { --bd-motion-duration: var(--bd-motion-pressed); }
+.bd-date-cell:hover:not(:disabled) { --bd-motion-duration: var(--bd-motion-hover); }
+.bd-date-cell:active:not(:disabled),
+.bd-date-cell[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }

@@ -23,6 +23,13 @@
   letter-spacing: var(--typography-body-1-letter-spacing);
   font-weight: var(--font-weight-regular);
   cursor: pointer;
+  /* Typing 의 파란 테두리는 `border` 가 아니라 **안쪽 그림자**로 그립니다.
+     · border-width 를 0 → 1px(borderwidth/02) 로 바꾸면 전환 도중 테두리가 갑자기 나타납니다
+       (두께는 부드럽게 늘릴 수 없습니다).
+     · 미리 투명 border 를 깔면 border-box 기준 content 폭이 2px 줄어 36px 숫자칸이 밀립니다.
+     `box-shadow: inset` 은 border-box 의 border 와 **같은 자리에 같은 두께**로 그려지면서
+     레이아웃에 전혀 영향을 주지 않아, 색만 부드럽게 나타나게 할 수 있습니다. */
+  box-shadow: inset 0 0 0 var(--ref-borderwidth-02) var(--bd-tf-border, transparent);
 }
 .bd-time-field__number {
   display: flex;
@@ -34,7 +41,7 @@
 .bd-time-field:hover:not([data-state='typing']) { --bd-tf-overlay: var(--ref-color-gray-900-5); }
 .bd-time-field[data-state='typing'] {
   background-color: var(--sys-color-common-white-default);
-  border: var(--ref-borderwidth-02) solid var(--sys-color-brand-primary-default);
+  --bd-tf-border: var(--sys-color-brand-primary-default);
   --bd-tf-overlay: transparent;
 }
 
@@ -73,4 +80,24 @@
   line-height: var(--typography-subtitle-line-height);
   color: var(--sys-color-neutral-800);
   padding: 0 var(--ref-spacing-02);
+}
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Time Field 셋 — 2개 반응
+     Default → Hover 150ms · Hover → Pressed(Typing) 50ms · Smart animate · Slow
+
+   Time Picker 의 상하 화살표와 Time Picker Group 에는 Figma 에 반응이 없습니다.
+   화살표는 Disabled 로 흐려질 때의 글자색만 전환합니다. */
+.bd-time-field {
+  transition-property: --bd-tf-overlay, background-color, box-shadow;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-time-field[data-state='typing'] { --bd-motion-duration: var(--bd-motion-pressed); }
+.bd-time-field:hover:not([data-state='typing']) { --bd-motion-duration: var(--bd-motion-hover); }
+
+.bd-time-picker__arrow {
+  transition-property: color;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
 }

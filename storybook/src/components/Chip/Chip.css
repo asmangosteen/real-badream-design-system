@@ -116,3 +116,20 @@
 .bd-chip__avatar { display: inline-flex; padding: var(--ref-spacing-03) var(--ref-spacing-04); }
 .bd-chip__icon { display: inline-flex; padding: var(--ref-spacing-03) var(--ref-spacing-02); }
 .bd-chip[data-kind='filter'][data-contents='icon'] .bd-chip__icon { padding: var(--ref-spacing-03); }
+
+/* ---------------- 상태 전환 (motion) ----------------
+   Figma 원본: Chip / Selection · Chip / Filter — 76개 반응 전부
+     Default → Hover 150ms · Hover → Pressed 50ms · Smart animate · Slow
+
+   규칙 순서가 곧 우선순위입니다 (뒤에 올수록 이깁니다):
+     선택 진입 50ms  <  마우스가 올라와 있는 동안 150ms  <  누르는 중 50ms
+   자세한 근거는 `styles/motion.css` 의 "우선순위" 절 참고. */
+.bd-chip {
+  transition-property: --bd-chip-overlay, background-color, border-color, color, opacity;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-chip[data-selected='true'] { --bd-motion-duration: var(--bd-motion-pressed); }
+.bd-chip:hover:not(:disabled) { --bd-motion-duration: var(--bd-motion-hover); }
+.bd-chip:active:not(:disabled),
+.bd-chip[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }

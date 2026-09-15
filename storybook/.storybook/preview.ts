@@ -5,6 +5,7 @@ import { DocsPage } from './DocsPage';
 import '../../tokens/tokens.css';
 import '../src/styles/fonts.css';
 import '../src/styles/typography.css';
+import '../src/styles/motion.css';
 import '../src/styles/preview.css';
 
 const preview: Preview = {
