@@ -14,15 +14,31 @@
 }
 .bd-text-blinker[data-state='off'] { opacity: 0; }
 
-/* ⚠️ Figma 에 깜빡임 duration·주기가 전혀 없습니다.
-   blink 를 켜면 아래 기본값(1s step-end)이 적용되며, 이는 구현 추정값입니다. */
+/* 깜빡임 — Figma 프로토타입 반응 실측값입니다.
+   (2026-09-15 정정: 이전 주석의 "Figma 에 duration·주기가 전혀 없다" 는 사실과 다릅니다.
+    Text Blinker 셋의 두 변형에 아래 반응이 양방향으로 걸려 있습니다.)
+
+     State=On  --(After delay 200ms)--> State=Off   Smart animate · Ease in and out · 150ms
+     State=Off --(After delay 200ms)--> State=On    Smart animate · Ease in and out · 150ms
+
+   따라서 한 주기 = (200 유지 + 150 페이드) × 2 = **700ms** 이고,
+   껐다 켰다 하는 계단(step)이 아니라 **부드럽게 사라졌다 나타나는 페이드**입니다.
+   구간 비율: 200/700 = 28.5714% · 350/700 = 50% · 550/700 = 78.5714% */
 .bd-text-blinker[data-blink='true'] {
-  animation: bd-blinker var(--bd-blinker-duration, 1s) step-end infinite;
+  animation: bd-blinker var(--bd-blinker-duration, 700ms) ease-in-out infinite;
 }
 @keyframes bd-blinker {
-  0%, 50% { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+  0%,       28.5714% { opacity: 1; }   /* On 200ms 유지 */
+  50%,      78.5714% { opacity: 0; }   /* 150ms 페이드아웃 후 Off 200ms 유지 */
+  100%               { opacity: 1; }   /* 150ms 페이드인 */
 }
+
+/* state 를 직접 바꿔 쓸 때도 같은 곡선·시간으로 전환합니다 */
+.bd-text-blinker {
+  transition: opacity 150ms ease-in-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bd-text-blinker[data-blink='true'] { animation: none; opacity: 1; }
+  .bd-text-blinker { transition: none; }
 }

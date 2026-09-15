@@ -46,7 +46,25 @@ Text Blinker는 텍스트 입력 필드(Input/TextField/TextArea 등) 안에서 
 
 **모션 데이터 없음.**
 
-`get_motion_context`를 컴포넌트 셋 전체(`2111:7483`, recursive=true)에 호출했으나 `{"nodes":[]}`인 완전히 빈 결과를 반환했습니다. 이름("Blinker")과 On/Off 두 상태 구조로 미루어 실제 프로덕트에서는 두 상태를 일정 주기로 토글하는 깜빡임(blink) 애니메이션이 구현될 것으로 강하게 추정되지만, **Figma 파일 자체에는 duration·easing·반복 주기 등 어떤 모션 값도 정의되어 있지 않습니다.** 임의로 타이밍(예: "500ms", "1s")을 만들어내지 않았습니다 — 실제 구현 시 브라우저의 네이티브 텍스트 커서 깜빡임 주기(일반적으로 OS/브라우저 설정을 따름) 또는 별도 UX 결정이 필요하며, 이는 **확인 필요**입니다.
+> **2026-09-15 정정 — 깜빡임 값은 Figma에 정의되어 있습니다.**
+> 아래 단락은 `get_motion_context`의 빈 결과만 보고 "모션 값 없음"으로 단정했으나 사실과 다릅니다.
+> `get_motion_context`는 **키프레임 애니메이션**만 읽습니다. 이 컴포넌트의 깜빡임은 키프레임이 아니라
+> **프로토타입 반응(`node.reactions`)** 으로 걸려 있어서 그 도구로는 보이지 않았을 뿐입니다.
+> Plugin API(`use_figma`)로 두 변형의 `reactions`를 직접 읽은 실측값은 다음과 같습니다.
+>
+> | From | Trigger | To | Animation | Easing | Duration |
+> |---|---|---|---|---|---|
+> | `State=On` (`2111:7482`) | After delay **200ms** | `State=Off` | Smart animate | Ease in and out | **150ms** |
+> | `State=Off` (`2111:7481`) | After delay **200ms** | `State=On` | Smart animate | Ease in and out | **150ms** |
+>
+> 따라서 한 주기 = (200 유지 + 150 전환) × 2 = **700ms**이고, 껐다 켰다 하는 계단(step)이 아니라
+> **부드럽게 사라졌다 나타나는 페이드**입니다. 스토리북 구현(`storybook/src/components/TextBlinker/TextBlinker.css`)은
+> 이 값을 그대로 옮겼습니다.
+>
+> 교훈: **모션을 확인할 때 `get_motion_context`만으로 "없음"을 결론짓지 말 것.** 변형 사이의 전환은
+> 프로토타입 반응에 들어 있고, 이는 `use_figma`로 `node.reactions`를 읽어야 보입니다.
+
+~~`get_motion_context`를 컴포넌트 셋 전체(`2111:7483`, recursive=true)에 호출했으나 `{"nodes":[]}`인 완전히 빈 결과를 반환했습니다. 이름("Blinker")과 On/Off 두 상태 구조로 미루어 실제 프로덕트에서는 두 상태를 일정 주기로 토글하는 깜빡임(blink) 애니메이션이 구현될 것으로 강하게 추정되지만, **Figma 파일 자체에는 duration·easing·반복 주기 등 어떤 모션 값도 정의되어 있지 않습니다.**~~ (위 정정 참고)
 
 ## 4. 접근성
 
@@ -65,7 +83,7 @@ Text Blinker는 텍스트 입력 필드(Input/TextField/TextArea 등) 안에서 
 - 높이도 토큰이 아니며, 컴포넌트 기본값 20px + 상위(Type Box)에서의 Size 별 리사이즈(16/18/20px)로 결정됩니다(2장).
 
 **확인 필요**
-- 실제 깜빡임 애니메이션의 duration·easing·반복 주기 (Figma에 모션 데이터 없음 — 4장 참고)
+- ~~실제 깜빡임 애니메이션의 duration·easing·반복 주기 (Figma에 모션 데이터 없음 — 4장 참고)~~ → **2026-09-15 해소.** 프로토타입 반응에 200ms 유지 + 150ms Ease in and out 전환(한 주기 700ms)으로 정의되어 있습니다. 4장 정정 참고.
 - `aria-hidden` 등 접근성 규정
 - 네이티브 브라우저 캐럿과의 중복 방지 처리 방식
 

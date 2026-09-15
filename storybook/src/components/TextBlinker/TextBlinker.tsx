@@ -4,8 +4,9 @@ export interface TextBlinkerProps {
   /** `off` 는 같은 색의 alpha 0% 입니다 (별도 회색이 아닙니다) */
   state?: 'on' | 'off';
   /**
-   * ⚠️ 깜빡임. **Figma 에 duration·주기가 전혀 정의되어 있지 않습니다.**
-   * 켜면 구현 기본값 1s(step-end)로 깜빡입니다.
+   * 깜빡임. Figma 프로토타입 반응 실측값(200ms 유지 + 150ms Ease in and out 페이드,
+   * 양방향)을 그대로 옮겨 **한 주기 700ms 의 페이드**로 깜빡입니다.
+   * 계단식(step)이 아니라 부드럽게 사라졌다 나타납니다.
    */
   blink?: boolean;
   /** 커서 색. Text Input 이 에러 상태에서 destructed 색으로 바꿔 씁니다 */
