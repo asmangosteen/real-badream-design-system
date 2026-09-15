@@ -61,15 +61,25 @@
    Figma 원본: Date 셋 — 4개 반응 전부
      Default → Hover 150ms · Hover → Pressed 50ms · Smart animate · Slow
 
-   Pinned 는 배경·글자색과 **함께 타이포(Body1 → Subtitle)** 도 바뀌지만,
-   글자 크기·굵기는 전환 대상에서 뺐습니다. 전환 도중 글자가 늘어나 보여서입니다. */
+   **입력 피드백(오버레이)만 전환하고, Type 축은 전환하지 않습니다** — Chip 과 같은 규칙입니다
+   (근거는 docs/INTERACTION.md 7.3 절).
+
+   Figma 의 Date 셋도 Status 축(Default/Hover/Pressed)에만 반응이 걸려 있고
+   **Type 축(Default/Current/Selected/Pinned/Null)에는 전환이 연결돼 있지 않습니다.**
+   Selected·Pinned 에는 Hover/Pressed 변형 자체가 없습니다.
+
+   색을 전환하면 중간 프레임이 어느 Type 도 아닌 제3의 모습이 됩니다.
+   특히 Pinned 는 배경 밝기 98% → 20%, 글자 12% → 98% 로 **서로 자리를 바꾸기 때문에**
+   배경을 크로스페이드하면 중간에 반드시 글자와 같은 밝기를 지나가 숫자가 사라집니다
+   (150ms 일 때 대비가 1.17 까지 떨어집니다). Chip Filled 와 같은 구조입니다.
+
+   ⚠️ 별개의 문제 — Pinned 의 **최종 상태 대비가 4.1** 로 WCAG AA(4.5) 미달입니다.
+      brand/primary-default 배경 위 흰 글자라는 Figma 색 지정 자체에서 오는 값이라
+      전환과 무관합니다. 디자이너 확인 필요. */
 .bd-date-cell {
-  transition-property: --bd-date-overlay, background-color, border-color, color;
+  transition-property: --bd-date-overlay;
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
-.bd-date-cell[data-type='selected'],
-.bd-date-cell[data-type='pinned'] { --bd-motion-duration: var(--bd-motion-pressed); }
-.bd-date-cell:hover:not(:disabled) { --bd-motion-duration: var(--bd-motion-hover); }
 .bd-date-cell:active:not(:disabled),
 .bd-date-cell[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }

@@ -92,20 +92,21 @@
    Figma 원본: Radio Button 셋 — 12개 반응 전부
      Default → Hover 150ms · Hover → Pressed 50ms · Smart animate · Slow
 
-   Disabled 의 opacity 는 루트에, 색은 `__circle` 에 걸려 있어 둘로 나눠 선언합니다.
-   Checkbox 와 마찬가지로 Checked 축 전환은 Figma 에 따로 정의돼 있지 않지만,
-   전 컴포넌트가 같은 인터랙션이라는 확인을 받아(2026-09-15) 같은 값을 씁니다. */
+   **입력 피드백(오버레이)만 전환하고, Checked 축은 전환하지 않습니다** — Checkbox 와
+   같은 규칙입니다(근거는 docs/INTERACTION.md 7.3 절).
+   흰 dot 이 흰 배경 위에서 시작해 전환 초반에 보이지 않는 문제가 Checkbox 와 동일합니다.
+
+   Disabled 의 opacity 는 루트에, 오버레이는 `__circle` 에 걸려 있어 둘로 나눠 선언합니다.
+   opacity 는 전체가 고르게 흐려지는 변화라 중간 모습이 어색하지 않아 그대로 전환합니다. */
 .bd-radio {
   transition-property: opacity;
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
 .bd-radio__circle {
-  transition-property: --bd-radio-overlay, background-color, border-color;
+  transition-property: --bd-radio-overlay;
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
-.bd-radio[data-checked='true'] { --bd-motion-duration: var(--bd-motion-pressed); }
-.bd-radio:hover:not(:disabled) { --bd-motion-duration: var(--bd-motion-hover); }
 .bd-radio:active:not(:disabled),
 .bd-radio[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }
