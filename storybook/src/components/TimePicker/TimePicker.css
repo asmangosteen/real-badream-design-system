@@ -37,6 +37,9 @@
   justify-content: center;
   width: 36px;                                /* ⚠️ 내부 px-8 은 토큰 바인딩 없는 하드코딩입니다 */
 }
+/* Typing 에서만 숫자와 캐럿 사이에 `spacing/01`=1px 이 들어갑니다 (스펙 5장 실측).
+   ⚠️ 2026-09-15 정정: 이 gap 이 빠져 있어 캐럿이 숫자에 붙어 있었습니다. */
+.bd-time-field[data-state='typing'] .bd-time-field__number { gap: var(--ref-spacing-01); }
 .bd-time-field[data-state='hover']:not([data-state='typing']),
 .bd-time-field:hover:not([data-state='typing']) { --bd-tf-overlay: var(--ref-color-gray-900-5); }
 .bd-time-field[data-state='typing'] {
@@ -70,16 +73,29 @@
 .bd-time-picker .bd-time-field { width: 56px; }
 
 /* ---------------- Time Picker Group ---------------- */
+/* ⚠️ 2026-09-15 정정 — 두 가지가 스펙과 어긋나 있었습니다.
+   (1) `gap: spacing/06`=8px 이 빠져 있었습니다. 스펙 6장의 폭 산출이
+       `56 + 8 + 4 + 8 + 56 = 132px`(2개) / `= 208px`(3개) 라 gap 이 없으면 폭이 맞지 않습니다.
+   (2) `display: flex` 라 부모 폭만큼 늘어났습니다(측정값 992px). Figma 는 hug 프레임이라
+       내용만큼만 차지해야 합니다 — `inline-flex` 로 바꿉니다. */
 .bd-time-picker-group {
   display: flex;
   align-items: center;
+  width: fit-content;                         /* hug — 부모가 flex 여도 늘어나지 않게 */
+  gap: var(--ref-spacing-06);                 /* 8px */
   font-family: var(--font-family-base);
 }
+/* Figma 의 구분자는 **4×14px 고정 SVG 에셋**입니다. 여기서는 글자 콜론으로 그리되
+   레이아웃 폭만 4px 로 맞춥니다(글자는 좌우로 조금 넘치지만 gap 8px 안에 들어갑니다).
+   ⚠️ 에셋을 그대로 쓰지 않은 부분이라 모양이 원본과 다를 수 있습니다. */
 .bd-time-picker-group__sep {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 4px;
   font-size: var(--typography-subtitle-size);
   line-height: var(--typography-subtitle-line-height);
   color: var(--sys-color-neutral-800);
-  padding: 0 var(--ref-spacing-02);
 }
 
 /* ---------------- 상태 전환 (motion) ----------------

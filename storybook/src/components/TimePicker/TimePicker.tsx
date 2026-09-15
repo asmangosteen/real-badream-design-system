@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { TextBlinker } from '../TextBlinker/TextBlinker';
 import { Icon } from '../Icon/Icon';
 import './TimePicker.css';
@@ -96,12 +97,15 @@ export interface TimePickerGroupProps {
  */
 export function TimePickerGroup({ values = ['00', '00'], directions, className }: TimePickerGroupProps) {
   return (
+    /* 스펙 2장 그대로 **평면 배열**입니다 — [Picker] → [Colon] → [Picker].
+       래퍼 <span> 으로 묶으면 그룹의 gap 이 콜론이 아니라 래퍼 사이에만 걸려
+       폭 산출(56 + 8 + 4 + 8 + 56 = 132)이 맞지 않습니다. */
     <div className={['bd-time-picker-group', className].filter(Boolean).join(' ')} data-count={values.length}>
       {values.map((v, i) => (
-        <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
+        <Fragment key={i}>
           {i > 0 && <span className="bd-time-picker-group__sep">:</span>}
           <TimePicker value={v} direction={directions?.[i] ?? 'both'} />
-        </span>
+        </Fragment>
       ))}
     </div>
   );
