@@ -47,7 +47,8 @@ Calendar Header는 달력(월/연도 선택) 상단에 위치하는 **352×56px 
 | Left + Nothing | `px-spacing/11`=20px / `py-spacing/06`=8px |
 | Left + Arrows, Left + Close | `pl-spacing/11`=20px / `pr-spacing/06`=8px / `py-spacing/06`=8px |
 
-**"Year and Month" 텍스트 블록**(`flex` row, gap `spacing/02`=2px, `items-center`): Center+Arrows를 제외한 5개 조합에서 공통으로 쓰이며, `flex-[1_0_0]`(가변 폭, 남는 공간을 채움)로 배치됩니다. Center+Arrows만 이 블록을 별도 인스턴스로 분리해 좌우 화살표 버튼 사이(3분할 레이아웃 중앙)에 배치합니다 — 즉 **레이아웃 구조 자체가 Center+Arrows에서만 갈라집니다**.
+**"Year and Month" 텍스트 블록**(`flex` row, gap `spacing/02`=2px, `items-center`): Center+Arrows를 제외한 5개 조합에서 공통으로 쓰이며, `flex-[1_0_0]`(가변 폭, 남는 공간을 채움)로 배치됩니다.
+**이 블록이 남는 공간을 전부 차지하고, 그 안에서 Title=Left는 왼쪽(`justify-start`)·Title=Center는 가운데(`justify-center`)로 정렬합니다** — 헤더 자체의 정렬이 아니라 이 블록 내부의 정렬입니다(2026-09-15 보강). 구현이 제목 옆에 `flex:1` 인 빈 spacer 를 두는 방식이었던 탓에 Center 세 조합이 전혀 가운데 정렬되지 않고 있었고, 이번에 고쳤습니다. Center+Arrows만 이 블록을 별도 인스턴스로 분리해 좌우 화살표 버튼 사이(3분할 레이아웃 중앙)에 배치합니다 — 즉 **레이아웃 구조 자체가 Center+Arrows에서만 갈라집니다**.
 
 - Title=Left: 텍스트 SubTitle/18 SemiBold, 색상 `neutral/800`
 - Title=Center(Arrows 제외): 텍스트 Body 1/16 SemiBold, `text-center`, 색상 `neutral/800`
@@ -55,7 +56,23 @@ Calendar Header는 달력(월/연도 선택) 상단에 위치하는 **352×56px 
   - With=Arrows 또는 Nothing → `arrowhead_down`(닫힌/접힌 상태 암시)
   - With=Close → `arrowhead_up`(펼쳐진 상태 암시 — 아래 닫기 버튼과 짝을 이룸)
 
-**이전/다음 달 이동 컨트롤**(Icon Button, `p-spacing/06`=8px, `radius/06`=12px, 내부 아이콘 24px):
+> **⚠️ 2026-09-15 보강 — 두 가지가 빠져 있었습니다.**
+>
+> **(1) 이전/다음·닫기 버튼은 `Icon Button` 컴포넌트 인스턴스입니다.**
+> 정확히는 **`Size=L · Type=Ghost · Icon Color=Black · Stroke=False`** 입니다
+> (40×40 · padding 8 · 아이콘 24px — Icon Button L 규격과 정확히 일치).
+> 구현이 자체 `<button>` 으로 그려서 **Icon Button 의 hover/pressed 오버레이가 빠져 있었고**,
+> 이번에 컴포넌트를 그대로 쓰도록 고쳤습니다.
+>
+> **(2) 아이콘 색은 글자 색과 다르고, 그마저도 인스턴스 오버라이드입니다.**
+> 초판은 색상으로 `neutral/800` 하나만 기록했는데 그건 **제목 글자**의 색입니다.
+> 헤더 안의 아이콘은 전부 **`neutral/600`(#5B616C)** 입니다 — 펼침 화살표(arrowhead_down/up),
+> 이전·다음(chevron_left/right), 닫기(close) 모두 같습니다.
+> 단 이는 **Icon Button 기본값이 아닙니다.** Icon Button 원본의 Ghost/Black 은
+> `neutral/800`(#202837, 변수 바인딩 확인)이고, Calendar Header 인스턴스에서만
+> `neutral/600` 으로 덮어쓴 것입니다. 구현도 헤더 CSS 에서만 덮어쓰도록 했습니다.
+
+**이전/다음 달 이동 컨트롤**(Icon Button, `p-spacing/06`=8px, `radius/06`=12px, 내부 아이콘 24px, 아이콘 색 `neutral/600`):
 - Left+Arrows: 텍스트 블록 뒤(우측, flex-1로 밀림)에 gap 없이 붙은 "Arrow Box" 안에 `chevron_left` → `chevron_right` 순서로 2개
 - Center+Arrows: 좌측에 `chevron_left` 버튼 1개, 우측에 `chevron_right` 버튼 1개(텍스트 블록을 사이에 두고 분리 배치)
 
@@ -102,7 +119,8 @@ Icon Button 래퍼(`p-spacing/06`=8px, `radius/06`=12px)는 다른 컴포넌트(
 **정확히 일치**
 - Spacing: `spacing/02`=2px, `spacing/06`=8px, `spacing/08`=12px, `spacing/11`=20px → 각각 `ref-spacing-02/06/08/11`과 일치
 - Radius: `radius/06`=12px → `ref-radius-06`
-- 색상: `neutral/800`(#202837) → `sys-color-neutral-800`(`ref-color-gray-800`)
+- 색상: 제목 글자 `neutral/800`(#202837) → `sys-color-neutral-800`(`ref-color-gray-800`)
+- 색상: **아이콘 `neutral/600`(#5B616C) → `sys-color-neutral-600`(`ref-color-gray-600`)** (2026-09-15 보강 — 초판 누락)
 - 타이포: `SubTitle/18 SB`(18px/24px/-0.09px, Semibold), `Body 1/16 SB`(16px/24px/-0.04px, Semibold) 전부 `tokens/typography.json`의 subtitle·body1 스타일 + weight-600과 정확히 일치
 - 프레임 크기: 352×56px는 Figma 컴포넌트 루트에 명시적으로 박힌 고정값(`w-[352px] h-[56px]`)
 

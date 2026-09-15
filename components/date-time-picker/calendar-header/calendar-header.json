@@ -119,4 +119,27 @@
   "openQuestions": [
     "아이콘 전용 버튼의 aria-label/aria-expanded 등 접근성 마크업 연결 규정"
   ]
+,
+  "corrections2026_09_15": {
+    "usesIconButtonComponent": {
+      "finding": "이전/다음·닫기 버튼은 Icon Button 컴포넌트 인스턴스임 — Size=L, Type=Ghost, Icon Color=Black, Stroke=False (40x40, padding 8, 아이콘 24px)",
+      "impact": "구현이 자체 button 으로 그려 Icon Button 의 hover/pressed 오버레이가 빠져 있었음 — 컴포넌트를 그대로 쓰도록 수정 완료",
+      "note": "제목 옆 펼침 화살표는 Icon Button 이 아니라 Year and Month 프레임 안의 맨아이콘 20px 이므로 그대로 둠"
+    },
+    "iconColor": {
+      "finding": "초판은 색상으로 neutral/800 하나만 기록했으나 그것은 제목 글자의 색. 벡터 fill 재실측 결과 헤더 안 아이콘은 전부 neutral/600(#5B616C)",
+      "instanceOverride": "Icon Button 원본의 Ghost/Black 은 neutral/800(#202837, boundVariables 확인). neutral/600 은 Calendar Header 인스턴스에서만 덮어쓴 값이므로 헤더 CSS 에서만 오버라이드함",
+      "appliesTo": ["arrowhead_down", "arrowhead_up", "chevron_left", "chevron_right", "close"],
+      "token": "sys-color-neutral-600 (ref-color-gray-600)",
+      "impact": "구현이 color: inherit 로 제목 색(neutral/800)을 물려받아 아이콘이 검게 렌더링되고 있었음 — 수정 완료"
+    },
+    "titleAlignment": {
+      "finding": "Year and Month 블록이 flex-1 로 남는 공간을 차지하고, 그 안에서 Left=justify-start / Center=justify-center 로 정렬. 헤더 자체의 정렬이 아님",
+      "impact": "구현이 제목 옆에 flex:1 인 빈 spacer 를 두어 Center 세 조합이 전혀 가운데 정렬되지 않았음(제목이 영역 왼쪽에 붙음) — 수정 완료"
+    },
+    "arrowBoxGap": {
+      "finding": "Left+Arrows 의 두 화살표는 Arrow Box(80x40) 안에 gap 0 으로 붙어 있음. md 3장에 이미 기록돼 있던 내용",
+      "impact": "구현이 두 버튼을 헤더 직계 자식으로 두어 헤더 gap 12px 이 사이에 들어가 있었음 — 별도 묶음으로 감싸 수정 완료"
+    }
+  }
 }
