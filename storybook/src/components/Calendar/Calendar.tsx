@@ -1,12 +1,14 @@
-import { DateCell, type DateCellType } from '../DateCell/DateCell';
+import { DateCell, type DateCellProps } from '../DateCell/DateCell';
 import { weekRangeBand } from './calendar-data';
 import './Calendar.css';
 
-export interface WeekCell {
+/**
+ * 한 칸의 설정입니다. **[Date](../DateCell/DateCell.tsx) 의 속성을 그대로 받습니다** —
+ * `forceState`(진열용 강제 hover/pressed)처럼 달력이 직접 안 쓰는 것까지 전부 넘어갑니다.
+ * `label` 은 `children` 의 지름길입니다.
+ */
+export interface WeekCell extends Omit<DateCellProps, 'children'> {
   label?: React.ReactNode;
-  type?: DateCellType;
-  disabled?: boolean;
-  onClick?: () => void;
 }
 
 export interface WeekProps {
@@ -44,9 +46,9 @@ export function Week({ cells = [], className }: WeekProps) {
           }
         />
       )}
-      {filled.map((c, i) => (
-        <DateCell key={i} type={c.type} disabled={c.disabled} onClick={c.onClick}>
-          {c.label}
+      {filled.map(({ label, ...cell }, i) => (
+        <DateCell key={i} {...cell}>
+          {label}
         </DateCell>
       ))}
     </div>
@@ -63,6 +65,10 @@ const DAYS = [
   { key: 'sat', label: '토' },
 ] as const;
 
+export interface WeekHeaderProps {
+  className?: string;
+}
+
 /**
  * 달력 최상단 **요일 라벨 행**입니다. 328×22px 고정.
  *
@@ -73,7 +79,7 @@ const DAYS = [
  *
  * 스펙 원본: `components/date-time-picker/week-header/week-header.md`
  */
-export function WeekHeader({ className }: { className?: string }) {
+export function WeekHeader({ className }: WeekHeaderProps) {
   return (
     <div className={['bd-week-header', className].filter(Boolean).join(' ')} role="row">
       {DAYS.map((d) => (
@@ -88,6 +94,8 @@ export function WeekHeader({ className }: { className?: string }) {
 export interface MonthProps {
   /** 주(週) 행 목록. Figma 정의 범위는 **5개 또는 6개**입니다 */
   weeks: WeekCell[][];
+  /** 각 [Week](#week) 행에 그대로 넘어갑니다(README 규칙 11) */
+  weekProps?: Partial<WeekProps>;
   className?: string;
 }
 
@@ -101,11 +109,11 @@ export interface MonthProps {
  *
  * 스펙 원본: `components/date-time-picker/month/month.md`
  */
-export function Month({ weeks, className }: MonthProps) {
+export function Month({ weeks, weekProps, className }: MonthProps) {
   return (
     <div className={['bd-month', className].filter(Boolean).join(' ')} data-week-number={weeks.length} role="rowgroup">
       {weeks.map((cells, i) => (
-        <Week key={i} cells={cells} />
+        <Week key={i} cells={cells} {...weekProps} />
       ))}
     </div>
   );

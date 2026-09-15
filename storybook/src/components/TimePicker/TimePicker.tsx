@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { TextBlinker } from '../TextBlinker/TextBlinker';
-import { IconButton } from '../IconButton/IconButton';
+import { TextBlinker, type TextBlinkerProps } from '../TextBlinker/TextBlinker';
+import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import './TimePicker.css';
 
 /* ==================== 값 다루기 ==================== */
@@ -39,6 +39,8 @@ function stepValue(value: number, delta: number, min: number, max: number, wrap:
 export type TimeFieldState = 'default' | 'hover' | 'typing';
 
 export interface TimeFieldProps {
+  /** 캐럿([Text Blinker](../TextBlinker/TextBlinker.tsx))에 그대로 넘어갑니다(README 규칙 11) */
+  blinkerProps?: Partial<TextBlinkerProps>;
   /** 표시할 2자리 값 */
   value?: string;
   /**
@@ -72,6 +74,7 @@ export interface TimeFieldProps {
  * 스펙 원본: `components/date-time-picker/time-field/time-field.md`
  */
 export function TimeField({
+  blinkerProps,
   value = '00',
   state,
   unit = 'minute',
@@ -203,7 +206,7 @@ export function TimeField({
       <span className="bd-time-field__number" aria-hidden="true">
         {display}
         {/* 진열용으로 상태를 고정했을 때는 캐럿을 멈춰 둡니다 — 스크린샷이 흔들리지 않게 */}
-        {resolved === 'typing' && <TextBlinker blink={state === undefined} />}
+        {resolved === 'typing' && <TextBlinker blink={state === undefined} {...blinkerProps} />}
       </span>
     </div>
   );
@@ -218,6 +221,10 @@ const HOLD_DELAY = 400;
 const HOLD_INTERVAL = 80;
 
 export interface TimePickerProps {
+  /** 위·아래 화살표([Icon Button](../IconButton/IconButton.tsx))에 그대로 넘어갑니다 */
+  arrowProps?: Partial<IconButtonProps>;
+  /** 가운데 [Time Field](#time-field) 에 그대로 넘어갑니다 */
+  fieldProps?: Partial<TimeFieldProps>;
   /** 제어 모드 값 (`'09'`) */
   value?: string;
   /** 비제어 모드 초기값 */
@@ -254,6 +261,8 @@ export interface TimePickerProps {
  * 스펙 원본: `components/date-time-picker/time-picker/time-picker.md`
  */
 export function TimePicker({
+  arrowProps,
+  fieldProps,
   value,
   defaultValue = '00',
   onChange,
@@ -329,6 +338,7 @@ export function TimePicker({
         disabled={up ? upDisabled : downDisabled}
         onClick={() => bump(up ? 1 : -1)}
         aria-label={`${label} ${up ? '올리기' : '내리기'}`}
+        {...arrowProps}
       />
     </span>
   );
@@ -345,6 +355,7 @@ export function TimePicker({
         min={min}
         max={max}
         aria-label={label}
+        {...fieldProps}
         onCommit={(next) => {
           if (value === undefined) setInner(next);
           onChange?.(next);
@@ -362,6 +373,8 @@ export function TimePicker({
 const DEFAULT_UNITS: TimeUnit[] = ['hour', 'minute', 'second'];
 
 export interface TimePickerGroupProps {
+  /** 각 [Time Picker](#time-picker) 에 그대로 넘어갑니다 — 화살표·필드 속성까지 이어집니다 */
+  pickerProps?: Partial<TimePickerProps>;
   /** 제어 모드 값. `'09:30'` 또는 `'09:30:00'` — **자릿수가 곧 Picker Count** 입니다 */
   value?: string;
   /** 비제어 모드 초기값 */
@@ -386,6 +399,7 @@ export interface TimePickerGroupProps {
  * 스펙 원본: `components/date-time-picker/time-picker-group/time-picker-group.md`
  */
 export function TimePickerGroup({
+  pickerProps,
   value,
   defaultValue = '00:00',
   onChange,
@@ -436,6 +450,7 @@ export function TimePickerGroup({
             direction={directions?.[i]}
             wrap={wrap}
             onChange={(next) => setPart(i, next)}
+            {...pickerProps}
           />
         </Fragment>
       ))}

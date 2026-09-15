@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Icon } from '../Icon/Icon';
-import { ButtonSpinner } from '../ButtonSpinner/ButtonSpinner';
+import { ButtonSpinner, type ButtonSpinnerProps } from '../ButtonSpinner/ButtonSpinner';
 import './TextButton.css';
 
 export type TextButtonSize = 's' | 'm' | 'l' | 'xl';
@@ -39,6 +39,8 @@ export interface TextButtonProps {
   loading?: boolean;
   disabled?: boolean;
   onClick?: () => void;
+  /** 로딩 스피너([Button Spinner](../ButtonSpinner/ButtonSpinner.tsx))에 그대로 넘어갑니다 */
+  spinnerProps?: Partial<ButtonSpinnerProps>;
   'aria-label'?: string;
   forceState?: 'hover' | 'pressed';
   className?: string;
@@ -62,6 +64,7 @@ export function TextButton({
   disabled = false,
   onClick,
   forceState,
+  spinnerProps,
   className,
   'aria-label': ariaLabel,
 }: TextButtonProps) {
@@ -84,7 +87,7 @@ export function TextButton({
       onClick={onClick}
     >
       {loading ? (
-        <ButtonSpinner size={SPINNER[size].size} frame={SPINNER[size].frame} />
+        <ButtonSpinner size={SPINNER[size].size} frame={SPINNER[size].frame} {...spinnerProps} />
       ) : (
         <>
           {contents === 'icon-text' && icon}

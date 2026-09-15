@@ -321,3 +321,39 @@ export const 기간선택: Story = {
     );
   },
 };
+
+/**
+ * **아토믹 디자인** — 조합 안에서도 자식 컴포넌트의 속성이 전부 살아 있습니다.
+ *
+ * 예전에는 하단 Time Picker 가 `<TimePickerGroup defaultValue="00:00" />` 하나로 박혀 있어
+ * **시:분 말고는 아무것도 바꿀 수 없었습니다** — 초 단위도, 화살표 방향도, 값 제어도.
+ * 지금은 `timePickerGroupProps` 로 그대로 넘어갑니다.
+ */
+export const 자식속성: Story = {
+  name: '자식 속성 · 조합 안에서도 전부',
+  args: { weeks: WEEKS },
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+      <Cell label="기본 — 시:분 2칸">
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePicker year={2026} month={9} today={TODAY} showTimePicker />
+        </div>
+      </Cell>
+      <Cell label="초까지 3칸 + 방향 제한 — Time Picker Group 의 속성">
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePicker
+            year={2026}
+            month={9}
+            today={TODAY}
+            showTimePicker
+            timePickerGroupProps={{
+              defaultValue: '09:30:00',
+              directions: ['both', 'both', 'up-only'],
+            }}
+          />
+        </div>
+      </Cell>
+    </div>
+  ),
+};

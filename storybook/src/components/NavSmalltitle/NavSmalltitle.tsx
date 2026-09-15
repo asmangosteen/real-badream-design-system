@@ -1,5 +1,5 @@
 import { Icon } from '../Icon/Icon';
-import { SegmentedControl } from '../SegmentedControl/SegmentedControl';
+import { SegmentedControl, type SegmentedControlProps } from '../SegmentedControl/SegmentedControl';
 import type { NavMode } from '../NavLeading/NavLeading';
 import './NavSmalltitle.css';
 
@@ -15,6 +15,8 @@ export interface NavSmalltitleProps {
   segments?: [string, string];
   segmentValue?: number;
   onSegmentChange?: (index: number) => void;
+  /** 가운데 [Segmented Control](../SegmentedControl/SegmentedControl.tsx) 에 그대로 넘어갑니다 */
+  segmentedControlProps?: Partial<SegmentedControlProps>;
   className?: string;
 }
 
@@ -35,6 +37,7 @@ export function NavSmalltitle({
   segments = ['Tab 1', 'Tab 2'],
   segmentValue = 0,
   onSegmentChange,
+  segmentedControlProps,
   className,
 }: NavSmalltitleProps) {
   return (
@@ -53,7 +56,13 @@ export function NavSmalltitle({
       )}
 
       {type === 'segmented-control' && (
-        <SegmentedControl size="s" items={[...segments]} value={segmentValue} onChange={onSegmentChange} />
+        <SegmentedControl
+          size="s"
+          items={[...segments]}
+          value={segmentValue}
+          onChange={onSegmentChange}
+          {...segmentedControlProps}
+        />
       )}
 
       {type === 'caption' && (

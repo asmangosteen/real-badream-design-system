@@ -1,16 +1,17 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { TabItem, type TabItemSize } from '../TabItem/TabItem';
-import { IconButton } from '../IconButton/IconButton';
+import { TabItem, type TabItemProps, type TabItemSize } from '../TabItem/TabItem';
+import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
 import './Tab.css';
 
 export type TabSize = TabItemSize;
 export type TabType = 'hug' | 'fill';
 
-export interface TabEntry {
+/**
+ * 탭 하나의 설정입니다. **[Tab Item](../TabItem/TabItem.tsx) 의 속성을 전부 받습니다**
+ * (활성 여부·클릭은 Tab 이 정하므로 뺍니다). `label` 은 `children` 의 지름길입니다.
+ */
+export interface TabEntry extends Omit<Partial<TabItemProps>, 'children' | 'active' | 'onClick'> {
   label: string;
-  /** 강조(경고/오류성) 탭 */
-  emphasize?: boolean;
-  disabled?: boolean;
 }
 
 export interface TabProps {
@@ -31,6 +32,8 @@ export interface TabProps {
   /** 탭 바 좌우 여백. **Hug 전용**입니다 */
   sidePadding?: boolean;
   onChange?: (index: number) => void;
+  /** 오른쪽 끝 "+" [Icon Button](../IconButton/IconButton.tsx) 에 그대로 넘어갑니다 */
+  moreButtonProps?: Partial<IconButtonProps>;
   'aria-label'?: string;
   className?: string;
 }
@@ -57,6 +60,7 @@ export function Tab({
   type = 'hug',
   tailingIcon = false,
   sidePadding = false,
+  moreButtonProps,
   onChange,
   className,
   'aria-label': ariaLabel,
@@ -150,16 +154,11 @@ export function Tab({
     >
       {/* 스크롤 컨테이너는 탭 로우 자체입니다 (별도 래퍼로 감싸지 않습니다) */}
       <div className="bd-tab__list" role="tablist" aria-label={ariaLabel} ref={listRef}>
-        {items.map((item, i) => (
-          <TabItem
-            key={item.label}
-            size={size}
-            active={i === value}
-            emphasize={item.emphasize}
-            disabled={item.disabled}
-            onClick={() => onChange?.(i)}
-          >
-            {item.label}
+        {items.map(({ label, ...entry }, i) => (
+          /* 항목이 준 속성을 그대로 펼칩니다 — `emphasize`·`disabled` 만이 아니라 Tab Item 에
+             나중에 속성이 늘어나도 여기서 막히지 않습니다(README 규칙 11). */
+          <TabItem key={i} size={size} {...entry} active={i === value} onClick={() => onChange?.(i)}>
+            {label}
           </TabItem>
         ))}
         {underline && (
@@ -187,6 +186,7 @@ export function Tab({
             size={size === 's' ? 'm' : 'l'}
             type="ghost"
             aria-label="더보기"
+            {...moreButtonProps}
           />
         </span>
       )}

@@ -1,4 +1,4 @@
-import { TextBlinker } from '../TextBlinker/TextBlinker';
+import { TextBlinker, type TextBlinkerProps } from '../TextBlinker/TextBlinker';
 import './TypeBox.css';
 
 export type TypeBoxSize = 's' | 'm' | 'l';
@@ -28,6 +28,12 @@ export interface TypeBoxProps {
   state?: TypeBoxState;
   /** 캐럿 색. Text Input 이 에러 상태에서 destructed 색으로 바꿔 씁니다 */
   caretColor?: string;
+  /**
+   * 캐럿([Text Blinker](../TextBlinker/TextBlinker.tsx))에 **그대로 넘어가는 속성**입니다.
+   * 색·높이는 Size 와 상태에서 계산하지만 그건 **기본값**일 뿐이라, 깜빡임(`blink`)이나
+   * 높이를 직접 정하고 싶으면 여기로 줍니다(README 규칙 11).
+   */
+  blinkerProps?: Partial<TextBlinkerProps>;
   className?: string;
 }
 
@@ -45,6 +51,7 @@ export function TypeBox({
   size = 'm',
   state = 'placeholder',
   caretColor,
+  blinkerProps,
   className,
 }: TypeBoxProps) {
   const showsValue = state === 'typing' || state === 'done';
@@ -53,9 +60,9 @@ export function TypeBox({
 
   return (
     <span className={['bd-type-box', className].filter(Boolean).join(' ')} data-size={size} data-state={state}>
-      {caretBefore && <TextBlinker color={caretColor} height={CARET_HEIGHT[size]} />}
+      {caretBefore && <TextBlinker color={caretColor} height={CARET_HEIGHT[size]} {...blinkerProps} />}
       <span>{showsValue ? value : placeholder}</span>
-      {caretAfter && <TextBlinker color={caretColor} height={CARET_HEIGHT[size]} />}
+      {caretAfter && <TextBlinker color={caretColor} height={CARET_HEIGHT[size]} {...blinkerProps} />}
     </span>
   );
 }

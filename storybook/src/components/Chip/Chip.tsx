@@ -1,4 +1,4 @@
-import { Avatar } from '../Avatar/Avatar';
+import { Avatar, type AvatarProps } from '../Avatar/Avatar';
 import { Icon } from '../Icon/Icon';
 import './Chip.css';
 
@@ -67,6 +67,8 @@ export interface ChipProps extends ChipBase {
   /** Selection 의 아이콘은 **교체 가능한 슬롯**입니다 */
   iconName?: string;
   avatarSrc?: string;
+  /** 왼쪽 [Avatar](../Avatar/Avatar.tsx) 에 그대로 넘어갑니다 — `alt` 등(README 규칙 11) */
+  avatarProps?: Partial<AvatarProps>;
 }
 
 /**
@@ -88,6 +90,7 @@ export function Chip({
   iconPosition,
   iconName = 'plus',
   avatarSrc,
+  avatarProps,
   disabled = false,
   selected = false,
   onClick,
@@ -106,7 +109,7 @@ export function Chip({
 
   const avatar = (
     <span className="bd-chip__avatar">
-      <Avatar src={avatarSrc} alt="" size={SELECTION_AVATAR_SIZE[size]} />
+      <Avatar src={avatarSrc} alt="" size={SELECTION_AVATAR_SIZE[size]} {...avatarProps} />
     </span>
   );
   const icon = (
@@ -163,6 +166,8 @@ export interface FilterChipProps extends ChipBase {
   /** 라벨 표시 여부. 생략하면 `contents` 를 따릅니다 */
   showText?: boolean;
   avatarSrc?: string;
+  /** 왼쪽 [Avatar](../Avatar/Avatar.tsx) 에 그대로 넘어갑니다 */
+  avatarProps?: Partial<AvatarProps>;
 }
 
 /**
@@ -181,6 +186,7 @@ export function FilterChip({
   showAvatar,
   showText,
   avatarSrc,
+  avatarProps,
   disabled = false,
   selected = false,
   onClick,
@@ -210,7 +216,7 @@ export function FilterChip({
     >
       {showsAvatar && (
         <span className="bd-chip__avatar">
-          <Avatar src={avatarSrc} alt="" size={16} />
+          <Avatar src={avatarSrc} alt="" size={16} {...avatarProps} />
         </span>
       )}
       {showsText && <span>{children}</span>}

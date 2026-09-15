@@ -1,11 +1,24 @@
-import { SegmentedControlItem, type SegItemSize } from '../SegmentedControlItem/SegmentedControlItem';
+import {
+  SegmentedControlItem,
+  type SegItemSize,
+  type SegmentedControlItemProps,
+} from '../SegmentedControlItem/SegmentedControlItem';
 import './SegmentedControl.css';
 
 export type SegmentedControlSize = SegItemSize;
 
+/**
+ * 세그먼트 하나의 설정입니다. 문자열만 주면 라벨로 쓰이고, 객체로 주면
+ * **[Segmented Control Item](../SegmentedControlItem/SegmentedControlItem.tsx) 의 속성이 전부** 넘어갑니다
+ * (선택 상태·클릭은 컨트롤이 정하므로 뺍니다).
+ */
+export type SegmentedControlEntry =
+  | string
+  | (Omit<Partial<SegmentedControlItemProps>, 'children' | 'selected' | 'onClick'> & { label: React.ReactNode });
+
 export interface SegmentedControlProps {
-  /** 세그먼트 라벨 목록. **2~5개**가 Figma 에 정의된 범위입니다 */
-  items: string[];
+  /** 세그먼트 목록. **2~5개**가 Figma 에 정의된 범위입니다 */
+  items: SegmentedControlEntry[];
   /** 현재 선택된 세그먼트의 인덱스 */
   value?: number;
   /** 컨트롤 전체의 크기 단계. 내부 `_Item` 의 Size 와 1:1 대응합니다 */
@@ -51,11 +64,15 @@ export function SegmentedControl({
     >
       {/* 흰 pill 하나가 선택 위치로 이동합니다 (항목마다 배경을 켜고 끄지 않습니다) */}
       <span className="bd-segmented-control__indicator" aria-hidden="true" />
-      {items.map((label, i) => (
-        <SegmentedControlItem key={label} size={size} selected={i === value} onClick={() => onChange?.(i)}>
-          {label}
-        </SegmentedControlItem>
-      ))}
+      {items.map((item, i) => {
+        /* 문자열이면 라벨만, 객체면 Item 속성 전부가 넘어갑니다 */
+        const { label, ...entry } = typeof item === 'string' ? { label: item } : item;
+        return (
+          <SegmentedControlItem key={i} size={size} {...entry} selected={i === value} onClick={() => onChange?.(i)}>
+            {label}
+          </SegmentedControlItem>
+        );
+      })}
     </div>
   );
 }

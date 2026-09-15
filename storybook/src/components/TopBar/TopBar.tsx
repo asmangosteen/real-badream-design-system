@@ -1,4 +1,4 @@
-import { StatusBar, type StatusBarOS } from '../StatusBar/StatusBar';
+import { StatusBar, type StatusBarOS, type StatusBarProps } from '../StatusBar/StatusBar';
 import { NavBarTop, type NavBarTopProps } from '../NavBarTop/NavBarTop';
 import type { NavMode } from '../NavLeading/NavLeading';
 import './TopBar.css';
@@ -17,6 +17,8 @@ export interface TopBarProps {
   os?: StatusBarOS;
   /** Navigation Bar Top 에 그대로 전달됩니다 */
   navProps?: Omit<NavBarTopProps, 'mode' | 'background'>;
+  /** [Status Bar](../StatusBar/StatusBar.tsx) 에 그대로 넘어갑니다 — `time` 등(README 규칙 11) */
+  statusProps?: Omit<Partial<StatusBarProps>, 'mode' | 'background'>;
   className?: string;
 }
 
@@ -38,6 +40,7 @@ export function TopBar({
   showNavigationBar = true,
   os = 'ios',
   navProps,
+  statusProps,
   className,
 }: TopBarProps) {
   // Background=No 에는 Line 축이 존재하지 않습니다
@@ -50,7 +53,7 @@ export function TopBar({
       data-background={background}
       data-line={hasLine}
     >
-      {showStatusBar && <StatusBar os={os} mode={mode} background="off" />}
+      {showStatusBar && <StatusBar os={os} mode={mode} background="off" {...statusProps} />}
       {showNavigationBar && <NavBarTop mode={mode} background="off" {...navProps} />}
     </div>
   );

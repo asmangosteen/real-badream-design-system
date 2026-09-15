@@ -1,8 +1,8 @@
 import { Fragment, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Icon } from '../Icon/Icon';
-import { IconButton } from '../IconButton/IconButton';
-import { Divider } from '../Divider/Divider';
-import { WeekHeader, Month, type WeekCell } from '../Calendar/Calendar';
+import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
+import { Divider, type DividerProps } from '../Divider/Divider';
+import { WeekHeader, Month, type MonthProps, type WeekCell, type WeekHeaderProps } from '../Calendar/Calendar';
 import {
   buildMonthWeeks,
   addMonths,
@@ -12,7 +12,7 @@ import {
   EMPTY_RANGE,
   type DateRange,
 } from '../Calendar/calendar-data';
-import { TimePickerGroup } from '../TimePicker/TimePicker';
+import { TimePickerGroup, type TimePickerGroupProps } from '../TimePicker/TimePicker';
 import './DatePicker.css';
 
 /* ==================== Calendar Header ==================== */
@@ -34,6 +34,8 @@ export interface CalendarHeaderProps {
   onNext?: () => void;
   onClose?: () => void;
   onToggle?: () => void;
+  /** 이전/다음·닫기 [Icon Button](../IconButton/IconButton.tsx) 세 개에 그대로 넘어갑니다(README 규칙 11) */
+  controlProps?: Partial<IconButtonProps>;
   className?: string;
 }
 
@@ -52,6 +54,7 @@ export function CalendarHeader({
   onNext,
   onClose,
   onToggle,
+  controlProps,
   className,
 }: CalendarHeaderProps) {
   /* Figma 에서 이 화살표는 Icon Button 이 아니라 `Year and Month` 프레임 안의 **맨아이콘 20px** 입니다.
@@ -88,7 +91,7 @@ export function CalendarHeader({
      컴포넌트를 그대로 씁니다. 아이콘 색만 헤더에서 neutral/600 으로 덮어씁니다
      (Figma 도 인스턴스 오버라이드입니다 — Icon Button 원본 Ghost 는 neutral/800). */
   const control = (iconName: string, onClick: (() => void) | undefined, ariaLabel: string) => (
-    <IconButton size="l" type="ghost" iconName={iconName} onClick={onClick} aria-label={ariaLabel} />
+    <IconButton size="l" type="ghost" iconName={iconName} onClick={onClick} aria-label={ariaLabel} {...controlProps} />
   );
 
   return (
@@ -576,6 +579,25 @@ export interface DatePickerProps {
   /** Group 안에서는 헤더 구성이 좌우 비대칭이 됩니다 */
   headerWith?: CalendarHeaderWith;
   headerShowDropdown?: boolean;
+
+  /* 아토믹 디자인 — 안에 쓰는 컴포넌트의 속성을 전부 열어 둡니다(README 규칙 11).
+     아래 값들은 Date Picker 가 계산해 넣는 **기본값**일 뿐이고, 주면 바깥 값이 이깁니다. */
+  /** 상단 [Calendar Header](#calendar-header) 에 그대로 넘어갑니다 */
+  headerProps?: Partial<CalendarHeaderProps>;
+  /** 요일 라벨 행([Week Header](../Calendar/Calendar.tsx))에 그대로 넘어갑니다 */
+  weekHeaderProps?: Partial<WeekHeaderProps>;
+  /** 달력 격자([Month](../Calendar/Calendar.tsx))에 그대로 넘어갑니다 */
+  monthProps?: Partial<MonthProps>;
+  /** 연·월 휠([Year and Month Wheel](#year-and-month-wheel))에 그대로 넘어갑니다 */
+  wheelProps?: Partial<YearMonthWheelProps>;
+  /** Time Picker 위 [Divider](../Divider/Divider.tsx) 에 그대로 넘어갑니다 */
+  dividerProps?: Partial<DividerProps>;
+  /**
+   * 하단 [Time Picker Group](../TimePicker/TimePicker.tsx) 에 그대로 넘어갑니다.
+   * 예전에는 `defaultValue="00:00"` 하나로 박아 두어 **시:분 말고는 아무것도 바꿀 수 없었습니다**
+   * — 초 단위(`units`)·방향(`directions`)·값 제어(`value`/`onChange`)가 전부 막혀 있었습니다.
+   */
+  timePickerGroupProps?: Partial<TimePickerGroupProps>;
   className?: string;
 }
 
@@ -610,6 +632,12 @@ export function DatePicker({
   today = new Date(),
   headerWith,
   headerShowDropdown = true,
+  headerProps,
+  weekHeaderProps,
+  monthProps,
+  wheelProps,
+  dividerProps,
+  timePickerGroupProps,
   className,
 }: DatePickerProps) {
   const base = today ?? new Date();
@@ -680,12 +708,13 @@ export function DatePicker({
         onNext={() => goMonth(1)}
         onToggle={() => setWheelOpen((v) => !v)}
         onClose={() => setWheelOpen(false)}
+        {...headerProps}
       />
       <div className="bd-date-picker__body">
         {effState === 'default' ? (
           <>
-            <WeekHeader />
-            <Month weeks={grid} />
+            <WeekHeader {...weekHeaderProps} />
+            <Month weeks={grid} {...monthProps} />
           </>
         ) : (
           <YearMonthWheel
@@ -695,14 +724,15 @@ export function DatePicker({
               if (year === undefined && month === undefined) setCursor({ year: y, month: m });
               onMonthChange?.(y, m);
             }}
+            {...wheelProps}
           />
         )}
       </div>
       {showTimePicker && (
         <>
-          <Divider />
+          <Divider {...dividerProps} />
           <div className="bd-date-picker__time">
-            <TimePickerGroup defaultValue="00:00" />
+            <TimePickerGroup defaultValue="00:00" {...timePickerGroupProps} />
           </div>
         </>
       )}
@@ -740,6 +770,10 @@ export interface DatePickerGroupProps {
    * `vertical` 에서는 무시됩니다 (부수 화면 없이 달력만 씁니다).
    */
   showTimePicker?: boolean;
+  /** 두 패널([Date Picker](#date-picker))에 그대로 넘어갑니다 — 헤더·휠·Time Picker 속성까지 이어집니다 */
+  panelProps?: Partial<DatePickerProps>;
+  /** 두 패널 사이 [Divider](../Divider/Divider.tsx) 에 그대로 넘어갑니다 */
+  dividerProps?: Partial<DividerProps>;
   className?: string;
 }
 
@@ -793,6 +827,8 @@ export function DatePickerGroup({
   onRangeChange,
   today = new Date(),
   showTimePicker = false,
+  panelProps,
+  dividerProps,
   className,
 }: DatePickerGroupProps) {
   const base = today ?? new Date();
@@ -840,7 +876,11 @@ export function DatePickerGroup({
       {panels.map((panel, i) => (
         <Fragment key={i}>
           {i > 0 && (
-            <Divider type={vertical ? 'horizontal' : 'vertical'} color="var(--sys-color-neutral-200)" />
+            <Divider
+              type={vertical ? 'horizontal' : 'vertical'}
+              color="var(--sys-color-neutral-200)"
+              {...dividerProps}
+            />
           )}
           <DatePicker
             year={panel.year}
@@ -860,6 +900,7 @@ export function DatePickerGroup({
             /* 세로형만 연도를 빼고 달만 씁니다 (Figma "1월"/"2월") */
             label={vertical ? formatMonth(panel.month) : undefined}
             showTimePicker={!vertical && showTimePicker}
+            {...panelProps}
           />
         </Fragment>
       ))}

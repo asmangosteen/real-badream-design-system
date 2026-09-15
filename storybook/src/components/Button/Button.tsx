@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Icon } from '../Icon/Icon';
-import { ButtonSpinner, type SpinnerSize } from '../ButtonSpinner/ButtonSpinner';
+import { ButtonSpinner, type ButtonSpinnerProps, type SpinnerSize } from '../ButtonSpinner/ButtonSpinner';
 import './Button.css';
 
 export type ButtonSize = 's' | 'm' | 'l' | 'xl' | '2xl';
@@ -59,6 +59,8 @@ export interface ButtonProps {
   loading?: boolean;
   disabled?: boolean;
   onClick?: () => void;
+  /** 로딩 스피너([Button Spinner](../ButtonSpinner/ButtonSpinner.tsx))에 그대로 넘어갑니다 */
+  spinnerProps?: Partial<ButtonSpinnerProps>;
   'aria-label'?: string;
   /** 변형 목록 표시용 강제 상태. 실제 서비스에서는 쓰지 않습니다 */
   forceState?: ButtonForceState;
@@ -87,6 +89,7 @@ export function Button({
   disabled = false,
   onClick,
   forceState,
+  spinnerProps,
   className,
   'aria-label': ariaLabel,
 }: ButtonProps) {
@@ -121,7 +124,7 @@ export function Button({
       {contents === 'text-icon' && icon}
       {/* Loading: 라벨을 유지한 채 뒤에 spacing/02(2px) 간격으로 스피너를 붙입니다 */}
       {/* tone 을 주지 않으면 스피너가 버튼 라벨 색을 그대로 따릅니다 */}
-      {loading && <ButtonSpinner size={SPINNER[size].size} frame={SPINNER[size].frame} />}
+      {loading && <ButtonSpinner size={SPINNER[size].size} frame={SPINNER[size].frame} {...spinnerProps} />}
     </button>
   );
 }

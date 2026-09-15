@@ -1,5 +1,5 @@
 import { Icon } from '../Icon/Icon';
-import { Divider } from '../Divider/Divider';
+import { Divider, type DividerProps } from '../Divider/Divider';
 import './Footer.css';
 
 export interface FooterInfoRow {
@@ -15,6 +15,10 @@ export interface FooterProps {
   info?: FooterInfoRow[];
   links?: { label: string; href?: string }[];
   copyright?: string;
+  /** Main·Sub 를 가르는 가로 [Divider](../Divider/Divider.tsx) 에 그대로 넘어갑니다 */
+  dividerProps?: Partial<DividerProps>;
+  /** 링크 사이 세로 Divider 에 그대로 넘어갑니다 */
+  linkDividerProps?: Partial<DividerProps>;
   onToggle?: () => void;
   className?: string;
 }
@@ -47,6 +51,8 @@ export function Footer({
   info = DEFAULT_INFO,
   links = DEFAULT_LINKS,
   copyright = 'ⓒ 2026. CYCLOID Corp. All rights reserved.',
+  dividerProps,
+  linkDividerProps,
   onToggle,
   className,
 }: FooterProps) {
@@ -73,7 +79,7 @@ export function Footer({
       </div>
 
       {/* Main ↔ Sub 구분선 — Divider Horizontal */}
-      <Divider color="var(--ref-color-gray-900-10)" />
+      <Divider color="var(--ref-color-gray-900-10)" {...dividerProps} />
 
       <div className="bd-footer__sub">
         <div className="bd-footer__links">
@@ -82,7 +88,7 @@ export function Footer({
               {/* 링크 구분자 — 같은 Divider 를 Vertical 로 재사용 */}
               {i > 0 && (
                 <span style={{ display: 'inline-flex', height: 11 }}>
-                  <Divider type="vertical" color="var(--sys-color-neutral-400)" />
+                  <Divider type="vertical" color="var(--sys-color-neutral-400)" {...linkDividerProps} />
                 </span>
               )}
               <a href={l.href ?? '#'}>{l.label}</a>

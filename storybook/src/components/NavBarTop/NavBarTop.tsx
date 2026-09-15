@@ -1,6 +1,6 @@
-import { NavLeading, type NavMode } from '../NavLeading/NavLeading';
-import { NavTrailing, type NavTrailingItemProps } from '../NavTrailing/NavTrailing';
-import { NavSmalltitle } from '../NavSmalltitle/NavSmalltitle';
+import { NavLeading, type NavLeadingProps, type NavMode } from '../NavLeading/NavLeading';
+import { NavTrailing, type NavTrailingItemProps, type NavTrailingProps } from '../NavTrailing/NavTrailing';
+import { NavSmalltitle, type NavSmalltitleProps } from '../NavSmalltitle/NavSmalltitle';
 import './NavBarTop.css';
 
 export const NAVBAR_TOP_TYPES = [
@@ -45,6 +45,14 @@ export interface NavBarTopProps {
   showLeading?: boolean;
   showTrailing?: boolean;
   showSmalltitle?: boolean;
+  /* 아토믹 디자인 — 세 서브 아톰의 속성을 전부 열어 둡니다(README 규칙 11).
+     `mode` 는 Top 이 한꺼번에 맞추지만 막지는 않습니다. */
+  /** 좌측 [Leading](../NavLeading/NavLeading.tsx) 에 그대로 넘어갑니다 */
+  leadingProps?: Partial<NavLeadingProps>;
+  /** 가운데 [Smalltitle](../NavSmalltitle/NavSmalltitle.tsx) 에 그대로 넘어갑니다 */
+  smalltitleProps?: Partial<NavSmalltitleProps>;
+  /** 우측 [Trailing](../NavTrailing/NavTrailing.tsx) 에 그대로 넘어갑니다 */
+  trailingProps?: Partial<NavTrailingProps>;
   segments?: [string, string];
   segmentValue?: number;
   onSegmentChange?: (i: number) => void;
@@ -70,6 +78,9 @@ export function NavBarTop({
   showLeading = true,
   showTrailing = true,
   showSmalltitle = true,
+  leadingProps,
+  smalltitleProps,
+  trailingProps,
   segments = ['Tab 1', 'Tab 2'],
   segmentValue = 0,
   onSegmentChange,
@@ -96,6 +107,7 @@ export function NavBarTop({
           showLabel={showBackLabel}
           label={backLabel}
           title={type === 'big-title' ? title : undefined}
+          {...leadingProps}
         />
       </div>
 
@@ -108,13 +120,14 @@ export function NavBarTop({
             segments={segments}
             segmentValue={segmentValue}
             onSegmentChange={onSegmentChange}
+            {...smalltitleProps}
           />
         </div>
       )}
 
       {showTrailing && (
         <div className="bd-navbar-top__trailing">
-          <NavTrailing mode={mode} items={items} />
+          <NavTrailing mode={mode} items={items} {...trailingProps} />
         </div>
       )}
     </div>
