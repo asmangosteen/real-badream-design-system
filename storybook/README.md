@@ -44,6 +44,20 @@ storybook/
 3. **Figma 에 없는 값을 넣었으면 반드시 표시합니다.** 코드 주석에 `⚠️` 로 남기고,
    스토리의 Docs 설명에도 "확인이 필요한 것들"로 적습니다. 임의로 만든 값을 조용히 섞지 않습니다.
 4. **값이 충돌하면 Figma 가 기준입니다.** 저장소는 Figma 의 파생본, 스토리북은 저장소의 파생본입니다.
+5. **테두리는 `border` 가 아니라 `box-shadow: inset` 으로 그립니다.**
+   Figma 의 스트로크는 전부 `strokeAlign: INSIDE` 라 **박스 크기를 키우지 않습니다.**
+   (실측: Button M 은 `Stroke=False` 도 `True` 도 똑같이 44×30, Icon Button M 은 둘 다 36×36)
+   CSS `border` 는 크기가 auto 인 축에서 바깥 크기에 더해지므로, 그대로 옮기면
+   테두리가 있는 변형만 가로·세로 2px 씩 커집니다. `box-shadow: inset 0 0 0 <두께> <색>` 은
+   border-box 의 border 와 같은 자리에 같은 두께로 그려지면서 레이아웃에 영향이 없습니다.
+   **예외** — `width`/`height` 가 고정된 요소(Checkbox·Radio·Date Cell·Avatar)는
+   `box-sizing: border-box` 덕분에 테두리가 안쪽에 그려지므로 `border` 를 그대로 써도 됩니다.
+6. **한 Size 만 재고 나머지를 추정하지 않습니다.** 바드림은 Size 별 계단이 불규칙합니다 —
+   Chip 은 아바타가 붙는 쪽 패딩이 S 4 · M 8 · L 6px 이고, 아이콘은 S 6 · M 8 · L 8px 로 다릅니다.
+   "M 만 실측하고 S/L 도 같은 비율" 로 적었다가 전부 틀린 적이 있습니다.
+7. **Figma 색을 읽을 때 `fills` 배열 전체를 봅니다.** Hover/Pressed 는 보통
+   **베이스 + interaction 오버레이 2겹**이고, 오버레이 값이 베이스와 같을 수 있습니다.
+   한 겹만 읽으면 "변화 없음" 으로 잘못 읽힙니다 (Chip Filled Hover 가 그랬습니다).
 
 ## 각 컴포넌트의 스토리 구성
 
