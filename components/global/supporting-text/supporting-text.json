@@ -7,7 +7,11 @@
     "componentSetNodeId": "2114:4182",
     "componentSetName": "Supporting Text",
     "totalVariantInstances": 36,
-    "axes": ["Size(S/M/L)", "Theme(Gray/Black/Brand/Destructed/Success/Warning)", "Text Count(True/False)"],
+    "axes": [
+      "Size(S/M/L)",
+      "Theme(Gray/Black/Brand/Destructed/Success/Warning)",
+      "Text Count(True/False)"
+    ],
     "note": "Input/TextField 계열 하단에 쓰이는 헬퍼·에러·성공 텍스트 글로벌 아톰. State 축 없는 순수 표시용 컴포넌트. showIcon은 36개 변형 축과 별개인 boolean prop."
   },
   "sampling": {
@@ -18,45 +22,181 @@
   "sizes": {
     "S": {
       "sourceNodeId": "2114:4181",
-      "container": { "width": "280px", "height": "20px" },
-      "paddingTop": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
-      "paddingX": { "figmaVariable": "spacing/07", "value": "10px", "token": "ref-spacing-07", "tokenMatch": "정확히 일치" },
-      "innerGapIconText": { "figmaVariable": "spacing/02", "value": "2px", "token": "ref-spacing-02", "tokenMatch": "정확히 일치" },
-      "outerGapContentCounter": { "figmaVariable": "spacing/06", "value": "8px", "token": "ref-spacing-06", "tokenMatch": "정확히 일치" },
-      "typography": { "style": "caption2", "size": "10px", "lineHeight": "16px", "weight": "500 (Medium)", "letterSpacing": "-0.03px", "tokenMatch": "정확히 일치 (tokens/typography.json styles.caption2)" },
+      "container": {
+        "width": "280px",
+        "height": "20px"
+      },
+      "paddingTop": {
+        "figmaVariable": "spacing/04",
+        "value": "4px",
+        "token": "ref-spacing-04",
+        "tokenMatch": "정확히 일치"
+      },
+      "paddingX": {
+        "figmaVariable": "spacing/07",
+        "value": "10px",
+        "token": "ref-spacing-07",
+        "tokenMatch": "정확히 일치"
+      },
+      "innerGapIconText": {
+        "figmaVariable": "spacing/02",
+        "value": "2px",
+        "token": "ref-spacing-02",
+        "tokenMatch": "정확히 일치"
+      },
+      "outerGapContentCounter": {
+        "figmaVariable": "spacing/06",
+        "value": "8px",
+        "token": "ref-spacing-06",
+        "tokenMatch": "정확히 일치"
+      },
+      "typography": {
+        "style": "caption2",
+        "size": "10px",
+        "lineHeight": "16px",
+        "weight": "500 (Medium)",
+        "letterSpacing": "-0.03px",
+        "tokenMatch": "정확히 일치 (tokens/typography.json styles.caption2)"
+      },
       "iconSize": "12px"
     },
     "M": {
       "sourceNodeId": "2114:4164",
-      "container": { "width": "280px", "height": "22px" },
-      "paddingTop": { "figmaVariable": "spacing/04", "value": "4px", "token": "ref-spacing-04", "tokenMatch": "정확히 일치" },
-      "paddingX": { "figmaVariable": "spacing/08", "value": "12px", "token": "ref-spacing-08", "tokenMatch": "정확히 일치" },
-      "innerGapIconText": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
-      "outerGapContentCounter": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
-      "typography": { "style": "caption1", "size": "12px", "lineHeight": "18px", "weight": "400 (Regular)", "letterSpacing": "-0.03px", "tokenMatch": "정확히 일치 (tokens/typography.json styles.caption1)" },
+      "container": {
+        "width": "280px",
+        "height": "22px"
+      },
+      "paddingTop": {
+        "figmaVariable": "spacing/04",
+        "value": "4px",
+        "token": "ref-spacing-04",
+        "tokenMatch": "정확히 일치"
+      },
+      "paddingX": {
+        "figmaVariable": "spacing/08",
+        "value": "12px",
+        "token": "ref-spacing-08",
+        "tokenMatch": "정확히 일치"
+      },
+      "innerGapIconText": {
+        "figmaVariable": "spacing/02",
+        "value": "2px",
+        "tokenMatch": "정확히 일치"
+      },
+      "outerGapContentCounter": {
+        "figmaVariable": "spacing/06",
+        "value": "8px",
+        "tokenMatch": "정확히 일치"
+      },
+      "typography": {
+        "style": "caption1",
+        "size": "12px",
+        "lineHeight": "18px",
+        "weight": "400 (Regular)",
+        "letterSpacing": "-0.03px",
+        "tokenMatch": "정확히 일치 (tokens/typography.json styles.caption1)"
+      },
       "iconSize": "16px",
       "note": "L과 타이포그래피·아이콘 크기 동일, 패딩만 다름"
     },
     "L": {
       "sourceNodeId": "2114:4175",
-      "container": { "width": "280px", "height": "24px" },
-      "paddingTop": { "figmaVariable": "spacing/05", "value": "6px", "token": "ref-spacing-05", "tokenMatch": "정확히 일치" },
-      "paddingX": { "figmaVariable": "spacing/09", "value": "14px", "token": "ref-spacing-09", "tokenMatch": "정확히 일치" },
-      "innerGapIconText": { "figmaVariable": "spacing/02", "value": "2px", "tokenMatch": "정확히 일치" },
-      "outerGapContentCounter": { "figmaVariable": "spacing/06", "value": "8px", "tokenMatch": "정확히 일치" },
-      "typography": { "style": "caption1", "size": "12px", "lineHeight": "18px", "weight": "400 (Regular)", "letterSpacing": "-0.03px", "tokenMatch": "정확히 일치 (M과 동일)" },
+      "container": {
+        "width": "280px",
+        "height": "24px"
+      },
+      "paddingTop": {
+        "figmaVariable": "spacing/05",
+        "value": "6px",
+        "token": "ref-spacing-05",
+        "tokenMatch": "정확히 일치"
+      },
+      "paddingX": {
+        "figmaVariable": "spacing/09",
+        "value": "14px",
+        "token": "ref-spacing-09",
+        "tokenMatch": "정확히 일치"
+      },
+      "innerGapIconText": {
+        "figmaVariable": "spacing/02",
+        "value": "2px",
+        "tokenMatch": "정확히 일치"
+      },
+      "outerGapContentCounter": {
+        "figmaVariable": "spacing/06",
+        "value": "8px",
+        "tokenMatch": "정확히 일치"
+      },
+      "typography": {
+        "style": "caption1",
+        "size": "12px",
+        "lineHeight": "18px",
+        "weight": "400 (Regular)",
+        "letterSpacing": "-0.03px",
+        "tokenMatch": "정확히 일치 (M과 동일)"
+      },
       "iconSize": "16px",
       "note": "M과 타이포그래피·아이콘 크기 동일, 패딩만 다름"
     }
   },
   "containerHeightRule": "height = paddingTop + text lineHeight (S: 4+16=20, M: 4+18=22, L: 6+18=24). 실측 3개 전부 이 공식과 정확히 일치.",
   "themes": {
-    "Gray":       { "sourceNodeId": "2114:4181", "textColor": { "figmaVariable": "neutral/500", "value": "#8c9199", "token": "sys-color-neutral-500 (ref-color-gray-500)", "tokenMatch": "정확히 일치" }, "iconColor": "textColor와 동일 (아이콘 애셋 자체가 테마 색상으로 사전 컬러링됨)" },
-    "Black":      { "sourceNodeId": "2114:4170", "textColor": { "figmaVariable": "neutral/700", "value": "#454c58", "token": "sys-color-neutral-700 (ref-color-gray-700)", "tokenMatch": "정확히 일치" }, "note": "이름과 달리 완전한 검정(gray-900/1000)이 아니라 진회색(gray-700)" },
-    "Brand":      { "sourceNodeId": "2114:4163", "textColor": { "figmaVariable": "brand/primary-default", "value": "#2c7be2", "token": "sys-color-brand-primary-default (ref-color-blue-500)", "tokenMatch": "정확히 일치" } },
-    "Destructed": { "sourceNodeId": "2114:4158", "textColor": { "figmaVariable": "theme/destructed-default", "value": "#e72f37", "token": "sys-color-theme-destructed-default (ref-color-red-500)", "tokenMatch": "정확히 일치" } },
-    "Success":    { "sourceNodeId": "2114:4173", "textColor": { "figmaVariable": "theme/success-default", "value": "#1f8f30", "token": "sys-color-theme-success-default (ref-color-green-600)", "tokenMatch": "정확히 일치" } },
-    "Warning":    { "sourceNodeId": "2114:4150", "textColor": { "figmaVariable": "theme/warning-default", "value": "#ff792c", "token": "sys-color-theme-warning-default (ref-color-orange-500)", "tokenMatch": "정확히 일치" } }
+    "Gray": {
+      "sourceNodeId": "2114:4181",
+      "textColor": {
+        "figmaVariable": "neutral/500",
+        "value": "#8c9199",
+        "token": "sys-color-neutral-500 (ref-color-gray-500)",
+        "tokenMatch": "정확히 일치"
+      },
+      "iconColor": "textColor와 동일 (아이콘 애셋 자체가 테마 색상으로 사전 컬러링됨)"
+    },
+    "Black": {
+      "sourceNodeId": "2114:4170",
+      "textColor": {
+        "figmaVariable": "neutral/700",
+        "value": "#454c58",
+        "token": "sys-color-neutral-700 (ref-color-gray-700)",
+        "tokenMatch": "정확히 일치"
+      },
+      "note": "이름과 달리 완전한 검정(gray-900/1000)이 아니라 진회색(gray-700)"
+    },
+    "Brand": {
+      "sourceNodeId": "2114:4163",
+      "textColor": {
+        "figmaVariable": "brand/primary-default",
+        "value": "#2c7be2",
+        "token": "sys-color-brand-primary-default (ref-color-blue-500)",
+        "tokenMatch": "정확히 일치"
+      }
+    },
+    "Destructed": {
+      "sourceNodeId": "2114:4158",
+      "textColor": {
+        "figmaVariable": "theme/destructed-default",
+        "value": "#e72f37",
+        "token": "sys-color-theme-destructed-default (ref-color-red-500)",
+        "tokenMatch": "정확히 일치"
+      }
+    },
+    "Success": {
+      "sourceNodeId": "2114:4173",
+      "textColor": {
+        "figmaVariable": "theme/success-default",
+        "value": "#1f8f30",
+        "token": "sys-color-theme-success-default (ref-color-green-600)",
+        "tokenMatch": "정확히 일치"
+      }
+    },
+    "Warning": {
+      "sourceNodeId": "2114:4150",
+      "textColor": {
+        "figmaVariable": "theme/warning-default",
+        "value": "#ff792c",
+        "token": "sys-color-theme-warning-default (ref-color-orange-500)",
+        "tokenMatch": "정확히 일치"
+      }
+    }
   },
   "crossVerification": {
     "nodeId": "2114:4161",
@@ -73,8 +213,9 @@
   "width": {
     "measuredValue": "280px (10개 노드 전부 동일, 실측값)",
     "structuralNote": "컨테이너 자체가 w-[280px] 고정 Tailwind 클래스로 명시됨 (Divider처럼 부모 flex-1로 늘어나는 내부 rectangle 패턴이 아님). Content 그룹만 내부적으로 flex-[1_0_0].",
-    "actualBehavior": "확인 필요 — 실제 Input/TextField 폭에 맞춰 늘어나야 하는지, 280px 고정폭이 의도인지 이 조사에서 판단 불가",
-    "tokenMatch": "기존 토큰에 없음"
+    "actualBehavior": "부모 폭에 맞춰 늘어나는 가변(fluid) — 280px 는 Figma 진열 프레임 표시값일 뿐 고정폭이 아님(디자이너 확인 완료, 2026-09-15). Text Input·Dropdown·Text Input Group 이 전부 같은 규칙",
+    "tokenMatch": "기존 토큰에 없음",
+    "confirmed": true
   },
   "interactions": [],
   "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2114:4182, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. State 축 자체가 없는 순수 표시용 컴포넌트.",
@@ -109,35 +250,92 @@
       "Gray/Black 두 톤의 정확한 사용 구분 기준",
       "showIcon=false 시 색상 단독 의존에 대한 WCAG 대응 규정",
       "각 Theme 색상의 명암비(AA) 수치 검증",
-      "카운터 텍스트의 스크린리더 접근성 규정",
-      "280px 고정폭의 실제 구현 시 늘어남 여부"
+      "카운터 텍스트의 스크린리더 접근성 규정"
+    ],
+    "확인완료": [
+      "컨테이너 너비: 고정 280px 가 아니라 부모 폭에 맞춰 늘어나는 가변(fluid) — 2026-09-15 디자이너 확인"
     ]
   },
   "samplingAppendix": {
     "sampledNodeIds": [
-      "2114:4181", "2114:4170", "2114:4163", "2114:4158", "2114:4173", "2114:4150",
-      "2114:4164", "2114:4175", "2114:4178", "2114:4161"
+      "2114:4181",
+      "2114:4170",
+      "2114:4163",
+      "2114:4158",
+      "2114:4173",
+      "2114:4150",
+      "2114:4164",
+      "2114:4175",
+      "2114:4178",
+      "2114:4161"
     ],
     "sampledDescription": {
-      "2114:4181": "S,Gray,True", "2114:4170": "S,Black,True", "2114:4163": "S,Brand,True",
-      "2114:4158": "S,Destructed,True", "2114:4173": "S,Success,True", "2114:4150": "S,Warning,True",
-      "2114:4164": "M,Gray,True", "2114:4175": "L,Gray,True", "2114:4178": "S,Gray,False",
+      "2114:4181": "S,Gray,True",
+      "2114:4170": "S,Black,True",
+      "2114:4163": "S,Brand,True",
+      "2114:4158": "S,Destructed,True",
+      "2114:4173": "S,Success,True",
+      "2114:4150": "S,Warning,True",
+      "2114:4164": "M,Gray,True",
+      "2114:4175": "L,Gray,True",
+      "2114:4178": "S,Gray,False",
       "2114:4161": "M,Destructed,True (교차검증)"
     },
     "unsampledNodeIds": [
-      "2114:4177", "2114:4167", "2114:4166", "2114:4172", "2114:4165", "2114:4168", "2114:4180",
-      "2114:4174", "2114:4176", "2114:4162", "2114:4160", "2114:4159",
-      "2114:4156", "2114:4179", "2114:4155", "2114:4171",
-      "2114:4154", "2114:4153", "2114:4169", "2114:4151", "2114:4152",
-      "2114:4149", "2114:4148", "2114:4147", "2114:4146", "2114:4157"
+      "2114:4177",
+      "2114:4167",
+      "2114:4166",
+      "2114:4172",
+      "2114:4165",
+      "2114:4168",
+      "2114:4180",
+      "2114:4174",
+      "2114:4176",
+      "2114:4162",
+      "2114:4160",
+      "2114:4159",
+      "2114:4156",
+      "2114:4179",
+      "2114:4155",
+      "2114:4171",
+      "2114:4154",
+      "2114:4153",
+      "2114:4169",
+      "2114:4151",
+      "2114:4152",
+      "2114:4149",
+      "2114:4148",
+      "2114:4147",
+      "2114:4146",
+      "2114:4157"
     ],
     "unsampledDescription": {
-      "2114:4177": "M,Gray,False", "2114:4167": "L,Gray,False",
-      "2114:4166": "S,Black,False", "2114:4172": "M,Black,True", "2114:4165": "M,Black,False", "2114:4168": "L,Black,True", "2114:4180": "L,Black,False",
-      "2114:4174": "S,Brand,False", "2114:4176": "M,Brand,True", "2114:4162": "M,Brand,False", "2114:4160": "L,Brand,True", "2114:4159": "L,Brand,False",
-      "2114:4156": "S,Destructed,False", "2114:4179": "M,Destructed,False", "2114:4155": "L,Destructed,True", "2114:4171": "L,Destructed,False",
-      "2114:4154": "S,Success,False", "2114:4153": "M,Success,True", "2114:4169": "M,Success,False", "2114:4151": "L,Success,True", "2114:4152": "L,Success,False",
-      "2114:4149": "S,Warning,False", "2114:4148": "M,Warning,True", "2114:4147": "M,Warning,False", "2114:4146": "L,Warning,True", "2114:4157": "L,Warning,False"
+      "2114:4177": "M,Gray,False",
+      "2114:4167": "L,Gray,False",
+      "2114:4166": "S,Black,False",
+      "2114:4172": "M,Black,True",
+      "2114:4165": "M,Black,False",
+      "2114:4168": "L,Black,True",
+      "2114:4180": "L,Black,False",
+      "2114:4174": "S,Brand,False",
+      "2114:4176": "M,Brand,True",
+      "2114:4162": "M,Brand,False",
+      "2114:4160": "L,Brand,True",
+      "2114:4159": "L,Brand,False",
+      "2114:4156": "S,Destructed,False",
+      "2114:4179": "M,Destructed,False",
+      "2114:4155": "L,Destructed,True",
+      "2114:4171": "L,Destructed,False",
+      "2114:4154": "S,Success,False",
+      "2114:4153": "M,Success,True",
+      "2114:4169": "M,Success,False",
+      "2114:4151": "L,Success,True",
+      "2114:4152": "L,Success,False",
+      "2114:4149": "S,Warning,False",
+      "2114:4148": "M,Warning,True",
+      "2114:4147": "M,Warning,False",
+      "2114:4146": "L,Warning,True",
+      "2114:4157": "L,Warning,False"
     }
   },
   "nonVariantProperties": {
@@ -145,16 +343,41 @@
     "method": "Figma 프로퍼티 패널 스크린샷(사용자 제공) + get_design_context(2114:4181 / 2114:4164 / 2114:4175) 재조회",
     "note": "36개 variant 축(Size×Theme×Text Count) 외에 별도 프로퍼티 3종이 존재합니다. Text Input 의 Show Unit, Calendar Header 의 Show Dropdown 과 같은 패턴입니다.",
     "properties": {
-      "Text": { "type": "text", "default": "Text", "description": "안내 문구 본문" },
-      "Show Icon": { "type": "boolean", "default": true, "description": "아이콘 표시 여부" },
-      "Icon S": { "type": "instanceSwap", "default": "Icon / Default / 12px / warning_filled", "usedBy": ["S"] },
-      "Icon M": { "type": "instanceSwap", "default": "Icon / Default / 16px / warning_filled", "usedBy": ["M", "L"] }
+      "Text": {
+        "type": "text",
+        "default": "Text",
+        "description": "안내 문구 본문"
+      },
+      "Show Icon": {
+        "type": "boolean",
+        "default": true,
+        "description": "아이콘 표시 여부"
+      },
+      "Icon S": {
+        "type": "instanceSwap",
+        "default": "Icon / Default / 12px / warning_filled",
+        "usedBy": [
+          "S"
+        ]
+      },
+      "Icon M": {
+        "type": "instanceSwap",
+        "default": "Icon / Default / 16px / warning_filled",
+        "usedBy": [
+          "M",
+          "L"
+        ]
+      }
     },
     "iconGlyphResolved": {
       "supersedes": "tokenMatchSummary 의 '아이콘 글리프 미확인' 항목",
       "value": "warning_filled",
       "category": "default/filled",
-      "sizeBySupportingTextSize": { "S": "12px", "M": "16px", "L": "16px" },
+      "sizeBySupportingTextSize": {
+        "S": "12px",
+        "M": "16px",
+        "L": "16px"
+      },
       "swappable": true
     },
     "noIconLSlot": "스왑 슬롯은 Icon S·Icon M 둘뿐이며 Icon L 은 존재하지 않습니다. Size=L 은 Icon M 슬롯을 그대로 공유합니다(2114:4175 의 L 변형이 iconM prop 을 참조). M·L 의 아이콘 크기가 16px 로 동일하기 때문입니다.",

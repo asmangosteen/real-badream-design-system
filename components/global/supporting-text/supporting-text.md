@@ -80,7 +80,7 @@ Gray/Black 두 톤의 정확한 사용 구분 기준(예: Default 상태=Gray, F
 - 컨테이너 높이(20/22/24px)는 `Padding Top + 텍스트 lineHeight`로 정확히 계산됩니다(S: 4+16=20, M: 4+18=22, L: 6+18=24).
 - **M과 L은 타이포그래피·아이콘 크기가 완전히 동일**(Caption1/12px Regular, 아이콘 16px)하며, **패딩(px/pt)만 다릅니다**. 실제 크기 단계를 만드는 건 S→M(타이포 10→12px, 아이콘 12→16px)뿐이고, M→L은 여백만 커집니다.
 - 카운터("000/000") 텍스트도 각 Size의 본문 텍스트와 동일한 스타일을 사용합니다(S=Caption2/10 Medium, M/L=Caption1/12 Regular) — Figma 컴포넌트 내부적으로 "State6" 변형으로 명명되어 있으나 실제로는 Size에 종속된 카운터 타이포 스케일일 뿐입니다.
-- 컨테이너 너비는 실측 10개 노드 전부 `w-[280px]`(고정 Tailwind 클래스)로 나옵니다. Divider 문서(3장)처럼 `flex-[1_0_0]`으로 부모에 맞춰 늘어나는 구조가 아니라 **컴포넌트 자체에 고정폭이 박혀 있는 형태**로 보이며, 실제 Input/TextField 폭에 맞춰 늘어나도록 재구현해야 하는지, 아니면 280px 고정폭이 의도인지는 **확인 필요**입니다.
+- 컨테이너 너비는 실측 10개 노드 전부 `w-[280px]`(고정 Tailwind 클래스)로 나오지만 **고정폭이 아니라 부모 폭에 맞춰 늘어나는 가변(fluid)입니다**(디자이너 확인 완료, 2026-09-15). 280px 는 Figma 진열 프레임의 표시값일 뿐이며, 이 컴포넌트를 쓰는 [Text Input](../../text-input/text-input/text-input.md)·[Dropdown](../../dropdown/dropdown.md)·[Text Input Group](../../text-input/text-input-group/text-input-group.md) 이 전부 같은 규칙입니다 — 안내 문구만 280px 로 멈추면 그 위 입력칸과 폭이 어긋납니다. 구현은 별도 `width` 없이 부모를 채웁니다(`display: flex` 는 블록 레벨).
 
 ## 4. Text Count = True/False 차이
 
@@ -124,7 +124,6 @@ Gray/Black 두 톤의 정확한 사용 구분 기준(예: Default 상태=Gray, F
 - `showIcon=false` 시 색상 단독 의존에 대한 WCAG 대응 규정(6장)
 - 각 Theme 색상의 명암비(AA) 수치 검증(6장)
 - 카운터 텍스트의 스크린리더 접근성 규정(6장)
-- 280px 고정폭이 실제 구현에서 Input/TextField 폭에 맞춰 늘어나야 하는지 여부(3장)
 
 ## 8. 샘플링에 사용한 노드 (부록)
 
