@@ -5,10 +5,15 @@
 /* 폭 = 10×2 + 36 = 56 · 높이 = 8×2 + 24 = 40 */
 .bd-time-field {
   --bd-tf-overlay: transparent;
+  position: relative;                         /* 키 입력을 받는 투명 input 의 기준칸 */
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  /* Figma 는 hug 프레임(padding 10×2 + 숫자칸 36 = 56px)입니다.
+     `display: flex` 는 블록 레벨이라 이게 없으면 **부모 폭을 그대로 채웁니다** —
+     Time Picker 안에서는 아래 `width: 56px` 에 가려 안 보이지만 단독으로 쓰면 드러납니다. */
+  width: fit-content;
   gap: var(--ref-spacing-07);                 /* 10px */
   padding: var(--ref-spacing-06) var(--ref-spacing-07);   /* 8 / 10 */
   border: 0;
@@ -22,7 +27,7 @@
   line-height: var(--typography-body-1-line-height);
   letter-spacing: var(--typography-body-1-letter-spacing);
   font-weight: var(--font-weight-regular);
-  cursor: pointer;
+  cursor: text;
   /* Typing 의 파란 테두리는 `border` 가 아니라 **안쪽 그림자**로 그립니다.
      · border-width 를 0 → 1px(borderwidth/02) 로 바꾸면 전환 도중 테두리가 갑자기 나타납니다
        (두께는 부드럽게 늘릴 수 없습니다).
@@ -31,14 +36,32 @@
      레이아웃에 전혀 영향을 주지 않아, 색만 부드럽게 나타나게 할 수 있습니다. */
   box-shadow: inset 0 0 0 var(--ref-borderwidth-02) var(--bd-tf-border, transparent);
 }
+/* 실제 키 입력을 받는 칸입니다. 글자는 아래 `__number` 가 그리므로 여기서는 보이지 않게만 둡니다 —
+   `display: none` 이나 `visibility: hidden` 은 포커스를 받을 수 없어 쓸 수 없습니다. */
+.bd-time-field__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  opacity: 0;
+  font: inherit;
+  cursor: inherit;
+}
 .bd-time-field__number {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;                                /* ⚠️ 내부 px-8 은 토큰 바인딩 없는 하드코딩입니다 */
+  /* 높이를 글자에 맡기면 **다 지웠을 때 캐럿 높이(20px)로 주저앉아** 칸이 40 → 36px 로 줄어듭니다.
+     Figma 의 Number Input 프레임도 실측 24px(= Body 1 줄 높이)이라 그 값을 고정합니다.
+     글자가 있을 때는 어차피 같은 값이라 보이는 건 달라지지 않습니다. */
+  height: var(--typography-body-1-line-height);
 }
-/* Typing 에서만 숫자와 캐럿 사이에 `spacing/01`=1px 이 들어갑니다 (스펙 5장 실측).
-   ⚠️ 2026-09-15 정정: 이 gap 이 빠져 있어 캐럿이 숫자에 붙어 있었습니다. */
+/* Typing 에서만 숫자와 캐럿 사이에 `spacing/01`=1px 이 들어갑니다 (스펙 5장 실측). */
 .bd-time-field[data-state='typing'] .bd-time-field__number { gap: var(--ref-spacing-01); }
 .bd-time-field[data-state='hover']:not([data-state='typing']),
 .bd-time-field:hover:not([data-state='typing']) { --bd-tf-overlay: var(--ref-color-gray-900-5); }
@@ -54,30 +77,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: fit-content;                         /* hug — Time Field 와 같은 이유 */
   gap: var(--ref-spacing-02);                 /* 2px */
 }
-.bd-time-picker__arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: content-box;
-  padding: var(--ref-spacing-06);             /* 8px → 20+16 = 36px 정사각형 */
-  border: 0;
-  background: none;
-  border-radius: var(--ref-radius-06);        /* 12px */
-  cursor: pointer;
-  color: var(--sys-color-neutral-800);
+/* 화살표는 맨 <button> 이 아니라 **Icon Button `Size=M · Type=Ghost`** 입니다(Figma 구조 그대로).
+   길게 누르기를 받으려고 <span> 으로 한 겹 감쌌는데, `display: contents` 라
+   레이아웃에는 이 래퍼가 없는 것과 같습니다. */
+.bd-time-picker__arrow { display: contents; }
+/* Icon Button 원본 Ghost 의 아이콘색은 `neutral/800` 이지만 Time Picker 안의 인스턴스는
+   **`neutral/600`(#5B616C)** 으로 오버라이드돼 있습니다 — Figma 쪽도 인스턴스 오버라이드라
+   여기서만 바꿉니다. Calendar Header 와 같은 처리입니다. */
+.bd-time-picker .bd-icon-button { --bd-ib-fg: var(--sys-color-neutral-600); }
+/* 비활성 방향은 **실제로 `disabled`** 지만(사용자 확인), 겉모습은 Icon Button 의 기본 Disabled
+   (전체 20% 투명)가 아니라 **아이콘 색만 `neutral/400`** 으로 바뀝니다 —
+   Figma 실측이 `opacity: 1` · `#C2C4C8` 였습니다. */
+.bd-time-picker .bd-icon-button:disabled {
+  opacity: 1;
+  --bd-ib-fg: var(--sys-color-neutral-400);
 }
-/* 비활성 방향은 실제로 disabled 처리됩니다(사용자 확인) */
-.bd-time-picker__arrow:disabled { color: var(--sys-color-neutral-400); cursor: not-allowed; }
 .bd-time-picker .bd-time-field { width: 56px; }
 
 /* ---------------- Time Picker Group ---------------- */
-/* ⚠️ 2026-09-15 정정 — 두 가지가 스펙과 어긋나 있었습니다.
-   (1) `gap: spacing/06`=8px 이 빠져 있었습니다. 스펙 6장의 폭 산출이
-       `56 + 8 + 4 + 8 + 56 = 132px`(2개) / `= 208px`(3개) 라 gap 이 없으면 폭이 맞지 않습니다.
-   (2) `display: flex` 라 부모 폭만큼 늘어났습니다(측정값 992px). Figma 는 hug 프레임이라
-       내용만큼만 차지해야 합니다 — `inline-flex` 로 바꿉니다. */
+/* 폭 = 56 + 8 + 4 + 8 + 56 = 132px(2개) · 208px(3개) */
 .bd-time-picker-group {
   display: flex;
   align-items: center;
@@ -85,25 +106,29 @@
   gap: var(--ref-spacing-06);                 /* 8px */
   font-family: var(--font-family-base);
 }
-/* Figma 의 구분자는 **4×14px 고정 SVG 에셋**입니다. 여기서는 글자 콜론으로 그리되
-   레이아웃 폭만 4px 로 맞춥니다(글자는 좌우로 조금 넘치지만 gap 8px 안에 들어갑니다).
-   ⚠️ 에셋을 그대로 쓰지 않은 부분이라 모양이 원본과 다를 수 있습니다. */
-.bd-time-picker-group__sep {
+/* 콜론은 글자(`:`)도 이미지 에셋도 아니라 **4×4 점 두 개**입니다 —
+   Figma 에서도 세로 auto-layout 프레임(gap `spacing/05`=6px)에 원 두 개가 들어 있습니다.
+   4 + 6 + 4 = 14px 로 실측 높이와 맞습니다. */
+.bd-time-picker-group__colon {
   display: flex;
-  justify-content: center;
   flex: 0 0 auto;
-  width: 4px;
-  font-size: var(--typography-subtitle-size);
-  line-height: var(--typography-subtitle-line-height);
-  color: var(--sys-color-neutral-800);
+  flex-direction: column;
+  gap: var(--ref-spacing-05);                 /* 6px */
+  width: var(--ref-spacing-04);               /* 4px */
+}
+.bd-time-picker-group__colon i {
+  width: var(--ref-spacing-04);               /* 4px */
+  height: var(--ref-spacing-04);
+  border-radius: 50%;
+  background: var(--sys-color-neutral-700);
 }
 
 /* ---------------- 상태 전환 (motion) ----------------
    Figma 원본: Time Field 셋 — 2개 반응
      Default → Hover 150ms · Hover → Pressed(Typing) 50ms · Smart animate · Slow
 
-   Time Picker 의 상하 화살표와 Time Picker Group 에는 Figma 에 반응이 없습니다.
-   화살표는 Disabled 로 흐려질 때의 글자색만 전환합니다. */
+   Time Picker Group 에는 Figma 에 반응이 없고, 화살표의 hover/pressed 는
+   Icon Button 컴포넌트가 자기 규칙대로 처리합니다. */
 .bd-time-field {
   transition-property: --bd-tf-overlay, background-color, box-shadow;
   transition-duration: var(--bd-motion-duration);
@@ -111,9 +136,3 @@
 }
 .bd-time-field[data-state='typing'] { --bd-motion-duration: var(--bd-motion-pressed); }
 .bd-time-field:hover:not([data-state='typing']) { --bd-motion-duration: var(--bd-motion-hover); }
-
-.bd-time-picker__arrow {
-  transition-property: color;
-  transition-duration: var(--bd-motion-duration);
-  transition-timing-function: var(--bd-motion-easing);
-}

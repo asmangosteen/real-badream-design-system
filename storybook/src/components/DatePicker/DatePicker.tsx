@@ -489,7 +489,7 @@ export function DatePicker({
         <>
           <Divider />
           <div className="bd-date-picker__time">
-            <TimePickerGroup values={['00', '00']} />
+            <TimePickerGroup defaultValue="00:00" />
           </div>
         </>
       )}
