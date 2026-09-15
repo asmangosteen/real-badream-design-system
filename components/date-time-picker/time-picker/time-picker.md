@@ -36,11 +36,28 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 
 | Direction | 위쪽 화살표 | 아래쪽 화살표 |
 |---|---|---|
-| **Down Only** | `chevron_up`(옅은 회색, 비활성으로 보임) | `chevron_down`(진한 회색, 활성) |
-| **Up Only** | `chevron_up`("1" 접미사 에셋, 진한 회색, 활성) | `chevron_down`("1" 접미사 에셋, 옅은 회색, 비활성) |
-| **Both** | `chevron_up`("1" 접미사 에셋, 진한, 활성) | `chevron_down`(진한, 활성) |
+| **Down Only** | `chevron_up` — `neutral/400`(#C2C4C8), 비활성 | `chevron_down` — `neutral/600`(#5B616C), 활성 |
+| **Up Only** | `chevron_up` — `neutral/600`(#5B616C), 활성 | `chevron_down` — `neutral/400`(#C2C4C8), 비활성 |
+| **Both** | `chevron_up` — `neutral/600`(#5B616C), 활성 | `chevron_down` — `neutral/600`(#5B616C), 활성 |
 
-코드상 각 화살표 방향마다 서로 다른 두 개의 SVG 에셋 URL(기본형과 `1` 접미사형)이 `direction` 값에 따라 스위칭되며, 스크린샷으로 육안 대조한 결과 활성 방향은 진한 회색, 비활성 방향은 옅은 회색으로 시각적으로 구분됩니다. 다만 `get_design_context`가 반환하는 것은 외부 SVG 에셋 URL뿐이라 **정확한 hex 색상값은 코드로 확인되지 않습니다** — 확인 필요.
+> **2026-09-15 정정.** 이전 판은 "`get_design_context`가 외부 SVG 에셋 URL만 반환해 정확한 hex 색상값은 확인되지 않습니다 — 확인 필요"였습니다.
+> Plugin API 로 벡터 `fills` 를 직접 읽어 값을 확정했습니다.
+
+**비활성은 Icon Button 의 Disabled 가 아닙니다.** 6개 화살표 인스턴스가 전부
+`Size=M, Type=Ghost, State=Default, Icon Color=Black` 으로 **변형이 완전히 같고**, 활성/비활성 차이는
+벡터 `fills` 를 직접 덮어쓴 **인스턴스 오버라이드**로만 표현돼 있습니다. 실측 `opacity` 도 양쪽 다 `1` 이라,
+Icon Button 컴포넌트의 Disabled 겉모습(전체 20% 투명)과는 다릅니다.
+
+같은 이유로 **활성 화살표의 `neutral/600` 도 오버라이드**입니다 — Icon Button 원본 Ghost 의 아이콘색은
+`neutral/800` 입니다([icon-button.md](../../button/icon-button/icon-button.md)). [Calendar Header](../calendar-header/calendar-header.md) 와 같은 처리입니다.
+
+### 3.1 값 범위
+
+단위별 최소·최대는 [time-field.md 1.1](../time-field/time-field.md#11-단위별-값-범위-사용자-지시-2026-09-15) 표를 그대로 따릅니다 —
+시 `00`–`23`, 분·초 `00`–`59`(사용자 지시, 2026-09-15).
+
+`wrap` 을 끄면 **끝에 닿는 순간 그쪽 화살표가 자동으로 `disabled`** 가 됩니다.
+즉 Direction 은 진열용으로 고정할 수도 있지만, 평소에는 값과 범위에서 저절로 정해집니다.
 
 ## 4. 핵심 발견
 
@@ -55,9 +72,24 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**컴포넌트 셋 자신에는 반응이 없고, 안에 든 인스턴스가 9개를 가집니다**(3개 변형 × 자식 3개).
 
-`get_motion_context`를 Date/Time Picker 패밀리 최상위 그룹(`2497:13877`, recursive=true)에 호출한 결과(오케스트레이터 사전 확보, 패밀리 11개 컴포넌트 전체 공용) `{"nodes":[]}`였습니다. 값 증감 시 숫자가 바뀌는 전환 효과, 버튼 Pressed 피드백 등에 대한 duration/easing 값이 Figma 파일에 정의되어 있지 않습니다.
+| 자식 | Trigger | To | 전환 | Figma 표시 |
+|---|---|---|---|---|
+| Icon Button(위) | `ON_HOVER` | `State=Hover` | Smart animate · Slow | **150ms** |
+| Time Field | `ON_HOVER` | `State=Hover` | Smart animate · Slow | **150ms** |
+| Icon Button(아래) | `ON_HOVER` | `State=Hover` | Smart animate · Slow | **150ms** |
+
+전부 원본 컴포넌트에서 **상속된** 반응입니다 — Time Picker 가 따로 추가한 건 없습니다.
+값 증감 자체(숫자가 바뀌는 전환)에 대한 모션은 여전히 정의돼 있지 않습니다.
+
+> **2026-09-15 정정.** 이전 판은 "모션 데이터 없음 — `get_motion_context` 가 `{"nodes":[]}` 반환"이었습니다.
+> `get_motion_context` 는 **키프레임 애니메이션만** 읽습니다. 변형 사이의 프로토타입 전환은 `node.reactions` 에 들어 있어
+> Plugin API 로 직접 읽어야 합니다 — [INTERACTION.md](../../../docs/INTERACTION.md) 참고.
+
+**⚠️ 비활성 방향의 화살표에도 `ON_HOVER` 가 그대로 붙어 있습니다.** Down Only 의 위쪽 화살표(`2229:8795`)를 포함해
+6개 전부입니다. 원본에서 상속된 것을 떼어내지 않은 것으로 보입니다 — 이 버튼은 실제로 `disabled` 이므로
+(3장·사용자 확인) **구현에서는 hover 를 막습니다.**
 
 ## 7. 접근성
 
@@ -72,6 +104,7 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 - Spacing: `spacing/02`=2px, `spacing/06`=8px → `ref-spacing-02/06`과 일치
 - Radius: `radius/06`=12px → `ref-radius-06`
 - 아이콘 크기: 20px(다른 컴포넌트의 20px 아이콘 규칙과 일관)
+- 화살표 아이콘 색: 활성 `neutral/600`(#5B616C) · 비활성 `neutral/400`(#C2C4C8) → `sys-color-neutral-600`/`400` 과 일치 (3장, 2026-09-15 확정)
 - 내장 Time Field의 모든 토큰(5장 참고, [time-field.md](../time-field/time-field.md) 8장과 동일)
 
 **확인 완료(사용자 확인)**
@@ -80,7 +113,6 @@ Time Picker는 위/아래 화살표로 시간 값을 증감시키는 **스테퍼
 - 비활성 방향 버튼은 실제로 `disabled` 처리되어 클릭이 막힘(시각적으로만 옅어지는 것이 아님)
 
 **기존 토큰에 없음 / 확인 필요**
-- 활성/비활성 화살표 아이콘의 정확한 색상값 — 에셋 URL로만 확인되어 hex 대조 불가
 - Direction 3종의 활성/비활성 표현 규칙(진한 vs 옅은 아이콘) 자체를 규정하는 토큰/문서 없음
 
 ## 9. 샘플링에 사용한 노드 (부록, 3개 전수)

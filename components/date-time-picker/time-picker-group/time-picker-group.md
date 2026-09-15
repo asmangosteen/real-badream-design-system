@@ -29,7 +29,12 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 - **Count=2**: [Time Picker] → [Colon] → [Time Picker]
 - **Count=3**: [Time Picker] → [Colon] → [Time Picker] → [Colon] → [Time Picker]
 
-**Colon(구분자)**: 고정 이미지 에셋(SVG), 4×14px. 실측 결과 폭 4px·높이 14px 값 자체는 `ref-spacing-04`(4px)·`ref-spacing-09`(14px)와 우연히 일치하나, 레이아웃 박스가 아니라 그림 형태의 이미지 에셋이라 토큰으로 바인딩된 값이 아닙니다(8장).
+**Colon(구분자)**: 4×14px. **이미지 에셋이 아니라 점 두 개를 쌓은 auto-layout 프레임**입니다 —
+`4×4px` 원(ELLIPSE) 2개를 세로로 `spacing/05`=6px 간격으로 배치한 것이고, `4 + 6 + 4 = 14px` 로 높이가 딱 떨어집니다.
+점 색은 `neutral/700`(#454C58). 세 값 모두 토큰에 그대로 바인딩돼 있습니다(8장).
+
+> **2026-09-15 정정.** 이전 판은 "고정 이미지 에셋(SVG)이고 4×14px 은 토큰과 우연히 일치할 뿐"이라고 적고 있었습니다.
+> Plugin API 로 노드(`2229:8886`)를 열어 보니 `FRAME`(VERTICAL, gap 6) 안에 `ELLIPSE` 2개였습니다.
 
 **크기 산출**(gap `spacing/06`=8px 기준, [Time Picker](../time-picker/time-picker.md) 폭 56px·Colon 폭 4px):
 - Count=2: 56 + 8 + 4 + 8 + 56 = **132px** ✅ 작업 지시 실측값과 정확히 일치
@@ -42,7 +47,7 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 
 1. **Time Picker Group은 Time Picker를 실제로 인스턴스로 조합합니다.** 병합 코드에 Time Picker의 축약 정의(및 그 내부 Time Field 축약 정의)가 그대로 포함되어 있어, 코드 레벨에서 조합 관계가 확인됩니다 — 작업 지시에서 제기한 가설을 그대로 확인시켜 줍니다.
 2. **이 컴포넌트의 병합 변형 안에서는 내장 Time Picker가 진열상 Direction=Down Only로 고정되어 보였습니다.** Count=2/3 두 변형 모두 안의 모든 Time Picker 인스턴스가 Down Only 하나만 쓰고 있었습니다(스크린샷상 모든 칸의 위쪽 화살표가 옅고 아래쪽 화살표만 진함). **사용자 확인 완료** — 실제 제품에서는 Picker Count(2/3)와 각 자리(시/분/초)의 Direction(Up Only/Down Only/Both) 모두 다양하게 조합되어 쓰입니다. 이 진열 노드가 Down Only만 보여준 것은 샘플링의 한계였을 뿐입니다.
-3. **Colon 구분자는 텍스트가 아니라 고정 이미지 에셋입니다.** 폰트 스타일이 아니라 SVG 그림으로 그려져 있습니다. **사용자 확인 완료** — 실제 구현에서도 텍스트 문자(`:`)로 대체하지 않고 Figma의 이미지 에셋을 그대로 사용합니다.
+3. **Colon 구분자는 텍스트가 아닙니다.** 폰트의 `:` 글자가 아니라 **점 두 개를 쌓은 도형**입니다(2장). 글자로 대체하면 폰트에 따라 점의 크기·간격·위치가 달라지므로, 구현에서도 4×4 원 2개를 직접 그립니다.
 
 ## 4. 콜론 사이 간격의 대칭성
 
@@ -55,9 +60,17 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**컴포넌트 셋 자신에는 반응이 없고, 안에 든 Time Picker 인스턴스가 가져옵니다** —
+Count=2 가 6개(2 × 3), Count=3 이 9개(3 × 3)로 **총 15개**입니다. 내용은 [time-picker.md](../time-picker/time-picker.md) 6장과 같습니다.
 
-`get_motion_context`를 Date/Time Picker 패밀리 최상위 그룹(`2497:13877`, recursive=true)에 호출한 결과(오케스트레이터 사전 확보, 패밀리 11개 컴포넌트 전체 공용) `{"nodes":[]}`였습니다. Picker Count 전환(2↔3 추가/제거) 자체는 이 컴포넌트가 지원하는 것으로 보이지 않으며(고정된 두 변형일 뿐, 동적 추가/삭제 애니메이션 정의 없음), 값 증감 시 전환 효과도 정의되어 있지 않습니다.
+Picker Count 2↔3 전환 자체에 대한 애니메이션은 정의돼 있지 않습니다(고정된 두 변형일 뿐).
+
+> **2026-09-15 정정.** 이전 판은 "모션 데이터 없음 — `get_motion_context` 가 `{"nodes":[]}` 반환"이었습니다.
+> `get_motion_context` 는 **키프레임 애니메이션만** 읽습니다. 변형 사이의 프로토타입 전환은 `node.reactions` 에 들어 있어
+> Plugin API 로 직접 읽어야 합니다 — [INTERACTION.md](../../../docs/INTERACTION.md) 참고.
+>
+> 패밀리 기준으로는 Time 컴포넌트 3종을 묶은 `2612:13920` 안에서 반응 **27개**가 확인됩니다 —
+> Time Field 3(자체 2 + Text Blinker 1) + Time Picker 9 + Time Picker Group 15.
 
 ## 7. 접근성
 
@@ -70,16 +83,16 @@ Time Picker Group은 [Time Picker](../time-picker/time-picker.md) 스테퍼 2개
 
 **정확히 일치**
 - Spacing: `spacing/06`=8px(컨테이너 gap) → `ref-spacing-06`과 일치
+- Colon: 점 크기 `spacing/04`=4px · 점 사이 `spacing/05`=6px · 색 `neutral/700`(#454C58) → `ref-spacing-04`/`ref-spacing-05`/`sys-color-neutral-700` 과 일치 (2장, 2026-09-15 확정)
 - 전체 크기 산술(132px/208px, 116px 높이)이 하위 컴포넌트의 실측 크기 + gap 토큰으로 정확히 재현됨
 - 내장 Time Picker/Time Field의 모든 토큰([time-picker.md](../time-picker/time-picker.md) 8장, [time-field.md](../time-field/time-field.md) 8장과 동일)
 
 **기존 토큰에 없음**
-- Colon 에셋의 4×14px 크기는 값 자체가 `ref-spacing-04`/`ref-spacing-09`와 우연히 일치하나 레이아웃 토큰이 아닌 이미지 에셋 크기라 토큰 매칭 대상이 아님
 - Picker Count 2/3별로 "몇 개를 조합할지" 규정하는 시맨틱 토큰은 저장소에 없음(개별 값 자체는 하위 컴포넌트 토큰과 일치)
 
 **확인 완료(사용자 확인)**
 - Group 내부 Time Picker의 Picker Count(2/3)·Direction(Up/Down/Both) 모두 실제 제품에서 다양하게 조합되어 쓰임 — 이 진열 노드는 Down Only 샘플만 보여준 것일 뿐
-- Colon은 실제 구현에서도 텍스트 문자로 대체하지 않고 Figma의 이미지 에셋을 그대로 사용
+- Colon은 텍스트 문자로 대체하지 않음 — 다만 이미지 에셋이 아니라 4×4 원 2개라 구현에서 직접 그립니다(2장)
 
 **확인 필요**
 - 그룹 전체 및 개별 필드의 접근성 마크업(`fieldset`/`aria-label`/`aria-hidden`) 연결 규정

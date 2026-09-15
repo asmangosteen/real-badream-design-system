@@ -21,7 +21,29 @@ Time Field는 시(時)/분(分)/초(秒) 등 시간 값 **2자리 숫자 하나*
 |---|---|---|
 | **State** | Default / Hover / Typing | 상호작용 상태. Default=비활성 배경(회색 채움), Hover=Default 위에 어두운 오버레이 추가, Typing=포커스 상태(흰 배경+파란 테두리+캐럿) |
 
+
+### 1.1 단위별 값 범위 (사용자 지시, 2026-09-15)
+
+Figma 에는 **단위 축도 범위 규정도 없습니다** — 샘플 텍스트가 "00" 하나뿐입니다.
+실제 값을 넣으려면 범위가 필요하므로 아래를 기준으로 정했습니다. **이 표가 유일한 출처입니다.**
+
+| 단위 | 최소 | 최대 |
+|---|---|---|
+| 시(hour) | `00` | `23` |
+| 분(minute) | `00` | `59` |
+| 초(second) | `00` | `59` |
+
+- 24시간제입니다. 오전/오후(AM·PM) 축은 Figma 에 없어 만들지 않았습니다.
+- 끝에서는 반대쪽으로 **순환**합니다 — 23시에서 ↑ 하면 00시.
+- 범위를 벗어난 값이 들어와도 화면에서는 범위 안의 두 자리로 보여줍니다(시의 `99` → `23`, `7` → `07`).
+- 타이핑 중 두 자리가 범위를 넘으면 방금 누른 숫자를 **새 첫 자리**로 봅니다 — 시에 `2` → `5` 는 `05`.
+
+구현에서는 `TIME_UNIT_RANGE` 한 곳에 모여 있고, `min`/`max` 를 직접 주면 그쪽이 우선합니다.
+
 **중요**: 3개 State 전부 텍스트 색상이 `neutral/800`로 동일합니다 — Text Input의 Placeholder(옅은 회색)처럼 값이 없을 때 색을 죽이는 처리가 없습니다. 즉 이 컴포넌트에서 샘플링된 "00"은 **항상 실제 값처럼 렌더링되는 표시**로 보이며, 별도의 "빈 값/placeholder" 변형은 Figma 컴포넌트 자체에 존재하지 않습니다.
+
+> **빈 값 처리(사용자 지시, 2026-09-15).** Typing 중에는 Backspace/Delete 로 **확정된 값까지 한 자리씩 지울 수 있어야** 합니다 — `10` → `1` → 빈 칸. 지우는 동안만 빈 칸이 보이고, 숫자칸 폭(36px)이 고정이라 칸 크기는 변하지 않습니다.
+> 다만 위와 같이 "값 없음" 변형이 없으므로 **다 지운 채로 포커스를 잃으면 마지막 확정값으로 되돌립니다** — 빈 채로 남겨 두지 않습니다.
 
 > **사용자 확인 완료**: Time Field는 클릭해서 숫자를 **직접 타이핑으로 입력할 수 있습니다**(스테퍼 전용 디스플레이가 아님). 즉 Typing 상태(흰 배경+파란 테두리+캐럿, 3장)가 실제 사용자 입력 흐름에서 그대로 쓰입니다 — [Time Picker](../time-picker/time-picker.md) 안에서 State=Default로 고정되어 보였던 것은 진열 샘플의 한계였을 뿐, 실제로는 Time Picker 안에서도 클릭 시 Typing 상태로 전환되어 타이핑이 가능한 것으로 이해해야 합니다.
 
@@ -58,14 +80,30 @@ Typing 상태에서만 "Number Input" 래퍼에 gap `spacing/01`=1px이 추가�
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**반응 2개** — 이 컴포넌트 셋 자신에 정의돼 있습니다.
 
-`get_motion_context`를 Date/Time Picker 패밀리 최상위 그룹(`2497:13877`, recursive=true)에 호출한 결과(오케스트레이터 사전 확보, 패밀리 11개 컴포넌트 전체 공용) `{"nodes":[]}`였습니다. Default↔Hover↔Typing 전환, 캐럿 깜빡임 모두 Figma 파일에 모션 값이 정의되어 있지 않습니다([text-blinker.md](../../global/text-blinker/text-blinker.md) 3장과 동일한 확인 필요 사항).
+| From | Trigger | To | 전환 | Figma 표시 |
+|---|---|---|---|---|
+| State=Default | `ON_HOVER` | State=Hover | Smart animate · Slow | **150ms** |
+| State=Hover | `ON_PRESS` | State=Typing | Smart animate · Slow | **50ms** |
+
+Typing 변형 안의 [Text Blinker](../../global/text-blinker/text-blinker.md) 인스턴스가 반응을 하나 더 가집니다 —
+`AFTER_TIMEOUT` 200ms → `State=Off`, Smart animate · Ease in and out **150ms**(양방향이라 한 주기 700ms).
+
+> **2026-09-15 정정.** 이전 판은 "모션 데이터 없음 — `get_motion_context` 가 `{"nodes":[]}` 반환"이었습니다.
+> `get_motion_context` 는 **키프레임 애니메이션만** 읽습니다. 변형 사이의 프로토타입 전환은 `node.reactions` 에 들어 있어
+> Plugin API 로 직접 읽어야 합니다 — [INTERACTION.md](../../../docs/INTERACTION.md) 참고.
+>
+> API 의 `transition.duration` 은 위 표의 값이 아니라 `0.3125s`/`0.1042s` 로 나옵니다. `Slow` 는 스프링이라
+> API 가 **완전히 정착(settle)하는 시간**을 주기 때문이고, Figma UI 표시값의 정확히 **2.0836배**입니다.
+
+`ON_PRESS` 는 "누르고 있는 동안"이지만 구현에서는 **클릭해서 포커스가 들어가 있는 동안**을 Typing 으로 봅니다 —
+마우스 버튼을 떼면 캐럿이 사라지는 입력칸은 성립하지 않습니다.
 
 ## 7. 접근성
 
 - 캐럿(Text Blinker) 접근성: [text-blinker.md](../../global/text-blinker/text-blinker.md) 4장과 동일하게 `aria-hidden`, 네이티브 캐럿과의 중복 방지 확인 필요.
-- 실제 구현 시 `<input type="text" inputmode="numeric" maxlength="2">` 등으로 매핑될 것으로 보이나, 값의 범위 제약(예: 분은 0~59)이나 자동 포맷팅 규칙은 Figma 디자인만으로 확인 불가 — 확인 필요.
+- 실제 구현은 `<input inputmode="numeric" role="spinbutton">` 으로 매핑했고, 값 범위는 1.1 표를 따릅니다(사용자 지시). `aria-valuemin`/`aria-valuemax` 에 그대로 실립니다.
 - Hover 상태에 `cursor-pointer`가 적용되어 있어 전체 박스가 클릭 가능한 포커스 타겟으로 보이나, 실제 `<input>` 포커스와 클릭 영역이 일치하는지는 확인 필요.
 
 ## 8. 토큰 매칭 요약

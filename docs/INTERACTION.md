@@ -128,6 +128,15 @@ Status Bar · Tab(+_Item) · Text Input Group · Toggle · Top Bar · _ButtonSpi
 
 이들은 **구현에서 이미 정해 둔 값을 유지**합니다(Application Contract 2번). 아래 4장 참고.
 
+> **다만 안에 든 아톰의 반응까지 없는 건 아닙니다.** 이 목록은 "**컴포넌트 셋 자신이 추가한** 반응이 없다"는 뜻입니다.
+> Time Picker 는 위/아래 화살표가 [Icon Button](../components/button/icon-button/icon-button.md) 인스턴스라 3.1 의 Icon Button 반응을 그대로 상속받고,
+> 안의 Time Field 도 자기 반응을 그대로 씁니다 — 실측하면 Time Picker 안에 **9개**(3변형 × 자식 3개),
+> Time Picker Group 안에 **15개**(Count=2 는 6, Count=3 은 9)가 잡힙니다. 전부 `ON_HOVER` · Smart animate · Slow · 150ms 입니다.
+> Calendar Header 도 같습니다.
+>
+> 그래서 **이 목록을 "hover 를 붙이지 않아도 된다"로 읽으면 안 됩니다.** 실제로 Time Picker 의 화살표를 맨 `<button>` 으로
+> 구현해 두는 바람에 hover 가 통째로 빠져 있었고, Icon Button 인스턴스로 바로잡고서야 반응이 살아났습니다.
+
 ### 3.3 Text Blinker — 유일한 반복 애니메이션
 
 | From | Trigger | To | Animation | Easing | Duration |

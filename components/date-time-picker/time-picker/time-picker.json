@@ -35,10 +35,11 @@
     }
   },
   "directions": {
-    "DownOnly": { "upArrow": { "asset": "chevron_up(기본형)", "visualState": "옅은 회색, 비활성으로 추정" }, "downArrow": { "asset": "chevron_down(기본형)", "visualState": "진한 회색, 활성으로 추정" } },
-    "UpOnly": { "upArrow": { "asset": "chevron_up(1 접미사형)", "visualState": "진한 회색, 활성으로 추정" }, "downArrow": { "asset": "chevron_down(1 접미사형)", "visualState": "옅은 회색, 비활성으로 추정" } },
-    "Both": { "upArrow": { "asset": "chevron_up(1 접미사형)", "visualState": "진한, 활성" }, "downArrow": { "asset": "chevron_down(기본형)", "visualState": "진한, 활성" } },
-    "note": "get_design_context는 외부 SVG 에셋 URL만 반환하므로 정확한 hex 색상값은 코드로 확인되지 않음. 스크린샷 육안 대조로만 진함/옅음을 구분 — 확인 필요."
+    "DownOnly": { "upArrow": { "icon": "chevron_up", "state": "비활성", "color": { "figmaVariable": "neutral/400", "hex": "#C2C4C8", "tokenMatch": "정확히 일치" } }, "downArrow": { "icon": "chevron_down", "state": "활성", "color": { "figmaVariable": "neutral/600", "hex": "#5B616C", "tokenMatch": "정확히 일치" } } },
+    "UpOnly": { "upArrow": { "icon": "chevron_up", "state": "활성", "color": { "figmaVariable": "neutral/600", "hex": "#5B616C", "tokenMatch": "정확히 일치" } }, "downArrow": { "icon": "chevron_down", "state": "비활성", "color": { "figmaVariable": "neutral/400", "hex": "#C2C4C8", "tokenMatch": "정확히 일치" } } },
+    "Both": { "upArrow": { "icon": "chevron_up", "state": "활성", "color": { "figmaVariable": "neutral/600", "hex": "#5B616C", "tokenMatch": "정확히 일치" } }, "downArrow": { "icon": "chevron_down", "state": "활성", "color": { "figmaVariable": "neutral/600", "hex": "#5B616C", "tokenMatch": "정확히 일치" } } },
+    "iconButtonVariant": "Size=M, Type=Ghost, State=Default, Icon Color=Black — 6개 화살표 인스턴스 전부 동일",
+    "note": "2026-09-15 Plugin API로 벡터 fills를 직접 읽어 확정. 활성/비활성 차이는 변형이 아니라 인스턴스 오버라이드로만 표현되며 opacity는 양쪽 다 1 — Icon Button의 Disabled(전체 20% 투명)와 다름. Ghost 원본 아이콘색이 neutral/800이므로 활성의 neutral/600도 오버라이드임(Calendar Header와 동일 처리)."
   },
   "keyFindings": [
     "Time Picker는 Time Field를 실제로 인스턴스로 조합함 — 병합 코드에 Time Field 축약 정의가 포함되어 코드 레벨에서 확인",
@@ -59,8 +60,12 @@
       }
     }
   },
-  "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 Date/Time Picker 패밀리 최상위 그룹(2497:13877, recursive=true)에 호출했으나 {\"nodes\":[]} 반환 — 패밀리 전체(11개 컴포넌트) 공용 확인.",
+  "interactions": [
+    { "ownedBy": "인스턴스 상속 — 컴포넌트 셋 자신이 추가한 반응은 없음", "on": "Icon Button(위/아래) 인스턴스", "trigger": "ON_HOVER", "to": "Size=M, Type=Ghost, State=Hover, Icon Color=Black", "transition": "SMART_ANIMATE", "easing": "SLOW", "figmaDuration": "150ms", "apiDuration": "0.3125s" },
+    { "ownedBy": "인스턴스 상속 — 컴포넌트 셋 자신이 추가한 반응은 없음", "on": "Time Field 인스턴스", "trigger": "ON_HOVER", "to": "State=Hover", "transition": "SMART_ANIMATE", "easing": "SLOW", "figmaDuration": "150ms", "apiDuration": "0.3125s" }
+  ],
+  "interactionsCount": "3개 변형 × 자식 3개 = 9개",
+  "interactionsNote": "2026-09-15 정정 — 이전 판은 '모션 데이터 없음(get_motion_context가 {\"nodes\":[]} 반환)'이었음. get_motion_context는 키프레임 애니메이션만 읽으며, 변형 사이의 프로토타입 전환은 node.reactions에 있어 Plugin API로 직접 읽어야 함. apiDuration이 figmaDuration의 정확히 2.0836배인 것은 Slow가 스프링이라 API가 완전히 정착(settle)하는 시간을 반환하기 때문. 값 증감 자체(숫자가 바뀌는 전환)에 대한 모션은 여전히 정의돼 있지 않음. 주의 — 비활성 방향의 화살표(예: Down Only의 2229:8795)에도 ON_HOVER가 그대로 붙어 있음(원본에서 상속된 것을 떼어내지 않은 것으로 보임). 이 버튼은 실제로 disabled이므로 구현에서는 hover를 막음.",
   "accessibility": {
     "stepperButtonLabels": "위/아래 스테퍼 버튼의 aria-label 연결 규정 없음 — 확인 필요",
     "disabledDirection": "비활성 방향 버튼은 disabled 처리됨(사용자 확인). 정확한 aria-disabled 속성 연결 규정은 확인 필요",
@@ -72,7 +77,5 @@
     "Time Picker Group 안에서 개별 Time Picker가 Down Only 외 다른 Direction으로 교체되어 쓰이는지 — 사용자 확인 완료, Picker Count·Direction 모두 다양하게 쓰임",
     "비활성 방향 버튼이 실제로 disabled 처리되는지 — 사용자 확인 완료, disabled 처리되어 클릭 막힘"
   ],
-  "openQuestions": [
-    "활성/비활성 화살표 아이콘의 정확한 hex 색상값"
-  ]
+  "openQuestions": []
 }
