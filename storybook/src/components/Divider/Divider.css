@@ -9,8 +9,14 @@
 
 /* Horizontal: 두께=height, 너비는 부모를 꽉 채움 */
 .bd-divider[data-type='horizontal'] { width: 100%; }
-/* Vertical: 두께=width, 높이는 부모를 꽉 채움 */
-.bd-divider[data-type='vertical'] { height: 100%; align-self: stretch; }
+/* Vertical: 두께=width, 높이는 부모를 꽉 채움
+   ⚠️ `height: 100%` 로는 부족합니다. 부모 높이가 **내용으로 정해지는**(height 를 따로 주지 않은)
+   flex 줄 안에서는 백분율 높이가 auto 로 풀려 **0 이 되고**, 게다가 height 가 auto 가 아니면
+   `align-self: stretch` 까지 막혀 형제 높이에 맞춰지지도 않습니다
+   (Date Picker Group 가로형의 가운데 구분선이 1×0 으로 사라져 있었습니다).
+   height 를 auto 로 두고 stretch 에 맡기되, 부모 높이가 확정된 경우를 위해 min-height 로 받칩니다 —
+   min-height 는 cross-size 속성이 아니라 stretch 를 막지 않습니다. */
+.bd-divider[data-type='vertical'] { align-self: stretch; min-height: 100%; }
 
 .bd-divider[data-size='1']  { --bd-divider-thickness: var(--ref-borderwidth-02); }
 .bd-divider[data-size='2']  { --bd-divider-thickness: var(--ref-borderwidth-03); }
