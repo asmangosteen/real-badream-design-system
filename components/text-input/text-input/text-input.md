@@ -124,7 +124,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
   - Done → TypeBox `Done`(값, 캐럿 없음)
   이는 Type Box 문서가 "확인 필요"로 남겨둔 "캐럿 상태가 실제로 어디서 쓰이는지"에 대한 답을 제공합니다: **Text Input이 바로 그 사용처입니다.**
 - **Text Blinker**: [`components/global/text-blinker/text-blinker.md`](../../global/text-blinker/text-blinker.md)의 `On` 변형이 TypeBox의 Selected/Typing 상태를 통해 간접적으로 인스턴스화됩니다. 크기(1.5×20px)·radius(2px)는 문서 스펙과 일치하지만, **채우기 색상은 Destructed 여부에 따라 `brand/primary-default`↔`theme/destructed-default`로 오버라이드**됩니다(3장 핵심 발견 3 참고) — text-blinker.md 자체에는 없는, 상위 컴포넌트 레벨의 활용 사례입니다.
-- **Supporting Text**: [`components/global/supporting-text/supporting-text.md`](../../global/supporting-text/supporting-text.md)의 Size S/M/L, **Theme=Gray**(기본), **Text Count=False** 조합을 그대로 사용. 아이콘은 `warning_filled`로, Supporting Text 문서에서 이미 확인된 "자유 교체 placeholder" 패턴과 동일합니다. Destructed 상태에서도 Supporting Text의 Theme이 자동으로 바뀌는 모습은 관찰되지 않았습니다(Input 테두리·Button만 색이 바뀌고 하단 Supporting Text는 계속 Gray 그대로) — Dropdown 문서에서 지적된 것과 동일한 WCAG 1.4.1 관련 우려가 그대로 적용됩니다(7장 참고).
+- **Supporting Text**: [`components/global/supporting-text/supporting-text.md`](../../global/supporting-text/supporting-text.md)의 Size S/M/L, **Theme=Gray**(기본), **Text Count=False** 조합을 그대로 사용. 아이콘은 `warning_filled`로, Supporting Text 문서에서 이미 확인된 "자유 교체 placeholder" 패턴과 동일합니다. Figma 변형에서는 Destructed 여도 Supporting Text 가 `Theme=Gray` 그대로입니다(Input 테두리·Button 만 색이 바뀜). **디자이너 확정(2026-09-15)** — 하단 Supporting Text 는 Destructed 와 함께 `Theme=Destructed`(빨강)로 바뀝니다. Figma 변형은 아직 `Theme=Gray` 이지만 **디자이너가 Figma 쪽을 맞추기로 했습니다** — 이 경우만 구현이 먼저 가 있는 상태입니다. (7장 참고)
 
 ## 6. 인터랙션(모션) 스펙
 
@@ -139,7 +139,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 - **캐럿(Text Blinker) 접근성**: [text-blinker.md](../../global/text-blinker/text-blinker.md) 4장에서 이미 확인 필요로 명시된 `aria-hidden` 처리, 네이티브 브라우저 캐럿과의 중복 방지가 Text Input에도 그대로 적용됩니다. 실제 구현 시 이 캐럿이 네이티브 `<input>`의 진짜 캐럿을 대체하는 커스텀 UI라면 네이티브 캐럿은 투명 처리(`caret-color: transparent`)하는 등의 처리가 필요할 수 있습니다 — 확인 필요.
 - **Typing 상태의 지우기 버튼(`close_in_circle`)**: 4장에서 확인한 대로 이 아이콘은 자유 교체 슬롯이 아니라 상태에 따라 강제로 나타나는 액션 버튼으로 보입니다. 스크린리더 사용자를 위한 `aria-label="입력값 지우기"` 등의 레이블 연결 규정이 Figma 파일에 없어 확인 필요입니다.
 - **Disabled 상태**: `pointer-events`/`aria-disabled`/`disabled` 속성 부여는 Figma 디자인만으로 확인 불가 — Dropdown 문서와 동일하게 확인 필요.
-- **Destructed(에러) 상태**: 테두리·버튼·캐럿 색상 변화로만 표현되며, 하단 Supporting Text는 Destructed와 무관하게 항상 Gray 톤으로 남습니다(5장). 색상에만 의존하지 않기(WCAG 1.4.1) 원칙에서, 실제 구현 시 Supporting Text의 Theme을 Destructed와 함께 전환하거나 최소한 텍스트 문구로 에러 내용을 명시하는 처리가 필요해 보입니다 — 확인 필요.
+- **Destructed(에러) 상태**: Figma 변형은 테두리·버튼·캐럿 색상 변화로만 표현하고 하단 Supporting Text 를 Gray 로 남깁니다(5장). 색상에만 의존하지 않기(WCAG 1.4.1) 관점에서 문제가 되어 **디자이너 확정(2026-09-15)** — 하단 Supporting Text 는 Destructed 와 함께 `Theme=Destructed`(빨강)로 바뀝니다. Figma 변형은 아직 `Theme=Gray` 이지만 **디자이너가 Figma 쪽을 맞추기로 했습니다** — 이 경우만 구현이 먼저 가 있는 상태입니다. **구현은 `Theme=Destructed` 로 함께 전환합니다.** Dropdown 도 같은 결정입니다([dropdown.md](../../dropdown/dropdown.md) 7장).
 - **Label 연결**(`<label for>`), 필수 입력 여부 등은 [Label 문서](../../global/label/label.md) 5장의 확인 필요 사항과 동일하게 적용됩니다. Text Input에는 Essential 토글 자체가 없으므로(5장), 필수 입력 표시가 필요하다면 별도 처리 방식이 필요합니다 — 확인 필요.
 - **`Show Unit` 단위 텍스트 슬롯**(3장 핵심 발견 5): 값과 단위(예: "12 km")가 스크린리더에 하나의 의미 단위로 읽히도록 구현할 필요가 있어 보이나, Figma 파일에 규정이 없어 확인 필요입니다.
 
@@ -174,7 +174,7 @@ Text Input은 사용자가 직접 텍스트를 입력하는 **입력형 필드 �
 - `Show Unit=True`를 Done 외 다른 State·Size와 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계) — 이번 15개 표본에는 Done 1건만 있어 확정하지 못함(3장 핵심 발견 5)
 - Typing 상태에서 Right Icon=False일 때 지우기 버튼이 사라지는지 여부(4장)
 - 접근성 마크업(`aria-hidden`, `aria-label`, `disabled`, `<label for>`) 연결 규정(7장)
-- Destructed 상태에서 Supporting Text의 Theme이 함께 전환되어야 하는지(색상 단독 의존 이슈, 7장)
+- ~~Destructed 상태에서 Supporting Text의 Theme이 함께 전환되어야 하는지~~ → **확정(2026-09-15)**: 전환합니다(빨강). Figma 는 디자이너가 맞출 예정 — 7장
 
 ## 9. 샘플링에 사용한 15개 노드 (부록)
 
