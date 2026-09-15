@@ -85,7 +85,18 @@ const meta = {
   argTypes: {
     size: { control: 'inline-radio', options: ['s', 'm', 'l'] },
     type: { control: 'inline-radio', options: ['outlined', 'filled'] },
-    contents: { control: 'select', options: ['text', 'avatar-text', 'avatar-text-icon', 'icon-text', 'text-icon'] },
+    contents: {
+      control: 'select',
+      options: ['text', 'avatar-text', 'avatar-text-icon', 'icon-text', 'text-icon'],
+      description: 'Figma Contents 축. 아래 세 속성 중 지정한 것이 이 값을 덮어씁니다',
+    },
+    showAvatar: { control: 'boolean', description: '왼쪽 아바타 표시 여부' },
+    showIcon: { control: 'boolean', description: '아이콘 표시 여부' },
+    iconPosition: {
+      control: 'inline-radio',
+      options: ['left', 'right'],
+      description: '⚠️ 아바타가 켜져 있으면 Figma 에 왼쪽 아이콘 변형이 없어 **항상 오른쪽**이 됩니다',
+    },
     iconName: { control: 'select', options: OUTLINED_ICONS },
     avatarSrc: { table: { disable: true } },
     className: { table: { disable: true } },
@@ -108,8 +119,10 @@ type PlaygroundArgs = {
   children: string;
   type: ChipType;
   size: ChipSize;
-  contents: ChipContents;
-  filterContents: FilterContents;
+  showAvatar: boolean;
+  showIcon: boolean;
+  iconPosition: 'left' | 'right';
+  showText: boolean;
   iconName: string;
   selected: boolean;
   disabled: boolean;
@@ -128,8 +141,10 @@ export const Playground: StoryObj<PlaygroundArgs> = {
     children: '전기스쿠터',
     type: 'outlined',
     size: 'm',
-    contents: 'text',
-    filterContents: 'text-icon',
+    showAvatar: false,
+    showIcon: false,
+    iconPosition: 'right',
+    showText: true,
     iconName: 'plus',
     selected: false,
     disabled: false,
@@ -147,18 +162,29 @@ export const Playground: StoryObj<PlaygroundArgs> = {
       if: { arg: 'kind', eq: 'selection' },
       description: '**Selection 전용** — Filter 에는 Size 축이 없습니다',
     },
-    contents: {
-      control: 'select',
-      options: ['text', 'avatar-text', 'avatar-text-icon', 'icon-text', 'text-icon'],
-      if: { arg: 'kind', eq: 'selection' },
-      description: 'Selection 전용 5종',
+    showAvatar: {
+      name: '아바타',
+      control: 'boolean',
+      description: '왼쪽에 아바타를 넣습니다. 붙는 쪽 패딩이 줄어듭니다 (S 4 · M 8 · L 6px)',
     },
-    filterContents: {
-      name: 'contents',
-      control: 'select',
-      options: ['text-icon', 'icon', 'avatar-icon', 'avatar-text-icon'],
+    showIcon: {
+      name: '아이콘',
+      control: 'boolean',
+      if: { arg: 'kind', eq: 'selection' },
+      description: '**Selection 전용** — Filter 의 `chevron_down` 은 끌 수 없습니다',
+    },
+    iconPosition: {
+      name: '아이콘 위치',
+      control: 'inline-radio',
+      options: ['left', 'right'],
+      if: { arg: 'kind', eq: 'selection' },
+      description: '⚠️ 아바타를 켜면 Figma 에 왼쪽 아이콘 변형이 없어 **항상 오른쪽**이 됩니다',
+    },
+    showText: {
+      name: '라벨',
+      control: 'boolean',
       if: { arg: 'kind', eq: 'filter' },
-      description: 'Filter 전용 4종 — Selection 과 목록이 다릅니다',
+      description: '**Filter 전용** — 끄면 아바타/아이콘만 남습니다',
     },
     iconName: {
       control: 'select',
@@ -179,11 +205,18 @@ export const Playground: StoryObj<PlaygroundArgs> = {
       onClick: () => updateArgs({ selected: !args.selected }),
     };
     return args.kind === 'filter' ? (
-      <FilterChip {...shared} contents={args.filterContents}>
+      <FilterChip {...shared} showAvatar={args.showAvatar} showText={args.showText}>
         {args.children}
       </FilterChip>
     ) : (
-      <Chip {...shared} size={args.size} contents={args.contents} iconName={args.iconName}>
+      <Chip
+        {...shared}
+        size={args.size}
+        showAvatar={args.showAvatar}
+        showIcon={args.showIcon}
+        iconPosition={args.iconPosition}
+        iconName={args.iconName}
+      >
         {args.children}
       </Chip>
     );

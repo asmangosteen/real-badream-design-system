@@ -34,7 +34,7 @@
       },
       "filled": {
         "default": { "background": { "figmaVariable": "color/gray/900-5", "value": "rgba(3,9,26,0.05)", "tokenMatch": "정확히 일치" }, "border": "없음", "text": "neutral/600" },
-        "hover": { "value": "rgba(3,9,26,0.05) (Default와 동일)", "note": "실측상 Default와 값이 완전히 같아 시각적 피드백이 없음 — 의도적인지 확인 필요" },
+        "hover": { "mechanism": "Default 배경(5%) 위에 추가 5% 오버레이 합성(2겹 gradient)", "overlay": { "figmaVariable": "color/interaction/light-gray/hover", "value": "rgba(3,9,26,0.05) over rgba(3,9,26,0.05)" }, "compositeAlpha": "9.75%", "note": "2026-09-15 정정: 이전 기록의 'Default와 동일해 피드백 없음'은 오독. fills 배열을 하나만 읽어서 생긴 오류이며, 실제로는 2겹이라 5%->9.75%로 어두워짐" },
         "pressed": { "mechanism": "Default 배경(5%) 위에 추가 10% 오버레이 합성(2겹 gradient)", "overlay": { "figmaVariable": "color/gray/900-10(추가 레이어)", "value": "rgba(3,9,26,0.1) over rgba(3,9,26,0.05)" } },
         "disabled": { "mechanism": "배경(gray-900-5%) 불변 + 전체 opacity 40%", "opacity": { "figmaVariable": "opacity/40", "tokenMatch": "정확히 일치" } },
         "selected": { "background": { "figmaVariable": "neutral/800", "hex": "#202837" }, "backgroundToken": "sys-color-neutral-800 (ref-color-gray-800)", "tokenMatch": "정확히 일치", "text": { "figmaVariable": "common/white-default", "hex": "#fdfdfd" }, "note": "Outlined Selected(연한 파란 배경+파란 테두리)와 완전히 다른 전략 — 진한 남색 단색으로 전환" }
@@ -64,7 +64,7 @@
       "leftPaddingRule": "기본 왼쪽 패딩은 spacing/08=12px이지만, 왼쪽에 아바타가 붙는 Contents(avatarIcon, avatarTextIcon)는 spacing/05=6px로 줄어듦. 왼쪽이 12px인 것은 textIcon 하나뿐이고 iconOnly는 4방향 6px 균등."
     },
     "icon": { "asset": "Icon / Default / 16px / chevron_down", "swappable": false, "note": "Selection과 달리 항상 고정된 chevron_down 아이콘. Selected 상태에서 다른 SVG 애셋으로 교체됨(색상 변경 추정, SVG fill 미확인)" },
-    "colorStateMechanism": "Selection의 typeState와 완전히 동일 (Default/Hover=gray-900-2%/Pressed=gray-900-5%/Disabled=opacity-40%/Selected=Outlined는 brand-lightest+blue-500-60% 테두리, Filled는 neutral-800)"
+    "colorStateMechanism": "Selection의 typeState와 완전히 동일 (Outlined Hover=gray-900-2%/Pressed=gray-900-5%, Filled Hover=interaction/light-gray/hover/Pressed=interaction/light-gray/pressed, Disabled=opacity-40%, Selected=Outlined는 brand-lightest+blue-500-60% 테두리, Filled는 neutral-800)"
   },
   "interactionTokenSummary": {
     "outlinedHover": { "figmaVariable": "color/gray/900-2", "value": "rgba(3,9,26,0.02)" },
@@ -97,7 +97,8 @@
     ],
     "기존토큰에없음": [],
     "확인필요": [
-      "Filled Hover가 Default와 값이 동일해 시각적 피드백이 없는 것이 의도적인지",
+      "[2026-09-15 해소] Filled Hover가 Default와 값이 동일해 시각적 피드백이 없는 것이 의도적인지 — 오독이었음. 2겹 합성이라 실제로는 5%->9.75%로 어두워짐",
+      "[2026-09-15 해소] Contents 구조가 S/L에도 동일 비율로 적용되는지 — 동일 비율이 아님. 왼쪽 아바타 패딩 S=4/M=8/L=6, 왼쪽 아이콘 S=6/M=8/L=8, 아바타 크기 S=12/M=16/L=20, 아이콘 크기 S=12/M=16/L=16. 아바타 컨테이너 패딩 S=3/3, M=3/4, L=2/6. 아이콘 컨테이너 패딩 S=3/1, M=3/2, L=4/2. chip.md 4장 참고",
       "Contents 구조의 패딩 비대칭이 S/L 사이즈에도 동일 비율로 적용되는지(M만 실측)",
       "Filter Chip Selected 시 아이콘 애셋 교체의 정확한 색상 값(SVG fill 미확인)",
       "Chip Disabled 40%와 Button 20%의 차이가 의도적인지",

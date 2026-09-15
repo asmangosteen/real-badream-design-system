@@ -48,31 +48,65 @@ Chip은 Badge와 마찬가지로 **하나가 아니라 2개의 독립된 Compone
 | State | Outlined | Filled |
 |---|---|---|
 | **Default** | 배경 `common/white-default`, 테두리 1px `color/gray/900-10`(10%), 텍스트 `neutral/600` | 배경 `color/gray/900-5`(5%, 반투명 회색), 테두리 없음, 텍스트 `neutral/600` |
-| **Hover** | Default와 동일 배경/테두리 위에 `color/gray/900-2`(2%) 오버레이 | 배경이 그대로 `rgba(3,9,26,0.05)` 플랫 색상(= Default와 동일 값) — **실측상 Default와 시각적으로 구분되지 않음** |
+| **Hover** | Default와 동일 배경/테두리 위에 `color/gray/900-2`(2%) 오버레이 | Default 배경(`gray/900-5`) 위에 `color/interaction/light-gray/hover`(5%) 오버레이 합성(2겹) — 합성 알파 **5% → 9.75%** |
 | **Pressed** | `color/gray/900-5`(5%) 오버레이 | `rgba(3,9,26,0.05)` 베이스 위에 `rgba(3,9,26,0.1)`(10%) 오버레이 합성(2겹 gradient) — 실질적으로 Default보다 진해짐 |
 | **Disabled** | 배경/테두리 불변 + 전체 `opacity/40`(40%) 적용 | 배경(`gray/900-5`) 불변 + 전체 `opacity/40`(40%) 적용 |
 | **Selected** | 배경 `brand/primary-lightest`(`#eef4fc`), 테두리 `color/blue/500-60`(60%, `rgba(44,123,226,0.6)`), 텍스트 `brand/primary-default`(파랑) | 배경 `neutral/800`(`#202837`, 진한 남색 단색), 텍스트 `common/white-default`(흰색) |
 
 **주요 발견**:
-- Chip의 Hover/Pressed 오버레이는 Button/Checkbox가 쓰는 `interaction/light-gray`(5%/10%) 패밀리가 **아니라**, 저장소 `tokens/colors.json`의 raw 알파 스텝인 `gray-900-2%`/`gray-900-5%`를 직접 참조합니다. 두 값 모두 `reference.alpha.gray-900` 테이블에 존재하는 정의된 토큰이라 **토큰 자체는 정확히 일치**하지만, Button 문서에서 쓰던 `interaction/*` 시맨틱 패밀리와는 다른 경로입니다.
-- **Filled Hover는 Default와 완전히 동일한 값**(`rgba(3,9,26,0.05)`)이라 실측상 시각적 피드백이 없습니다 — Checkbox Angular 미선택 Pressed와 유사하게, 의도적인지 확인 필요.
+- **Type에 따라 오버레이 토큰 패밀리가 다릅니다.** Outlined는 raw 알파 스텝(`gray-900-2%`/`gray-900-5%`)을, Filled는 Button/Checkbox와 같은 `interaction/light-gray/*`(5%/10%) 시맨틱 패밀리를 참조합니다. 값은 서로 같지만 바인딩 경로가 다릅니다.
+- **⚠️ 2026-09-15 정정 — "Filled Hover는 Default와 동일해 피드백이 없다"는 서술은 틀렸습니다.** Figma의 Filled/Hover는 채우기가 **2겹**입니다(베이스 `gray/900-5` + `interaction/light-gray/hover`). 두 겹의 **값이 우연히 같아서**(둘 다 `#03091a @5%`) 채우기를 하나만 읽고 "Default와 동일"로 잘못 판단했던 것입니다. 실제 합성 알파는 **5% → 9.75%**(흰 배경 위 `#f2f3f4` → `#e6e7e9`)로 뚜렷하게 어두워집니다. 이 오류 때문에 구현에 Filled hover 피드백이 아예 빠져 있었고, 함께 수정했습니다.
+  > 교훈: `fills` 배열의 **마지막 하나만 읽지 말 것.** Hover/Pressed는 2겹이고, 오버레이 값이 베이스와 같을 수 있습니다.
 - **Disabled의 `opacity/40`은 Button 문서에서 "사용처 미확인"으로 남겼던 바로 그 토큰**입니다. Chip이 이 토큰의 실제 사용처임이 이번 조사로 확인되었습니다.
 - **Selected 상태에서 Outlined와 Filled가 완전히 다른 전략을 씁니다**: Outlined는 옅은 파란 배경+파란 테두리(브랜드 색 강조), Filled는 진한 남색 단색 배경(거의 검정에 가까움)으로 전환됩니다. Button의 Primary/Secondary처럼 "하나의 브랜드 컬러로 통일"하지 않고 Type별로 서로 다른 강조 방식을 택한 점이 특이합니다.
 
-## 4. Chip / Selection — Contents별 구조 (M, Outlined, Default 기준 실측)
+## 4. Chip / Selection — Contents별 구조 (2026-09-15 Size 3종 전수 실측)
 
-| Contents | 구조 | 패딩(외곽) |
+> **정정**: 초판은 M 사이즈만 실측하고 "S/L도 동일 비율일 것"으로 추정했습니다.
+> 전수 실측 결과 **동일 비율이 아닙니다.** 아래가 실측값입니다.
+
+### 4-1. 외곽 패딩 — 붙는 쪽만 줄어들고, 줄어드는 값이 Size마다 다릅니다
+
+| Size | 기본 좌우 | 왼쪽에 아이콘 | 왼쪽에 아바타 | 오른쪽에 아이콘 |
+|---|---|---|---|---|
+| **S** | `spacing/06`=8px | `spacing/05`=6px | **`spacing/04`=4px** | `spacing/05`=6px |
+| **M** | `spacing/08`=12px | `spacing/06`=8px | `spacing/06`=8px | `spacing/06`=8px |
+| **L** | `spacing/08`=12px | `spacing/06`=8px | **`spacing/05`=6px** | `spacing/06`=8px |
+
+**아바타 쪽이 아이콘 쪽보다 더 많이 줄어듭니다** (S 4 vs 6 · L 6 vs 8). M만 우연히 둘 다 8px로 같습니다 — 초판이 M만 보고 "아바타=아이콘"으로 묶은 원인입니다.
+
+### 4-2. 내부 컨테이너 — 아바타·아이콘 크기도 Size마다 다릅니다
+
+| Size | 아바타 컨테이너 | 아바타 | 아이콘 컨테이너 | 아이콘 |
+|---|---|---|---|---|
+| **S** | 18×18 · px `spacing/03`=3px · py 3px | **12px** | 14×18 · px `spacing/01`=1px · py 3px | **12px** |
+| **M** | 24×22 · px `spacing/04`=4px · py 3px | 16px | 20×22 · px `spacing/02`=2px · py 3px | 16px |
+| **L** | 32×24 · px `spacing/05`=6px · py `spacing/02`=2px | **20px** | 20×24 · px 2px · py `spacing/04`=4px | **16px** |
+
+⚠️ **L에서 아바타는 20px로 커지는데 아이콘은 16px 그대로**입니다(M과 동일). 두 슬롯의 크기 계단이 다릅니다.
+
+칩의 `gap`은 전 변형 **0**이고, 라벨과의 간격은 전부 이 컨테이너 패딩이 만듭니다.
+
+### 4-3. 검증 (전체 폭 = 좌패딩 + 컨테이너 + 텍스트 + 우패딩)
+
+| 조합 | 계산 | Figma |
 |---|---|---|
-| **Text** | 라벨만 | px 12px · py 6px (2장 참고) |
-| **Avatar + Text** | Avatar Container(내부 px `spacing/04`=4px·py `spacing/03`=3px, 16px 원형 아바타) + 라벨 | pl `spacing/06`=8px · pr `spacing/08`=12px(비대칭) |
-| **Avatar + Text + Icon** | Avatar Container + 라벨 + Icon Container(내부 px `spacing/02`=2px·py `spacing/03`=3px, 16px 아이콘) | px `spacing/06`=8px(좌우 대칭) |
-| **Icon + Text** | Icon Container(왼쪽) + 라벨 | pl `spacing/06`=8px · pr `spacing/08`=12px(비대칭, 아이콘이 왼쪽) |
-| **Text + Icon** | 라벨 + Icon Container(오른쪽) | pl `spacing/08`=12px · pr `spacing/06`=8px(비대칭, 아이콘이 오른쪽) |
+| S Avatar+Text | 4 + 18 + 24 + 8 | **54×24** |
+| M Avatar+Text | 8 + 24 + 28 + 12 | **72×34** |
+| L Avatar+Text | 6 + 32 + 32 + 12 | **82×40** |
+| S Avatar+Text+Icon | 4 + 18 + 24 + 14 + 6 | **66×24** |
+| M Avatar+Text+Icon | 8 + 24 + 28 + 20 + 8 | **88×34** |
+| L Avatar+Text+Icon | 6 + 32 + 32 + 20 + 8 | **98×40** |
 
-- **Avatar**: 재사용 서브컴포넌트. 16px 크기, 테두리 1px(`borderwidth/02`) `color/gray/900-5`(5%), `radius/12`(999px, 원형), 이미지 `object-cover`. Chip에서는 항상 16px 버전만 사용됩니다(서브컴포넌트 자체는 12px 버전도 정의되어 있으나 Chip에서 쓰이지 않음).
-- **Icon**: `Icon / Default / 16px / plus` 하나만 관측되었으며(Badge와 동일한 "+" 아이콘), `iconM` prop으로 스왑 가능한 슬롯입니다.
-- Icon/Avatar가 옆에 붙을 때 그쪽 방향의 외곽 패딩이 한 단계 줄어드는 비대칭 규칙은 Badge Content(Show Icon=True)·Button과 동일한 패턴입니다.
-- 이 구조는 M 사이즈로만 실측했으며, S/L에서도 동일 비율로 적용된다고 추정합니다(개별 검증 안 함) — 확인 필요.
+- **Avatar**: 재사용 서브컴포넌트. 테두리 1px(`borderwidth/02`) `color/gray/900-5`(5%), `radius/12`(999px, 원형), 이미지 `object-cover`. **Chip에서 12 / 16 / 20px 세 가지 크기를 모두 씁니다** — 초판의 "항상 16px 버전만 사용"은 M만 보고 내린 결론이라 틀렸습니다.
+- **Icon**: Selection은 `plus`가 기본이며 교체 가능한 슬롯입니다. 크기는 S만 12px, M·L은 16px입니다.
+- Icon/Avatar가 옆에 붙을 때 그쪽 외곽 패딩이 줄어드는 비대칭 규칙 자체는 Badge Content(Show Icon=True)·Button과 같은 패턴입니다.
+
+### 4-4. 스트로크는 박스 크기를 키우지 않습니다
+
+Outlined의 테두리는 `strokeAlign: INSIDE` · 두께 1px이라 **Outlined와 Filled의 실측 크기가 같습니다**(S 둘 다 40×24).
+CSS `border`는 바깥 크기에 더해지므로 그대로 옮기면 Outlined만 가로·세로 2px씩 커집니다 —
+구현에서는 `box-shadow: inset 0 0 0 1px`으로 그려 레이아웃 영향을 없앴습니다(2026-09-15 수정).
 
 ## 5. Chip / Filter 스펙
 
@@ -90,7 +124,7 @@ Chip은 Badge와 마찬가지로 **하나가 아니라 2개의 독립된 Compone
 
 **Filter의 왼쪽 패딩 규칙**: 기본은 `spacing/08`=12px 이지만, **왼쪽에 아바타가 붙는 Contents(Avatar+Icon · Avatar+Text+Icon)는 `spacing/05`=6px 로 줄어듭니다.** Contents 4종 중 왼쪽이 12px인 것은 `Text+Icon` 하나뿐이고, `Icon`만은 4방향 6px 균등입니다. 초판 문서에 Avatar+Text+Icon 값이 빠져 있어 구현에서 이 조합만 12px로 남는 버그가 있었습니다(2026-09-14 정정).
 
-색상/State 메커니즘은 Selection과 **완전히 동일**합니다(Outlined/Filled의 Default·Hover(`gray-900-2%`)·Pressed(`gray-900-5%`)·Disabled(`opacity/40`)·Selected(Outlined=브랜드 라이트+블루 테두리, Filled=neutral/800) 전부 3장과 동일 토큰).
+색상/State 메커니즘은 Selection과 **완전히 동일**합니다(Outlined Hover=`gray-900-2%`·Pressed=`gray-900-5%`, Filled Hover=`interaction/light-gray/hover`·Pressed=`interaction/light-gray/pressed`, Disabled=`opacity/40`, Selected는 Outlined=브랜드 라이트+블루 테두리 / Filled=neutral/800 — 전부 3장과 동일 토큰).
 
 **Selected 상태에서 아이콘 애셋 자체가 교체됩니다**: Default의 `chevron_down` 아이콘과 Selected의 `chevron_down` 아이콘이 서로 다른 SVG URL로 발급되어, 색상이 다르게 구워진(baked-in) 별도 애셋으로 추정됩니다(라벨 텍스트가 파란색으로 바뀌는 것과 짝을 맞추기 위함으로 보이나, SVG 내부 fill 직접 확인은 안 함 — 확인 필요).
 
@@ -137,8 +171,8 @@ Chip은 Badge와 마찬가지로 **하나가 아니라 2개의 독립된 Compone
 - 없음 (실측된 모든 값이 저장소 토큰과 매칭됨)
 
 **확인 필요**
-- Filled Hover가 Default와 값이 동일해 시각적 피드백이 없는 것이 의도적인지
-- Contents 구조(Avatar/Icon 조합 시 패딩 비대칭)가 S/L 사이즈에도 동일 비율로 적용되는지(M만 실측)
+- ~~Filled Hover가 Default와 값이 동일해 시각적 피드백이 없는 것이 의도적인지~~ → **2026-09-15 해소.** 오독이었습니다. 2겹 합성이라 실제로는 5%→9.75%로 어두워집니다(3장 정정 참고).
+- ~~Contents 구조(Avatar/Icon 조합 시 패딩 비대칭)가 S/L 사이즈에도 동일 비율로 적용되는지(M만 실측)~~ → **2026-09-15 해소.** 전수 실측 결과 **동일 비율이 아닙니다.** 4장 참고.
 - Filter Chip Selected 시 아이콘 애셋이 교체되는 정확한 색상 값(SVG fill 미확인)
 - Chip Disabled가 40% opacity를 쓰는 것과 Button이 20%를 쓰는 것의 차이가 의도적인지
 - Selected 상태의 `aria-pressed`/`aria-selected`, Filter Chip의 `aria-haspopup`/`aria-expanded` 규정 여부
