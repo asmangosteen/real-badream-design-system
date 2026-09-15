@@ -73,8 +73,23 @@
     },
     "figmaLeftover": "Figma 의 Number=1 변형만 itemSpacing:10 이 남아 있으나 자식이 하나뿐이라 효과가 없는 기본값 잔재입니다.",
     "measured": {
-      "icon+button": "40 + 8 + 31(\"완료\") + 12 = 91px",
+      "icon+button": "40 + 8 + 31(\"완료\") + 20 = 99px",
       "icon+icon+button": "131px"
+    },
+    "rightEdge": {
+      "lastItemIcon": {
+        "boxPadding": "12px (spacing/08, Figma 그대로)",
+        "visual": "20px",
+        "note": "Icon Button 안쪽 여백 8px 이 있어 글리프는 12+8=20px 에 놓입니다."
+      },
+      "lastItemButton": {
+        "boxPadding": "20px (spacing/08 + spacing/06)",
+        "visual": "20px",
+        "source": "⚠️ 사용자 지시 (2026-09-15) — Figma 아님",
+        "note": "버튼 자리는 hug 라 여백이 없어 12px 에 붙으면 혼자 바깥으로 튀어나와 보입니다. 8px 을 더해 아이콘 글리프와 같은 20px 로 맞춥니다."
+      },
+      "⚠️": "Figma 의 Trailing 3개 변형은 전부 paddingRight: spacing/08(12px) 하나뿐이고 Button 이 들어간 샘플 자체가 없습니다(2026-09-15 재실측 확인). 이 저장소는 '값이 충돌하면 Figma 가 기준' 이므로, 근거가 Figma 가 아닌 이 항목을 재실측 후 12px 로 되돌리지 마세요.",
+      "implementation": ".bd-nav-trailing-item[data-type='button']:last-child { margin-right: var(--ref-spacing-06); }"
     }
   },
   "sizes": {
@@ -82,7 +97,7 @@
     "Number=2": "92x48",
     "Number=3": "132x48",
     "formula": "아이콘만일 때 40 x n + 우측 패딩 12",
-    "withButton": "버튼은 글자 폭 hug + 아이콘과 맞닿으면 8px — 예: 아이콘 1 + 버튼(\"완료\") = 91px"
+    "withButton": "버튼은 글자 폭 hug · 아이콘과 맞닿으면 8px · 맨 오른쪽이면 우측 여백 20px — 예: 아이콘 1 + 버튼(\"완료\") = 99px"
   },
   "growthInTop": "Top의 Trailing 인스턴스는 layoutGrow:1이라 남는 공간을 전부 차지한 뒤 justify-end로 오른쪽 끝에 붙습니다 — Big Title 132→140px, Seg_back 52→188px. 아이콘의 화면상 위치는 변하지 않습니다(2026-09-15 실측)."
 }

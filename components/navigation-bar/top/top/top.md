@@ -198,6 +198,7 @@ Type 전환(예: 스크롤에 따라 Big Title → NoTitle_back으로 축소되�
 **디자이너 확인(2026-09-15)**
 - Figma에 고정 폭으로 박힌 값(Back 라벨 48 · Big Title 230 · Home 로고칸 230)은 **그대로 고정 폭으로 구현**합니다(hug 아님).
 - **단 Trailing의 Button 자리는 예외로 hug입니다**(2026-09-15 정정) — 버튼이 들어가면 글자 폭만큼만 차지합니다([trailing-components.md](../trailing-components/trailing-components.md) 2장).
+- **맨 오른쪽이 버튼이면 우측 끝에서 20px**을 띄웁니다(⚠️ 사용자 지시, Figma 아님 — [trailing.md](../trailing/trailing.md) 2장).
 - Dark의 hover/pressed 오버레이는 **Figma 원본대로 `interaction/light-gray` 유지**합니다(어두운 배경에서 잘 안 보이는 것을 감수).
 - 폭은 **화면 폭을 따르고**, 넓어질 때 Trailing은 고정, 중앙이 없으면 Leading이·있으면 Smalltitle이 늘어납니다(2-1장).
 - 가운데 Segmented Control은 **기존 컴포넌트를 그대로 넣은 것이므로 인터랙션도 그대로 동작**해야 합니다.

@@ -56,3 +56,15 @@
   justify-content: flex-end;
   padding-right: var(--ref-spacing-08);    /* 12px */
 }
+
+/* ⚠️ **맨 오른쪽이 버튼이면 우측 끝에서 20px** 을 띄웁니다 (사용자 지시, 2026-09-15).
+   ⚠️ **Figma 는 아직 12px 입니다 — 재실측하고 되돌리지 마세요.**
+
+   아이콘은 Icon Button 안쪽 여백 8px 을 자기가 갖고 있어서, 묶음 패딩이 12px 이어도
+   **글리프는 우측 끝에서 20px** 에 놓입니다(12 + 8). 반면 버튼 자리는 hug 라 여백이 없어
+   글자가 12px 에 붙어 **혼자 바깥으로 튀어나와** 보입니다.
+   8px 을 더해 12 + 8 = **20px** 로, 아이콘 글리프와 같은 자리에 맞춥니다.
+   (아이콘↔버튼 사이를 16px 로 맞춘 것과 같은 규칙의 연장입니다) */
+.bd-nav-trailing-item[data-type='button']:last-child {
+  margin-right: var(--ref-spacing-06);     /* 8px → 우측 끝에서 12 + 8 = 20px */
+}
