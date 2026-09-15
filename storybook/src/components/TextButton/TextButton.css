@@ -57,15 +57,15 @@
 /* ---------------- Text Color · 베이스 + 합성용 오버레이 ---------------- */
 .bd-text-button[data-color='blue'] {
   --bd-tb-base: var(--sys-color-brand-primary-default);
-  --bd-tb-overlay: #0d2d57;                    /* color/interaction/blue */
+  --bd-tb-overlay: var(--ref-color-blue-900);  /* #0D2D57 — color/interaction/blue 의 베이스 색 */
 }
 .bd-text-button[data-color='gray'] {
   --bd-tb-base: var(--sys-color-neutral-600);
-  --bd-tb-overlay: #03091a;                    /* color/interaction/gray */
+  --bd-tb-overlay: var(--ref-color-gray-900);  /* #03091A — color/interaction/gray 의 베이스 색 */
 }
 .bd-text-button[data-color='red'] {
   --bd-tb-base: var(--sys-color-theme-destructed-default);
-  --bd-tb-overlay: #5e1314;                    /* color/interaction/red */
+  --bd-tb-overlay: var(--ref-color-red-900);   /* #5E1314 — color/interaction/red 의 베이스 색 */
 }
 
 /* Hover 15% · Pressed 30% — 실측 라벨 색과 정확히 일치하는 합성 비율 */

@@ -22,27 +22,22 @@
 .bd-page-control__dot {
   border-radius: var(--ref-radius-12);
   background-color: var(--bd-dot-color);
-  opacity: var(--bd-dot-opacity, 1);
 }
 
 /* On Light — 미선택은 검정 계열 20%, 선택은 neutral/700 100% */
 .bd-page-control[data-type='on-light'] .bd-page-control__dot {
-  --bd-dot-color: var(--ref-color-gray-900);
-  --bd-dot-opacity: 0.2;
+  --bd-dot-color: var(--ref-color-gray-900-20);
 }
 .bd-page-control[data-type='on-light'] .bd-page-control__dot[data-selected='true'] {
   --bd-dot-color: var(--sys-color-neutral-700);
-  --bd-dot-opacity: 1;
 }
 
 /* On Dark — 미선택은 흰색 계열 20%, 선택은 neutral/100 100% */
 .bd-page-control[data-type='on-dark'] .bd-page-control__dot {
-  --bd-dot-color: var(--sys-color-common-white-default);
-  --bd-dot-opacity: 0.2;
+  --bd-dot-color: var(--ref-color-gray-50-20);
 }
 .bd-page-control[data-type='on-dark'] .bd-page-control__dot[data-selected='true'] {
   --bd-dot-color: var(--sys-color-neutral-100);
-  --bd-dot-opacity: 1;
 }
 
 /* ---------------- 상태 전환 (motion) ----------------

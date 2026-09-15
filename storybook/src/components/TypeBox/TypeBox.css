@@ -3,7 +3,7 @@
 .bd-type-box {
   display: inline-flex;
   align-items: center;
-  gap: 1px;
+  gap: var(--ref-spacing-01);                 /* 1px */
   font-family: var(--font-family-base);
   white-space: nowrap;
 }

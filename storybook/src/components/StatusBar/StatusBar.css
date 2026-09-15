@@ -15,11 +15,11 @@
 /* Background=On 은 Mode 와 같은 색의 단색 배경을 채웁니다.
    Off 는 배경이 아예 없어 화면 콘텐츠 위에 겹쳐 씁니다. */
 .bd-status-bar[data-background='off'] { background: transparent; }
-.bd-status-bar[data-mode='light'][data-background='on'] { background: #ffffff; } /* common/white-emphasis */
-.bd-status-bar[data-mode='dark'][data-background='on']  { background: #000000; } /* common/black-emphasis */
+.bd-status-bar[data-mode='light'][data-background='on'] { background: var(--sys-color-common-white-emphasis); }
+.bd-status-bar[data-mode='dark'][data-background='on']  { background: var(--sys-color-common-black-emphasis); }
 
-.bd-status-bar[data-mode='light'] { color: #000000; }
-.bd-status-bar[data-mode='dark']  { color: #ffffff; }
+.bd-status-bar[data-mode='light'] { color: var(--sys-color-common-black-emphasis); }
+.bd-status-bar[data-mode='dark']  { color: var(--sys-color-common-white-emphasis); }
 
 /* ---------------- iOS — Time / 노치 스페이서 / 아이콘 3분할 ---------------- */
 .bd-status-bar[data-os='ios'] {
