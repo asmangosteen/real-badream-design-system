@@ -10,7 +10,7 @@ const SIZES: ButtonSize[] = ['s', 'm', 'l', 'xl', '2xl'];
 const TYPES: ButtonType[] = ['primary', 'secondary', 'tertiary', 'destructed'];
 
 const meta = {
-  title: 'Components/Button',
+  title: 'Components/Button/Button',
   component: Button,
   tags: ['autodocs'],
   parameters: {

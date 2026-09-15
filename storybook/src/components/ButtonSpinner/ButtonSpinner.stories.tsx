@@ -7,7 +7,7 @@ import figmaInButton from './figma-reference/figma-in-button-ring18.svg';
 import { Cell, Row, Section } from '../../shared/story-helpers';
 
 const meta = {
-  title: 'Components/Button Spinner',
+  title: 'Components/Button/Button Spinner',
   component: ButtonSpinner,
   tags: ['autodocs'],
   parameters: {

@@ -3,7 +3,7 @@ import { NavTrailing, NavTrailingItem } from './NavTrailing';
 import { Cell, Row, Section } from '../../shared/story-helpers';
 
 const meta = {
-  title: 'Components/Navigation Bar/Trailing',
+  title: 'Components/Navigation Bar/Top/Trailing',
   component: NavTrailing,
   tags: ['autodocs'],
   parameters: {

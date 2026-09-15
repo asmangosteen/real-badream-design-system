@@ -3,7 +3,7 @@ import { NavLeading } from './NavLeading';
 import { Cell, Row, Section } from '../../shared/story-helpers';
 
 const meta = {
-  title: 'Components/Navigation Bar/Leading',
+  title: 'Components/Navigation Bar/Top/Leading',
   component: NavLeading,
   tags: ['autodocs'],
   parameters: {

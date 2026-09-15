@@ -10,7 +10,7 @@ const SIZES: TextButtonSize[] = ['s', 'm', 'l', 'xl'];
 const COLORS: TextButtonColor[] = ['blue', 'gray', 'red'];
 
 const meta = {
-  title: 'Components/Text Button',
+  title: 'Components/Button/Text Button',
   component: TextButton,
   tags: ['autodocs'],
   parameters: {

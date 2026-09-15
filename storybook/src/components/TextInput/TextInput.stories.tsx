@@ -6,7 +6,7 @@ import { Section } from '../../shared/story-helpers';
 const OUTLINED_ICONS = namesOf('outlined');
 
 const meta = {
-  title: 'Components/Text Input',
+  title: 'Components/Text Input/Text Input',
   component: TextInput,
   tags: ['autodocs'],
   parameters: {

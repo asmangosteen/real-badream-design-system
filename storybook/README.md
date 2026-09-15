@@ -36,6 +36,39 @@ storybook/
             └── Name.stories.tsx  스토리 + 스펙 문서
 ```
 
+### 사이드바는 `components/` 폴더 구조를 그대로 따릅니다
+
+스토리 **제목**이 저장소 `components/` 의 폴더 경로와 1:1 로 대응합니다.
+소스 폴더명(`src/components/[Name]/`)은 상관없습니다 — 사이드바를 만드는 건 제목입니다.
+
+| `components/` | 스토리 제목 |
+|---|---|
+| `button/icon-button/` | `Components/Button/Icon Button` |
+| `text-input/text-input-group/` | `Components/Text Input/Text Input Group` |
+| `navigation-bar/top/leading/` | `Components/Navigation Bar/Top/Leading` |
+| `global/type-box/` | `Components/Global/Type Box` |
+
+순서는 `.storybook/preview.ts` 의 `storySort` 가 **제목 경로를 마디별로** 비교해 맞춥니다.
+기본 정렬은 제목이 아니라 **스토리 파일이 로딩되는 순서**라, 폴더명과 제목이 다르면
+엉뚱한 자리에 끼어듭니다(`Calendar/` 가 만드는 `Date Time Picker` 그룹이 Button Spinner 뒤에
+붙어 있었습니다). `method: 'alphabetical'` 은 **한 페이지 안의 스토리까지 이름순으로 섞기 때문에**
+쓰지 않습니다.
+
+> ⚠️ `storySort` 함수는 **인라인으로, 바깥 값을 참조하지 않게** 써야 합니다.
+> Storybook 이 preview 를 정적 파싱해 그 자리의 소스만 떼어다 평가하므로,
+> 밖에 선언한 함수를 가리키면 `/index.json` 이 500 으로 죽고 사이드바가 통째로 사라집니다.
+
+**폴더 하나에 페이지 하나가 아닌 곳**(패밀리 서브 아톰을 한 페이지에 모아 둔 자리):
+
+| 스토리 페이지 | 함께 다루는 `components/` 폴더 |
+|---|---|
+| `Date Time Picker/Week · Month` | `week`, `week-header`, `month` |
+| `Date Time Picker/Date Picker` | `date-picker`, `date-picker-group`, `calendar-header`, `year-month-wheel` |
+| `Navigation Bar/Top/Trailing` | `trailing`, `trailing-components` |
+
+반대로 `Components/Icon` 은 스펙 폴더가 없습니다 — 아이콘 **에셋 목록**이라 실측 대상이 아닙니다.
+
+
 ## 지켜야 할 규칙
 
 1. **토큰을 복사하지 않습니다.** `tokens/tokens.css` 와 `assets/` 를 원본 경로에서 직접 읽습니다.

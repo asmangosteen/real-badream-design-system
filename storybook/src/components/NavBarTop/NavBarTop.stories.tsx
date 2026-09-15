@@ -3,7 +3,7 @@ import { NavBarTop, NAVBAR_TOP_TYPES, NAVBAR_TOP_CONFIG } from './NavBarTop';
 import { Section } from '../../shared/story-helpers';
 
 const meta = {
-  title: 'Components/Navigation Bar/Top',
+  title: 'Components/Navigation Bar/Top/Top',
   component: NavBarTop,
   tags: ['autodocs'],
   parameters: {

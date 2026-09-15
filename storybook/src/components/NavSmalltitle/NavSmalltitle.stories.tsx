@@ -3,7 +3,7 @@ import { NavSmalltitle } from './NavSmalltitle';
 import { Cell, Section } from '../../shared/story-helpers';
 
 const meta = {
-  title: 'Components/Navigation Bar/Smalltitle',
+  title: 'Components/Navigation Bar/Top/Smalltitle',
   component: NavSmalltitle,
   tags: ['autodocs'],
   parameters: {

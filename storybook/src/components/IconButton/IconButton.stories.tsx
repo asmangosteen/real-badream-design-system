@@ -10,7 +10,7 @@ const SIZES: IconButtonSize[] = ['s', 'm', 'l'];
 const TYPES: IconButtonType[] = ['ghost', 'tertiary', 'primary', 'secondary', 'destructed', 'destructed-subtle'];
 
 const meta = {
-  title: 'Components/Icon Button',
+  title: 'Components/Button/Icon Button',
   component: IconButton,
   tags: ['autodocs'],
   parameters: {
