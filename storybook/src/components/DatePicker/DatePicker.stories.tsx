@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { DatePicker, DatePickerGroup, CalendarHeader, YearMonthWheel } from './DatePicker';
 import type { WeekCell } from '../Calendar/Calendar';
@@ -79,12 +80,52 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * **실제 달력으로 동작합니다.** 화살표로 달을 넘기고, 날짜를 누르면 선택됩니다.
+ * 오늘은 테두리(`current`), 고른 날짜는 파란 배경(`pinned`)으로 그려집니다.
+ * 제목 옆 화살표를 누르면 연·월 휠이 열립니다.
+ */
 export const Playground: Story = {
-  args: { state: 'default', showTimePicker: false, label: '2026년 9월', weeks: WEEKS },
-  render: (args) => (
-    <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
-      <DatePicker {...args} />
-    </div>
+  args: { showTimePicker: false },
+  render: function Render(args) {
+    const [picked, setPicked] = useState<Date | null>(null);
+    return (
+      <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <DatePicker {...args} value={picked} onChange={setPicked} />
+        </div>
+        <div style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.7, paddingTop: 4 }}>
+          고른 날짜:{' '}
+          <b style={{ color: '#202837' }}>
+            {picked ? `${picked.getFullYear()}. ${picked.getMonth() + 1}. ${picked.getDate()}` : '없음'}
+          </b>
+          <div style={{ marginTop: 6 }}>오늘: {new Date().toLocaleDateString('ko-KR')}</div>
+        </div>
+      </div>
+    );
+  },
+};
+
+/** 달마다 주(週) 수가 달라지는 것을 확인하는 진열입니다. 6주·5주·4주 케이스를 나란히 둡니다. */
+export const 실제달력: Story = {
+  name: '실제 달력 · 주 수 변화',
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <Section title="같은 컴포넌트, 다른 달">
+      <Row>
+        {([
+          [2026, 8, '2026년 8월 — 6주 (토요일 시작, 31일)'],
+          [2026, 9, '2026년 9월 — 5주'],
+          [2026, 2, '2026년 2월 — ⚠️ 4주지만 5주로 맞춤'],
+        ] as const).map(([y, m, label]) => (
+          <Cell key={label} label={label}>
+            <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+              <DatePicker year={y} month={m} today={new Date(2026, 8, 15)} />
+            </div>
+          </Cell>
+        ))}
+      </Row>
+    </Section>
   ),
 };
 
@@ -139,15 +180,29 @@ export const Header: Story = {
 };
 
 /** 거리 기반 크기·투명도 감쇠를 확인해 보세요. */
+/**
+ * **마우스 휠·트랙패드로 돌려보세요.** 네이티브 스크롤을 그대로 쓰기 때문에 관성과 감속이
+ * 살아 있고, 멈추면 항목에 달라붙습니다. 항목 클릭이나 ↑↓ 키로도 고를 수 있습니다.
+ *
+ * ⚠️ **연도와 월은 따로 돕니다** — Figma 진열(1997~2003년 / 10·11·12·1·2·3·4월)이 근거입니다.
+ */
 export const Wheel: Story = {
   name: 'Year and Month Wheel',
-  args: { weeks: WEEKS },
   parameters: { controls: { disable: true } },
-  render: () => (
-    <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
-      <YearMonthWheel />
-    </div>
-  ),
+  render: function Render() {
+    const [ym, setYm] = useState({ year: 2000, month: 1 });
+    return (
+      <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+        <div style={{ outline: '1px solid #EDEEF0', width: 'fit-content' }}>
+          <YearMonthWheel year={ym.year} month={ym.month} onChange={(year, month) => setYm({ year, month })} />
+        </div>
+        <div style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.7, paddingTop: 4 }}>
+          고른 값: <b style={{ color: '#202837' }}>{ym.year}년 {ym.month}월</b>
+          <div style={{ marginTop: 6 }}>연도·월을 각각 돌려보세요</div>
+        </div>
+      </div>
+    );
+  },
 };
 
 /** Date Picker 2개를 Divider로 구분해 배치합니다. */
