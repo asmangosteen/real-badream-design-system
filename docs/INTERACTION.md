@@ -266,9 +266,9 @@ Figma 도 같습니다 — Chip 셋의 반응은 `Default→Hover`, `Hover→Pre
 네 컴포넌트 모두 Figma 에도 해당 축의 전환이 연결돼 있지 않습니다. 원본이 이미 즉시 전환입니다.
 입력 피드백(hover/pressed 오버레이)은 전부 그대로 애니메이션됩니다.
 
-> ⚠️ **전환과 무관한 별개의 문제** — Date Cell `Pinned` 는 **최종 상태 대비가 4.1** 로
-> WCAG AA(4.5)에 못 미칩니다. `brand/primary-default` 배경 위 흰 글자라는 Figma 색 지정
-> 자체에서 나오는 값이라 전환을 고쳐도 남습니다. 디자이너 확인 필요.
+> 참고 — Date Cell `Pinned`(`brand/primary-default` 배경 + 흰 글자)의 대비는 4.1 입니다.
+> WCAG AA 기준(4.5)보다 낮지만 **의도된 값으로 확정했습니다**(2026-09-15 디자이너 확인).
+> 브랜드 색을 그대로 쓰기 위한 선택이며, 다시 지적 사항으로 올리지 않습니다.
 
 ### 7.4 `transition: all` 금지
 

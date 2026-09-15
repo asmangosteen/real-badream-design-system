@@ -73,9 +73,8 @@
    배경을 크로스페이드하면 중간에 반드시 글자와 같은 밝기를 지나가 숫자가 사라집니다
    (150ms 일 때 대비가 1.17 까지 떨어집니다). Chip Filled 와 같은 구조입니다.
 
-   ⚠️ 별개의 문제 — Pinned 의 **최종 상태 대비가 4.1** 로 WCAG AA(4.5) 미달입니다.
-      brand/primary-default 배경 위 흰 글자라는 Figma 색 지정 자체에서 오는 값이라
-      전환과 무관합니다. 디자이너 확인 필요. */
+   참고 — Pinned(brand/primary-default 배경 + 흰 글자)의 대비는 4.1 로 WCAG AA(4.5)보다
+   낮지만, 브랜드 색을 그대로 쓰기 위한 **의도된 값으로 확정**되었습니다(2026-09-15 확인). */
 .bd-date-cell {
   transition-property: --bd-date-overlay;
   transition-duration: var(--bd-motion-duration);
