@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { Label } from '../Label/Label';
-import { TypeBox, type TypeBoxState } from '../TypeBox/TypeBox';
-import { SupportingText, type SupportingTextTheme } from '../SupportingText/SupportingText';
+import { Label, type LabelProps } from '../Label/Label';
+import { TypeBox, type TypeBoxProps, type TypeBoxState } from '../TypeBox/TypeBox';
+import { SupportingText, type SupportingTextTheme, type SupportingTextProps } from '../SupportingText/SupportingText';
 import { Icon } from '../Icon/Icon';
 import './TextInput.css';
 
@@ -46,6 +46,22 @@ export interface TextInputProps {
   supportingText?: string;
   supportingTheme?: SupportingTextTheme;
   showSupportingText?: boolean;
+  /**
+   * 상단 [Label](../Label/Label.tsx) 에 **그대로 넘어가는 속성**입니다 (`htmlFor` 등).
+   * 아래 `label`·`essential` 은 자주 쓰는 것만 꺼내 둔 지름길이고, **이쪽이 우선**입니다.
+   */
+  labelProps?: Omit<LabelProps, 'children'>;
+  /**
+   * 하단 [Supporting Text](../SupportingText/SupportingText.tsx) 에 **그대로 넘어가는 속성 전부**입니다.
+   *
+   * 아토믹 디자인이라 조합 안에서도 자식 속성이 전부 살아 있어야 합니다 — 지름길 세 개
+   * (`supportingText`·`supportingTheme`·`showSupportingText`)로는 못 건드리는
+   * **아이콘(`showIcon`·`iconName`)·글자 수 카운터(`showCount`·`current`·`max`)** 까지 여기로 줍니다.
+   * 기본값 뒤에 펼치므로 **이쪽이 언제나 우선**입니다.
+   */
+  supportingProps?: SupportingTextProps;
+  /** 값 표시칸([Type Box](../TypeBox/TypeBox.tsx))에 그대로 넘어갑니다 — 캐럿 색 등 */
+  typeBoxProps?: Partial<TypeBoxProps>;
   showLeftIcon?: boolean;
   leftIconName?: string;
   /**
@@ -95,6 +111,9 @@ export function TextInput({
   supportingText = 'Supporting text',
   supportingTheme,
   showSupportingText = true,
+  labelProps,
+  supportingProps,
+  typeBoxProps,
   showLeftIcon = true,
   leftIconName = 'profile_filled',
   showRightIcon = true,
@@ -167,7 +186,7 @@ export function TextInput({
       data-auto={!forced}
     >
       {showLabel && (
-        <Label size={size} essential={essential}>
+        <Label size={size} essential={essential} {...labelProps}>
           {label}
         </Label>
       )}
@@ -190,6 +209,7 @@ export function TextInput({
                 value={value}
                 placeholder={placeholder}
                 caretColor={caretColor}
+                {...typeBoxProps}
               />
             ) : (
               <input
@@ -259,8 +279,15 @@ export function TextInput({
       </div>
 
       {showSupportingText && (
-        <SupportingText size={size} theme={supportingTheme ?? (isError ? 'destructed' : 'gray')} showIcon={false}>
-          {supportingText}
+        /* 기본값을 먼저 두고 `supportingProps` 를 **뒤에** 펼칩니다 — 바깥에서 준 값이 언제나 이깁니다.
+           `showIcon={false}` 는 Figma 실사용 모습이라 기본값일 뿐, 켜고 싶으면 켤 수 있어야 합니다. */
+        <SupportingText
+          size={size}
+          theme={supportingTheme ?? (isError ? 'destructed' : 'gray')}
+          showIcon={false}
+          {...supportingProps}
+        >
+          {supportingProps?.children ?? supportingText}
         </SupportingText>
       )}
     </div>

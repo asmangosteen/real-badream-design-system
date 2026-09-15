@@ -86,6 +86,13 @@ Text Input Group은 단순하게 보면 **Text Input 2~3개를 합쳐 놓은 것
 행이 `showLabel`/`showSupportingText`를 켜도 그 자리가 아니면 그리지 않습니다 —
 중간 행에 라벨이 끼면 그룹으로 읽히지 않기 때문입니다.
 
+이 원칙은 그룹 → Text Input 한 단계에서 끝나지 않습니다. **아토믹 디자인**이라
+Text Input 안의 [Supporting Text](../../global/supporting-text/supporting-text.md)·
+[Label](../../global/label/label.md) 속성도 그룹 안에서 전부 바꿀 수 있어야 합니다.
+Text Input 이 `supportingProps`·`labelProps` 로 통로를 열어 두었고, 행 타입이 `TextInputProps`
+그대로이므로 그룹에서도 그대로 닿습니다 — 예를 들어 행마다 Supporting Text 의 아이콘을 켜거나
+글자 수 카운터를 붙일 수 있습니다(스토리 `자식 속성 · 조합 안에서도 전부`).
+
 **2. 안내 문구(Supporting Text)는 맨 아래 행 아래에만 나옵니다.**
 그룹이 하나만 갖습니다. 행마다 붙이면 칸 사이가 벌어져 한 덩어리로 읽히지 않습니다.
 

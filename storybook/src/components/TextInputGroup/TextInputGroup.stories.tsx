@@ -37,6 +37,12 @@ const meta = {
           '**기본값 세 개만** Text Input 단독일 때와 다릅니다 — 버튼·좌우 아이콘이 **꺼진 채로 시작**하고',
           '값은 **빈 문자열**입니다(Figma의 6개 변형이 전부 그 모습). 행에서 켜면 그대로 켜집니다.',
           '',
+          '### 한 단계 더 — 자식의 자식까지',
+          '',
+          '**아토믹 디자인**이라 Text Input 안의 Supporting Text·Label 속성도 그룹 안에서 전부 바꿀 수 있습니다.',
+          '`supportingProps`·`labelProps` 로 통로가 열려 있어, 행마다 Supporting Text의 아이콘을 켜거나',
+          '글자 수 카운터를 붙이는 것까지 됩니다 — 스토리 `자식 속성 · 조합 안에서도 전부` 참고.',
+          '',
           '| Size | 필드 간 gap | 내부 Input Size | 전체 높이 (Field=2) |',
           '|---|---|---|---|',
           '| S | 4px | S | 84px |',
@@ -159,6 +165,59 @@ export const 행별설정: Story = {
         supportingText="조회 후 주행거리를 입력해주세요"
         showSupportingText
       />
+    </div>
+  ),
+};
+
+/**
+ * **아토믹 디자인** — 조합 안에서도 자식 컴포넌트의 속성이 전부 살아 있습니다.
+ *
+ * 아래는 **Text Input Group 안에서 Supporting Text 의 속성을 직접 바꾼** 예입니다.
+ * 아이콘·글리프·글자 수 카운터는 지름길(`supportingText`·`supportingTheme`)로는 못 건드리는
+ * 것들인데, `supportingProps` 로 그대로 넘어갑니다.
+ */
+export const 자식속성: Story = {
+  name: '자식 속성 · 조합 안에서도 전부',
+  args: { fields: [] },
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div style={{ width: 340 }}>
+      <div style={{ marginBottom: 28 }}>
+        <span className="bd-cell__label">기본 — 아이콘 없음</span>
+        <TextInputGroup
+          label="주소"
+          fields={[{ placeholder: '기본 주소' }, { placeholder: '상세 주소' }]}
+          supportingText="도로명 주소로 입력해주세요"
+          showSupportingText
+        />
+      </div>
+      <div style={{ marginBottom: 28 }}>
+        <span className="bd-cell__label">Supporting Text 의 아이콘을 켜고 글리프를 바꿈</span>
+        <TextInputGroup
+          label="주소"
+          fields={[
+            { placeholder: '기본 주소' },
+            {
+              placeholder: '상세 주소',
+              supportingProps: { showIcon: true, iconName: 'info_filled', theme: 'brand' },
+            },
+          ]}
+          supportingText="건물명·동호수까지 적어주세요"
+          showSupportingText
+        />
+      </div>
+      <div>
+        <span className="bd-cell__label">글자 수 카운터까지 — Supporting Text 의 Text Count 축</span>
+        <TextInputGroup
+          label="주소"
+          fields={[
+            { placeholder: '기본 주소' },
+            { placeholder: '상세 주소', supportingProps: { showCount: true, current: 12, max: 50 } },
+          ]}
+          supportingText="상세 주소"
+          showSupportingText
+        />
+      </div>
     </div>
   ),
 };
