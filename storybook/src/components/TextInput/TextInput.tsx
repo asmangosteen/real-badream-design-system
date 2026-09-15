@@ -48,10 +48,20 @@ export interface TextInputProps {
   showSupportingText?: boolean;
   showLeftIcon?: boolean;
   leftIconName?: string;
-  /** ⚠️ **State=Typing 에서는 이 슬롯이 강제로 `close_in_circle`(지우기) 로 대체됩니다** */
+  /**
+   * ⚠️ **State=Typing 에서는 이 슬롯이 강제로 `close_in_circle`(지우기) 로 대체됩니다.**
+   * ⚠️ **`showUnit` 을 켜면 단위에 자리를 내주고 표시되지 않습니다** — 우측은 한 자리입니다.
+   */
   showRightIcon?: boolean;
   rightIconName?: string;
-  /** 우측 아이콘 뒤 단위 텍스트. **variant 축이 아닌 별도 boolean 프로퍼티**입니다 */
+  /**
+   * 우측 **단위 텍스트**. **variant 축이 아닌 별도 boolean 프로퍼티**입니다.
+   *
+   * ⚠️ **우측 아이콘과 같이 쓰지 않습니다** — 우측은 한 자리이고, 켜면 **아이콘을 대신**합니다.
+   * (Figma 에 둘 다 그려진 노드가 있는 건 변형을 한눈에 보여주려는 진열용입니다.)
+   *
+   * ⚠️ **포커스가 들어간 동안(Selected·Typing)에는 표시되지 않습니다** — 입력 중에는 감춥니다.
+   */
   showUnit?: boolean;
   unit?: string;
   /** 값이 바뀔 때 (자동 모드에서 직접 입력하면 호출됩니다) */
@@ -114,13 +124,39 @@ export function TextInput({
   const effState: TextInputState = state ?? autoState;
 
   const iconSize = ICON_SIZE[size];
+  /** 포커스가 들어가 있는 상태 = 사용자가 지금 이 필드에 입력하고 있는 상태 */
+  const isFocused = effState === 'selected' || effState === 'typing';
   // Destructed 는 selected·typing 에서만 유효합니다
-  const isError = destructed && (effState === 'selected' || effState === 'typing');
-  const caretColor = isError ? 'var(--sys-color-theme-destructed-default)' : undefined;
-  // Typing 에서는 우측 아이콘이 강제로 지우기 버튼이 됩니다
-  const rightIcon = effState === 'typing' ? 'close_in_circle' : rightIconName;
-  const rightCategory = effState === 'typing' ? 'filled' : 'outlined';
+  const isError = destructed && isFocused;
+  /* 커서 색 — Figma 의 [Text Blinker](../TextBlinker) 와 같은 **브랜드 블루**, 에러일 때만 빨강.
+     · 진열용(state 고정)에서는 Type Box 안의 **Text Blinker 컴포넌트가 그대로** 그려집니다.
+     · 자동 모드에서는 진짜 `<input>` 이라 브라우저 커서가 뜨므로, `caret-color` 로 같은 색을 입힙니다
+       (색은 같고 굵기 1px·모서리 각짐만 다릅니다 — 브라우저가 커서 모양까지는 열어주지 않습니다). */
+  const caretColor = isError
+    ? 'var(--sys-color-theme-destructed-default)'
+    : 'var(--sys-color-brand-primary-default)';
   const disabled = effState === 'disabled';
+
+  /* ---------- 우측 슬롯은 "한 자리" 입니다 ----------
+     우측 아이콘과 단위를 **같이 두지 않습니다**(디자이너 확인, 2026-09-15).
+     Figma 의 Done 노드(`2119:10054`)에 `arrowhead_down` 과 "km" 이 함께 그려져 있는 것은
+     변형을 한눈에 보여주려는 **진열용**이고, 실제 사용에서는 둘 중 하나만 씁니다.
+
+     그 한 자리에 무엇이 놓이는지 — 위에서부터 우선합니다:
+     1. **입력 중(Typing)** → `close_in_circle` **지우기 버튼**(Figma 고정, 자유 슬롯 아님)
+     2. **`showUnit` 이 켜져 있으면** → 단위 텍스트가 우측 아이콘을 **대신**합니다.
+        단, **포커스가 들어간 동안(Selected·Typing)에는 감춥니다** — 입력에 방해되지 않도록.
+     3. 그 외 → 우측 아이콘 */
+  const rightSlot: 'clear' | 'unit' | 'icon' | 'none' =
+    effState === 'typing' && showRightIcon
+      ? 'clear'
+      : showUnit
+        ? isFocused
+          ? 'none'
+          : 'unit'
+        : showRightIcon
+          ? 'icon'
+          : 'none';
 
   return (
     <div
@@ -138,7 +174,14 @@ export function TextInput({
 
       <div className="bd-text-input__row">
         <div className="bd-text-input__box">
-          {showLeftIcon && <Icon name={leftIconName} category="filled" size={iconSize} />}
+          {showLeftIcon && (
+            <Icon
+              name={leftIconName}
+              category="filled"
+              size={iconSize}
+              className="bd-text-input__icon bd-text-input__icon--left"
+            />
+          )}
           <span className="bd-text-input__value">
             {forced ? (
               <TypeBox
@@ -155,7 +198,9 @@ export function TextInput({
                 value={typed}
                 placeholder={placeholder}
                 disabled={disabled}
-                style={caretColor ? { caretColor } : undefined}
+                /* 브라우저 맞춤법 검사 밑줄(빨간 점선)을 끕니다 — 디자인 요소가 아닙니다 */
+                spellCheck={false}
+                style={{ caretColor }}
                 onChange={(e) => {
                   setTyped(e.target.value);
                   onChange?.(e.target.value);
@@ -165,9 +210,17 @@ export function TextInput({
               />
             )}
           </span>
-          {showRightIcon &&
-            (!forced && effState === 'typing' ? (
-              /* Figma 스펙대로 Typing 에서는 이 자리가 '지우기' 입니다 — 실제로 지워집니다 */
+          {rightSlot === 'clear' &&
+            (forced ? (
+              /* 스펙 진열용 — 누를 수 없는 표시 전용 아이콘 */
+              <Icon
+                name="close_in_circle"
+                category="filled"
+                size={iconSize}
+                className="bd-text-input__icon bd-text-input__icon--right"
+              />
+            ) : (
+              /* 자동 모드에서는 실제로 지워집니다 */
               <button
                 type="button"
                 className="bd-text-input__clear"
@@ -179,12 +232,23 @@ export function TextInput({
                   inputRef.current?.focus();
                 }}
               >
-                <Icon name={rightIcon} category={rightCategory} size={iconSize} />
+                <Icon
+                  name="close_in_circle"
+                  category="filled"
+                  size={iconSize}
+                  className="bd-text-input__icon bd-text-input__icon--right"
+                />
               </button>
-            ) : (
-              <Icon name={rightIcon} category={rightCategory} size={iconSize} />
             ))}
-          {showUnit && <span className="bd-text-input__unit">{unit}</span>}
+          {rightSlot === 'icon' && (
+            <Icon
+              name={rightIconName}
+              category="outlined"
+              size={iconSize}
+              className="bd-text-input__icon bd-text-input__icon--right"
+            />
+          )}
+          {rightSlot === 'unit' && <span className="bd-text-input__unit">{unit}</span>}
         </div>
 
         {showButton && (

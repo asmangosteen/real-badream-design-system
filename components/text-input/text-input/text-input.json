@@ -220,9 +220,10 @@
   "interactionsNote": "모션 데이터 없음. get_motion_context를 최상위 프레임(2114:8709, recursive=true)에 호출했으나 {\"nodes\":[]} 반환. State 전환, 캐럿 깜빡임 모두 Figma 파일에 모션 값이 정의되어 있지 않음.",
   "containerWidth": {
     "figmaSampleValue": "w-[280px]",
-    "actualBehavior": "Dropdown과 동일한 Figma 진열 프레임 컨벤션으로 보이며 화면 폭에 따른 가변(fluid) 너비일 가능성이 높음",
-    "confirmed": false,
-    "note": "Text Input 자체로는 재검증하지 않음 — 확인 필요"
+    "actualBehavior": "고정이 아니라 화면(부모) 폭에 맞춰 늘어나는 가변(fluid) 너비",
+    "confirmed": true,
+    "confirmedBy": "디자이너 확인 (2026-09-15)",
+    "note": "Figma의 280px는 진열 프레임 폭일 뿐입니다. Dropdown과 동일한 결론"
   },
   "accessibility": {
     "textBlinkerAriaHidden": "text-blinker.md 4장과 동일 — aria-hidden, 네이티브 캐럿과의 중복 방지 확인 필요",
@@ -240,11 +241,54 @@
     "Show Unit이 8개 공식 축 밖의 별도 요소인지 여부 — 사용자가 Figma 프로퍼티 패널에서 정식 boolean 컴포넌트 프로퍼티임을 확인. 8개 variant 축과 별개의 9번째 축(source.additionalNonVariantProperty 참고)"
   ],
   "openQuestions": [
-    "컴포넌트 너비가 실제로 fluid인지(Dropdown처럼 재검증 안 함)",
     "캐럿 깜빡임 애니메이션 duration/easing/반복 주기",
     "Show Unit=True를 Done 외 다른 State·Size와 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계) — 15개 표본에는 Done 1건만 있어 미확정",
     "Typing 상태에서 Right Icon=False일 때 지우기 버튼 표시 여부",
     "aria-hidden, aria-label, disabled, <label for> 등 접근성 마크업 연결 규정",
     "Destructed 상태에서 Supporting Text Theme 전환 필요 여부"
-  ]
+  ],
+  "iconColorByState": {
+    "measuredAt": "2026-09-15",
+    "method": "아이콘이 구워진 SVG 애셋이라 변수로 노출되지 않아, Figma 애셋 서버에서 8개 노드의 SVG를 직접 받아 fill 값을 대조",
+    "rule": "포커스 상태(Selected·Typing)만 neutral/800으로 진해지고, 그 외에는 neutral/500. Disabled만 neutral/400. Typing의 우측 close_in_circle(지우기)만 예외로 neutral/500 유지",
+    "notFollowingTextColor": "Done은 값이 neutral/800으로 진해지는데도 아이콘은 neutral/500 그대로 — 아이콘 색은 글자색을 따라가지 않음",
+    "destructedEffect": "없음 — Destructed=True는 테두리·버튼·캐럿만 빨강으로 바꾸고 아이콘 색은 바꾸지 않음",
+    "states": {
+      "default":            { "left": "neutral/500", "leftHex": "#8C9199", "right": "neutral/500", "rightHex": "#8C9199", "nodes": ["2119:17344", "2119:17346"] },
+      "hover":              { "left": "neutral/500", "leftHex": "#8C9199", "right": "neutral/500", "rightHex": "#8C9199", "nodes": ["2119:17546", "2119:17548"] },
+      "disabled":           { "left": "neutral/400", "leftHex": "#C2C4C8", "right": "neutral/400", "rightHex": "#C2C4C8", "nodes": ["2119:19593", "2119:19595"] },
+      "done":               { "left": "neutral/500", "leftHex": "#8C9199", "right": "neutral/500", "rightHex": "#8C9199", "nodes": ["2119:19375", "2119:19377"] },
+      "selected":           { "left": "neutral/800", "leftHex": "#202837", "right": "neutral/800", "rightHex": "#202837", "nodes": ["2119:17751", "2119:17753"] },
+      "selectedDestructed": { "left": "neutral/800", "leftHex": "#202837", "right": "neutral/800", "rightHex": "#202837", "nodes": ["2119:18805", "2119:18807"] },
+      "typing":             { "left": "neutral/800", "leftHex": "#202837", "right": "neutral/500", "rightHex": "#8C9199", "rightIcon": "close_in_circle", "nodes": ["2119:18004", "2119:18006"] },
+      "typingDestructed":   { "left": "neutral/800", "leftHex": "#202837", "right": "neutral/500", "rightHex": "#8C9199", "rightIcon": "close_in_circle", "nodes": ["2119:18822", "2119:18824"] }
+    }
+  },
+  "unitTypography": {
+    "measuredAt": "2026-09-15",
+    "node": "2119:19378",
+    "color": { "figmaVariable": "neutral/800", "value": "#202837", "token": "sys-color-neutral-800" },
+    "fontSize": { "figmaVariable": "size/Body2", "value": "14px" },
+    "lineHeight": { "figmaVariable": "lineHeight/Body2", "value": "22px" },
+    "fontWeight": { "figmaVariable": "weight/400", "value": "Regular" },
+    "letterSpacing": { "figmaVariable": "letterspacing/body", "value": "-0.04px" },
+    "rule": "단위 텍스트는 같은 자리의 값 글자(Type Box)와 완전히 같은 스타일입니다 — 회색 보조 텍스트가 아닙니다",
+    "otherSizes": "Figma 표본이 Size=M·State=Done 하나뿐이라, S는 Caption1 12px Medium, L은 Body1으로 '값 글자와 같은 타이포' 규칙을 적용 (M에서 정확히 일치하는 것이 근거)",
+    "disabledNote": "⚠️ Disabled에 단위가 켜진 표본이 Figma에 없음. 단위만 진하게 남으면 어색해 값 글자와 함께 neutral/400으로 흐려지게 함 (구현 결정)"
+  },
+  "rightSlot": {
+    "confirmed": true,
+    "confirmedBy": "디자이너 확인 (2026-09-15)",
+    "rule": "Input 우측은 한 자리입니다. 우측 아이콘과 단위(Show Unit)는 같이 쓰지 않고 둘 중 하나만 놓입니다",
+    "figmaCaveat": "Done 노드(2119:10054)에 arrowhead_down과 'km'이 함께 그려져 있으나, 이는 변형을 한눈에 보여주려는 진열용이며 실제 사용 규칙이 아님",
+    "priority": [
+      { "order": 1, "when": "state == typing", "renders": "close_in_circle (지우기 버튼)", "note": "Figma 고정 — 자유 교체 슬롯이 아님" },
+      { "order": 2, "when": "showUnit && !focused", "renders": "단위 텍스트 (예: km)", "note": "우측 아이콘을 대신함" },
+      { "order": 2, "when": "showUnit && focused", "renders": "없음", "note": "포커스(Selected·Typing) 동안에는 단위를 감춤 — 입력 방해 방지" },
+      { "order": 3, "when": "그 외", "renders": "우측 아이콘 (arrowhead_down)" }
+    ],
+    "focusedStates": ["selected", "typing"],
+    "destructedImplication": "Destructed는 Selected·Typing에서만 노출되므로, 에러 상태에서는 단위가 표시되지 않음",
+    "evidence": "Typing 실측 노드 2개(2119:10121, 2119:18818) 모두 단위 레이어가 없고 showUnit prop 자체가 코드 출력에 나타나지 않음"
+  }
 }
