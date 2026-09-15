@@ -26,10 +26,24 @@ Date Picker Group은 **Type(Horizontal/Vertical) 1축, 2-변형 컴포넌트**�
 - Date Picker 인스턴스 2개(가로 나열) + 그 사이에 **90도 회전된 세로 [Divider](../../divider/divider.md)**(`neutral/200`, 1px 두께, `container-type: size` + `rotate-90` 기법으로 세로선 구현).
 - **각 Date Picker 인스턴스가 360px로 확장되어 있습니다**(단독 [Date Picker](../date-picker/date-picker.md) 문서의 기본 352px보다 8px 넓음) — 360+1(Divider)+360=721px을 정확히 채우기 위한 인스턴스 단위 너비 오버라이드로 보입니다.
 - **좌측 Date Picker**(`2224:3350`) 헤더: 제목 텍스트("2000년 1월", SubTitle/18 SB) + `arrowhead_down` 20px 아이콘만 있고 **이전/다음 달 Arrow Box가 없습니다.**
-- **우측 Date Picker**(`2224:3449`) 헤더: 동일 제목 텍스트지만 **드롭다운 화살표(`arrowhead_down`) 없이 Arrow Box(이전/다음 달 `chevron_left`/`chevron_right`)만 있습니다.**
-- 즉 좌우 두 패널이 [Calendar Header](../calendar-header/calendar-header.md)의 서로 다른 두 변형(좌="With=Nothing"+커스텀 드롭다운 토글, 우="With=Arrows")을 나눠 쓰는 비대칭 구조입니다.
+- **우측 Date Picker**(`2224:3449`) 헤더: 동일 제목 텍스트 + **드롭다운 화살표(`arrowhead_down`)** + Arrow Box(이전/다음 달 `chevron_left`/`chevron_right`). 즉 **양쪽 다 드롭다운이 있고**, 화살표만 우측에 더 붙습니다.
+- 즉 좌우 두 패널은 `Show Dropdown=true` 로 같고, `With` 만 좌=`Nothing` · 우=`Arrows` 로 다릅니다.
 
-> **사용자 확인 완료**: 두 패널은 **동기화되지 않은 독립적인 캘린더**입니다(한쪽 조작이 반대쪽에 영향을 주지 않음). 좌우가 서로 다른 헤더 컨트롤(드롭다운만/화살표만)을 나눠 쓰는 것은 진열 샘플의 배치일 뿐, "동기화된 range 캘린더"를 의도한 구조는 아닙니다. 실제 사용 시에는 각 Date Picker 인스턴스가 필요에 따라 [Calendar Header](../calendar-header/calendar-header.md)의 6개 변형 중 원하는 것을 독립적으로 선택해 쓰는 것으로 이해하는 것이 맞습니다 — 이 진열 노드의 좌우 조합 자체를 고정 규칙으로 보지 말 것.
+> **⚠️ 2026-09-15 정정.** 이전 판은 "우측은 드롭다운 화살표 없이 Arrow Box 만 있습니다" 였습니다.
+> Plugin API 로 확인하니 우측 헤더도 `Show Dropdown = true` 이고 `arrowhead_down` 노드가 `visible: true` 입니다
+> (좌측 `Year and Month` 320×24 · 우측 240×24 + `Arrow Box` 80×40).
+> 우측에도 드롭다운이 있어야 **두 패널이 각자의 휠을 열 수** 있습니다.
+
+> **⚠️ 2026-09-15 정정 (사용자 지시).** 이전 판은 "두 패널은 동기화되지 않은 독립적인 캘린더입니다(사용자 확인)" 였는데 **반대입니다.**
+>
+> 두 패널은 **연속된 두 달**을 함께 보여 줍니다 — 그룹이 기준 달 하나를 들고, 첫 패널이 기준 달을 · 다음 패널이 그 다음 달을 그립니다.
+> 어느 쪽에서 달을 옮기든(화살표든 휠이든) **둘이 같이** 움직이고 제목도 함께 바뀝니다.
+> 따라서 우측에만 Arrow Box 가 있는 것은 진열 배치가 아니라 **고정 규칙**입니다 — 화살표 한 벌이 두 달을 함께 옮기므로 양쪽에 달 이유가 없습니다.
+>
+> 패널마다 따로인 것은 두 가지뿐입니다.
+> - **연·월 휠**: 각 헤더의 제목을 눌러 그 패널의 휠을 엽니다(양쪽을 동시에 열어 둘 수도 있습니다).
+>   어느 쪽 휠에서 고르든 **그 패널이 고른 달을 보여주도록** 기준 달이 옮겨지므로 두 달의 간격은 유지됩니다.
+> - **Time Picker**: 켜면 패널마다 자기 시간 값을 가집니다.
 - Calendar 콘텐츠 영역 패딩: 좌우 모두 `p=spacing/10`(16px, Date Picker 단독 문서의 `spacing/08`=12px보다 큼) — Group 안에서는 패딩이 확장되어 쓰입니다.
 - 두 Date Picker 모두 Month는 **Week Number=5**(5주 그리드) 변형을 사용합니다.
 
@@ -39,6 +53,7 @@ Date Picker Group은 **Type(Horizontal/Vertical) 1축, 2-변형 컴포넌트**�
 - 두 Date Picker 모두 **352px 기본 너비 그대로**(Horizontal과 달리 확장 없음).
 - **헤더가 Arrow Box·드롭다운 토글 둘 다 없이 제목 텍스트만** 표시됩니다("1월"/"2월" — **연도 없이 월(月)만** 표시, Horizontal의 "2000년 1월"과 달리 축약된 텍스트). [Calendar Header](../calendar-header/calendar-header.md)의 "Title=Left, With=Nothing" 변형에 대응하나, 텍스트 콘텐츠 자체가 "연+월"이 아닌 "월"만이라는 점은 Calendar Header 문서에 없는 이 컴포넌트 특유의 콘텐츠 오버라이드입니다.
 - Calendar 콘텐츠 영역 패딩: `px=spacing/08`(12px), `py=spacing/06`(8px) — 좌우/상하 패딩이 다른 비대칭 패딩이며, Horizontal(균등 16px)·Date Picker 단독(균등 12px) 어느 쪽과도 다릅니다.
+- **부수 화면이 전부 빠집니다**(사용자 지시, 2026-09-15). 연·월 휠도 Time Picker 도 쓰지 않고, 이전/다음 화살표도 없습니다 — 특정 상황에서만 쓰는 **고정 표시**라서 달력 격자만 그대로 씁니다. 두 패널이 연속된 두 달이라는 점은 Horizontal 과 같습니다.
 - 두 Date Picker 모두 Month는 Week Number=5(5주 그리드) 변형을 사용합니다.
 
 ## 4. Type별 비교 요약
@@ -60,7 +75,7 @@ Date Picker Group은 **Type(Horizontal/Vertical) 1축, 2-변형 컴포넌트**�
 
 ## 6. 접근성
 
-- 두 Date Picker 패널이 서로 독립적이므로(사용자 확인), 각 패널을 독립된 `role="group"`으로 마크업하는 정도면 충분해 보이나 정확한 `aria-label` 규정은 Figma 파일에 없음 — 확인 필요.
+- 두 패널이 **하나의 달력**으로 묶여 동작하므로(2장), 그룹 전체를 하나의 `role="group"` 으로 묶고 각 패널에 달 이름을 `aria-label` 로 다는 편이 맞아 보이나 정확한 규정은 Figma 파일에 없음 — 확인 필요.
 - 개별 [Date](../date/date.md) 셀의 접근성 이슈(6장)가 이 컴포넌트에도 동일하게 적용됩니다.
 
 ## 7. 토큰 매칭 요약
@@ -72,13 +87,14 @@ Date Picker Group은 **Type(Horizontal/Vertical) 1축, 2-변형 컴포넌트**�
 
 **기존 토큰에 없음**
 - Date Picker 인스턴스를 360px로 확장하는 규칙(Horizontal 전용) 자체는 별도 토큰이 아니라 이 조합 컴포넌트만의 레이아웃 오버라이드
-- 좌우/상하 비대칭 헤더 구성(Horizontal의 드롭다운 vs Arrow Box 분리) 규칙을 명시하는 토큰/문서 없음
+- Horizontal 우측에만 Arrow Box 가 붙는 규칙을 명시하는 토큰/문서 없음(2장에 근거를 적어 둠)
 
-**확인 완료(사용자 확인)**
-- 두 Date Picker 패널은 동기화되지 않은 독립적인 캘린더입니다(2장). Horizontal의 좌우 비대칭 헤더 구성은 진열 배치일 뿐 고정 규칙이 아닙니다.
+**확인 완료(사용자 지시, 2026-09-15)**
+- 두 패널은 **연속된 두 달**을 함께 보여 주며 기준 달 하나를 나눠 씁니다(2장). 우측에만 화살표가 있는 것은 고정 규칙입니다.
+- 연·월 휠과 Time Picker 만 패널마다 따로입니다.
+- Vertical 은 연도 없이 달만 쓰고 휠·Time Picker·화살표가 전부 없습니다(3장).
 
 **확인 필요**
-- Time Picker 통합 여부(Date Picker Group 자체에는 Time Picker 섹션이 관찰되지 않음 — Time Picker=Off 조합만 샘플링됨)
 - 접근성 마크업(`role="group"`, `aria-label`) 규정(6장)
 
 ## 8. 샘플링에 사용한 노드 (부록, 2개 전수)
