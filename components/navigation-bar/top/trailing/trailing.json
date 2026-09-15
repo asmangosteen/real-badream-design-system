@@ -28,6 +28,16 @@
       "figmaVariable": "spacing/08",
       "value": "12px",
       "tokenMatch": "정확히 일치"
+    },
+    "paddingRightWhenLastIsButton": {
+      "figmaVariable": "spacing/11",
+      "value": "20px",
+      "token": "ref-spacing-11",
+      "confirmedBy": "디자이너 지시 (2026-09-15)",
+      "aheadOfFigma": true,
+      "rule": "묶음의 맨 끝 항목이 Button 이면 우측 패딩이 12px 이 아니라 20px 입니다. Figma 는 12px 고정이라 이 항목은 구현이 Figma 보다 앞서 있습니다 — 재실측 시 12px 로 되돌리지 마세요",
+      "why": "아이콘은 Icon Button L(40x40) 안에 24px 글리프가 놓여 좌우 8px 이 남으므로 12+8 = 화면 끝에서 이미 20px 안쪽입니다. Text Button 은 padding:0 이라 글자가 상자 끝까지 차서 12px 밖에 남지 않아 아이콘보다 8px 튀어나와 보입니다. 맨 끝이 버튼일 때만 20px 로 올려 둘을 같은 자리에 세웁니다",
+      "ownedBy": "묶음(.bd-nav-trailing) 전체의 padding-right — 버튼 항목의 margin 으로 붙이면 아이콘과 맞닿는 쪽의 8px 규칙과 겹쳐 계산이 꼬입니다"
     }
   },
   "numberIsMaximumNote": "사용자 확인 완료 — Number(1/2/3)는 정확한 개수가 아니라 최대 허용치. Top에서 각 Type마다 배정된 최댓값 이하로 0개부터 자유롭게 조절 가능하며, Trailing Components의 Icon·Button 타입을 섞어 쓸 수 있음(Smalltitle 비침범 조건, 폭 계산 규칙은 확인 필요)",
@@ -73,8 +83,9 @@
     },
     "figmaLeftover": "Figma 의 Number=1 변형만 itemSpacing:10 이 남아 있으나 자식이 하나뿐이라 효과가 없는 기본값 잔재입니다.",
     "measured": {
-      "icon+button": "40 + 8 + 31(\"완료\") + 12 = 91px",
-      "icon+icon+button": "131px"
+      "icon+button": "40 + 8 + 31(\"완료\") + 20 = 99px",
+      "icon+icon+button": "139px",
+      "note": "우측 패딩은 맨 끝이 버튼이라 20px 입니다(layout.paddingRightWhenLastIsButton). 아이콘으로 끝나면 12px 입니다"
     }
   },
   "sizes": {
@@ -82,7 +93,7 @@
     "Number=2": "92x48",
     "Number=3": "132x48",
     "formula": "아이콘만일 때 40 x n + 우측 패딩 12",
-    "withButton": "버튼은 글자 폭 hug + 아이콘과 맞닿으면 8px — 예: 아이콘 1 + 버튼(\"완료\") = 91px"
+    "withButton": "버튼은 글자 폭 hug + 아이콘과 맞닿으면 8px, 맨 끝이 버튼이면 우측 패딩 20 — 예: 아이콘 1 + 버튼(\"완료\") = 40 + 8 + 31 + 20 = 99px"
   },
   "growthInTop": "Top의 Trailing 인스턴스는 layoutGrow:1이라 남는 공간을 전부 차지한 뒤 justify-end로 오른쪽 끝에 붙습니다 — Big Title 132→140px, Seg_back 52→188px. 아이콘의 화면상 위치는 변하지 않습니다(2026-09-15 실측)."
 }

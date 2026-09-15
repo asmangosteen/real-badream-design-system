@@ -89,13 +89,23 @@ export interface NavTrailingProps {
  * Navigation Bar 우측의 **액션 아이템 묶음**입니다.
  *
  * 항목 사이 gap 이 0이라, 각 항목의 세로 패딩(4px)이 서로 맞닿는 방식으로 배치됩니다.
- * 묶음 자체는 우측 패딩 12px 을 갖고 오른쪽 끝에 정렬됩니다.
+ * 묶음 자체는 우측 패딩 12px 을 갖고 오른쪽 끝에 정렬됩니다 —
+ * **맨 끝이 Button 이면 20px** 입니다(디자이너 지시, 2026-09-15). 아이콘은 Icon Button 안쪽
+ * 여백 8px 덕에 이미 끝에서 20px 안쪽이라, 버튼도 같은 20px 에 서게 맞춘 것입니다.
  *
  * 스펙 원본: `components/navigation-bar/top/trailing/trailing.md`
  */
 export function NavTrailing({ items = [{ type: 'icon' }], mode = 'light', className }: NavTrailingProps) {
+  /* 맨 끝 항목이 Button 이면 묶음의 우측 패딩이 12 → 20px 로 바뀝니다(NavTrailing.css 참고).
+     항목의 기본 Type 이 `icon` 이라 여기서도 같은 기본값으로 읽습니다. */
+  const lastType = items.length > 0 ? (items[items.length - 1].type ?? 'icon') : undefined;
+
   return (
-    <div className={['bd-nav-trailing', className].filter(Boolean).join(' ')} data-count={items.length}>
+    <div
+      className={['bd-nav-trailing', className].filter(Boolean).join(' ')}
+      data-count={items.length}
+      data-last={lastType}
+    >
       {items.map((item, i) => (
         <NavTrailingItem key={i} mode={mode} {...item} />
       ))}

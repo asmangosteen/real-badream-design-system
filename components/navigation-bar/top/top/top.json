@@ -374,7 +374,7 @@
   "widthBehavior": {
     "confirmed": "2026-09-15 디자이너 확인",
     "rule": "모바일 전용. 390px 은 Figma 기준 폭이고 실제로는 화면 폭을 따릅니다. 390 을 넘어갈 때 Trailing 은 항상 고정이고, 중앙이 없는 Type 은 Leading 이, 중앙이 있는 Type 은 Smalltitle(과 그 안의 Segmented Control)이 남는 폭을 가져갑니다.",
-    "trailing": "고정 — 내용만큼만(아이콘 40×n · 버튼은 글자 폭 hug · 우측 12). 아이콘은 늘 오른쪽 끝에서 12px 안쪽.",
+    "trailing": "고정 — 내용만큼만(아이콘 40×n · 버튼은 글자 폭 hug · 우측 12, 맨 끝이 버튼이면 20). 화면 끝에서 보이는 것까지는 아이콘·버튼 모두 20px — trailing.json 의 layout.paddingRightWhenLastIsButton 참고.",
     "leading": "중앙이 없는 Type(Big Title·Home·NoTitle_back·NoTitle_close)에서 fill. Big Title 텍스트가 같이 늘어납니다.",
     "smalltitle": "중앙이 있는 Type 에서 fill. 좌우 여백 100px 을 똑같이 유지 → 어떤 폭에서도 화면 정중앙.",
     "unchanged": "Back 라벨(48px)·Home 로고칸(230px)은 내용이 왼쪽 정렬이라 고정 폭 그대로.",

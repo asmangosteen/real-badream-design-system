@@ -58,7 +58,7 @@ Top은 화면 최상단에 오는 **완성형 상단 내비게이션 바**입니
 
 | 영역 | 동작 |
 |---|---|
-| **Trailing** | **항상 고정.** 내용만큼만 차지하고(40×n + 우측 12) 아이콘은 늘 오른쪽 끝에서 12px 안쪽에 붙습니다 |
+| **Trailing** | **항상 고정.** 내용만큼만 차지하고(40×n + 우측 12 — **맨 끝이 버튼이면 20**) 오른쪽 끝에 붙습니다. 화면 끝에서 보이는 것까지의 거리는 아이콘·버튼 모두 **20px**입니다([trailing.md](../trailing/trailing.md) 2장) |
 | **Leading** | **중앙이 없는 Type**(Big Title·Home·NoTitle_back·NoTitle_close)에서 남는 폭을 가져갑니다 — Big Title 제목이 길어질 여유가 생깁니다 |
 | **Smalltitle · Segmented Control** | **중앙이 있는 Type**(Smalltitle_back/close·Seg_back/close)에서 늘어납니다. 좌우 여백 100px을 똑같이 유지하므로 **어떤 폭에서도 화면 정중앙**입니다 |
 

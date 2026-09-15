@@ -38,7 +38,7 @@
 /* ⚠️ Figma 원본은 Trailing 이 `layoutGrow: 1` 로 남는 공간을 먹는 구조지만, **반대로 뒤집었습니다.**
    Figma 프레임이 390 고정이라 그 안에서는 어느 쪽이 늘어나든 결과가 같지만,
    390 을 넘어가면 달라집니다 — 늘어나야 하는 건 Trailing 이 아니라 Leading/Smalltitle 입니다.
-   Trailing 은 내용만큼만 차지하고(40×n + 우측 12), Leading 이 남는 폭을 전부 가져가
+   Trailing 은 내용만큼만 차지하고(40×n + 우측 12 — 맨 끝이 버튼이면 20), Leading 이 남는 폭을 전부 가져가
    Trailing 을 오른쪽 끝으로 밀어냅니다. **390 에서는 아이콘 위치가 예전과 픽셀 단위로 동일합니다.**
    `min-width: 0` 은 390 보다 좁은 화면에서 Leading 이 gap 안쪽으로 비어져 나갈 수 있게 해 둔 것입니다. */
 .bd-navbar-top__leading { flex: 1 1 auto; min-width: 0; }
