@@ -15,7 +15,7 @@ Text Input은 **Size(S/M/L) × State(Default/Hover/Disabled/Done/Selected/Typing
   3. **State 축**(Size=M, 나머지 전부 True): Hover(`2119:10082`) · Disabled(`2119:10069`) · Done(`2119:10054`) · Selected/Destructed=False(`2119:10095`) · Selected/Destructed=True(`2119:18801`) · Typing/Destructed=False(`2119:10121`) · Typing/Destructed=True(`2119:18818`)
   4. **토글 축 5종**(Size=M, State=Default, 한 축씩 False): Show Button=False(`2114:8648`) · Show Label=False(`2119:10903`) · Supporting Text=False(`2119:11203`) · Left Icon=False(`2119:10149`) · Right Icon=False(`2119:10048`) · 5개 전부 False(`2115:9089`)
 - `get_variable_defs`는 대표 노드 4개(S/M/L 각 1회 + Disabled 1회)에서 호출했습니다.
-- `get_motion_context`는 최상위 프레임(`2114:8709`, recursive=true)에 1회 호출했으며 모션 데이터 없음을 확인했습니다.
+- `get_motion_context`는 최상위 프레임(`2114:8709`, recursive=true)에 1회 호출했고 빈 결과였습니다. **다만 이건 모션이 없다는 뜻이 아니었습니다** — 6장 참고(2026-09-16 정정).
 - 나머지 753개(미실측)는 위 축들이 서로 독립적으로 조합된다는 규칙(Dropdown·Supporting Text 문서와 동일한 방법론)에 따라 값이 예측 가능하지만, 개별 실측하지 않은 조합에 새 토큰명을 만들지는 않았습니다.
 - 절대 추측으로 토큰명을 만들지 않았습니다. 저장소 `tokens/*.json`에 없는 값은 "확인 필요" 또는 "기존 토큰에 없음"으로 명시합니다.
 
@@ -163,11 +163,25 @@ Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.**
 
-`get_motion_context`를 최상위 프레임(`2114:8709`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Default↔Hover↔Selected↔Typing↔Done 전환, 그리고 캐럿의 깜빡임(blink) 자체에 대해서도 Figma 파일에 duration·easing 등 모션 값이 정의되어 있지 않습니다 — [text-blinker.md](../../global/text-blinker/text-blinker.md) 3장·[type-box.md](../../global/type-box/type-box.md) 5장에서 이미 확인 필요로 남긴 것과 동일하게, 실제 캐럿 깜빡임 주기는 구현 시 별도 결정이 필요합니다.
+> **⚠️ 2026-09-16 정정 — 이전 판의 "모션 데이터 없음"은 틀린 기록이었습니다.**
+> `get_motion_context`(`2114:8709`, recursive)가 빈 결과였던 건 사실이지만, 이 도구는 **키프레임 애니메이션만** 읽습니다.
+> 변형 사이의 전환은 **프로토타입 반응(`node.reactions`)** 에 들어 있고 Plugin API(`use_figma`)로만 보입니다.
+> **캐럿 깜빡임 주기가 "확인 필요"라고 적혀 있던 것도 함께 해소되었습니다**(아래 참고).
 
-3장에서 관찰된 "Done 상태의 단위(unit) 텍스트 슬롯"에 대해서도 별도 모션은 없습니다.
+전수 집계 결과 **반응 192건**(Hover 96 + Pressed 96):
+
+| 트리거 | 전환 | API duration | 패널 표시값 | Easing |
+|---|---|---|---|---|
+| `ON_HOVER` | Default → Hover | 0.3125초 | **150ms** | `SLOW` |
+| `ON_PRESS` | Hover → 입력 상태 | 0.1042초 | **50ms** | `SLOW` |
+
+저장소 표준 인터랙션과 동일한 값입니다. CSS 근사는 `cubic-bezier(0.17, 0, 0.19, 1)`입니다(`docs/INTERACTION.md` 2장).
+
+**캐럿 깜빡임은 Text Blinker 자체에 정의되어 있습니다** — `AFTER_TIMEOUT 200ms` → Smart animate · `EASE_IN_AND_OUT` · 150ms(양방향). **한 주기 700ms 페이드**입니다. [text-blinker.md](../../global/text-blinker/text-blinker.md) 참고. (초판이 "확인 필요"로 남겼던 항목이며 같은 오독에서 비롯된 것이었습니다.)
+
+3장에서 관찰된 "Done 상태의 단위(unit) 텍스트 슬롯"에는 별도 반응이 없습니다.
 
 ## 7. 접근성
 
@@ -205,7 +219,7 @@ Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
 - **좌·우 아이콘 색상**: State마다 다릅니다 — 3장 표의 "아이콘 색" 열 참고(2026-09-15 Figma 원본 SVG 전수 실측)
 
 **확인 필요**
-- 캐럿 깜빡임 애니메이션의 duration/easing/반복 주기(Figma에 모션 데이터 없음, text-blinker.md·type-box.md와 동일)
+- ~~캐럿 깜빡임 애니메이션의 duration/easing/반복 주기~~ → **2026-09-16 해소.** Text Blinker의 프로토타입 반응에 정의되어 있습니다(200ms 유지 + 150ms 페이드, 한 주기 700ms). 6장 참고.
 - `Show Unit=True`를 Done 외 다른 State·Size와 조합했을 때의 정확한 레이아웃(간격, 텍스트 스타일, Right Icon과의 관계) — 이번 15개 표본에는 Done 1건만 있어 확정하지 못함(3장 핵심 발견 5)
 - Typing 상태에서 Right Icon=False일 때 지우기 버튼이 사라지는지 여부(4장)
 - 접근성 마크업(`aria-hidden`, `aria-label`, `disabled`, `<label for>`) 연결 규정(7장)

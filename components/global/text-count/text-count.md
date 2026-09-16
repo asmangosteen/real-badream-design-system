@@ -60,9 +60,11 @@ Text Count는 텍스트 입력 필드(TextArea 등) 근처에 표시되는 글�
 
 ## 4. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**Figma 프로토타입 반응 0건**(`2114:3929` 전수 확인). 정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.
 
-`get_motion_context`를 컴포넌트 셋 전체(`2114:3929`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. State 전환(Default→Typing→Destructed) 시 색상 트랜지션 애니메이션이 있을 것으로 추정되나, Figma 파일에 어떤 duration·easing 값도 정의되어 있지 않아 임의로 만들지 않았습니다 — 확인 필요.
+> **⚠️ 2026-09-16 정정 — "State 전환 duration/easing 확인 필요"는 더 이상 열린 항목이 아닙니다.**
+> **2026-09-15 디자이너 확인**으로 *"전 컴포넌트가 다 동일하니 확인 불필요"* 가 확정되어,
+> 반응이 없는 컴포넌트도 저장소 표준 인터랙션(Hover 150ms · Pressed 50ms · Figma Slow)을 그대로 씁니다(`docs/INTERACTION.md` 3.2절).
 
 ## 5. 접근성
 
@@ -83,7 +85,7 @@ Text Count는 텍스트 입력 필드(TextArea 등) 근처에 표시되는 글�
 
 **확인 필요**
 - Figma 소스의 `State6`/`State5`/`State4` 네이밍을 실제 의미 있는 이름(`Default`/`Typing`/`Destructed`)으로 Figma 파일 자체에서 정정할지 여부(디자이너 확인 필요)
-- State 전환 시 색상 트랜지션 duration/easing (모션 데이터 없음)
+- ~~State 전환 시 색상 트랜지션 duration/easing~~ → **2026-09-16 해소** (4장 참고 — 저장소 표준 인터랙션을 그대로 씁니다)
 - 접근성 `aria-live` 안내 필요 여부, 색상 단독 사용에 대한 보강 필요 여부
 
 ## 7. 샘플링에 사용한 노드 (부록, 6개 전수)

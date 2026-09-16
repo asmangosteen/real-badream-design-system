@@ -85,9 +85,16 @@ Type Box 자체에는 배경·테두리·선택 하이라이트 같은 별도의
 
 ## 5. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**Type Box 컴포넌트 셋 자체에는 프로토타입 반응이 없습니다**(`2111:7576` 전수 확인). 정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.
 
-`get_motion_context`를 컴포넌트 셋 전체(`2111:7576`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Type Box 자체에는 State 전환 애니메이션이 정의되어 있지 않으며, 내부에 삽입된 `Text Blinker`(캐럿) 역시 [별도 문서](../text-blinker/text-blinker.md) 3절에서 이미 확인한 대로 모션 데이터가 없습니다(캐럿의 실제 깜빡임 주기는 두 문서 모두에서 확인 필요로 남아 있습니다).
+> **⚠️ 2026-09-16 정정 — 내부 `Text Blinker`에 "모션 데이터가 없다"고 적은 것은 틀렸습니다.**
+> `get_motion_context`는 **키프레임 애니메이션만** 읽습니다. 캐럿의 깜빡임은 키프레임이 아니라
+> **프로토타입 반응(`node.reactions`)** 으로 걸려 있어 그 도구로는 보이지 않았을 뿐입니다.
+> 실측값: `AFTER_TIMEOUT 200ms` → Smart animate · `EASE_IN_AND_OUT` · 150ms(양방향),
+> **한 주기 700ms 페이드**. [`text-blinker.md`](../text-blinker/text-blinker.md) 3장 참고.
+> 따라서 "캐럿 깜빡임 주기 확인 필요"는 더 이상 열린 항목이 아닙니다.
+
+Type Box의 State 전환(Placeholder↔Selected↔Typing↔Done)에는 반응이 연결되어 있지 않습니다. 2026-09-15 디자이너 확인으로 **반응이 없는 컴포넌트도 저장소 표준 인터랙션을 그대로 씁니다**(`docs/INTERACTION.md` 3.2절).
 
 ## 6. 접근성
 
@@ -119,7 +126,7 @@ Type Box 자체에는 배경·테두리·선택 하이라이트 같은 별도의
 **확인 필요**
 - Type Box 레이어의 접근성 역할(네이티브 `<input>`과의 관계)
 - `Placeholder`/`Selected` 회색 텍스트의 WCAG 명암비 수치
-- 캐럿 깜빡임 애니메이션의 duration/easing/반복 주기 (Figma에 모션 데이터 없음, `text-blinker.md`와 동일)
+- ~~캐럿 깜빡임 애니메이션의 duration/easing/반복 주기~~ → **2026-09-16 해소.** `text-blinker.md` 3장에 실측값이 있습니다(한 주기 700ms 페이드). 5장 참고.
 
 ## 8. 샘플링에 사용한 노드 (부록, 12개 전수)
 

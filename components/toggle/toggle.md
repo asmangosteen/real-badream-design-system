@@ -89,9 +89,14 @@ Checkbox·Radio Button과 달리 Toggle에는 **Hover/Pressed 등 세분화된 S
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**Figma 프로토타입 반응 0건** — 컴포넌트 셋(`2207:8085`)에도 24개 변형 어디에도 반응이 없습니다(2026-09-16 Plugin API 전수 재확인). 정본은 [`docs/INTERACTION.md`](../../docs/INTERACTION.md)입니다.
 
-`get_motion_context`를 상위 Frame(`2207:8085`, recursive=true)에 호출했으나 빈 결과(`{"nodes":[]}`)를 반환했습니다. 프로토타입 인터랙션(스마트 애니메이트, Off→On 전환 시 thumb 슬라이딩 애니메이션 등)이 Figma 파일 안에 정의되어 있지 않습니다. Checkbox·Radio Button과 동일하게 이 컴포넌트도 모션이 문서화되어 있지 않으며, 스위치 특성상 슬라이딩 전환이 실제 구현에는 필요할 가능성이 높으나 **duration/easing 값은 확인 필요**이며 임의로 만들지 않았습니다.
+> **⚠️ 2026-09-16 정정 — "duration/easing 확인 필요"는 더 이상 열린 항목이 아닙니다.**
+> 초판은 "Checkbox·Radio Button과 동일하게 모션이 문서화되어 있지 않다"고 적었는데, **Checkbox·Radio Button에는 실제로 반응이 있습니다**(각 12건). Toggle만 없는 것이 맞습니다.
+> **2026-09-15 디자이너 확인**으로 *"전 컴포넌트가 다 동일하니 확인 불필요"* 가 확정되어, 반응이 없는 컴포넌트도 저장소 표준 인터랙션을 그대로 씁니다(`docs/INTERACTION.md` 3.2절).
+
+**구현값: 트랙 색·thumb 이동 모두 `150ms` + `ease`** (`storybook/src/components/Toggle/Toggle.css`).
+표준 곡선(Figma Slow)이 아니라 `ease`인 것은 **기존에 정해져 있던 값을 그대로 유지**한 것입니다 — 저장소 원칙상 이미 정해진 값이 있으면 Figma에 새 정의가 없다고 해서 임의로 통일하지 않습니다(`docs/INTERACTION.md` 6장).
 
 2장에서 확인한 대로 thumb 위치는 `justify-content: flex-start`(Off) ↔ `justify-end`(On) 전환으로 구현되어 있어, 실제 구현 시 CSS `transition-property`를 트랙의 `justify-content`가 아니라(이 속성은 애니메이션 불가) thumb 자체의 `transform: translateX()` 또는 `left` 값으로 재구성해야 슬라이딩 애니메이션을 붙일 수 있습니다 — 이는 Figma 실측 사실이 아니라 구현 관점의 참고 메모입니다.
 

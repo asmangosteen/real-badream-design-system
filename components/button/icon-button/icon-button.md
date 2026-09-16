@@ -136,11 +136,21 @@ Primary/Destructed/Secondary는 개별 노드(`2209:2271`,`2209:2268`,`2209:2273
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.**
 
-`get_motion_context`를 컴포넌트 셋 전체(`2209:2320`, recursive=true)에 호출했으나 빈 결과(`{"nodes":[]}`)를 반환했습니다. Figma 파일 안에 Hover/Pressed 전환에 대한 프로토타입 인터랙션(스마트 애니메이트, 트랜지션, 키프레임)이 정의되어 있지 않습니다.
+> **⚠️ 2026-09-16 정정 — 이전 판의 "모션 데이터 없음"은 틀린 기록이었습니다.**
+> `get_motion_context`(`2209:2320`, recursive)가 빈 결과였던 건 사실이지만, 이 도구는 **키프레임 애니메이션만** 읽습니다.
+> 변형 사이의 전환은 **프로토타입 반응(`node.reactions`)** 에 들어 있고 Plugin API(`use_figma`)로만 보입니다.
 
-State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 전환의 duration이나 easing은 Figma에 정의된 바가 없으므로 임의 수치(예: "200ms ease-out")를 만들어내지 않았습니다. 구현 시 duration/easing이 필요하면 디자이너 확인이 필요합니다.
+전수 집계 결과 **반응 54건**(Hover 27 + Pressed 27):
+
+| 트리거 | 전환 | API duration | 패널 표시값 | Easing |
+|---|---|---|---|---|
+| `ON_HOVER` | Default → Hover | 0.3125초 | **150ms** | `SLOW` |
+| `ON_PRESS` | Hover → Pressed | 0.1042초 | **50ms** | `SLOW` |
+
+저장소 표준 인터랙션과 동일한 값입니다. CSS 근사는 `cubic-bezier(0.17, 0, 0.19, 1)`입니다(`docs/INTERACTION.md` 2장).
+`Default → Disabled`에는 반응이 연결되어 있지 않습니다.
 
 ## 7. 접근성
 

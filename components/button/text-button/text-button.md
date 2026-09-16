@@ -123,9 +123,16 @@ Loading 변형은 **Contents=Default**로, 라벨 텍스트를 표시하지 않�
 
 ## 6. 인터랙션(모션) 스펙
 
-`get_motion_context`(키프레임/Animate 탭 데이터 조회용)를 컴포넌트 셋 전체(`439:21305`, recursive=true)에 호출한 결과는 빈 결과였습니다 — 이는 Figma의 "Animate" 툴(키프레임 타임라인) 기준으로는 모션이 없다는 뜻이며, 아래 프로토타입 인터랙션(Prototype 탭의 리액션)과는 별개의 데이터입니다. 프로토타입 리액션은 MCP 도구로 조회되지 않아 **사용자가 Figma에서 직접 확인해 전달**했습니다(2026-08-29 확인).
+**정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.**
 
-**사용자 확인 완료 — Hover/Pressed 전환에 프로토타입 인터랙션이 정의되어 있습니다.** 아래 규칙은 Size(S/M/L/XL) × Text Color(Blue/Gray/Red) × Contents(Text/Text+Icon/Icon+Text) **모든 조합에 동일하게 적용**됩니다(사용자 확인 — 대표로 Size=S, Text Color=Blue, Contents=Text 노드에서 프로토타입 패널을 캡처해 전달받음).
+`get_motion_context`(키프레임/Animate 탭 데이터 조회용)를 컴포넌트 셋 전체(`439:21305`, recursive=true)에 호출한 결과는 빈 결과였습니다 — 이는 Figma의 "Animate" 툴(키프레임 타임라인) 기준으로는 모션이 없다는 뜻이며, 아래 프로토타입 인터랙션(Prototype 탭의 리액션)과는 별개의 데이터입니다.
+
+> **⚠️ 2026-09-16 정정 — "프로토타입 리액션은 MCP 도구로 조회되지 않는다"는 서술은 더 이상 맞지 않습니다.**
+> 초판(2026-08-29)에는 사용자가 Figma 패널을 직접 캡처해 전달해 주셨지만, 지금은
+> **Plugin API(`use_figma`)로 `node.reactions`를 직접 읽을 수 있습니다.**
+> 전수 집계 결과 **반응 72건**(Hover 36 + Pressed 36)으로 아래 표와 정확히 일치합니다 — 사용자 전달값이 맞았습니다.
+
+**Hover/Pressed 전환에 프로토타입 인터랙션이 정의되어 있습니다.** 아래 규칙은 Size(S/M/L/XL) × Text Color(Blue/Gray/Red) × Contents(Text/Text+Icon/Icon+Text) **모든 조합에 동일하게 적용**됩니다(사용자 확인 — 대표로 Size=S, Text Color=Blue, Contents=Text 노드에서 프로토타입 패널을 캡처해 전달받음).
 
 | 트리거 | Action | 대상 State | Animation | Easing | Duration |
 |---|---|---|---|---|---|
@@ -133,7 +140,10 @@ Loading 변형은 **Contents=Default**로, 라벨 텍스트를 표시하지 않�
 | **While pressing** | Change to | Hover → **Pressed** (Size/Text Color/Contents 동일 유지) | Smart animate | **Slow**(Figma 스프링 프리셋) | **50ms** |
 
 - **트랜지션 대상 프로퍼티**: Text Button은 상태 간 레이아웃 변화가 없고(2장 공통 구조 참고) 텍스트/아이콘 `color`만 바뀌므로(4장), Smart Animate가 실질적으로 보간하는 값은 **라벨·아이콘의 색상**입니다. Hover=`#276fcd`(Blue 기준), Pressed=`#2364b8`(Blue 기준) — 4장 실측값 참고.
-- **Easing "Slow"에 대한 주의**: Figma의 "Slow"는 cubic-bezier가 아니라 **스프링(spring) 물리 기반 프리셋**입니다(Gentle/Quick/Bouncy/Slow 중 하나). Figma UI에는 근사 duration(150ms/50ms)만 표시되고 정확한 mass/stiffness/damping 값은 노출되지 않습니다 — CSS `transition-timing-function`으로는 스프링 곡선을 정확히 재현할 수 없으므로, 웹 구현 시 ① CSS `ease-out` 계열로 근사하거나 ② Framer Motion/React Spring 등 스프링 기반 애니메이션 라이브러리로 구현하는 두 가지 선택지가 있습니다. 정확한 스프링 파라미터는 **확인 필요**(Figma 파일에서 직접 노출되지 않음).
+- **Easing "Slow"의 정체 — 2026-09-15 규명 완료(더 이상 "확인 필요" 아님).**
+  "Slow"는 cubic-bezier가 아니라 **스프링 프리셋**이 맞습니다. API `duration`이 패널 표시값의 정확히 **2.0836배**(312.53/150 · 104.18/50 둘 다 동일)이고, `figma.motion.physicalSpringToNormalized()`를 감쇠비별로 확인하면 **`bounce = 1 − ζ`** 가 성립합니다 → Figma는 Apple의 `spring(duration:bounce:)` 모델을 씁니다.
+  따라서 **Slow = 오버슈트 없는 임계감쇠 스프링**(ω = 2π/duration)이고, `x(t)=1−(1+ωt)e^(−ωt)`를 최소자승 피팅한 CSS 근사가 **`cubic-bezier(0.17, 0, 0.19, 1)`** 입니다(최대오차 1.2% — `ease-out` 15.6% · `ease` 6.7% 대비). 규명 과정은 `docs/INTERACTION.md` 2장.
+  → 스프링 라이브러리 없이 **CSS `transition`만으로 충분히 재현됩니다.**
 - **Hover→Pressed가 50ms로 Default→Hover(150ms)보다 짧습니다** — 눌림 반응은 더 즉각적으로, 호버 진입은 더 부드럽게 처리하려는 의도로 보입니다.
 - Disabled 진입/Loading 스피너 회전에 대한 프로토타입 리액션은 이번에 전달받지 못했습니다 — 여전히 **확인 필요**.
 

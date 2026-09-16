@@ -81,9 +81,22 @@ Selected/Pinned/Null은 Status=Default 변형만 존재해 Hover/Pressed/Disable
 
 ## 5. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.**
 
-`get_motion_context`를 Date/Time Picker 패밀리 최상위 그룹(`2497:13877`, recursive=true)에 호출했으나 `{"nodes":[]}`인 빈 결과를 반환했습니다. Status 전환(Default↔Hover↔Pressed)에 대한 duration/easing 등 모션 값이 Figma 파일에 정의되어 있지 않습니다.
+> **⚠️ 2026-09-16 정정 — 이전 판의 "모션 데이터 없음"은 틀린 기록이었습니다.**
+> `get_motion_context`(`2497:13877`, recursive)가 빈 결과였던 건 사실이지만, 이 도구는 **키프레임 애니메이션만** 읽습니다.
+> 변형 사이의 전환은 **프로토타입 반응(`node.reactions`)** 에 들어 있고 Plugin API(`use_figma`)로만 보입니다.
+
+전수 집계 결과 **반응 4건**(Hover 2 + Pressed 2):
+
+| 트리거 | 전환 | API duration | 패널 표시값 | Easing |
+|---|---|---|---|---|
+| `ON_HOVER` | Default → Hover | 0.3125초 | **150ms** | `SLOW` |
+| `ON_PRESS` | Hover → Pressed | 0.1042초 | **50ms** | `SLOW` |
+
+저장소 표준 인터랙션과 동일한 값입니다. CSS 근사는 `cubic-bezier(0.17, 0, 0.19, 1)`입니다(`docs/INTERACTION.md` 2장).
+
+**⚠️ `Type` 축(Selected·Pinned)에는 반응이 없고, 구현에서도 색을 전환하지 않습니다.** Pinned은 배경 밝기가 98%↔20%로 뒤집혀 전환 중 대비가 1.17까지 떨어지기 때문입니다 — Chip·Checkbox와 같은 규칙(`docs/INTERACTION.md` 7.3절). `Pinned`·`Selected`에는 Hover/Pressed 변형 자체가 없습니다.
 
 ## 6. 접근성
 

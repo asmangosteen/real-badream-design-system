@@ -44,7 +44,7 @@ Text Blinker는 텍스트 입력 필드(Input/TextField/TextArea 등) 안에서 
 
 ## 3. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**반응 2건 — 한 주기 700ms 페이드.** 정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.
 
 > **2026-09-15 정정 — 깜빡임 값은 Figma에 정의되어 있습니다.**
 > 아래 단락은 `get_motion_context`의 빈 결과만 보고 "모션 값 없음"으로 단정했으나 사실과 다릅니다.

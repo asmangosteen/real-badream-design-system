@@ -102,7 +102,7 @@
     }
   },
   "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 상위 Frame(2207:8085, recursive)에 호출했으나 빈 결과({\"nodes\":[]}) 반환. Off→On 전환 시 thumb 슬라이딩 애니메이션 등 프로토타입 인터랙션이 정의되어 있지 않음. thumb 위치가 justify-content 전환으로 구현되어 있어(justify-content는 애니메이션 불가 속성), 실제 구현 시 transform/left 기반으로 재구성이 필요할 수 있음(구현 참고 메모, Figma 실측 사실 아님).",
+  "interactionsNote": "Figma 프로토타입 반응 0건 — 컴포넌트 셋(2207:8085)에도 24개 변형에도 반응 없음(2026-09-16 Plugin API 전수 재확인). ⚠️ 정정(2026-09-16): 초판의 'Checkbox·Radio Button과 동일하게 모션이 문서화되어 있지 않다'는 틀린 기록 — 그 둘에는 실제로 반응이 12건씩 있음. 'duration/easing 확인 필요'도 더 이상 열린 항목이 아님: 2026-09-15 디자이너 확인으로 반응 없는 컴포넌트도 저장소 표준 인터랙션을 그대로 씀(docs/INTERACTION.md 3.2절). 구현값은 트랙 색·thumb 이동 모두 150ms + ease 로, 기존에 정해져 있던 값을 그대로 유지한 것(Figma Slow 곡선이 아님). thumb 위치가 justify-content 전환으로 구현되어 있어(justify-content는 애니메이션 불가 속성), 실제 구현 시 transform/left 기반으로 재구성이 필요할 수 있음(구현 참고 메모, Figma 실측 사실 아님).",
   "accessibility": {
     "noHoverPressedFocusedState": "Checkbox/Radio Button과 달리 Toggle Figma 컴포넌트 셋에는 Hover/Pressed/Focused 시각 변형 자체가 없음(Disabled 축만 존재) — 의도된 설계로 확인됨. 다만 실제 구현 시 마우스 오버·클릭·키보드 포커스에 대한 시각 피드백(포커스 링 등)은 별도로 설계해야 하며, 그 구체적 스타일 값은 Figma에 없어 확인 필요.",
     "ariaMapping": "role=\"switch\"/aria-checked=\"true|false\", disabled 시 aria-disabled 또는 네이티브 disabled 속성 매핑이 일반적인 웹 접근성 규약. Figma 파일 자체에는 이 규정이 없음 — 확인 필요.",

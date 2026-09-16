@@ -179,23 +179,24 @@ Contents=Text × State=Loading 변형의 스피너 실측 치수입니다(라벨
 
 ## 6. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**정본은 [`docs/INTERACTION.md`](../../../docs/INTERACTION.md)입니다.**
 
-`get_motion_context`를 다음 대상에 호출했으나 전부 빈 결과(`{"nodes":[]}`)를 반환했습니다:
-- 컴포넌트 셋 전체(`409:6752`, recursive=true)
-- Primary M Default 개별 노드(`409:6750`, recursive=true)
-- Primary M Loading 개별 노드(`439:18792`, recursive=true)
+> **⚠️ 2026-09-16 정정 — 이전 판의 "모션 데이터 없음"은 틀린 기록이었습니다.**
+> `get_motion_context`는 **키프레임 애니메이션만** 읽습니다(`409:6752`·`409:6750`·`439:18792` 모두 빈 결과였던 건 사실입니다).
+> 변형 사이의 전환은 **프로토타입 반응(`node.reactions`)** 에 들어 있고 Plugin API(`use_figma`)로만 보입니다.
 
-Figma 파일 안에 Hover/Pressed 전환이나 Loading 스피너 회전에 대한 프로토타입 인터랙션(스마트 애니메이트, 트랜지션, 키프레임)이 전혀 정의되어 있지 않습니다.
+전수 집계 결과 **반응 440건**(Hover 220 + Pressed 220):
 
-| 트리거 | 대상 프로퍼티 | Duration | Easing | 시작값 | 종료값 |
+| 트리거 | 전환 | 대상 프로퍼티 | API duration | 패널 표시값 | Easing |
 |---|---|---|---|---|---|
-| Default → Hover | 배경 오버레이 | 모션 데이터 없음 | 모션 데이터 없음 | 오버레이 0% | 5장 참고 오버레이 값 |
-| Hover → Pressed | 배경 오버레이 | 모션 데이터 없음 | 모션 데이터 없음 | Hover 오버레이 | Pressed 오버레이 |
-| Default → Disabled | opacity | 모션 데이터 없음 | 모션 데이터 없음 | 100% | 20% |
-| Loading 스피너 회전 | transform: rotate | 모션 데이터 없음 | 모션 데이터 없음 | 모션 데이터 없음 | 모션 데이터 없음 |
+| `ON_HOVER` | Default → Hover | 배경 오버레이 | 0.3125초 | **150ms** | `SLOW` |
+| `ON_PRESS` | Hover → Pressed | 배경 오버레이 | 0.1042초 | **50ms** | `SLOW` |
 
-State 간 **색상/opacity 값 자체**는 5장에 실측되어 있지만, 그 전환에 걸리는 duration이나 easing 곡선은 Figma에 정의된 바가 없으므로 임의의 수치(예: "200ms ease-out")를 만들어내지 않았습니다. 구현 시 duration/easing이 필요하다면 별도로 디자이너 확인이 필요합니다.
+저장소 표준 인터랙션과 동일한 값입니다. `SLOW`는 cubic-bezier가 아니라 **오버슈트 없는 임계감쇠 스프링**이고, CSS 근사는 `cubic-bezier(0.17, 0, 0.19, 1)`입니다(`docs/INTERACTION.md` 2장에 규명 과정이 있습니다).
+
+**Disabled와 Loading 스피너 회전에는 여전히 반응이 없습니다.**
+- `Default → Disabled`(opacity 100%→20%)는 전환이 연결되어 있지 않습니다.
+- 스피너 회전 주기·이징도 Figma에 정의된 바가 없어 **확인 필요**로 남아 있습니다(모양·색·두께 실측은 [`button-spinner.md`](../button-spinner/button-spinner.md) 참고).
 
 ## 7. 접근성
 

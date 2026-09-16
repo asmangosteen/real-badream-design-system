@@ -142,9 +142,23 @@ CSS `border`는 바깥 크기에 더해지므로 그대로 옮기면 Outlined만
 
 ## 7. 인터랙션(모션) 스펙
 
-**모션 데이터 없음.**
+**정본은 [`docs/INTERACTION.md`](../../docs/INTERACTION.md)입니다.**
 
-`get_motion_context`를 상위 그룹(`2483:12764`, recursive=true)에 호출했으나 빈 결과(`{"nodes":[]}`)를 반환했습니다. State 간 색상값 자체는 3·5장에 실측되어 있으나 전환 duration/easing은 확인 필요이며 임의로 만들지 않았습니다.
+> **⚠️ 2026-09-16 정정 — 이전 판의 "모션 데이터 없음"은 틀린 기록이었습니다.**
+> `get_motion_context`(`2483:12764`, recursive)가 빈 결과였던 건 사실이지만, 이 도구는 **키프레임 애니메이션만** 읽습니다.
+> 변형 사이의 전환은 **프로토타입 반응(`node.reactions`)** 에 들어 있고 Plugin API(`use_figma`)로만 보입니다.
+
+전수 집계 결과 **반응 76건** — Selection 60건(`2270:842`) + Filter 16건(`2275:3087`):
+
+| 트리거 | 전환 | API duration | 패널 표시값 | Easing |
+|---|---|---|---|---|
+| `ON_HOVER` | Default → Hover | 0.3125초 | **150ms** | `SLOW` |
+| `ON_PRESS` | Hover → Pressed | 0.1042초 | **50ms** | `SLOW` |
+
+저장소 표준 인터랙션과 동일한 값입니다. CSS 근사는 `cubic-bezier(0.17, 0, 0.19, 1)`입니다(`docs/INTERACTION.md` 2장).
+
+**⚠️ `Selected` 축에는 반응이 없고, 구현에서도 색을 전환하지 않습니다.**
+Filled은 Default↔Selected에서 배경 밝기 89%↔2% · 글자 12%↔98%로 **서로 자리를 바꾸기** 때문에, 배경을 크로스페이드하면 중간에 반드시 글자와 같은 밝기를 지나가며 라벨이 잠깐 증발합니다. 전환 시간을 줄여도 사라지는 시간만 짧아질 뿐이라 **상태 축은 즉시 전환**합니다. Outlined도 같은 이유로 통일했습니다 — 규칙과 근거는 `docs/INTERACTION.md` 7.3절.
 
 ## 8. 접근성
 

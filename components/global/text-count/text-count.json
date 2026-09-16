@@ -111,7 +111,7 @@
     "width": "42px(Small)/49px(Default) — placeholder '000/000'(7글자) 기준 실측값, content-hugging 요소로 추정(고정폭 아님)"
   },
   "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2114:3929, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. State 전환 시 색상 트랜지션이 있을 것으로 추정되나 duration/easing 값이 Figma에 정의되어 있지 않음 — 확인 필요.",
+  "interactionsNote": "Figma 프로토타입 반응 0건(2114:3929 전수 확인). ⚠️ 정정(2026-09-16): 'State 전환 duration/easing 확인 필요'는 더 이상 열린 항목이 아님 — 2026-09-15 디자이너 확인으로 반응 없는 컴포넌트도 저장소 표준 인터랙션(Hover 150ms · Pressed 50ms · Figma Slow)을 그대로 씀. 정본은 docs/INTERACTION.md 3.2절.",
   "accessibility": {
     "ariaLive": "글자 수 초과(Destructed)가 색상 변화만으로 표시되어 스크린리더용 aria-live 안내 필요 여부 확인 필요.",
     "colorOnlyIndication": "색상만으로 상태 구분(WCAG 1.4.1 색상 단독 사용 금지 원칙) — 아이콘/텍스트 보강 필요 여부 확인 필요."
@@ -129,7 +129,7 @@
     ],
     "확인필요": [
       "Figma 소스의 State6/State5/State4 네이밍을 실제 의미 있는 이름으로 정정할지 여부(디자이너 확인 필요)",
-      "State 전환 색상 트랜지션 duration/easing (모션 데이터 없음)",
+      "해소됨(2026-09-16) — State 전환 색상 트랜지션은 저장소 표준 인터랙션을 그대로 씀(docs/INTERACTION.md 3.2절)",
       "aria-live 안내 필요 여부, 색상 단독 사용 보강 필요 여부"
     ]
   },

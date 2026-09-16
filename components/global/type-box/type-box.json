@@ -133,7 +133,7 @@
     "summary": "캐럿 세로 padding은 Size에 따라 spacing/01(S,1px) → spacing/02(M·L,2px)로 커짐(각 Size의 줄높이 증가와 같은 방향). spacing/01은 이와 별개로 전 Size·State 공통 캐럿-텍스트 flex gap 역할도 겸함."
   },
   "interactions": [],
-  "interactionsNote": "모션 데이터 없음. get_motion_context를 컴포넌트 셋 전체(2111:7576, recursive)에 호출했으나 {\"nodes\":[]}인 빈 결과 반환. 내부 Text Blinker 서브컴포넌트 역시 text-blinker.json 기준 모션 데이터 없음. 캐럿 깜빡임 실제 주기는 두 컴포넌트 모두 확인 필요.",
+  "interactionsNote": "부분 정정됨(2026-09-16). Type Box 컴포넌트 셋 자체에 반응이 없는 것은 사실(2111:7576 전수 확인)이나, '내부 Text Blinker도 모션 데이터 없음'은 틀린 기록이었음 — get_motion_context는 키프레임만 읽고 캐럿 깜빡임은 node.reactions에 있음. 실측: AFTER_TIMEOUT 200ms → Smart animate · EASE_IN_AND_OUT · 150ms(양방향), 한 주기 700ms 페이드(text-blinker.json 참고). 반응이 없는 컴포넌트도 저장소 표준 인터랙션을 그대로 씀(2026-09-15 디자이너 확인, docs/INTERACTION.md 3.2절).",
   "accessibility": {
     "layerRole": "순수 '미리보기 텍스트 레이어'로 추정, 실제 접근 가능한 <input>/<textarea>는 상위 Input 컴포넌트가 담당할 것으로 추정 — Figma에 명시 없음, 확인 필요.",
     "placeholderContrast": "Placeholder/Selected 텍스트 색상(neutral/500, #8c9199)의 WCAG 명암비 수치 검증 미수행 — 확인 필요.",
@@ -160,7 +160,7 @@
       "상위 Input 컴포넌트와의 정확한 조합/레이아웃 규칙 (조사 범위 밖)",
       "Type Box 레이어의 접근성 역할(네이티브 <input>과의 관계)",
       "Placeholder/Selected 회색 텍스트의 WCAG 명암비 수치",
-      "캐럿 깜빡임 애니메이션의 duration/easing/반복 주기 (Figma에 모션 데이터 없음)"
+      "해소됨(2026-09-16) — 캐럿 깜빡임 duration/easing/반복 주기는 Text Blinker의 프로토타입 반응에 정의되어 있음(한 주기 700ms 페이드, text-blinker.json 참고)"
     ]
   },
   "variants": {
