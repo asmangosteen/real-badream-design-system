@@ -12,6 +12,9 @@ export type CheckboxForceState = 'hover' | 'pressed';
  *
  * Angular 는 두 Size 모두 16px 로 **같습니다** — 16px 박스에서는 박스를 꽉 채우고,
  * 20px 박스에서는 사방 2px 여백이 생깁니다. Rounded 만 박스를 따라 커집니다.
+ *
+ * ✅ **2026-09-16 디자이너 확인으로 의도된 설계임이 확정됐습니다.** 오타가 아니니
+ * `size` 에 비례해 계산하도록 "고치지" 마세요.
  */
 const ICON_SIZE: Record<CheckboxType, Record<CheckboxSize, number>> = {
   angular: { 16: 16, 20: 16 },
