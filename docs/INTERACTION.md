@@ -105,7 +105,7 @@ Figma 패널에 보이는 150ms/50ms 와 API 가 돌려주는 312.53ms/104.18ms 
 | Button | 935 | 440 | `components/button/button/` |
 | Text Button | 156 | 72 | `components/button/text-button/` |
 | Icon Button | 108 | 54 | `components/button/icon-button/` |
-| Checkbox / Angular · Rounded | 12+12 | 12 | `components/checkbox/` |
+| Checkbox / Angular · Rounded | 24+24 | 24 | `components/checkbox/` |
 | Radio Button | 24 | 12 | `components/radio-button/` |
 | Chip / Selection · Filter | 150+40 | 76 | `components/chip/` |
 | Date | 11 | 4 | `components/date-time-picker/date/` |

@@ -1,16 +1,19 @@
 /* ============================================================
-   Checkbox — 스펙: components/checkbox/checkbox.md (24개 전수 실측)
-   Size 축 없음: Angular/Rounded 모두 16×16px 고정.
+   Checkbox — 스펙: components/checkbox/checkbox.md (48개 전수 실측)
+   Size 축 16px / 20px (2026-09-16 Figma 추가). 색은 두 Size 가 완전히 같고,
+   달라지는 것은 박스 한 변 · Angular radius · Rounded 아이콘 크기뿐입니다.
    Hover/Pressed 는 Figma 와 동일하게 "베이스 위에 오버레이를 얹는" 방식으로 구현합니다.
    ============================================================ */
 .bd-checkbox {
   --bd-cb-overlay: transparent;
+  --bd-cb-size: 16px;
+  --bd-cb-radius: var(--ref-radius-02);   /* Angular 16px = 4px. Type/Size 규칙에서 덮어씁니다 */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: 16px;
-  height: 16px;
+  width: var(--bd-cb-size);
+  height: var(--bd-cb-size);
   padding: 0;
   border: 0;
   background: none;
@@ -30,12 +33,20 @@
   /* Figma 와 동일한 2겹 합성: 오버레이(위) + 베이스(아래) */
   background-image: linear-gradient(var(--bd-cb-overlay), var(--bd-cb-overlay));
   background-color: var(--bd-cb-base);
-  color: var(--sys-color-common-white-default);
+  /* 아이콘 색. `.bd-icon` 이 `color: inherit` 이라 여기서 정합니다 */
+  color: var(--bd-cb-fg, var(--sys-color-common-white-default));
 }
 
+/* ---------- Size (Figma Size 축) ----------
+   박스 한 변만 바뀌고 테두리 1px·색·오버레이는 두 Size 가 동일합니다.
+   Angular 는 radius 도 함께 커집니다(4px → 6px). Rounded 는 999px 라 Size 와 무관합니다. */
+.bd-checkbox[data-size='20'] { --bd-cb-size: 20px; }
+
 /* ---------- Type ---------- */
-.bd-checkbox[data-type='angular'] .bd-checkbox__box { border-radius: var(--ref-radius-02); }  /* 4px */
-.bd-checkbox[data-type='rounded'] .bd-checkbox__box { border-radius: var(--ref-radius-12); }  /* 999px */
+.bd-checkbox[data-type='angular'] { --bd-cb-radius: var(--ref-radius-02); }             /* 4px  · radius/02 */
+.bd-checkbox[data-type='angular'][data-size='20'] { --bd-cb-radius: var(--ref-radius-03); }  /* 6px · radius/03 */
+.bd-checkbox[data-type='rounded'] { --bd-cb-radius: var(--ref-radius-12); }             /* 999px · radius/12 */
+.bd-checkbox__box { border-radius: var(--bd-cb-radius); }
 
 /* ---------- 베이스 색 ---------- */
 /* 미선택 기본: 흰 배경 + 10% 테두리 */
@@ -52,6 +63,18 @@
 .bd-checkbox[data-checked='true'] .bd-checkbox__box {
   --bd-cb-base: var(--sys-color-brand-primary-default);
   border: 0;
+}
+
+/* ---------- Rounded 미선택의 회색 체크 (스펙 6장) ----------
+   Rounded 는 Outlined 유무와 관계없이 **미선택에도 체크가 보입니다.**
+   Default/Hover/Pressed 는 neutral/400, Disabled 만 neutral/300 으로 한 단계 옅어집니다.
+   (Outlined=False 의 Disabled 는 배경·테두리가 전혀 변하지 않아 이 색이 유일한 비활성 신호입니다.)
+   Angular 미선택에는 Figma 에도 아이콘 레이어가 아예 없어 렌더하지 않습니다. */
+.bd-checkbox[data-type='rounded'][data-checked='false'] .bd-checkbox__box {
+  --bd-cb-fg: var(--sys-color-neutral-400);
+}
+.bd-checkbox:disabled[data-type='rounded'][data-checked='false'] .bd-checkbox__box {
+  --bd-cb-fg: var(--sys-color-neutral-300);
 }
 
 /* ---------- Hover / Pressed 오버레이 ---------- */
@@ -88,9 +111,8 @@
 .bd-checkbox:focus-visible {
   outline: 2px solid var(--sys-color-brand-primary-default);
   outline-offset: 2px;
-  border-radius: var(--ref-radius-02);
+  border-radius: var(--bd-cb-radius);   /* 박스와 같은 radius — Type·Size 를 그대로 따라갑니다 */
 }
-.bd-checkbox[data-type='rounded']:focus-visible { border-radius: var(--ref-radius-12); }
 
 /* ---------------- 상태 전환 (motion) ----------------
    Figma 원본: Checkbox / Angular · Checkbox / Rounded — 12개 반응 전부

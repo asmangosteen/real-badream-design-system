@@ -21,8 +21,8 @@ export interface RadioButtonProps {
 /**
  * 여러 선택지 중 하나만 고르는 단일 선택 입력입니다.
  *
- * Checkbox(Rounded)와 형태가 비슷하지만 **Size 축(S/M/L)이 있고**,
- * **미선택 Disabled를 opacity 40%로 처리**한다는 점이 다릅니다.
+ * Checkbox(Rounded)와 형태가 비슷하지만 **Size 축의 값이 다르고**(Radio `S/M/L` = 16/20/24px ·
+ * Checkbox `16px/20px`), **미선택 Disabled를 opacity 40%로 처리**한다는 점이 다릅니다.
  *
  * 스펙 원본: `components/radio-button/radio-button.md`
  */

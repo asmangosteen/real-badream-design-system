@@ -109,7 +109,7 @@
       "spec": "components/checkbox/checkbox.md",
       "machineReadable": "components/checkbox/checkbox.json",
       "status": "문서화 완료",
-      "note": "Figma상 2개 Component Set(Angular, Rounded)으로 분리되어 있음, 총 24개 인스턴스, Size 축 없음"
+      "note": "Figma상 2개 Component Set(Angular, Rounded)으로 분리되어 있음, 각 24개씩 총 48개 인스턴스. 2026-09-16 Size 축(16px/20px) 추가로 24개 → 48개가 됨. 색은 두 Size 동일하고 박스 한 변·Angular radius(4px→6px)·Rounded 아이콘(12px→16px)만 달라짐. Angular 아이콘은 두 Size 모두 16px 고정"
     },
     "chip": {
       "spec": "components/chip/chip.md",
@@ -133,7 +133,7 @@
       "spec": "components/radio-button/radio-button.md",
       "machineReadable": "components/radio-button/radio-button.json",
       "status": "문서화 완료",
-      "note": "Checked(False/True) × State(Default/Hover/Pressed/Disabled) × Size(S/M/L) 총 24개 인스턴스, 전수 실측. Checkbox와 달리 Size 축 있음, Indeterminate 축 없음"
+      "note": "Checked(False/True) × State(Default/Hover/Pressed/Disabled) × Size(S/M/L) 총 24개 인스턴스, 전수 실측. Checkbox와는 Size 축의 이름·값이 다르고(Radio S/M/L = 16/20/24px · Checkbox 16px/20px, Radio에만 24px 있음), Indeterminate 축이 없음"
     },
     "toggle": {
       "spec": "components/toggle/toggle.md",
