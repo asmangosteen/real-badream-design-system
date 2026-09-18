@@ -117,11 +117,21 @@ const meta = {
           '스크롤 컨테이너에 `.bd-scroll-area` 클래스를 주면 막대만 감춰집니다(스크롤 기능은 그대로).',
           '',
           '```html',
-          '<div class="bd-scroll-area" style="position: relative; overflow: auto">',
-          '  …콘텐츠…',
+          '<!-- 래퍼는 스크롤하지 않습니다 -->',
+          '<div style="position: relative">',
+          '  <div class="bd-scroll-area" style="overflow: auto">…콘텐츠…</div>',
           '  <ScrollBar visible={…} progress={…} ratio={…} />',
           '</div>',
           '```',
+          '',
+          '## ⚠️ 스크롤바를 스크롤 컨테이너 안에 넣으면 안 됩니다',
+          '',
+          '`position: absolute` 는 **흐름에서만 빠질 뿐 스크롤에서는 못 빠집니다.**',
+          '스크롤 컨테이너 안에 두면 콘텐츠와 함께 밀려 올라가 화면 밖으로 사라집니다 —',
+          '아래로 642px 스크롤하면 스크롤바도 642px 위로 올라갑니다.',
+          '',
+          '**스크롤하지 않는 래퍼**를 하나 두고, 스크롤은 안쪽 요소가 맡으며,',
+          '스크롤바는 그 래퍼의 자식(= 스크롤 영역의 형제)으로 둡니다. 위 예시가 그 구조입니다.',
           '',
           '⚠️ 데스크톱에서는 마우스로 끌 수 있는 막대가 사라집니다. 이 컴포넌트가 드래그를 받지 않으므로',
           '**모바일 전용 영역에만 쓰세요.** 휠·키보드 스크롤은 영향받지 않습니다.',
@@ -306,22 +316,26 @@ function VerticalDemo({ count, auto = false }: { count: number; auto?: boolean }
   const [ref, scroll] = useScrollIndicator<HTMLDivElement>();
   useAutoScroll(auto ? ref : { current: null }, 'vertical');
   return (
+    // ⚠️ 스크롤바는 **스크롤하지 않는 래퍼**에 얹습니다. 스크롤 컨테이너 안에 넣으면
+    //    position:absolute 라도 콘텐츠와 함께 밀려 올라가 화면 밖으로 사라집니다.
     <div
-      ref={ref}
-      // OS 기본 스크롤바를 숨겨 ScrollBar 만 보이게 합니다 (ScrollBar.css 의 보조 클래스)
-      className="bd-scroll-area"
       style={{
         position: 'relative',
         width: 220,
         height: 180,
-        overflowY: 'auto',
         boxSizing: 'border-box',
         border: '1px solid var(--ref-color-gray-900-10)',
         borderRadius: 'var(--ref-radius-06)',
         background: 'var(--sys-color-common-white-default)',
+        overflow: 'hidden', // 래퍼의 둥근 모서리로 콘텐츠를 잘라 줍니다
       }}
     >
-      <div>
+      <div
+        ref={ref}
+        // OS 기본 스크롤바를 숨겨 ScrollBar 만 보이게 합니다 (ScrollBar.css 의 보조 클래스)
+        className="bd-scroll-area"
+        style={{ height: '100%', overflowY: 'auto' }}
+      >
         {Array.from({ length: count }, (_, i) => (
           <div
             key={i}
@@ -353,39 +367,38 @@ function HorizontalDemo({ count, auto = false }: { count: number; auto?: boolean
   useAutoScroll(auto ? ref : { current: null }, 'horizontal');
   return (
     <div
-      ref={ref}
-      // OS 기본 스크롤바를 숨겨 ScrollBar 만 보이게 합니다 (ScrollBar.css 의 보조 클래스)
-      className="bd-scroll-area"
       style={{
         position: 'relative',
         width: 460,
-        overflowX: 'auto',
         boxSizing: 'border-box',
         border: '1px solid var(--ref-color-gray-900-10)',
         borderRadius: 'var(--ref-radius-06)',
         background: 'var(--sys-color-common-white-default)',
+        overflow: 'hidden',
       }}
     >
-      <div style={{ display: 'flex', gap: 12, padding: '16px 16px 24px' }}>
-        {Array.from({ length: count }, (_, i) => (
-          <div
-            key={i}
-            style={{
-              flex: '0 0 auto',
-              width: 96,
-              height: 96,
-              display: 'grid',
-              placeItems: 'center',
-              borderRadius: 'var(--ref-radius-04)',
-              background: 'var(--sys-color-neutral-100)',
-              fontFamily: 'var(--font-family-base)',
-              fontSize: 'var(--typography-body-2-size)',
-              color: 'var(--sys-color-neutral-600)',
-            }}
-          >
-            {i + 1}
-          </div>
-        ))}
+      <div ref={ref} className="bd-scroll-area" style={{ overflowX: 'auto' }}>
+        <div style={{ display: 'flex', gap: 12, padding: '16px 16px 24px' }}>
+          {Array.from({ length: count }, (_, i) => (
+            <div
+              key={i}
+              style={{
+                flex: '0 0 auto',
+                width: 96,
+                height: 96,
+                display: 'grid',
+                placeItems: 'center',
+                borderRadius: 'var(--ref-radius-04)',
+                background: 'var(--sys-color-neutral-100)',
+                fontFamily: 'var(--font-family-base)',
+                fontSize: 'var(--typography-body-2-size)',
+                color: 'var(--sys-color-neutral-600)',
+              }}
+            >
+              {i + 1}
+            </div>
+          ))}
+        </div>
       </div>
       {scroll.horizontal.scrollable && (
         <ScrollBar

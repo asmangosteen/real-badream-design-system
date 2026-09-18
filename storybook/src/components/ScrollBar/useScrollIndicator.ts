@@ -50,8 +50,12 @@ function measure(el: HTMLElement): Omit<ScrollIndicatorState, 'visible'> {
  *
  * ```tsx
  * const [ref, scroll] = useScrollIndicator<HTMLDivElement>();
- * <div ref={ref} style={{ position: 'relative', overflow: 'auto' }}>
- *   {…}
+ *
+ * // ⚠️ 래퍼는 스크롤하지 않고, 스크롤은 안쪽 div 가 합니다
+ * <div style={{ position: 'relative' }}>
+ *   <div ref={ref} className="bd-scroll-area" style={{ overflow: 'auto' }}>
+ *     {…콘텐츠…}
+ *   </div>
  *   {scroll.vertical.scrollable && (
  *     <ScrollBar visible={scroll.visible} {...scroll.vertical} />
  *   )}
@@ -61,9 +65,14 @@ function measure(el: HTMLElement): Omit<ScrollIndicatorState, 'visible'> {
  * **스크롤을 하면 노출되고 멈추면 숨겨집니다** — 스크롤이 이어지는 동안에는
  * 타이머가 계속 초기화되므로 손을 떼기 전까지 사라지지 않습니다.
  *
- * ⚠️ 스크롤바를 스크롤 컨테이너 **안**에 두면 콘텐츠와 함께 밀려 올라갑니다.
- * 위 예시처럼 `position: relative` 인 **컨테이너 자신**에 얹거나, 스크롤 영역을
- * 감싸는 별도 래퍼에 두세요.
+ * ## ⚠️ 스크롤바를 스크롤 컨테이너 **안**에 넣으면 안 됩니다
+ *
+ * `position: absolute` 는 **흐름에서만 빠질 뿐 스크롤에서는 못 빠집니다.**
+ * 스크롤 컨테이너 안에 두면 콘텐츠와 함께 밀려 올라가 화면 밖으로 사라집니다
+ * (아래로 642px 스크롤하면 스크롤바도 642px 위로 올라갑니다).
+ *
+ * 그래서 **스크롤하지 않는 래퍼**를 하나 두고, 스크롤은 안쪽 요소가 맡으며,
+ * 스크롤바는 래퍼의 자식(= 스크롤 영역의 형제)으로 둡니다.
  */
 export function useScrollIndicator<T extends HTMLElement>() {
   const ref = useRef<T>(null);

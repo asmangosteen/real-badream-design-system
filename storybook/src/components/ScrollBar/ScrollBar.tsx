@@ -46,7 +46,8 @@ const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
  * - **드래그할 수 없습니다** — `pointer-events: none` · `aria-hidden` (디자이너 확정).
  *   밑에 깔린 콘텐츠의 터치를 가로채지 않습니다.
  * - `position: absolute` 로 스크롤 영역 위에 **겹쳐 놓습니다.**
- *   부모에 `position: relative` 가 필요합니다.
+ *   ⚠️ 부모는 `position: relative` 이면서 **스크롤하지 않는 래퍼**여야 합니다 —
+ *   스크롤 컨테이너 안에 두면 콘텐츠와 함께 밀려 올라가 사라집니다.
  * - 트랙에 배경이 없어 **thumb 만 보입니다.**
  *
  * 여백은 CSS 변수로 열려 있습니다 — `--bd-scrollbar-offset`(고정되는 변, 기본 2px) ·
