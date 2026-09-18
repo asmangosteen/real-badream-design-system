@@ -1,0 +1,142 @@
+{
+  "$schema": "https://badream.internal/schemas/component-spec-v1.json",
+  "component": "Scroll Bar",
+  "source": {
+    "figmaFileKey": "2OcDq1pJgavJMLHvsdpf8S",
+    "figmaFileUrl": "https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2711-7950",
+    "componentSetNodeId": "2686:6437",
+    "figmaPageNodeId": "2686:6438",
+    "overviewGroupNodeId": "2711:7950",
+    "overviewGroupNote": "그룹 ID는 깨질 수 있으므로 참조는 Component Set ID(2686:6437)를 쓸 것.",
+    "variantCount": 6,
+    "axes": ["Type(Vertical/Horizontal, 기본 Vertical)", "Position(Top/Middle/Bottom, 기본 Top)"],
+    "figmaComponentDescription": "Absolute Position 상태로 다른 컴포넌트에 Overlay 해서 사용됩니다.\n스크롤을 하면 노출되며, 멈춰있는 상태일 경우 노출하지 않습니다.\nVertical, Horizontal 각 Type의 높이와 너비는 컴포넌트의 규격에 비례합니다.\n노출 위치는 Vertical은 컴포넌트의 우측 끝에서 8px 떨어진 곳, Horizontal은 하단 끝에서 8px 떨어진 곳입니다."
+  },
+  "sampling": {
+    "method": "Plugin API(use_figma)로 6개 변형 전체의 크기·fills 배열 전체·cornerRadius 변수 바인딩·자식 사각형·Constraints·reactions를 실측. 파일 전체에서 인스턴스 18개를 찾아 실사용 치수까지 대조.",
+    "coverage": "6개 변형 전수. 추정/외삽 없음.",
+    "date": "2026-09-18"
+  },
+  "structure": {
+    "layers": 2,
+    "track": "컴포넌트 프레임 자체. 배경 없음(fills 빈 배열). 스크롤 가능한 전체 길이를 나타냄.",
+    "thumb": "Rectangle 자식 1개. 유일하게 보이는 요소. 현재 위치와 보이는 분량을 나타냄."
+  },
+  "track": {
+    "figmaMeasured": { "vertical": "6x180px", "horizontal": "180x6px" },
+    "thickness": { "value": "6px", "token": null, "tokenMatch": "기존 토큰에 없음(고정 치수, Figma 변수 바인딩 없음)" },
+    "length": { "figmaValue": "180px", "isFixed": false, "rule": "감싸는 컴포넌트의 규격에 비례. 실사용에서 184/178/174px로 제각각." },
+    "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" },
+    "background": { "fills": [], "note": "배경 없음 — 레일이 보이지 않고 thumb만 떠 있는 iOS 스타일 오버레이 스크롤바. radius 999는 설정되어 있으나 실제로 보이지 않음." }
+  },
+  "thumb": {
+    "thickness": { "value": "6px", "note": "트랙 두께와 동일 — 가로축을 꽉 채움" },
+    "figmaMeasuredLength": { "value": "60px", "isFixed": false, "note": "트랙 180px 기준 '3페이지 분량' 예시값. 고정 규격이 아님." },
+    "radius": { "figmaVariable": "radius/12", "value": "999px", "token": "ref-radius-12", "tokenMatch": "정확히 일치" },
+    "color": { "figmaVariable": "color/gray/900-40", "hex": "#03091a", "alpha": 0.4, "token": "ref-color-gray-900-40", "tokenMatch": "정확히 일치", "note": "두 Type 동일" },
+    "lengthRule": {
+      "formula": "max(24px, 트랙 길이 × (보이는 영역 ÷ 전체 콘텐츠))",
+      "minLength": "24px",
+      "minLengthRationale": "두께 6px의 4배. 비율 계산값이 두께와 비슷해지면 막대가 아니라 동그라미로 보이므로 하한을 둠. 트랙 174px 기준 콘텐츠가 약 7.25페이지를 넘으면 하한이 걸림.",
+      "clampBehavior": "하한이 걸린 뒤에도 이동 거리를 그만큼 줄여 Position=100%일 때 트랙 끝에 닿게 함.",
+      "figmaSource": false,
+      "decidedBy": "2026-09-18 디자이너 지시",
+      "warning": "⚠️ Figma에 없는 값. 재실측 때 'Figma와 다르다'고 되돌리지 말 것."
+    }
+  },
+  "position": {
+    "figmaVariants": ["Top", "Middle", "Bottom"],
+    "semantics": "상태 3단계가 아니라 스크롤 진행률 0% / 50% / 100% 예시 스냅샷. 실제 스크롤바는 연속적으로 움직임.",
+    "directionMapping": {
+      "vertical": { "Top": "위쪽 끝", "Middle": "가운데", "Bottom": "아래쪽 끝" },
+      "horizontal": { "Top": "왼쪽 끝", "Middle": "가운데", "Bottom": "오른쪽 끝" },
+      "note": "축 이름이 세로 기준이라 Horizontal에서는 반대로 읽힐 수 있음. 2026-09-18 디자이너 결정으로 Figma 변형 이름을 그대로 유지하고 이 표를 정본으로 삼음."
+    },
+    "positionFormula": "thumb 위치 = (트랙 길이 − thumb 길이) × 스크롤 진행률(0~1). Position=Bottom(진행률 1)이면 자동으로 트랙 끝에 붙음.",
+    "figmaCoordinatesAreIllustrative": {
+      "measured": { "Top": 0, "Middle": 60, "Bottom": 120 },
+      "warning": "⚠️ 이 y/x 좌표를 규격으로 옮기지 말 것. 트랙 180px · thumb 60px 조합에서만 맞아떨어지는 예시값이며, 실사용 인스턴스에서는 어긋나 있음. 2026-09-18 디자이너 확인 결과 '예시로 만든 것이라 문제가 아님'. 구현은 좌표가 아니라 진행률로 계산할 것.",
+      "constraintsNote": "Vertical 3개 변형의 thumb Constraints가 전부 vertical=MIN(위쪽 고정)이고 Horizontal만 MIN/CENTER/MAX로 걸려 있음. 위와 같은 이유로 지적 사항이 아님."
+    }
+  },
+  "placement": {
+    "positioning": "position: absolute. 스크롤 영역 위에 겹쳐 놓으며 레이아웃 흐름에 끼어들지 않음(콘텐츠를 밀어내지 않음).",
+    "anchoredEdge": { "vertical": "컨테이너 우측 끝에서 2px", "horizontal": "컨테이너 하단 끝에서 2px" },
+    "offsetToken": "ref-spacing-02 (2px) — 정확히 일치",
+    "offsetOverride": { "figmaValue": "8px", "repoValue": "2px", "figmaSource": false, "decidedBy": "2026-09-18 디자이너 지시 ('다시 보니 8px 은 너무 크다')", "warning": "⚠️ Figma 컴포넌트 설명(8px) 및 실사용 인스턴스(8~10px)와 정면으로 다른 유일한 값. 저장소 원칙이 '충돌하면 Figma 기준'이라 표시 없이 두면 재실측 때 8px으로 되돌아감. Figma 쪽 갱신은 확인 필요 항목." },
+    "crossAxisMargin": {
+      "rule": "Scroll Bar가 정하지 않음 — 감싸는 컴포넌트가 자기 내부 여백에 맞춰 정함",
+      "measured": ["0px", "11px", "13px"],
+      "note": "실사용마다 다른 것은 불일치가 아니라 의도된 자유도. 트랙 길이도 그 여백을 뺀 값이 됨.",
+      "decidedBy": "2026-09-18 디자이너 결정"
+    }
+  },
+  "interactions": [],
+  "interactionsNote": "Figma 프로토타입 반응 0건 — 컴포넌트 셋에도 6개 변형 어디에도 없음. get_motion_context 빈 결과를 근거로 삼지 않고 Plugin API로 node.reactions를 전수 확인한 결과임(components/README.md 모션 규칙 참고).",
+  "autoHide": {
+    "appearMs": 0,
+    "appearNote": "스크롤이 시작되는 순간 즉시 노출",
+    "holdMs": 1000,
+    "holdNote": "스크롤이 멈춘 뒤 대기. 스크롤 재개 시 타이머 리셋(일반 구현 관례)",
+    "fadeOutMs": 300,
+    "fadeOutProperty": "opacity 1 → 0",
+    "figmaSource": false,
+    "decidedBy": "2026-09-18 디자이너 지시 (iOS 기본 스크롤 인디케이터 관례값)",
+    "warning": "⚠️ Figma에 없는 값. 재실측 때 '근거가 없다'는 이유로 지우지 말 것.",
+    "relationToStandardInteraction": "저장소 표준 인터랙션(Hover 150ms · Pressed 50ms · Figma Slow)과는 별개. 저건 상태 전환용이고 이건 자동 노출/숨김임.",
+    "reducedMotion": "prefers-reduced-motion에서는 페이드 없이 즉시 사라지게 함(저장소 공통 규칙)"
+  },
+  "usage": {
+    "instanceCount": 18,
+    "allOnPage": "❖ Select",
+    "allType": "Vertical",
+    "horizontalInstancesExist": false,
+    "horizontalNote": "Type=Horizontal 실사용 사례는 파일 안에 아직 없음. 스펙만 정의된 상태.",
+    "measured": [
+      { "parent": "Frame 8", "trackHeight": 184, "containerHeight": 184, "marginTopBottom": [0, 0], "marginRight": 8 },
+      { "parent": "Select Size=S", "trackHeight": 178, "containerHeight": 200, "marginTopBottom": [11, 11], "marginRight": 10 },
+      { "parent": "Select Size=M · Size=L", "trackHeight": 174, "containerHeight": 200, "marginTopBottom": [13, 13], "marginRight": 9 }
+    ],
+    "note": "트랙 길이가 셋 다 다른 것은 '컴포넌트 규격에 비례한다'는 설명이 실제로 지켜지고 있다는 뜻. ⚠️ 이 측정치는 2026-09-18 여백 변경 이전의 Figma 현황이며 새 규칙은 2px(placement.offsetOverride 참고). Figma 쪽 인스턴스 갱신은 확인 필요."
+  },
+  "accessibility": {
+    "displayOnly": {
+      "value": true,
+      "decidedBy": "2026-09-18 디자이너 확정",
+      "warning": "⚠️ Figma에 근거가 없는 확정 사항",
+      "implementation": "pointer-events: none (클릭·드래그를 받지 않고 밑에 깔린 콘텐츠의 터치를 가로채지 않음) + aria-hidden=true (스크롤 위치는 네이티브 스크롤 컨테이너가 이미 알려 주므로 중복 안내가 됨)",
+      "consistency": "Figma에 State 축(Hover/Pressed)이 없는 것과 일치. Avatar·Divider와 같은 '순수 표시용 컴포넌트' 분류.",
+      "touchTarget": "두께 6px은 권장 44px에 한참 못 미치지만 드래그를 받지 않으므로 문제가 되지 않음."
+    },
+    "autoHideConcern": "자동으로 사라지므로 스크롤 위치 정보가 시각적으로만, 그것도 일시적으로만 제공됨. 다만 네이티브 스크롤 컨테이너를 쓰면 보조기술은 별도 경로로 위치를 얻으므로 실질적 손실 없음.",
+    "lightBackgroundOnly": {
+      "value": true,
+      "reason": "thumb이 gray/900-40(검정 40%)이라 어두운 배경 위에서는 대비가 확보되지 않음.",
+      "decision": "어두운 배경용 변형은 필요해지면 그때 추가하기로 함(2026-09-18 디자이너 결정). 지금은 확인 필요 항목이 아님."
+    }
+  },
+  "tokenMatchSummary": {
+    "정확히일치": [
+      "thumb 색 color/gray/900-40(#03091a 40%) → ref-color-gray-900-40",
+      "트랙·thumb radius 999px → ref-radius-12",
+      "배치 여백 2px → ref-spacing-02 (⚠️ Figma는 8px — 2026-09-18 디자이너 지시로 줄인 값)"
+    ],
+    "기존토큰에없음": [
+      "트랙·thumb 두께 6px (고정 치수, Figma 변수 바인딩 없음. 스케일에 ref-spacing-05·ref-radius-03이 같은 6px이지만 두께용 토큰은 아님)",
+      "트랙 길이 180px · thumb 길이 60px (둘 다 진열용 예시값)"
+    ],
+    "Figma에없는값_디자이너지시": [
+      "배치 여백 2px (Figma 설명은 8px — Figma와 정면으로 다른 유일한 값)",
+      "thumb 길이 계산식과 최소 길이 24px",
+      "노출/숨김 타이밍 0ms / 1000ms / 300ms",
+      "표시 전용 처리(pointer-events: none · aria-hidden)"
+    ],
+    "확인필요": ["Figma 쪽 갱신 — 컴포넌트 설명 원문의 8px과 Select 안 인스턴스 18개의 배치 여백을 2px으로 맞출지. 값 자체는 확정됐고 Figma 파일을 누가 언제 고칠지만 남음."]
+  },
+  "sampledNodeIds": {
+    "vertical": { "Top": "2686:6436", "Middle": "2686:6432", "Bottom": "2686:6433" },
+    "verticalThumbs": { "Top": "2686:6412", "Middle": "2686:6414", "Bottom": "2686:6416" },
+    "horizontal": { "Top": "2686:6431", "Middle": "2686:6434", "Bottom": "2686:6435" },
+    "horizontalThumbs": { "Top": "2686:6425", "Middle": "2686:6428", "Bottom": "2686:6430" }
+  }
+}

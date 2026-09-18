@@ -123,7 +123,7 @@ Figma 패널에 보이는 150ms/50ms 와 API 가 돌려주는 312.53ms/104.18ms 
 
 Type Box · Label · Text Count · Supporting Text · Avatar · Badge(4종) · Divider ·
 Month · Calendar Header · Date Picker(+Group) · Time Picker(+Group) · Footer ·
-List(6종) · Menu(3종) · Navigation Bar(5종) · Page Control · Segmented Control(+_Item) ·
+List(6종) · Menu(3종) · Navigation Bar(5종) · Page Control · **Scroll Bar** · Segmented Control(+_Item) ·
 Status Bar · Tab(+_Item) · Text Input Group · Toggle · Top Bar · _ButtonSpinner
 
 이들은 **구현에서 이미 정해 둔 값을 유지**합니다(Application Contract 2번). 아래 4장 참고.
@@ -148,6 +148,24 @@ Status Bar · Tab(+_Item) · Text Input Group · Toggle · Top Bar · _ButtonSpi
 **부드럽게 사라졌다 나타나는 페이드**입니다.
 
 > 이전 스펙 문서는 이 값을 "Figma 에 모션 데이터 없음"으로 적고 있었습니다. 원인은 8장 참고.
+
+### 3.4 Scroll Bar — 유일한 자동 노출/숨김
+
+프로토타입 반응은 **0건**이지만(3.2 목록에 포함), 컴포넌트 설명에
+*"스크롤을 하면 노출되며, 멈춰있는 상태일 경우 노출하지 않습니다"* 라는 **동작 규정**이 있습니다.
+상태 전환이 아니라 **스크롤 이벤트에 반응하는 자동 노출/숨김**이라 표준 인터랙션(150/50ms)과는 별개입니다.
+
+| 구간 | 값 |
+|---|---|
+| 등장 | 즉시 (`0ms`) |
+| 머무름 | 스크롤이 멈춘 뒤 **`1000ms`** 대기 (스크롤 재개 시 리셋) |
+| 사라짐 | **`300ms`** 페이드아웃 (`opacity` 1 → 0) |
+
+> **⚠️ 이 세 값은 Figma 에 없습니다.** iOS 기본 스크롤 인디케이터 관례값이며 **2026-09-18 디자이너 지시**가 출처입니다.
+> 재실측 때 "Figma 에 근거가 없다"는 이유로 지우지 마세요. 스펙 원본은
+> [`components/scroll-bar/scroll-bar.md`](../components/scroll-bar/scroll-bar.md) 5장.
+
+`prefers-reduced-motion` 에서는 페이드 없이 즉시 사라집니다(6장 공통 규칙).
 
 ---
 

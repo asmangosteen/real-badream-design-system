@@ -1,0 +1,107 @@
+/* ============================================================
+   Scroll Bar — 스펙: components/scroll-bar/scroll-bar.md (6개 전수 실측)
+   구조는 2겹뿐입니다: 트랙(배경 없음) + thumb.
+   State 축이 없는 **순수 표시용** 컴포넌트입니다 — 드래그를 받지 않습니다.
+   ============================================================ */
+.bd-scrollbar {
+  /* 사용처가 덮어쓰는 값 ------------------------------------ */
+  /* 고정되는 변의 여백. Vertical=우측 · Horizontal=하단, 둘 다 2px.
+     ⚠️ Figma 컴포넌트 설명에는 8px 로 적혀 있지만 **2026-09-18 디자이너 지시로 2px 로 줄였습니다**
+        ("다시 보니 8px 은 너무 크다"). 저장소 원칙이 "충돌하면 Figma 기준" 이라 표시 없이 두면
+        재실측 때 8px 로 되돌아갑니다 — Figma 설명 원문도 갱신이 필요합니다(스펙 4장). */
+  --bd-scrollbar-offset: var(--ref-spacing-02);
+  /* 나머지 두 변의 여백. ⚠️ Scroll Bar 가 정하지 않습니다 —
+     감싸는 컴포넌트가 자기 내부 여백에 맞춰 정합니다(2026-09-18 디자이너 결정).
+     실사용 인스턴스가 0 · 11 · 13px 로 제각각인 것은 불일치가 아니라 의도된 자유도입니다. */
+  --bd-scrollbar-inset: 0px;
+
+  /* 컴포넌트가 계산하는 값 ---------------------------------- */
+  --bd-sb-progress: 0;        /* 스크롤 진행률 0~1 */
+  --bd-sb-ratio: 0.3333;      /* 보이는 영역 ÷ 전체 콘텐츠 */
+  /* thumb 길이 = max(24px, 트랙 × 비율).
+     `100%` 는 쓰이는 속성에 따라 해석됩니다 — Vertical 은 height/top 이라 트랙 높이,
+     Horizontal 은 width/left 라 트랙 너비가 되어 한 식으로 두 방향을 모두 처리합니다. */
+  --bd-sb-thumb: max(24px, calc(var(--bd-sb-ratio) * 100%));
+
+  position: absolute;
+  /* 표시 전용 — 클릭·드래그를 받지 않고 밑에 깔린 콘텐츠의 터치도 가로채지 않습니다 */
+  pointer-events: none;
+  /* 트랙에는 배경이 없습니다. radius 는 Figma 에 설정돼 있으나 배경이 없어 보이지 않습니다 */
+  border-radius: var(--ref-radius-12);
+
+  /* 자동 숨김 — 기본은 숨김, data-visible 로 켭니다 */
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: var(--bd-motion-scrollbar-fade);   /* 사라질 때 300ms */
+  transition-timing-function: linear;
+}
+/* 등장은 **즉시**입니다(0ms). 스크롤이 시작되는 순간 바로 보여야 하므로 페이드인이 없습니다 */
+.bd-scrollbar[data-visible='true'] {
+  opacity: 1;
+  transition-duration: 0ms;
+}
+
+/* ---------- Type ----------
+   두께 6px 은 대응하는 토큰이 없어 고정값입니다(스펙 8장).
+   스케일에 ref-spacing-05·ref-radius-03 이 같은 6px 이지만 둘 다 두께용 토큰이 아닙니다. */
+.bd-scrollbar[data-type='vertical'] {
+  top: var(--bd-scrollbar-inset);
+  bottom: var(--bd-scrollbar-inset);
+  right: var(--bd-scrollbar-offset);
+  width: 6px;
+}
+.bd-scrollbar[data-type='horizontal'] {
+  left: var(--bd-scrollbar-inset);
+  right: var(--bd-scrollbar-inset);
+  bottom: var(--bd-scrollbar-offset);
+  height: 6px;
+}
+
+/* ---------- thumb ---------- */
+.bd-scrollbar__thumb {
+  position: absolute;
+  background-color: var(--ref-color-gray-900-40);   /* #03091a 40% */
+  border-radius: var(--ref-radius-12);              /* 999px */
+}
+
+/* 위치 = (트랙 − thumb) × 진행률.
+   진행률 1 이면 이 식이 자동으로 트랙 끝에 붙습니다 —
+   ⚠️ Figma 의 y/x 좌표(0 · 60 · 120)는 트랙 180 · thumb 60 조합에서만 맞는 예시값이라
+   옮겨 적지 않았습니다(스펙 3-1장). 최소 길이가 걸려 thumb 이 길어져도 이 식이
+   이동 거리를 그만큼 줄여 주므로 끝까지 도달합니다. */
+.bd-scrollbar[data-type='vertical'] .bd-scrollbar__thumb {
+  left: 0;
+  width: 100%;
+  height: var(--bd-sb-thumb);
+  top: calc((100% - var(--bd-sb-thumb)) * var(--bd-sb-progress));
+}
+.bd-scrollbar[data-type='horizontal'] .bd-scrollbar__thumb {
+  top: 0;
+  height: 100%;
+  width: var(--bd-sb-thumb);
+  left: calc((100% - var(--bd-sb-thumb)) * var(--bd-sb-progress));
+}
+
+/* ============================================================
+   .bd-scroll-area — OS 기본 스크롤바를 숨기는 보조 클래스
+   ------------------------------------------------------------
+   커스텀 오버레이 스크롤바를 쓰려면 네이티브 스크롤바를 반드시 꺼야 합니다.
+   안 그러면 **두 개가 동시에 보입니다.**
+   스크롤 기능 자체는 그대로 살아 있고 막대만 감춥니다.
+
+   ⚠️ 데스크톱에서는 마우스로 끌 수 있는 막대가 사라집니다.
+      이 컴포넌트가 드래그를 받지 않으므로(표시 전용) **모바일 전용 영역에만 쓰세요.**
+      키보드(방향키·PageUp/Down)와 휠 스크롤은 영향받지 않습니다.
+   ============================================================ */
+.bd-scroll-area {
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* 구형 Edge */
+}
+.bd-scroll-area::-webkit-scrollbar {
+  display: none;              /* Chrome · Safari */
+}
+
+/* ⚠️ thumb 의 위치·길이에는 transition 을 걸지 않습니다.
+   스크롤을 따라 실시간으로 움직여야 하는 값이라, 전환을 걸면 손가락보다 늦게 따라와
+   고무줄처럼 늘어져 보입니다. 이 컴포넌트에서 애니메이션되는 것은 **opacity 하나뿐**입니다.
+   (prefers-reduced-motion 은 motion.css 에서 --bd-motion-scrollbar-fade 를 0 으로 만들어 일괄 처리합니다) */
