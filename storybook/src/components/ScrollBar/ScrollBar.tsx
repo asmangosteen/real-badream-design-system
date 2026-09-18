@@ -33,6 +33,14 @@ export interface ScrollBarProps {
   progress?: number;
   /** 보이는 영역 ÷ 전체 콘텐츠 (`0`~`1`). thumb 길이를 정합니다. 최소 24px 는 CSS 가 보장합니다 */
   ratio?: number;
+  /**
+   * 감싸는 컨테이너의 모서리 `border-radius`(px).
+   *
+   * 지정하면 **양 끝을 이만큼 더 밀어** thumb 이 둥근 모서리에 물려 잘리는 것을 막습니다.
+   * radius 가 있는 컨테이너에서만 필요하고, 사각 컨테이너는 비워 두면 됩니다(기본 0).
+   * 컨테이너의 `border-radius` 값을 그대로 넘기세요.
+   */
+  radius?: number;
   /** 보임 여부. 스크롤 중에만 `true` 로 두면 됩니다 — `useScrollIndicator` 가 대신 계산해 줍니다 */
   visible?: boolean;
   className?: string;
@@ -51,7 +59,8 @@ const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
  * - 트랙에 배경이 없어 **thumb 만 보입니다.**
  *
  * 여백은 CSS 변수로 열려 있습니다 — `--bd-scrollbar-offset`(고정되는 변, 기본 2px) ·
- * `--bd-scrollbar-inset`(나머지 두 변, 기본 0). **나머지 두 변은 감싸는 컴포넌트가 정합니다.**
+ * `--bd-scrollbar-inset`(나머지 두 변, 기본 0) · `--bd-scrollbar-radius`(모서리 회피분, `radius` prop).
+ * **나머지 두 변은 감싸는 컴포넌트가 정합니다.**
  *
  * 스펙 원본: `components/scroll-bar/scroll-bar.md`
  */
@@ -60,6 +69,7 @@ export function ScrollBar({
   position = 'top',
   progress,
   ratio = DEFAULT_RATIO,
+  radius = 0,
   visible = true,
   className,
 }: ScrollBarProps) {
@@ -76,6 +86,7 @@ export function ScrollBar({
         {
           '--bd-sb-progress': p,
           '--bd-sb-ratio': clamp01(ratio),
+          ...(radius ? { '--bd-scrollbar-radius': `${radius}px` } : null),
         } as CSSProperties
       }
     >

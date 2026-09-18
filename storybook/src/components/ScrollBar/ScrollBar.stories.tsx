@@ -6,6 +6,10 @@ import { Cell, Row, Section } from '../../shared/story-helpers';
 
 const REPO = 'https://github.com/asmangosteen/real-badream-design-system/blob/main';
 
+/** 실제 동작 데모 컨테이너의 모서리 radius(px). wrapper 의 border-radius 와 ScrollBar `radius` 에 같은 값을 넘겨,
+ *  thumb 이 둥근 모서리에 물려 잘리지 않게 합니다(= `ref-radius-06`). */
+const DEMO_RADIUS = 12;
+
 /**
  * ScrollBar 는 `position: absolute` 라 **반드시 `position: relative` 인 부모**가 필요합니다.
  * 스토리에서는 이 상자가 "감싸는 컴포넌트" 역할을 합니다.
@@ -136,11 +140,21 @@ const meta = {
           '⚠️ 데스크톱에서는 마우스로 끌 수 있는 막대가 사라집니다. 이 컴포넌트가 드래그를 받지 않으므로',
           '**모바일 전용 영역에만 쓰세요.** 휠·키보드 스크롤은 영향받지 않습니다.',
           '',
+          '## 둥근 모서리 컨테이너 — `radius` 를 넘기세요',
+          '',
+          '컨테이너에 `border-radius` 가 있으면 thumb 이 양 끝에서 **둥근 모서리에 물려 잘립니다.**',
+          '`radius` prop 에 컨테이너의 radius 값을 넘기면 **양 끝을 그만큼 밀어** 모서리 구간을 피합니다.',
+          '',
+          '```tsx',
+          '<ScrollBar radius={12} … />   {/* 컨테이너 border-radius 가 12px 이면 */}',
+          '```',
+          '',
           '## ⚠️ 구현에서 정한 것 (Figma 근거 없음 · 2026-09-18 디자이너 지시)',
           '',
           `- thumb **최소 길이 ${SCROLLBAR_MIN_THUMB}px**`,
           `- 자동 숨김 — 등장 즉시 · 멈춘 뒤 **${SCROLLBAR_HOLD_MS}ms** 대기 · **300ms** 페이드아웃`,
           '- **드래그 불가** — `pointer-events: none` · `aria-hidden="true"`',
+          '- 둥근 모서리 회피 — `radius` prop 만큼 **양 끝을 추가로 밀어** thumb 이 모서리에 잘리지 않게 함',
           '',
           `스펙 원본: [\`components/scroll-bar/scroll-bar.md\`](${REPO}/components/scroll-bar/scroll-bar.md)`,
         ].join('\n'),
@@ -161,6 +175,10 @@ const meta = {
     ratio: {
       control: { type: 'range', min: 0.02, max: 1, step: 0.01 },
       description: '보이는 영역 ÷ 전체 콘텐츠. thumb 길이를 정합니다.',
+    },
+    radius: {
+      control: { type: 'range', min: 0, max: 24, step: 1 },
+      description: '감싸는 컨테이너의 border-radius(px). 양 끝을 이만큼 밀어 thumb 이 모서리에 잘리지 않게 합니다.',
     },
     className: { table: { disable: true } },
   },
@@ -325,7 +343,7 @@ function VerticalDemo({ count, auto = false }: { count: number; auto?: boolean }
         height: 180,
         boxSizing: 'border-box',
         border: '1px solid var(--ref-color-gray-900-10)',
-        borderRadius: 'var(--ref-radius-06)',
+        borderRadius: DEMO_RADIUS,
         background: 'var(--sys-color-common-white-default)',
         overflow: 'hidden', // 래퍼의 둥근 모서리로 콘텐츠를 잘라 줍니다
       }}
@@ -356,6 +374,7 @@ function VerticalDemo({ count, auto = false }: { count: number; auto?: boolean }
           visible={scroll.visible}
           progress={scroll.vertical.progress}
           ratio={scroll.vertical.ratio}
+          radius={DEMO_RADIUS}
         />
       )}
     </div>
@@ -372,7 +391,7 @@ function HorizontalDemo({ count, auto = false }: { count: number; auto?: boolean
         width: 460,
         boxSizing: 'border-box',
         border: '1px solid var(--ref-color-gray-900-10)',
-        borderRadius: 'var(--ref-radius-06)',
+        borderRadius: DEMO_RADIUS,
         background: 'var(--sys-color-common-white-default)',
         overflow: 'hidden',
       }}
@@ -406,6 +425,7 @@ function HorizontalDemo({ count, auto = false }: { count: number; auto?: boolean
           visible={scroll.visible}
           progress={scroll.horizontal.progress}
           ratio={scroll.horizontal.ratio}
+          radius={DEMO_RADIUS}
         />
       )}
     </div>
@@ -488,6 +508,54 @@ export const Placement: Story = {
             </Frame>
           </Cell>
         ))}
+      </Row>
+    </Section>
+  ),
+};
+
+/** 실제로 모서리를 잘라내는(overflow:hidden + border-radius) 컨테이너. `radius` 효과를 눈으로 보기 위한 것 */
+function ClippedBox({ radius, children }: { radius: number; children: ReactNode }) {
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: 120,
+        height: 180,
+        borderRadius: radius,
+        border: '1px solid var(--ref-color-gray-900-10)',
+        background: 'var(--sys-color-neutral-100)',
+        overflow: 'hidden', // ← 이게 있어야 모서리가 thumb 을 실제로 잘라냅니다
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/**
+ * 컨테이너에 `border-radius` 가 크면 thumb 이 양 끝에서 **둥근 모서리에 물려 잘립니다.**
+ * `radius` 를 넘기면 양 끝을 그만큼 밀어 모서리 구간을 피합니다.
+ *
+ * 아래는 radius `20px` 컨테이너에서 thumb 을 맨 위(progress=0)에 둔 비교입니다.
+ * 왼쪽은 thumb 윗부분이 모서리에 잘려 나가고, 오른쪽은 온전합니다.
+ */
+export const RadiusGap: Story = {
+  name: '둥근 모서리 회피 (radius)',
+  args: {},
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <Section title="컨테이너 radius=20px · thumb 을 맨 위(progress=0)에 둠">
+      <Row>
+        <Cell label="radius 안 넘김 — 모서리에 잘림 ✗">
+          <ClippedBox radius={20}>
+            <ScrollBar type="vertical" progress={0} ratio={1 / 4} />
+          </ClippedBox>
+        </Cell>
+        <Cell label="radius={20} — 온전함 ✓">
+          <ClippedBox radius={20}>
+            <ScrollBar type="vertical" progress={0} ratio={1 / 4} radius={20} />
+          </ClippedBox>
+        </Cell>
       </Row>
     </Section>
   ),

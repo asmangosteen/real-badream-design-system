@@ -342,7 +342,7 @@
       "spec": "components/scroll-bar/scroll-bar.md",
       "machineReadable": "components/scroll-bar/scroll-bar.json",
       "status": "문서화 완료",
-      "note": "Type(Vertical/Horizontal) × Position(Top/Middle/Bottom) 총 6개 인스턴스, 전수 실측(2026-09-18). State 축 없는 순수 표시용 스크롤 인디케이터로 드래그 불가(디자이너 확정, pointer-events:none · aria-hidden). position:absolute로 스크롤 영역 위에 겹쳐 놓고 Vertical은 우측·Horizontal은 하단에서 2px 떨어뜨림(⚠️ Figma 설명은 8px이나 2026-09-18 디자이너 지시로 줄인 값 — Figma와 정면으로 다른 유일한 값). 나머지 두 변의 여백과 트랙 길이는 감싸는 컴포넌트가 정함(의도된 자유도). ⚠️ Position은 상태 3단계가 아니라 스크롤 진행률 0/50/100% 예시이며 Figma의 thumb 길이 60px·y좌표(0/60/120)는 전부 예시값 — 실제로는 thumb 길이 = max(24px, 트랙 × 보이는영역/전체콘텐츠), 위치 = (트랙−thumb) × 진행률로 계산. 트랙은 배경 없이 thumb만 보임. 프로토타입 반응 0건이고 노출/숨김 타이밍(즉시 등장 · 1000ms 대기 · 300ms 페이드아웃)은 Figma가 아니라 2026-09-18 디자이너 지시가 출처. 실사용 인스턴스 18개는 전부 Select 안의 Vertical이며 Horizontal 사례는 아직 없음. 밝은 배경 전용(어두운 배경용 변형은 필요해지면 추가하기로 함)"
+      "note": "Type(Vertical/Horizontal) × Position(Top/Middle/Bottom) 총 6개 인스턴스, 전수 실측(2026-09-18). State 축 없는 순수 표시용 스크롤 인디케이터로 드래그 불가(디자이너 확정, pointer-events:none · aria-hidden). position:absolute로 스크롤 영역 위에 겹쳐 놓고 Vertical은 우측·Horizontal은 하단에서 2px 떨어뜨림(2026-09-18에 8px에서 줄임 · Figma도 갱신 완료). 나머지 두 변의 여백과 트랙 길이는 감싸는 컴포넌트가 정함(의도된 자유도). 컨테이너에 border-radius가 있으면 radius prop으로 양 끝을 그만큼 밀어 thumb이 둥근 모서리에 잘리는 것을 막음(2026-09-18 디자이너 지시, Figma에 없는 구현 규칙). ⚠️ Position은 상태 3단계가 아니라 스크롤 진행률 0/50/100% 예시이며 Figma의 thumb 길이 60px·y좌표(0/60/120)는 전부 예시값 — 실제로는 thumb 길이 = max(24px, 트랙 × 보이는영역/전체콘텐츠), 위치 = (트랙−thumb) × 진행률로 계산. 트랙은 배경 없이 thumb만 보임. 프로토타입 반응 0건이고 노출/숨김 타이밍(즉시 등장 · 1000ms 대기 · 300ms 페이드아웃)은 Figma가 아니라 2026-09-18 디자이너 지시가 출처. 실사용 인스턴스 18개는 전부 Select 안의 Vertical이며 Horizontal 사례는 아직 없음. 밝은 배경 전용(어두운 배경용 변형은 필요해지면 추가하기로 함)"
     }
   },
   "typography": {
