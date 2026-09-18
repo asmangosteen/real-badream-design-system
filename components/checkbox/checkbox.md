@@ -3,6 +3,10 @@
 > Figma 파일: [바드림 Design System](https://www.figma.com/design/2OcDq1pJgavJMLHvsdpf8S/%EB%B0%94%EB%93%9C%EB%A6%BC-Design-System?node-id=2662-5344) — 캔버스 그룹 `2662:5344`(페이지 `❖ Checkbox` = `2171:6427`) 안에 2개의 개별 Component Set이 있음
 > 기계 판독용 값은 [`checkbox.json`](./checkbox.json)을 함께 참고합니다. 이 문서와 checkbox.json은 항상 같은 소스에서 나온 값이어야 합니다.
 
+> **⚠️ 2026-09-18 갱신 — Hover/Pressed 오버레이가 배경별 3갈래로 바뀌었습니다.**
+> 흰 배경 미선택(Angular 미선택 · Rounded Outlined=True)이 raw 알파 `gray/900-2`(2%) · `gray/900-5`(5%)로 통일됐습니다.
+> 예전엔 Angular 미선택=피드백 없음, Rounded Outlined=True=`interaction/light-gray`(5%/10%)였습니다. (3장·4장)
+>
 > **⚠️ 2026-09-16 갱신 — Figma에 `Size` 축(`16px` / `20px`)이 추가되었습니다.**
 > 각 Component Set이 12개 → **24개**, 합계 24개 → **48개** 변형이 되었습니다.
 > 초판 문서의 "Checkbox에는 Size 축이 없습니다"는 더 이상 유효하지 않습니다.
@@ -85,9 +89,11 @@ Angular의 minus(부분선택) 글리프는 11.33 × 1.33px로 **두 Size가 완
 | State | 배경 | 테두리 | 비고 |
 |---|---|---|---|
 | Default | `common/white-default` `#fdfdfd` | 1px `color/gray/900-10` = `rgba(3,9,26,0.1)` | — |
-| Hover | Default와 동일 | Default와 동일 | `cursor: pointer`만 추가, **색상 변화 없음** |
-| Pressed | Default와 동일 | Default와 동일 | **색상 변화 전혀 없음** — 눌림 피드백이 시각적으로 구현되어 있지 않음 |
+| Hover | `common/white-default` 위에 **`color/gray/900-2`(검정 2%)** 오버레이 | 변화 없음 | ⚠️ **2026-09-18 갱신** — 예전엔 피드백이 전혀 없었으나 옅은 오버레이가 추가됨 |
+| Pressed | `common/white-default` 위에 **`color/gray/900-5`(검정 5%)** 오버레이 | 변화 없음 | ⚠️ **2026-09-18 갱신** — 예전엔 피드백 없음 → 5% 오버레이 |
 | Disabled | Default와 동일(흰색 유지) | 1px `color/gray/900-5` = `rgba(3,9,26,0.05)` (10%→5%로 더 옅어짐) | Button의 "opacity 20%" 방식과 다르게, **테두리 알파 자체를 낮추는 방식**으로 비활성 표현 |
+
+> **⚠️ 2026-09-18 Figma hover 인터랙션 갱신.** Angular 미선택은 이전 판에서 "Hover/Pressed에 색 변화가 전혀 없다"였으나, **흰 배경 미선택에 옅은 raw-알파 오버레이(`gray/900-2` 2% · `gray/900-5` 5%)가 추가**되었습니다. 아래 Rounded Outlined=True도 같은 값으로 바뀌었습니다(4장).
 
 **Checked=True, Indeterminate=Off (체크)**
 기준 실측 16px: `2173:6688`(Default) · `2173:6692`(Hover) · `2173:6694`(Pressed) · `2173:6689`(Disabled)
@@ -115,8 +121,8 @@ Angular의 minus(부분선택) 글리프는 11.33 × 1.33px로 **두 Size가 완
 | State | 배경 | 테두리 | 아이콘 색 | 비고 |
 |---|---|---|---|---|
 | Default | `common/white-default` | 1px `color/gray/900-10` | `neutral/400` `#c2c4c8` | 미선택에도 **회색 체크가 보입니다**(6장 참고) |
-| Hover | `common/white-default` 위에 `color/interaction/light-gray/hover`(`gray-900` 5%) 오버레이 | 변화 없음 | `neutral/400` | Button Tertiary(라이트) Hover와 동일 토큰 |
-| Pressed | `interaction/light-gray/pressed`(`gray-900` 10%) 오버레이 | 변화 없음 | `neutral/400` | — |
+| Hover | `common/white-default` 위에 **`color/gray/900-2`(검정 2%)** 오버레이 | 변화 없음 | `neutral/400` | ⚠️ **2026-09-18 갱신** — 예전 `interaction/light-gray`(5%)에서 바뀜. Angular 미선택과 동일 값 |
+| Pressed | **`color/gray/900-5`(검정 5%)** 오버레이 | 변화 없음 | `neutral/400` | ⚠️ **2026-09-18 갱신** — 예전 10% → 5% |
 | Disabled | 변화 없음(흰색 유지) | `color/gray/900-5`로 옅어짐(10%→5%) | **`neutral/300` `#dbdcdf`** | 체크도 한 단계 더 옅어집니다 |
 
 **Checked=False, Outlined=False (테두리 없는 연한 회색 원)**
@@ -145,12 +151,17 @@ Angular의 minus(부분선택) 글리프는 11.33 × 1.33px로 **두 Size가 완
 
 ## 4. 인터랙션 오버레이 토큰 요약
 
-| 상황 | 토큰 | Hover | Pressed |
-|---|---|---|---|
-| 채워진 배경(Checked=True, 파란색) | `color/interaction/blue` | `#0D2D57` 15% | `#0D2D57` 30% |
-| 흰/연회색 배경(Checked=False) | `color/interaction/light-gray` | `#03091A` 5% | `#03091A` 10% |
+**2026-09-18 갱신 — 배경별로 3갈래입니다.**
 
-두 토큰 모두 `docs/DESIGN.md`·`tokens/colors.json`의 `interaction.blue`/`interaction.light-gray` 계열과 **정확히 일치**하며, Button 문서(5-2절)에서 Primary/Tertiary(라이트)에 쓰인 것과 동일한 패밀리입니다.
+| 배경 | 해당 변형 | 토큰 | Hover | Pressed |
+|---|---|---|---|---|
+| **흰 배경 미선택** | Angular 미선택 · Rounded Outlined=True | **`color/gray/900`(raw 알파)** | `#03091A` **2%** | `#03091A` **5%** |
+| 연회색 미선택 | Rounded Outlined=False | `color/interaction/light-gray` | `#03091A` 5% | `#03091A` 10% |
+| 파랑 선택 | Checked=True (Angular·Rounded) | `color/interaction/blue` | `#0D2D57` 15% | `#0D2D57` 30% |
+
+- **흰 배경 미선택 두 종류가 이제 raw 알파 `gray/900-2`(2%) · `gray/900-5`(5%)를 씁니다** — Chip Outlined과 같은 패밀리입니다. (예전엔 Angular 미선택=피드백 없음, Rounded Outlined=True=light-gray 5/10)
+- 연회색·파랑 배경은 예전 그대로 시맨틱 `interaction/*` 를 씁니다.
+- 값이 배경에 따라 갈리는 패턴은 Chip(Outlined=raw / Filled=시맨틱)과 동일합니다.
 
 **오버레이는 `fills` 배열의 2번째 항목**입니다(1번째가 베이스). 색을 읽을 때 `fills[0]`만 보면 오버레이를 놓칩니다 — Chip Filled Hover에서 실제로 겪은 오류입니다.
 
@@ -196,7 +207,7 @@ Plugin API로 벡터의 `fills`를 직접 읽은 결과, Rounded 미선택의 �
 ## 7. 접근성
 
 - **Focused 상태 없음**: Figma State 축에 Default/Hover/Pressed/Disabled 4종만 있고 **키보드 포커스 상태(Focused)가 정의되어 있지 않습니다**. 구현에서는 브랜드색 2px 포커스 링을 추가했으며 디자이너 확인이 필요합니다.
-- **Pressed 상태의 시각 피드백 부재(Angular 미선택)**: Angular Checked=False의 Pressed가 Default와 완전히 동일해, 마우스/터치 다운 시 아무런 시각적 피드백이 없습니다 — 의도적인지 확인 필요. **두 Size 모두 동일합니다.**
+- ~~**Pressed 상태의 시각 피드백 부재(Angular 미선택)**~~ → **2026-09-18 해소.** Figma hover 인터랙션 갱신으로 Angular 미선택에도 Hover(`gray/900-2` 2%) · Pressed(`gray/900-5` 5%) 오버레이가 추가되었습니다(3-1장·4장).
 - **Indeterminate의 ARIA 매핑**: Indeterminate=On은 HTML `input[type=checkbox]`의 `indeterminate` DOM 프로퍼티(및 `aria-checked="mixed"`)로 매핑해야 합니다. Figma 파일 자체에는 이 규정이 문서화되어 있지 않습니다.
 - **최소 터치 영역**: 16×16px는 물론 **새로 추가된 20×20px도 44px 권장 기준에 한참 못 미칩니다.** 실제 구현에서는 라벨 텍스트를 포함한 히트 영역 확장이 필요할 것으로 보이나 Figma 파일에 명시된 규정은 없습니다 — 확인 필요.
 - **Rounded 미선택 회색 체크의 대비**: `neutral/400`(#c2c4c8) 체크가 흰 배경 위에서 대비 약 2.0, Disabled의 `neutral/300`은 약 1.6입니다. 선택 여부를 색·형태만으로 구분하게 되므로 라벨을 함께 제공해야 합니다.
@@ -212,7 +223,7 @@ Plugin API로 벡터의 `fills`를 직접 읽은 결과, Rounded 미선택의 �
 - Disabled 선택 상태 배경 `neutral/400`(`#c2c4c8`) → `sys-color-neutral-400`(`ref-color-gray-400`)
 - Rounded 미선택(Outlined=False) 배경 `neutral/100`(`#f6f7f7`) → `sys-color-neutral-100`(`ref-color-gray-100`)
 - Rounded 미선택 체크 `neutral/400` · Disabled `neutral/300` → `sys-color-neutral-400` / `sys-color-neutral-300`
-- Hover/Pressed 오버레이 → `interaction/blue`(15%/30%), `interaction/light-gray`(5%/10%)
+- Hover/Pressed 오버레이 → 흰 배경 미선택 `gray/900-2`/`gray/900-5`(2%/5%), 연회색 미선택 `interaction/light-gray`(5%/10%), 파랑 선택 `interaction/blue`(15%/30%)
 
 **기존 토큰에 없음**
 - 박스 고정 치수 16×16px · 20×20px
@@ -220,12 +231,12 @@ Plugin API로 벡터의 `fills`를 직접 읽은 결과, Rounded 미선택의 �
 
 **확인 필요**
 - Focused 상태가 정의되지 않은 것에 대한 접근성 대응 방안
-- Angular 미선택 Pressed에 시각 피드백이 없는 것이 의도적인지
 - Rounded Outlined=False Disabled가 배경은 그대로 두고 체크 색만 바꾸는 것이 의도적인지
 - 최소 터치 영역 확장 규정 여부(20px에서도 44px 미만)
 
 **확인 완료 (다시 올리지 말 것)**
 - Angular 아이콘이 20px 박스에서도 16px로 고정인 것 → **2026-09-16 디자이너 확인, 의도된 설계**(2-1장)
+- Angular 미선택 Hover/Pressed 피드백 → **2026-09-18 Figma 갱신으로 추가됨**(`gray/900-2`·`gray/900-5`). 예전 "피드백 없음"은 옛 상태(3-1장·4장)
 
 ## 9. 샘플링에 사용한 노드 (부록, 48개 전수)
 

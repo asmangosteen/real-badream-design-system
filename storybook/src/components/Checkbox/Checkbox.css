@@ -77,16 +77,36 @@
   --bd-cb-fg: var(--sys-color-neutral-300);
 }
 
-/* ---------- Hover / Pressed 오버레이 ---------- */
-/* Angular 미선택은 스펙상 Hover/Pressed 에 색 변화가 전혀 없습니다 (실측 확인) */
-.bd-checkbox[data-type='rounded'][data-checked='false']:hover:not(:disabled),
-.bd-checkbox[data-type='rounded'][data-checked='false'][data-force-state='hover'] {
-  --bd-cb-overlay: var(--interaction-light-gray-hover);
+/* ---------- Hover / Pressed 오버레이 ----------
+   2026-09-18 Figma hover 인터랙션 갱신으로 배경별 오버레이가 3갈래로 나뉩니다.
+     · 흰 배경 미선택(Angular 미선택 · Rounded Outlined=True) → raw 알파 gray/900-2(2%) · gray/900-5(5%)
+     · 연회색 미선택(Rounded Outlined=False)              → interaction/light-gray 5% · 10%
+     · 파랑 선택                                          → interaction/blue 15% · 30%
+   ⚠️ 예전엔 Angular 미선택에 피드백이 아예 없었고, Rounded 흰 배경도 light-gray(5/10)였습니다.
+      둘 다 이번에 gray/900-2·5 로 바뀌었습니다(스펙 3장). */
+
+/* 흰 배경 미선택 = Angular 미선택(data-outlined 없음) + Rounded Outlined=True.
+   data-outlined 이 'false' 가 아닌 미선택을 한 번에 잡습니다. */
+.bd-checkbox[data-checked='false']:not([data-outlined='false']):hover:not(:disabled),
+.bd-checkbox[data-checked='false']:not([data-outlined='false'])[data-force-state='hover'] {
+  --bd-cb-overlay: var(--ref-color-gray-900-2);   /* 검정 2% */
 }
-.bd-checkbox[data-type='rounded'][data-checked='false']:active:not(:disabled),
-.bd-checkbox[data-type='rounded'][data-checked='false'][data-force-state='pressed'] {
-  --bd-cb-overlay: var(--interaction-light-gray-pressed);
+.bd-checkbox[data-checked='false']:not([data-outlined='false']):active:not(:disabled),
+.bd-checkbox[data-checked='false']:not([data-outlined='false'])[data-force-state='pressed'] {
+  --bd-cb-overlay: var(--ref-color-gray-900-5);   /* 검정 5% */
 }
+
+/* 연회색 미선택 = Rounded Outlined=False */
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-outlined='false']:hover:not(:disabled),
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-outlined='false'][data-force-state='hover'] {
+  --bd-cb-overlay: var(--interaction-light-gray-hover);   /* 검정 5% */
+}
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-outlined='false']:active:not(:disabled),
+.bd-checkbox[data-type='rounded'][data-checked='false'][data-outlined='false'][data-force-state='pressed'] {
+  --bd-cb-overlay: var(--interaction-light-gray-pressed);   /* 검정 10% */
+}
+
+/* 선택됨 = 파랑 */
 .bd-checkbox[data-checked='true']:hover:not(:disabled),
 .bd-checkbox[data-checked='true'][data-force-state='hover'] {
   --bd-cb-overlay: var(--interaction-blue-hover);
