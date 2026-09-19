@@ -80,6 +80,7 @@
 @property --bd-date-overlay   { syntax: '<color>'; inherits: true; initial-value: transparent; }
 @property --bd-tf-overlay     { syntax: '<color>'; inherits: true; initial-value: transparent; }
 @property --bd-ti-btn-overlay { syntax: '<color>'; inherits: true; initial-value: transparent; }
+@property --bd-pg-overlay     { syntax: '<color>'; inherits: true; initial-value: transparent; }
 /* Text Button 은 배경이 없어 오버레이 대신 글자색 합성 비율을 움직입니다 */
 @property --bd-tb-overlay-amount { syntax: '<percentage>'; inherits: true; initial-value: 0%; }
 
