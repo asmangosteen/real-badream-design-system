@@ -281,6 +281,24 @@ Figma 도 같습니다 — Chip 셋의 반응은 `Default→Hover`, `Hover→Pre
 }
 ```
 
+#### ⚠️ 반드시 **기본 규칙**에서 뺄 것 — 선택된 쪽에서만 끄면 절반만 고쳐집니다
+
+CSS 는 전환이 시작될 때 **도착 상태(after-change style)** 의 `transition-property` 를 씁니다.
+그래서 아래처럼 쓰면 **선택되는 방향만 즉시**가 되고 **선택이 풀리는 방향은 그대로 전환이 걸립니다.**
+
+```css
+/* ✗ 틀린 방식 — 절반만 막힙니다 */
+.cell { transition-property: --overlay, background-color, color, opacity; }
+.cell[data-selected='true'] { transition-property: opacity; }   /* 들어올 때만 즉시 */
+```
+
+결과는 **새 항목이 즉시 어두워지는데 이전 항목은 150ms 에 걸쳐 밝아지는** 것이라,
+두 항목이 한동안 같이 어두워 보이며 딸깍거립니다.
+2026-09-19 Pagination 에서 실제로 이 상태로 나갔고 디자이너가 "딸깍딸깍 눈이 아프다"고 지적했습니다
+(클릭 16ms 뒤 이전 칸 배경이 `rgb(122,127,136)` — 남색에서 흰색으로 가는 중간값이었습니다).
+
+**기본 규칙에서 빼면 양방향이 모두 즉시**가 되고, 선택된 쪽에서 `transition-property` 를 덮을 필요도 없습니다.
+
 **적용 현황 (2026-09-15 기준)** — 상태 축을 가진 컴포넌트 전부에 적용했습니다.
 
 | 컴포넌트 | 전환하지 않는 축 | 전환을 뺀 이유 |
@@ -289,6 +307,7 @@ Figma 도 같습니다 — Chip 셋의 반응은 `Default→Hover`, `Hover→Pre
 | Date Cell | Type(Selected·Pinned) | Pinned 가 배경 98% ↔ 20% · 글자 12% ↔ 98% 로 뒤집혀 대비 1.17 까지 하락 |
 | Checkbox | Checked | 흰 체크가 흰 배경에서 시작해 앞 25ms 동안 보이지 않음(대비 1.0 → 3.12) |
 | Radio Button | Checked | 흰 dot 이 같은 이유로 보이지 않음 |
+| Pagination | Selected | 배경 98% ↔ 27% · 글자 36% ↔ 98% 로 뒤집혀 전환의 47% 지점에서 숫자가 사라짐 |
 
 네 컴포넌트 모두 Figma 에도 해당 축의 전환이 연결돼 있지 않습니다. 원본이 이미 즉시 전환입니다.
 입력 피드백(hover/pressed 오버레이)은 전부 그대로 애니메이션됩니다.

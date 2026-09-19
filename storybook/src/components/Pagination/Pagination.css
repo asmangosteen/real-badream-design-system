@@ -31,7 +31,13 @@
   flex: 0 0 auto;
   -webkit-tap-highlight-color: transparent;
 
-  transition-property: --bd-pg-overlay, background-color, color, opacity;
+  /* ⚠️ **배경색·글자색은 전환하지 않습니다.** 이 둘은 Selected 축에서만 바뀌는데,
+     CSS 는 전환이 시작될 때 **도착 상태**의 `transition-property` 를 씁니다. 그래서
+     `[data-selected='true']` 쪽에서만 끄면 **선택이 풀리는 방향은 그대로 전환이 걸려**,
+     새 페이지는 즉시 어두워지는데 이전 페이지는 150ms 에 걸쳐 흰색으로 빠집니다
+     → 두 칸이 동시에 어두워 보이면서 딸깍거립니다(2026-09-19 디자이너 지적, 실측으로 확인).
+     Chip·Checkbox 와 같이 **기본 규칙에서 빼는 것**이 맞습니다(docs/INTERACTION.md 7.3 절). */
+  transition-property: --bd-pg-overlay, opacity;
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
@@ -77,7 +83,8 @@
   --bd-pg-bg: var(--sys-color-neutral-700);          /* #454C58 */
   --bd-pg-fg: var(--sys-color-common-white-default);
   cursor: default;
-  transition-property: opacity;
+  /* 여기서 transition-property 를 덮지 않습니다 — 기본 규칙이 이미 배경·글자색을
+     전환하지 않으므로 선택되는 방향·풀리는 방향이 **둘 다** 즉시입니다. */
 }
 
 /* 생략 표시 `···` — 2.5px 원 3개, gap 3 (Figma 실측) */

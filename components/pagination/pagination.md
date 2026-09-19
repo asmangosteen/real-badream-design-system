@@ -264,7 +264,17 @@ Figma 실측이 **4자리(`9999`)에서 64px**이고 Text Input `Size=M`의 좌�
 
 **조합 4개(`Page Numbering Group`·`Pagination`·`Per Page`·`Move to Page`·`Pagination Group`)에는 반응이 0건**입니다 — 상태는 안에 든 아톰과 재사용 컴포넌트가 담당합니다.
 
-**⚠️ `Selected` 축은 색을 전환하지 않습니다.** 배경이 흰색(98%)↔`neutral/700`(27%)로, 글자가 `neutral/600`(36%)↔흰색(98%)로 **서로 밝기가 뒤집힙니다.** 배경을 크로스페이드하면 중간에 글자와 같은 밝기를 지나가 숫자가 증발합니다 — Chip·Checkbox·Date Cell과 같은 규칙입니다(`docs/INTERACTION.md` 7.3절). Hover/Pressed 오버레이만 전환합니다.
+**⚠️ `Selected` 축은 색을 전환하지 않습니다 — 양방향 모두 즉시입니다.**
+
+배경이 흰색(98%)↔`neutral/700`(27%)로, 글자가 `neutral/600`(36%)↔흰색(98%)로 **서로 밝기가 뒤집힙니다.** 계산하면 전환의 **약 47% 지점에서 배경과 글자 밝기가 같아져 숫자가 사라집니다.** Chip·Checkbox·Date Cell과 같은 규칙입니다(`docs/INTERACTION.md` 7.3절). Hover/Pressed 오버레이와 Disabled `opacity`만 전환합니다.
+
+```css
+.bd-pg-cell { transition-property: --bd-pg-overlay, opacity; }
+```
+
+> **⚠️ 한 번 절반만 고쳤다가 되돌린 부분입니다.** 처음엔 기본 규칙에 `background-color`·`color`를 두고 `[data-selected='true']`에서만 `transition-property: opacity`로 껐습니다. CSS는 **도착 상태**의 `transition-property`를 쓰므로 **선택이 풀리는 방향은 그대로 150ms 전환이 걸렸고**, 새 페이지는 즉시 어두워지는데 이전 페이지는 천천히 밝아져 **두 칸이 동시에 어두워 보이며 딸깍거렸습니다**(2026-09-19 디자이너 지적, 클릭 16ms 뒤 이전 칸 배경이 `rgb(122,127,136)`인 것을 실측으로 확인). **반드시 기본 규칙에서 빼야 합니다.**
+>
+> 대안으로 "알약이 미끄러지는" 인디케이터 방식도 검토했으나 **2026-09-19 디자이너 결정으로 즉시 전환을 유지**합니다. Figma 원본도 Selected 축에 반응이 없습니다.
 
 ## 11. 접근성
 
