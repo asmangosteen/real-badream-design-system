@@ -23,6 +23,7 @@ const DONE = [
   ['Avatar', '7개', 'components-avatar--docs'],
   ['Page Control', '70개 · 축소 규칙', 'components-page-control--docs'],
   ['Scroll Bar', '6개 · 표시 전용 인디케이터', 'components-scroll-bar--docs'],
+  ['Pagination', '7개 컴포넌트 · ⚠️ 웹 전용', 'components-pagination--docs'],
   ['Status Bar', '8개 · ⚠️ 원본 에셋 필요', 'components-status-bar--docs'],
   ['Footer', '2개 · ⚠️ 홈 전용', 'components-footer--docs'],
   ['Icon', '648개 SVG 갤러리', 'components-icon--docs'],

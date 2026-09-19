@@ -338,6 +338,13 @@
       "status": "문서화 완료",
       "note": "State(Close/Open) 총 2개 인스턴스, 전수 실측. 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용(색상 오버라이드 관련 내용은 components/divider/divider.md 참고). 하단 padding 120px은 Footer 전용 의도된 예외로, 홈 화면에 추후 추가될 Bottom Navigation Bar와 겹치지 않기 위한 여유 공간(사용자 확인)"
     },
+    "pagination": {
+      "spec": "components/pagination/pagination.md",
+      "machineReadable": "components/pagination/pagination.json",
+      "status": "문서화 완료",
+      "note": "7개 컴포넌트(아톰 Page Numbering 15변형·Page Direction 8변형 + 조합 Page Numbering Group 4변형·Pagination·Per Page·Move to Page·Pagination Group), 전수 실측(2026-09-19). ⚠️ 이 저장소에서 유일한 웹 전용 컴포넌트 — hover 가 1급 상태이고 기준 폭 1080px 이며 칸 38x38 이 모바일 권장 44px 미달이라 모바일에 쓰지 않음. 공통 규격 높이 38 · radius 10(radius/05) · 배경 흰색 · 글자 neutral/600 · Hover gray/900-2(2%) · Pressed gray/900-5(5%) · Selected neutral/700 단색 + 흰 글자 · Disabled opacity 40%. 번호는 항상 최대 9칸이고 넘으면 ···로 접음(현재 ≤ 5 → Rear · 현재 ≥ 총−4 → Front · 그 외 Both — 레이아웃 3종은 Figma 실측, 전환 경계는 2026-09-19 디자이너 지시이며 현재 좌우에 번호가 2개씩 보이도록 잡음). Per Page 는 Dropdown, Move to Page 는 Text Input + Button 인스턴스를 재사용. Pagination Group 폭은 Figma 1080 이 아니라 컨테이너 100%(디자이너 확인). Move to Page 는 범위 초과 입력을 자동 보정. ⚠️ Per Page 드롭다운이 여는 Select Group(2686:7432)·Select(2662:5203)는 아직 저장소에 없어 스토리북에서 임시 목록으로 대체함.",
+      "platform": "web-only"
+    },
     "scrollBar": {
       "spec": "components/scroll-bar/scroll-bar.md",
       "machineReadable": "components/scroll-bar/scroll-bar.json",

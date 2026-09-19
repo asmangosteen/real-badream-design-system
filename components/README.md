@@ -52,6 +52,7 @@
 | Date Picker Group | [components/date-time-picker/date-picker-group/date-picker-group.md](./date-time-picker/date-picker-group/date-picker-group.md) | 완료 | 2개 인스턴스 (Type Horizontal/Vertical). Date Picker 2개를 Divider로 구분해 나란히 배치, 두 패널은 동기화되지 않는 독립 캘린더(사용자 확인). 전수 실측 |
 | Footer | [components/footer/footer.md](./footer/footer.md) | 완료 | 2개 인스턴스 (State Close/Open). 바드림 앱 홈 화면 최하단 전용 컴포넌트(사용자 확인, 강한 제약사항). 기본 Close, Header 탭으로 Close⇄Open 토글(사용자 확인, Figma 프로토타입 모션 데이터 없음). Divider를 Horizontal(Main-Sub 구분)·Vertical(기타정보 링크 구분) 양쪽으로 재사용(색상 오버라이드는 [Divider](./divider/divider.md) 문서 참고). 하단 padding 120px은 Bottom Navigation Bar 대비 Footer 전용 의도된 예외(사용자 확인). 전수 실측 |
 | Scroll Bar | [components/scroll-bar/scroll-bar.md](./scroll-bar/scroll-bar.md) | 완료 | 6개 인스턴스 (Type Vertical/Horizontal × Position Top/Middle/Bottom). State 축 없는 **순수 표시용** 스크롤 인디케이터 — 드래그 불가(디자이너 확정). `position: absolute` 로 겹쳐 놓고, 스크롤 중에만 노출됩니다. **Position 은 상태 3단계가 아니라 진행률 0/50/100% 예시**이고 thumb 길이도 콘텐츠 비율로 계산합니다(최소 24px) — Figma 의 60px·y좌표는 예시값입니다. 트랙 배경 없음(thumb 만 보임). 전수 실측 |
+| Pagination | [components/pagination/pagination.md](./pagination/pagination.md) | 완료 | **7개 컴포넌트**(아톰 2 + 조합 5) — Page Numbering 15변형 · Page Direction 8변형 · Page Numbering Group 4변형 + Pagination · Per Page · Move to Page · Pagination Group. ⚠️ **이 저장소에서 유일한 웹 전용 컴포넌트**(hover 가 1급 상태 · 기준 폭 1080 · 칸 38px). 번호는 **최대 9칸**이고 넘으면 `···` 로 접습니다(현재 ≤ 5 → Rear · 현재 ≥ 총−4 → Front · 그 외 Both — 현재 좌우에 번호 2개씩 보장). Per Page 는 Dropdown, Move to Page 는 Text Input + Button 인스턴스를 재사용합니다. 전수 실측 |
 
 ## components/date-time-picker/란
 

@@ -112,7 +112,7 @@ Figma 패널에 보이는 150ms/50ms 와 API 가 돌려주는 312.53ms/104.18ms 
 | Time Field | 3 | 2 | `components/date-time-picker/time-field/` |
 | Text Input | 768 | 192 | `components/text-input/text-input/` |
 | Dropdown | 288 | 96 | `components/dropdown/` |
-| Page Numbering · Page Direction | 15+10 | 10 | 저장소 미구현 |
+| Page Numbering · Page Direction | 15+8 | 10 | `components/pagination/` |
 | Search Box | 16 | 19 | 저장소 미구현 |
 
 **예외 — Search Box** 만 Trigger 구성이 다릅니다.

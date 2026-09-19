@@ -1,0 +1,228 @@
+/* ============================================================
+   Pagination — 스펙: components/pagination/pagination.md (7개 컴포넌트 전수 실측)
+   ⚠️ **웹 전용 컴포넌트입니다.** 저장소의 다른 컴포넌트와 달리 모바일 화면에 쓰지 않습니다.
+      Hover 가 1급 상태이고 폭이 1080 기준이라 모바일에서는 성립하지 않습니다(스펙 1장).
+
+   일곱 개가 한 파일을 공유합니다 — 두 아톰(Page Numbering · Page Direction)이
+   **크기(38 높이)·radius(10)·배경·Hover/Pressed 오버레이가 완전히 같아서** 규칙을 한 번만 씁니다.
+   ============================================================ */
+
+/* ---------- 두 아톰이 공유하는 칸 ----------
+   Hover `gray/900-2`(2%) · Pressed `gray/900-5`(5%) 는 2026-09-18 갱신된
+   흰 배경 오버레이 규칙과 같은 값입니다(Checkbox 흰 배경 미선택 · Chip Outlined 과 동일 패밀리). */
+.bd-pg-cell {
+  --bd-pg-overlay: transparent;
+  --bd-pg-bg: var(--sys-color-common-white-default);
+  --bd-pg-fg: var(--sys-color-neutral-600);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ref-radius-05);      /* 10px */
+  /* Figma 와 동일한 2겹 합성: 오버레이(위) + 베이스(아래) */
+  background-image: linear-gradient(var(--bd-pg-overlay), var(--bd-pg-overlay));
+  background-color: var(--bd-pg-bg);
+  color: var(--bd-pg-fg);
+  cursor: pointer;
+  flex: 0 0 auto;
+  -webkit-tap-highlight-color: transparent;
+
+  transition-property: --bd-pg-overlay, background-color, color, opacity;
+  transition-duration: var(--bd-motion-duration);
+  transition-timing-function: var(--bd-motion-easing);
+}
+.bd-pg-cell:hover:not(:disabled):not([data-selected='true']),
+.bd-pg-cell[data-force-state='hover'] {
+  --bd-pg-overlay: var(--ref-color-gray-900-2);    /* 검정 2% */
+}
+.bd-pg-cell:active:not(:disabled):not([data-selected='true']),
+.bd-pg-cell[data-force-state='pressed'] {
+  --bd-pg-overlay: var(--ref-color-gray-900-5);    /* 검정 5% */
+  --bd-motion-duration: var(--bd-motion-pressed);
+}
+/* Disabled 는 Button 과 같은 opacity 방식입니다 — Figma 실측 40% */
+.bd-pg-cell:disabled {
+  opacity: var(--ref-opacity-40);          /* 40% */
+  cursor: not-allowed;
+  --bd-pg-overlay: transparent;
+}
+.bd-pg-cell:focus-visible {
+  /* ⚠️ Figma 에 Focused 상태 정의가 없어 구현에서 추가했습니다 (스펙 8장) */
+  outline: 2px solid var(--sys-color-brand-primary-default);
+  outline-offset: 2px;
+}
+
+/* ---------- Page Numbering ---------- */
+.bd-page-numbering {
+  /* Figma Contents 축: `0 ~ 000`(1~3자리)=38 · `0000`(4자리 이상)=44 · Abbreviated=38.
+     패딩 8/4 안에 내용 칸 30(또는 36)×22 가 들어갑니다. */
+  width: 38px;
+  padding: 8px 4px;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-2-size);          /* Body 2/14 M */
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  font-weight: var(--font-weight-medium);
+}
+.bd-page-numbering[data-contents='0000'] { width: 44px; }
+
+/* 현재 페이지. ⚠️ 선택 축은 색을 전환하지 않습니다 —
+   배경 98%↔27% · 글자 36%↔98% 로 밝기가 뒤집혀 전환 중 라벨이 증발합니다
+   (docs/INTERACTION.md 7.3 절, Chip·Checkbox 와 같은 규칙). */
+.bd-page-numbering[data-selected='true'] {
+  --bd-pg-bg: var(--sys-color-neutral-700);          /* #454C58 */
+  --bd-pg-fg: var(--sys-color-common-white-default);
+  cursor: default;
+  transition-property: opacity;
+}
+
+/* 생략 표시 `···` — 2.5px 원 3개, gap 3 (Figma 실측) */
+.bd-page-numbering[data-contents='abbreviated'] { cursor: default; }
+.bd-page-numbering__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 30px;
+  height: 22px;
+}
+.bd-page-numbering__dots i {
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: var(--ref-radius-12);
+  background-color: currentColor;
+}
+
+/* ---------- Page Direction ---------- */
+.bd-page-direction {
+  width: 38px;
+}
+
+/* ---------- Page Numbering Group ----------
+   9칸 × 38 = 342px. gap 은 0 이고 칸 자체의 좌우 패딩(4)이 간격을 만듭니다. */
+.bd-page-numbering-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  flex: 0 0 auto;
+}
+
+/* ---------- Pagination ---------- */
+.bd-pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;                                   /* 38 + 342 + 38 = 418 */
+  flex: 0 0 auto;
+}
+
+/* ---------- Per Page ---------- */
+.bd-per-page {
+  position: relative;                        /* 목록이 이 기준으로 뜹니다 */
+  display: inline-flex;
+  align-items: center;
+  gap: 0;                                    /* 80 + 56 = 136 */
+  flex: 0 0 auto;
+}
+.bd-per-page__dropdown { width: 80px; }
+.bd-per-page__suffix {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 var(--ref-spacing-06);          /* 0 8px */
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-2-size);  /* Body 2/14 R */
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  color: var(--sys-color-neutral-600);
+  white-space: nowrap;
+}
+
+/* 열리는 목록. ⚠️ Figma 원본은 `Select Group` 컴포넌트이고 아직 저장소에 없습니다 —
+   여기 목록은 **동작만 보여주는 임시 대체**입니다(2026-09-19 디자이너 결정, 스펙 6장).
+   위치 규칙(드롭다운 아래 4px)만 Figma 지시대로 지켰습니다. */
+.bd-per-page__list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 10;
+  min-width: 80px;
+  margin: 0;
+  padding: var(--ref-spacing-04) 0;
+  list-style: none;
+  background: var(--sys-color-common-white-default);
+  border-radius: var(--ref-radius-05);
+  box-shadow: 0 4px 16px var(--ref-color-gray-900-10);
+}
+.bd-per-page__list button {
+  display: block;
+  width: 100%;
+  padding: var(--ref-spacing-06) var(--ref-spacing-08);
+  border: 0;
+  background: none;
+  text-align: left;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-2-size);
+  color: var(--sys-color-neutral-800);
+  cursor: pointer;
+}
+.bd-per-page__list button:hover { background: var(--ref-color-gray-900-2); }
+.bd-per-page__list button[aria-selected='true'] { color: var(--sys-color-brand-primary-default); }
+
+/* ---------- Move to Page ---------- */
+.bd-move-to-page {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ref-spacing-06);                /* 8px — 입력 묶음과 버튼 사이 */
+  flex: 0 0 auto;
+}
+.bd-move-to-page__input-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;                                    /* 64 + 58 = 122 */
+}
+/* 입력칸 폭 = 좌우 패딩 24px + 총 페이지 자릿수 × 10px.
+   Figma 실측이 4자리(9999)에서 64px 이고 Text Input 좌우 패딩이 12+12=24 이므로
+   내용칸 40 ÷ 4자리 = 자리당 10px 입니다. 1자리 34 · 2자리 44 · 3자리 54 · 4자리 64(Figma).
+   ⚠️ Figma 에는 4자리 예시 하나뿐입니다 — 자릿수 비례는 2026-09-19 디자이너 지시입니다. */
+.bd-move-to-page__field {
+  --bd-mtp-digits: 4;
+  width: calc(24px + var(--bd-mtp-digits) * 10px);
+}
+.bd-move-to-page__total {
+  display: flex;
+  align-items: center;
+  gap: var(--ref-spacing-02);                /* 2px — "/" 와 총 페이지 사이 */
+  height: 38px;
+  padding: 0 var(--ref-spacing-06);          /* 0 8px */
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-2-size);  /* Body 2/14 R */
+  line-height: var(--typography-body-2-line-height);
+  letter-spacing: var(--typography-body-2-letter-spacing);
+  color: var(--sys-color-neutral-600);
+  white-space: nowrap;
+}
+
+/* ---------- Pagination Group ----------
+   ⚠️ Figma 는 폭 1080 고정이지만 **구현은 100%** 입니다 (2026-09-19 디자이너 확인).
+      1080 은 기준 폭일 뿐이고 웹에서는 컨테이너를 따라갑니다 — Navigation Bar Top 과 같은 결론.
+      "Figma 실측과 다르다"고 되돌리지 마세요(스펙 5장). */
+.bd-pagination-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* 32px — 스페이싱 스케일이 24px(`ref-spacing-12`)에서 끝나 대응 토큰이 없습니다(스펙 9장) */
+  gap: 32px;
+  width: 100%;
+}
+/* 세 칸 중 일부를 숨겨도 나머지 위치가 유지되도록 빈 자리를 남깁니다 —
+   Pagination 이 가운데에 그대로 있어야 하기 때문입니다(Frame 1 예시 2~4번째 줄). */
+.bd-pagination-group__slot { display: flex; align-items: center; }
+.bd-pagination-group__slot[data-side='start'] { justify-content: flex-start; }
+.bd-pagination-group__slot[data-side='center'] { justify-content: center; flex: 0 0 auto; }
+.bd-pagination-group__slot[data-side='end'] { justify-content: flex-end; }
+.bd-pagination-group__slot[data-side='start'],
+.bd-pagination-group__slot[data-side='end'] { flex: 1 1 0; min-width: 0; }
