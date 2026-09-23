@@ -1,3 +1,4 @@
+import { Squircle } from '../../shared/Squircle';
 import './SegmentedControlItem.css';
 
 export type SegItemSize = 'xs' | 's' | 'm' | 'l' | 'xl';
@@ -37,6 +38,7 @@ export function SegmentedControlItem({
       data-selected={selected}
       onClick={onClick}
     >
+      <Squircle />
       {children}
     </button>
   );

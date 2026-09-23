@@ -51,5 +51,19 @@
     "각 셀에 실제 날짜·Type(Current/Selected/Pinned/Null)이 매핑되는 규칙(이 심볼은 7개 전부 Default 플레이스홀더)",
     "Week 컨테이너의 시맨틱 마크업(행 역할) 규정",
     "요일 순서(일~토)가 Week Header와 세로로 정렬되는 방식의 명시적 확인"
-  ]
+  ],
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "원·알약이라 모양 변화 없음",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "날짜 칸(Date 인스턴스)",
+        "radius": "999px",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(원)"
+      }
+    ]
+  }
 }

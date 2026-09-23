@@ -1,4 +1,5 @@
 import { Icon } from '../Icon/Icon';
+import { Squircle } from '../../shared/Squircle';
 import './Checkbox.css';
 
 export type CheckboxType = 'angular' | 'rounded';
@@ -91,6 +92,7 @@ export function Checkbox({
       onClick={() => onChange?.(!checked)}
     >
       <span className="bd-checkbox__box">
+        <Squircle />
         {showIcon && (
           <Icon name={isIndeterminate ? 'minus' : 'check'} category="outlined" size={iconSize} />
         )}

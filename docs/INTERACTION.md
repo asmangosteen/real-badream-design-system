@@ -249,6 +249,8 @@ CSS 는 전환이 시작될 때 **도착 상태(after-change style)** 의 `trans
 → **`box-shadow: inset 0 0 0 <두께> <색>`** 으로 그립니다.
 border-box 의 border 와 같은 자리에 같은 두께로 그려지면서 레이아웃에 전혀 영향을 주지 않습니다.
 (Time Field 의 Typing 상태 파란 테두리가 이 방식입니다.)
+2026-09-23 부터는 Corner Smoothing 때문에 같은 원리(두께 고정 · 색만 전환 · 안쪽 · 레이아웃 무영향)를
+squircle 레이어의 `::after` 가 이어받아 그립니다 — `docs/DESIGN.md` 9.2, `storybook/src/shared/Squircle.tsx`.
 
 ### 7.3 상태 축(선택·체크)은 색을 전환하지 않습니다
 

@@ -13,6 +13,7 @@ import {
   type DateRange,
 } from '../Calendar/calendar-data';
 import { TimePickerGroup, type TimePickerGroupProps } from '../TimePicker/TimePicker';
+import { Squircle } from '../../shared/Squircle';
 import './DatePicker.css';
 
 /* ==================== Calendar Header ==================== */
@@ -510,7 +511,9 @@ export function YearMonthWheel({
   return (
     <div className={['bd-ym-wheel', className].filter(Boolean).join(' ')}>
       {/* 가운데 선택 알약 — 두 열 뒤에 깔립니다 */}
-      <div className="bd-ym-wheel__pill" aria-hidden="true" />
+      <div className="bd-ym-wheel__pill" aria-hidden="true">
+        <Squircle />
+      </div>
       <div className="bd-ym-wheel__cols">
         <WheelColumn
           values={years}

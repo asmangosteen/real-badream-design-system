@@ -1,5 +1,6 @@
 import { Avatar, type AvatarProps } from '../Avatar/Avatar';
 import { Icon } from '../Icon/Icon';
+import { Squircle } from '../../shared/Squircle';
 import './Chip.css';
 
 export type ChipSize = 's' | 'm' | 'l';
@@ -133,6 +134,7 @@ export function Chip({
       data-force-state={forceState}
       onClick={onClick}
     >
+      <Squircle />
       {shows.avatar && avatar}
       {shows.icon && shows.position === 'left' && icon}
       <span>{children}</span>
@@ -214,6 +216,7 @@ export function FilterChip({
       data-force-state={forceState}
       onClick={onClick}
     >
+      <Squircle />
       {showsAvatar && (
         <span className="bd-chip__avatar">
           <Avatar src={avatarSrc} alt="" size={16} {...avatarProps} />

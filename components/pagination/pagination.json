@@ -265,5 +265,44 @@
     "pageNumberingGroup": { "stableNone": "2287:8449", "rear": "2287:8447", "both": "2287:8448", "front": "2287:8446" },
     "singles": { "pagination": "2287:8785", "perPage": "2287:8764", "moveToPage": "2287:8763", "paginationGroup": "2287:13983" },
     "exampleFrame": "2292:22294"
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Page Numbering",
+        "radius": "10px (radius/05)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Page Direction",
+        "radius": "10px (radius/05)",
+        "figmaSmoothing": "0%",
+        "implementation": "60% 로 적용"
+      },
+      {
+        "layer": "Per Page 상자(Dropdown)",
+        "radius": "10px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Dropdown)"
+      },
+      {
+        "layer": "Move to Page 입력칸·버튼(Text Input · Button)",
+        "radius": "10px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (각 컴포넌트)"
+      }
+    ],
+    "notes": [
+      "⚠️ Page Direction 은 Figma 에서 smoothing 0% 이지만, 옆의 Page Numbering 과 맞춰 60% 로 구현합니다 (2026-09-23 디자이너 결정 — Figma 는 디자이너가 수정 예정). 두 아톰이 같은 칸 규칙(.bd-pg-cell)을 공유하므로 한 번에 적용됩니다.",
+      "배경색은 여전히 전환하지 않습니다(선택 전환 딸깍거림 방지 규칙 유지).",
+      "Per Page 목록은 Figma Select Group 의 임시 대체라 Figma 값이 없어 적용하지 않습니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.",
+      "포커스 링(outline)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정)."
+    ]
   }
 }

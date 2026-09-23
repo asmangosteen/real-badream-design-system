@@ -183,3 +183,14 @@ Button·Icon Button·Badge·Text Input·Chip 에서 쓰는 방식과 같습니�
 | Dark·Blur·Off | `2555:13870` |
 
 `get_metadata`로 10개 변형 전체의 심볼 목록을 확인했고(Background=No에는 Line=On 조합 자체가 없음을 이때 확인), `get_variable_defs`·`get_motion_context`는 최상위 프레임(`2555:13875`)에서 공용으로 확보했습니다. Blur+Line=On 조합(Light `2555:13868`, Dark `2555:13867`)은 이번 6개 표본에 포함되지 않아 구분선 색상 패턴은 Default 기준으로 추정만 했습니다(확인 필요, 3장).
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Icon Button 인스턴스 | 12px | 60% | 적용 (Icon Button) |
+| Status Bar 의 알약 | 100px | 0% | 해당 없음(알약) |

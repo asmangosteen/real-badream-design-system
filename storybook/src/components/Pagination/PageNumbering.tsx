@@ -1,5 +1,6 @@
 import { Icon } from '../Icon/Icon';
 import { toNumberingContents, type NumberingContents } from './pagination-logic';
+import { Squircle } from '../../shared/Squircle';
 import './Pagination.css';
 
 export type { NumberingContents };
@@ -60,6 +61,7 @@ export function PageNumbering({
       aria-hidden={isAbbr ? true : undefined}
       onClick={() => !isAbbr && page !== undefined && onClick?.(page)}
     >
+      <Squircle />
       {isAbbr ? (
         // `···` 는 글자가 아니라 2.5px 원 3개입니다 (Figma 실측)
         <span className="bd-page-numbering__dots" aria-hidden="true">
@@ -107,6 +109,7 @@ export function PageDirection({
       aria-label={ariaLabel ?? (prev ? '이전 페이지' : '다음 페이지')}
       onClick={onClick}
     >
+      <Squircle />
       <Icon name={prev ? 'chevron_left' : 'chevron_right'} category="outlined" size={20} />
     </button>
   );

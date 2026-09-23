@@ -18,7 +18,10 @@
   box-sizing: border-box;
   flex: 1 1 auto;
   min-width: 0;
-  background-color: var(--sys-color-common-white-default);
+  /* 배경·테두리는 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing).
+     Dropdown 에서는 이 상자가 <button> 이라 브라우저 기본 배경을 지워야 합니다 */
+  background: none;
+  --bd-ti-bg: var(--sys-color-common-white-default);
   color: var(--sys-color-neutral-800);
 /* ⚠️ 테두리를 `border` 가 아니라 **안쪽 그림자**로 그립니다 (2026-09-15).
    Figma 의 스트로크는 전부 `strokeAlign: INSIDE` 라 **박스 크기를 키우지 않습니다** —
@@ -27,9 +30,10 @@
    CSS `border` 는 크기가 auto 인 축에서 바깥 크기에 더해지므로, 그대로 옮기면
    테두리가 있는 변형만 가로·세로로 2px 씩 커집니다(실제로 그런 상태였습니다).
    `box-shadow: inset` 은 border-box 의 border 와 같은 자리에 같은 두께로 그려지면서
-   레이아웃에 전혀 영향을 주지 않습니다. */
+   레이아웃에 전혀 영향을 주지 않습니다.
+   (2026-09-23) 지금은 Corner Smoothing 때문에 <Squircle /> 레이어의 ::after 가 같은 자리에
+   squircle 모양으로 그립니다 — 크기에 영향이 없다는 성질은 그대로입니다. */
   --bd-ti-border: var(--ref-color-gray-900-10);
-  box-shadow: inset 0 0 0 var(--ref-borderwidth-02) var(--bd-ti-border);
 }
 .bd-text-input[data-size='s'] .bd-text-input__box {
   padding: var(--ref-spacing-05) var(--ref-spacing-07);   /* 6 / 10 */
@@ -147,7 +151,7 @@
   --bd-ti-border: var(--sys-color-theme-destructed-default);
 }
 .bd-text-input[data-state='disabled'] .bd-text-input__box {
-  background-color: var(--ref-color-gray-900-5);
+  --bd-ti-bg: var(--ref-color-gray-900-5);
   --bd-ti-border: transparent;
 }
 
@@ -158,8 +162,9 @@
   cursor: pointer;
   font-family: inherit;
   font-weight: var(--font-weight-medium);
-  background-color: var(--sys-color-brand-primary-default);
-  background-image: linear-gradient(var(--bd-ti-btn-overlay, transparent), var(--bd-ti-btn-overlay, transparent));
+  /* 배경·오버레이는 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
+  background: none;
+  --bd-ti-btn-bg: var(--sys-color-brand-primary-default);
   color: var(--sys-color-common-white-default);
 }
 /* 누를 수 있는 버튼이므로 Button 의 Primary 와 같은 오버레이를 씁니다 */
@@ -190,7 +195,7 @@
 /* Selected/Typing + Destructed 면 버튼 배경도 빨강으로 바뀝니다 */
 .bd-text-input[data-destructed='true'][data-state='selected'] .bd-text-input__button,
 .bd-text-input[data-destructed='true'][data-state='typing'] .bd-text-input__button {
-  background-color: var(--sys-color-theme-destructed-default);
+  --bd-ti-btn-bg: var(--sys-color-theme-destructed-default);
 }
 .bd-text-input[data-state='disabled'] .bd-text-input__button {
   opacity: var(--ref-opacity-20);
@@ -211,11 +216,8 @@
    State 가 바뀌면 테두리뿐 아니라 좌우 아이콘·단위·Type Box·Label 의 색까지
    같이 움직여야 한 덩어리로 보입니다. 각 서브 아톰은 자기 CSS 에서 color 를 전환하고,
    `--bd-motion-duration` 은 상속되므로 여기서 한 번만 정해 주면 전부 따라옵니다. */
-.bd-text-input__box {
-  transition-property: background-color, box-shadow;
-  transition-duration: var(--bd-motion-duration);
-  transition-timing-function: var(--bd-motion-easing);
-}
+/* 박스의 배경색·테두리색 전환은 <Squircle /> 레이어가 맡습니다(아래 --bd-sq-transition).
+   레이어는 --bd-motion-duration 을 상속받으므로 위 State 별 시간 규칙이 그대로 적용됩니다. */
 .bd-text-input__icon,
 .bd-text-input__unit,
 .bd-text-input__input,
@@ -225,7 +227,7 @@
   transition-timing-function: var(--bd-motion-easing);
 }
 .bd-text-input__button {
-  transition-property: --bd-ti-btn-overlay, background-color, opacity;
+  transition-property: --bd-ti-btn-overlay, opacity;   /* 배경색 전환은 <Squircle /> 레이어 */
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
@@ -237,3 +239,21 @@
 .bd-text-input[data-auto='true']:hover { --bd-motion-duration: var(--bd-motion-hover); }
 /* 우측 확정 버튼을 누르는 중 = 50ms (Button Primary 와 같은 규칙) */
 .bd-text-input__button:active:not(:disabled) { --bd-motion-duration: var(--bd-motion-pressed); }
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Text Input · Text Input Group · Dropdown 의 Input 박스(radius 10·12)와
+   우측 확정 버튼(radius 10·12)에 Corner smoothing 60% 가 걸려 있습니다.
+   둘 다 첫 자식 <Squircle /> 레이어가 배경·오버레이·테두리를 squircle 로 칠합니다.
+   Dropdown 의 선택 상자도 `.bd-text-input__box` 라 이 규칙을 그대로 씁니다.
+   포커스 링(outline)은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-text-input__box > .bd-sq {
+  --bd-sq-fill: var(--bd-ti-bg);
+  --bd-sq-stroke: var(--bd-ti-border);
+  --bd-sq-stroke-width: var(--ref-borderwidth-02);
+  --bd-sq-transition: background-color;   /* 예전 박스의 background-color · box-shadow 전환 */
+}
+.bd-text-input__button > .bd-sq {
+  --bd-sq-fill: var(--bd-ti-btn-bg);
+  --bd-sq-overlay: var(--bd-ti-btn-overlay, transparent);
+  --bd-sq-transition: background-color;
+}

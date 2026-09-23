@@ -77,5 +77,28 @@
   ],
   "openQuestions": [
     "그룹 전체 및 개별 필드의 접근성 마크업(fieldset/aria-label/aria-hidden) 연결 규정"
-  ]
+  ],
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "자식 컴포넌트가 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Time Field",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Time Field)"
+      },
+      {
+        "layer": "화살표(Icon Button)",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Icon Button)"
+      }
+    ],
+    "notes": [
+      "콜론의 점(4×4 원)은 해당 없습니다."
+    ]
+  }
 }

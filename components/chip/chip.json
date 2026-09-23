@@ -112,5 +112,49 @@
   "sampledNodeIds": {
     "selection": ["2270:841", "2270:836", "2270:824", "2270:761", "2270:798", "2270:793", "2270:837", "2270:835", "2270:829", "2270:833", "2273:2741", "2270:827", "2270:782", "2270:819", "2270:821", "2270:755", "2270:757"],
     "filter": ["2275:3568", "2275:3576", "2275:3584", "2275:3592", "2275:3632", "2275:3600", "2275:4023", "2275:3893", "2275:3268"]
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Selection S",
+        "radius": "6px (radius/03)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Selection M",
+        "radius": "10px (radius/05)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Selection L",
+        "radius": "12px (radius/06)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Filter",
+        "radius": "999px (radius/12)",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(알약)"
+      },
+      {
+        "layer": "안쪽 Avatar 인스턴스",
+        "radius": "999px",
+        "figmaSmoothing": "0%",
+        "implementation": "해당 없음(원)"
+      }
+    ],
+    "notes": [
+      "Outlined 테두리도 같은 squircle 을 따릅니다. 선택 축은 여전히 전환하지 않습니다.",
+      "완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.",
+      "포커스 링(outline)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정)."
+    ]
   }
 }

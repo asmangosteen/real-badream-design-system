@@ -103,3 +103,14 @@ Caption의 `spacing/00`(-2px)은 **CSS `gap`으로 옮기면 선언째로 무시
 | **Caption** | `2555:12094` | `2555:12447` |
 
 8개 변형 전체가 `get_design_context` 1회 호출(`2555:12097`)로 병합 코드로 반환되었습니다. `get_variable_defs`·`get_motion_context`는 Navigation Bar 상위 그룹(`2612:16631`)에서 공용으로 확보했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Segmented Control 컨테이너(XS) | 8px | 60% | 적용 (Segmented Control) |
+| Segmented Control 알약 | 6px | 60% | 적용 (Segmented Control) |

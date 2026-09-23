@@ -237,3 +237,21 @@ Selected/Typing 으로 넘어가지 않아 자동 State 전환이 죽습니다.
 | 토글 축(Size=M, State=Default) | Show Button=False `2114:8648` · Show Label=False `2119:10903` · Supporting Text=False `2119:11203` · Left Icon=False `2119:10149` · Right Icon=False `2119:10048` · 5개 전부 False `2115:9089` |
 
 전체 768개 인스턴스의 축 구조는 `get_metadata` 전수 조사(오케스트레이터 사전 확보)로 도출했습니다. `get_variable_defs`는 S/M/L 대표 노드와 Disabled 노드에서 각각 호출해 확보했고, `get_motion_context`는 최상위 프레임(`2114:8709`, recursive=true)에 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Input 박스 S · M | 10px (`radius/05`) | 60% | 적용 |
+| Input 박스 L | 12px (`radius/06`) | 60% | 적용 |
+| 우측 확정 버튼(Button 인스턴스) S · M | 10px | 60% | 적용 |
+| 우측 확정 버튼 L | 12px | 60% | 적용 |
+| 캐럿(Text Blinker) | 2px | 60% | 변화 없음(폭 2px) |
+
+- State 별 테두리도 같은 squircle 을 따릅니다. 테두리는 여전히 안쪽 1px 이고 크기를 키우지 않습니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 포커스 링(`outline`)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정).

@@ -15,8 +15,7 @@
   white-space: nowrap;
   text-decoration: none;
   gap: var(--ref-spacing-02);            /* 전 Size 공통 2px */
-  background-image: linear-gradient(var(--bd-btn-overlay), var(--bd-btn-overlay));
-  background-color: var(--bd-btn-bg);
+  background: none;                      /* 배경·테두리는 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
   color: var(--bd-btn-fg);
   -webkit-tap-highlight-color: transparent;
 }
@@ -105,11 +104,12 @@
    CSS `border` 는 크기가 auto 인 축에서 바깥 크기에 더해지므로, 그대로 옮기면
    테두리가 있는 변형만 가로·세로로 2px 씩 커집니다(실제로 그런 상태였습니다).
    `box-shadow: inset` 은 border-box 의 border 와 같은 자리에 같은 두께로 그려지면서
-   레이아웃에 전혀 영향을 주지 않습니다. */
+   레이아웃에 전혀 영향을 주지 않습니다.
+   (2026-09-23) 지금은 Corner Smoothing 때문에 <Squircle /> 레이어의 ::after 가 같은 자리에
+   squircle 모양으로 그립니다 — 크기에 영향이 없다는 성질은 그대로입니다. */
 .bd-button[data-stroke='true'] {
   --bd-btn-bg: var(--sys-color-common-white-default);
   --bd-btn-border: var(--ref-color-gray-900-10);
-  box-shadow: inset 0 0 0 var(--ref-borderwidth-02) var(--bd-btn-border);
 }
 /* Bold Stroke 는 Tertiary 에서만 관측됨 — 불투명 단색 보더 */
 .bd-button[data-stroke='true'][data-bold-stroke='true'] {
@@ -186,11 +186,25 @@
    duration·easing 의 근거와 유도 과정은 `styles/motion.css` 주석에 있습니다.
 
    transition-property 를 명시적으로 나열한 이유: `all` 을 쓰면 Controls 에서
-   Size 를 바꿀 때 padding·font-size 까지 애니메이션돼 글자가 꿈틀거립니다. */
+   Size 를 바꿀 때 padding·font-size 까지 애니메이션돼 글자가 꿈틀거립니다.
+   배경색·테두리색은 <Squircle /> 레이어가 그리므로 레이어 쪽(--bd-sq-transition)에서 전환합니다. */
 .bd-button {
-  transition-property: --bd-btn-overlay, background-color, box-shadow, color, opacity;
+  transition-property: --bd-btn-overlay, color, opacity;
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
 .bd-button:active:not(:disabled),
 .bd-button[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Button 셋의 전 변형(radius 8·10·12)에 Corner smoothing 60% 가 걸려 있습니다.
+   배경·오버레이·테두리를 첫 자식 <Squircle /> 레이어가 squircle 로 칠합니다(shared/Squircle.tsx).
+   radius 는 위 Size 규칙의 border-radius 를 레이어가 그대로 읽어 가므로 여기 다시 적지 않습니다.
+   포커스 링(outline)은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-button > .bd-sq {
+  --bd-sq-fill: var(--bd-btn-bg);
+  --bd-sq-overlay: var(--bd-btn-overlay);
+  --bd-sq-stroke: var(--bd-btn-border, transparent);
+  --bd-sq-stroke-width: var(--ref-borderwidth-02);
+  --bd-sq-transition: background-color;   /* 예전 host 의 background-color · box-shadow 전환 */
+}

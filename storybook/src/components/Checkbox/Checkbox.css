@@ -30,9 +30,8 @@
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  /* Figma 와 동일한 2겹 합성: 오버레이(위) + 베이스(아래) */
-  background-image: linear-gradient(var(--bd-cb-overlay), var(--bd-cb-overlay));
-  background-color: var(--bd-cb-base);
+  /* Figma 와 동일한 2겹 합성(오버레이 위 + 베이스 아래)과 테두리는
+     첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
   /* 아이콘 색. `.bd-icon` 이 `color: inherit` 이라 여기서 정합니다 */
   color: var(--bd-cb-fg, var(--sys-color-common-white-default));
 }
@@ -52,17 +51,17 @@
 /* 미선택 기본: 흰 배경 + 10% 테두리 */
 .bd-checkbox[data-checked='false'] .bd-checkbox__box {
   --bd-cb-base: var(--sys-color-common-white-default);
-  border: var(--ref-borderwidth-02) solid var(--ref-color-gray-900-10);
+  --bd-cb-border: var(--ref-color-gray-900-10);
 }
 /* Rounded · Outlined=False: 테두리 없는 연회색 원 */
 .bd-checkbox[data-type='rounded'][data-checked='false'][data-outlined='false'] .bd-checkbox__box {
   --bd-cb-base: var(--sys-color-neutral-100);
-  border: 0;
+  --bd-cb-border: transparent;
 }
 /* 선택됨: 브랜드 파랑, 테두리 없음 */
 .bd-checkbox[data-checked='true'] .bd-checkbox__box {
   --bd-cb-base: var(--sys-color-brand-primary-default);
-  border: 0;
+  --bd-cb-border: transparent;
 }
 
 /* ---------- Rounded 미선택의 회색 체크 (스펙 6장) ----------
@@ -120,7 +119,7 @@
    Button 의 opacity 방식이 아닙니다.
    미선택: 테두리 알파만 10%→5% 로 옅어짐 / 선택됨: 배경을 neutral/400 단색으로 교체 */
 .bd-checkbox:disabled[data-checked='false'] .bd-checkbox__box {
-  border-color: var(--ref-color-gray-900-5);
+  --bd-cb-border: var(--ref-color-gray-900-5);
 }
 .bd-checkbox:disabled[data-checked='true'] .bd-checkbox__box {
   --bd-cb-base: var(--sys-color-neutral-400);
@@ -157,3 +156,20 @@
 }
 .bd-checkbox:active:not(:disabled),
 .bd-checkbox[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Checkbox / Angular(radius 4·6) · Rounded(999px) 전 변형에 Corner smoothing 60% 가 걸려 있습니다.
+   박스의 배경·오버레이·테두리를 `__box` 의 첫 자식 <Squircle /> 레이어가 squircle 로 칠합니다.
+   Rounded 는 완전한 원이라 smoothing 이 걸려도 모양이 바뀌지 않습니다(알고리즘이 0 으로 줄임).
+
+   테두리는 예전에 진짜 `border`(1px) 였습니다. 박스가 border-box 고정 크기라 바깥 크기는
+   그대로였고, 레이어의 ::after 로 옮겨도 같은 자리(안쪽 1px)에 그려집니다.
+   체크 아이콘은 flex 가운데 정렬이라 border 가 빠져도 위치가 변하지 않습니다.
+   **Checked 축은 여전히 전환하지 않습니다** — 레이어도 전환 속성을 두지 않습니다(위 motion 주석).
+   포커스 링(outline)은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-checkbox__box > .bd-sq {
+  --bd-sq-fill: var(--bd-cb-base);
+  --bd-sq-overlay: var(--bd-cb-overlay);
+  --bd-sq-stroke: var(--bd-cb-border, transparent);
+  --bd-sq-stroke-width: var(--ref-borderwidth-02);
+}

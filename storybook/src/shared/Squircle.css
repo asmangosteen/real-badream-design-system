@@ -1,0 +1,71 @@
+/* ============================================================
+   Squircle 레이어 — 설명은 Squircle.tsx 머리말 참고
+   ------------------------------------------------------------
+   컴포넌트가 넘기는 값 (전부 선택, 기본은 "아무것도 안 그림")
+     --bd-sq-fill          채우기 색
+     --bd-sq-overlay       채우기 위에 얹는 hover/pressed 오버레이 색
+     --bd-sq-stroke        테두리 색 (Figma strokeAlign: INSIDE — 크기를 키우지 않음)
+     --bd-sq-stroke-width  테두리 두께. 0 이면 테두리 경로를 만들지 않습니다
+     --bd-sq-filter        그림자. `drop-shadow(...)` — squircle 모양을 따라 생깁니다
+     --bd-sq-transition    전환할 속성 (background-color · filter). 기본은 전환 없음
+     --bd-sq-duration      전환 시간 (기본 --bd-motion-duration)
+     --bd-sq-easing        전환 곡선 (기본 --bd-motion-easing)
+
+   ⚠️ 색 변수는 컴포넌트 요소가 아니라 `.컴포넌트 > .bd-sq` 에 선언하세요.
+      오버레이 변수(--bd-btn-overlay 등)는 @property 로 등록돼 컴포넌트 요소에서 보간되는데,
+      그 **보간 중인 값**을 자식이 상속받아 var() 로 읽어야 hover 전환이 매 프레임 따라옵니다.
+   ============================================================ */
+
+:root {
+  /* Figma Corner smoothing 60% — iOS `.continuous` 와 같은 값. 전 컴포넌트 공통입니다 */
+  --bd-corner-smoothing: 0.6;
+}
+
+/* 레이어를 품은 컴포넌트 요소 — 레이어의 기준칸이 되고(position),
+   z-index: -1 인 레이어가 컴포넌트 밖으로 빠져나가 부모 뒤에 깔리지 않게 막습니다(isolation).
+   :where 로 우선순위를 0 으로 두어, 이미 absolute 인 요소(인디케이터 등)의 position 을 덮지 않습니다. */
+:where(:has(> .bd-sq)) {
+  position: relative;
+  isolation: isolate;
+}
+
+.bd-sq {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;          /* JS 가 이 값을 radius 로 읽고, 경로가 없을 때의 폴백도 됩니다 */
+  filter: var(--bd-sq-filter, none);
+  transition-property: var(--bd-sq-transition, none);
+  transition-duration: var(--bd-sq-duration, var(--bd-motion-duration));
+  transition-timing-function: var(--bd-sq-easing, var(--bd-motion-easing));
+}
+.bd-sq::before,
+.bd-sq::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transition: inherit;
+}
+
+/* 채우기 — Figma 와 같은 2겹 합성: 오버레이(위) + 베이스(아래) */
+.bd-sq::before {
+  background-color: var(--bd-sq-fill, transparent);
+  background-image: linear-gradient(var(--bd-sq-overlay, transparent), var(--bd-sq-overlay, transparent));
+}
+
+/* 테두리 — 경로가 계산되기 전(첫 페인트·JS 없음)에는 예전처럼 안쪽 그림자 원호로 그립니다 */
+.bd-sq::after {
+  box-shadow: inset 0 0 0 var(--bd-sq-stroke-width, 0px) var(--bd-sq-stroke, transparent);
+}
+
+/* 경로가 계산되면 squircle 로 바꿉니다 */
+.bd-sq[data-sq]::before {
+  clip-path: var(--bd-sq-fill-path);
+}
+.bd-sq[data-sq]::after {
+  box-shadow: none;
+  background-color: var(--bd-sq-stroke, transparent);
+  clip-path: var(--bd-sq-ring-path);
+}

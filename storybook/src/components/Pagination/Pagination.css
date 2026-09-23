@@ -23,9 +23,9 @@
   padding: 0;
   border: 0;
   border-radius: var(--ref-radius-05);      /* 10px */
-  /* Figma 와 동일한 2겹 합성: 오버레이(위) + 베이스(아래) */
-  background-image: linear-gradient(var(--bd-pg-overlay), var(--bd-pg-overlay));
-  background-color: var(--bd-pg-bg);
+  /* Figma 와 동일한 2겹 합성(오버레이 위 + 베이스 아래)은 첫 자식 <Squircle /> 레이어가 칠합니다
+     (아래 Corner Smoothing) */
+  background: none;
   color: var(--bd-pg-fg);
   cursor: pointer;
   flex: 0 0 auto;
@@ -233,3 +233,17 @@
 .bd-pagination-group__slot[data-side='end'] { justify-content: flex-end; }
 .bd-pagination-group__slot[data-side='start'],
 .bd-pagination-group__slot[data-side='end'] { flex: 1 1 0; min-width: 0; }
+
+/* ---------- Corner Smoothing (2026-09-23) ----------
+   Figma Page Numbering(radius 10)에 Corner smoothing 60% 가 걸려 있습니다.
+   Page Direction 은 Figma 에서 0% 였지만 **Page Numbering 과 맞춰 60% 로 구현합니다**
+   (2026-09-23 디자이너 결정 — Figma 쪽은 디자이너가 수정). 두 아톰이 이 칸 규칙을 공유하므로 한 번에 적용됩니다.
+   배경·오버레이를 첫 자식 <Squircle /> 레이어가 squircle 로 칠합니다.
+   **배경색은 여전히 전환하지 않습니다** — 레이어에도 전환 속성을 두지 않습니다(위 딸깍거림 주석).
+   Per Page · Move to Page 의 상자는 Dropdown · Text Input 이라 그쪽 규칙을 따릅니다.
+   Per Page 목록(`__list`)은 Figma `Select Group` 의 임시 대체라 Figma 값이 없어 원호 그대로입니다.
+   생략 점(`···`)은 완전한 원입니다. */
+.bd-pg-cell > .bd-sq {
+  --bd-sq-fill: var(--bd-pg-bg);
+  --bd-sq-overlay: var(--bd-pg-overlay);
+}

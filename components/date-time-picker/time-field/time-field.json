@@ -122,5 +122,29 @@
   ],
   "openQuestions": [
     "Number Input 래퍼 36px/8px 값이 실제로 spacing 토큰을 의도한 것인지, 순수 하드코딩인지"
-  ]
+  ],
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Time Field",
+        "radius": "12px (radius/06)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Typing 캐럿(Text Blinker)",
+        "radius": "2px",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(폭 2px)"
+      }
+    ],
+    "notes": [
+      "Typing 의 파란 테두리도 같은 squircle 을 따릅니다. 키 입력을 받는 투명 input 은 레이어 위에 있어 동작이 그대로입니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다."
+    ]
+  }
 }

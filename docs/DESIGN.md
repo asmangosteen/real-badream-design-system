@@ -509,6 +509,26 @@ Radius는 컴포넌트의 시각적 일관성을 유지하는 핵심 요소입�
 
 Example values: 2px, 4px, 6px, 8px, 10px, 12px, 16px, 20px, 24px, 32px, 40px, 999px.
 
+### 9.2 Corner Smoothing
+
+모든 Radius에는 **Corner Smoothing 60%** 를 함께 적용합니다 (2026-09-23 도입). 원호(`border-radius`)는 직선에서 곡선으로 넘어가는 지점이 끊겨 보이는데, Corner Smoothing은 곡선을 더 일찍 시작해 직선과 연속으로 이어지게 만듭니다(superellipse, 일명 squircle). Figma의 Corner smoothing 60%는 iOS의 `.continuous` 곡선과 같은 값입니다.
+
+- **값은 전 컴포넌트 공통 60% 하나뿐입니다.** Radius 토큰과 짝을 이루며, Radius 값은 그대로 둡니다 (예: `ref-radius-06` 12px + smoothing 60%).
+- Radius가 작아도 적용합니다 (2px·4px 포함). 크기가 작을수록 차이가 작을 뿐 규칙은 같습니다.
+- **완전한 원·알약(`ref-radius-12` 999px, 또는 Radius가 짧은 변의 절반 이상)은 적용해도 모양이 변하지 않습니다.** 곡선이 들어갈 자리가 없어 smoothing이 자동으로 0이 되기 때문입니다 — Figma와 구현 모두 같습니다.
+- Radius가 짧은 변의 절반에 가까우면 곡선이 들어갈 자리만큼만 smoothing이 줄어듭니다 (예: 높이 32px + Radius 12px → 실제 약 33%). Radius 값은 줄어들지 않습니다.
+- Radius가 `0`인 컴포넌트(Full Bleed Button 등)에는 해당하지 않습니다.
+- 테두리(Stroke)도 같은 곡선을 따릅니다. 테두리는 안쪽(`strokeAlign: INSIDE`)에 그리며 크기를 키우지 않습니다.
+- 포커스 링처럼 Figma에 정의가 없고 구현에서 추가한 Radius에는 적용하지 않습니다.
+
+|Platform|구현|
+|---|---|
+|iOS (SwiftUI)|`RoundedRectangle(cornerRadius: r, style: .continuous)`|
+|Android (Compose)|`AbsoluteSmoothCornerShape(cornerRadius = r.dp, smoothnessAsPercent = 60)` (racra/smooth-corner-rect-android-compose)|
+|Web|figma-squircle 알고리즘으로 SVG path를 만들어 `clip-path: path()` 로 적용 (CSS 표준 `corner-shape`는 2026-09 현재 Chrome·Edge 전용이고 곡선이 근사값이라 쓰지 않음)|
+
+Web 구현 참고 — 스토리북은 컴포넌트 요소 자체가 아니라 뒤에 깔린 레이어(`storybook/src/shared/Squircle.tsx`)를 자릅니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다. 그림자는 `box-shadow` 대신 `filter: drop-shadow` 로 그려 squircle 모양을 따르게 합니다(원호 그림자는 squircle보다 바깥에 있어 모서리에 틈이 생깁니다).
+
 ---
 ## 10. Foundations - Border Width
 

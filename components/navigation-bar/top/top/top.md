@@ -223,3 +223,14 @@ Type 전환(예: 스크롤에 따라 Big Title → NoTitle_back으로 축소되�
 | Home(Dark·Off) — Mode 대조 | `2573:12845` |
 
 `get_metadata`로 32개 변형 전체의 심볼 목록을 확인했고, `get_variable_defs`·`get_motion_context`는 Navigation Bar 상위 그룹(`2612:16631`)에서 공용으로 확보했습니다. Smalltitle_close(`2555:12810`류)는 이번 표본에 포함되지 않았으나, 사용자가 제공한 스크린샷(Close+Subtitle+아이콘 2개 구성)으로 Trailing 최대치가 Smalltitle_back과 동일한 2임을 확인했습니다. Home은 4개 변형(Light/Dark×Off/On) 전수를 실측했습니다(2026-09-09 추가).
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Trailing 의 Icon Button | 12px | 60% | 적용 (Icon Button) |
+| Smalltitle 의 Segmented Control | 8 · 6px | 60% | 적용 (Segmented Control) |

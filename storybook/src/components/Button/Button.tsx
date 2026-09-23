@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Icon } from '../Icon/Icon';
 import { ButtonSpinner, type ButtonSpinnerProps, type SpinnerSize } from '../ButtonSpinner/ButtonSpinner';
+import { Squircle } from '../../shared/Squircle';
 import './Button.css';
 
 export type ButtonSize = 's' | 'm' | 'l' | 'xl' | '2xl';
@@ -118,6 +119,7 @@ export function Button({
       aria-busy={loading || undefined}
       onClick={onClick}
     >
+      <Squircle />
       {/* Contents=Icon 은 아이콘만, icon-text 는 앞, text-icon 은 뒤에 배치합니다 */}
       {(iconOnly || contents === 'icon-text') && icon}
       {showText && <span className="bd-button__label">{children}</span>}

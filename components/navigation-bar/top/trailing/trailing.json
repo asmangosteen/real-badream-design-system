@@ -99,5 +99,19 @@
     "formula": "아이콘만일 때 40 x n + 우측 패딩 12",
     "withButton": "버튼은 글자 폭 hug · 아이콘과 맞닿으면 8px · 맨 오른쪽이면 우측 여백 20px — 예: 아이콘 1 + 버튼(\"완료\") = 99px"
   },
-  "growthInTop": "Top의 Trailing 인스턴스는 layoutGrow:1이라 남는 공간을 전부 차지한 뒤 justify-end로 오른쪽 끝에 붙습니다 — Big Title 132→140px, Seg_back 52→188px. 아이콘의 화면상 위치는 변하지 않습니다(2026-09-15 실측)."
+  "growthInTop": "Top의 Trailing 인스턴스는 layoutGrow:1이라 남는 공간을 전부 차지한 뒤 justify-end로 오른쪽 끝에 붙습니다 — Big Title 132→140px, Seg_back 52→188px. 아이콘의 화면상 위치는 변하지 않습니다(2026-09-15 실측).",
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "자식 컴포넌트가 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Icon Button 인스턴스",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Icon Button)"
+      }
+    ]
+  }
 }

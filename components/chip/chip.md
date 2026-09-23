@@ -107,6 +107,7 @@ Chip은 Badge와 마찬가지로 **하나가 아니라 2개의 독립된 Compone
 Outlined의 테두리는 `strokeAlign: INSIDE` · 두께 1px이라 **Outlined와 Filled의 실측 크기가 같습니다**(S 둘 다 40×24).
 CSS `border`는 바깥 크기에 더해지므로 그대로 옮기면 Outlined만 가로·세로 2px씩 커집니다 —
 구현에서는 `box-shadow: inset 0 0 0 1px`으로 그려 레이아웃 영향을 없앴습니다(2026-09-15 수정).
+2026-09-23 부터는 Corner Smoothing 을 따르도록 squircle 레이어가 같은 자리(안쪽 1px)에 그립니다 — 크기에 영향이 없는 것은 같습니다(아래 Corner Smoothing 절).
 
 ## 5. Chip / Filter 스펙
 
@@ -205,3 +206,22 @@ Type(Filled, Text+Icon): `2275:3600`(Default)
 Contents(Outlined, Default): `2275:4023`(Icon) · `2275:3893`(Avatar+Icon) · `2275:3268`(Avatar+Text+Icon)
 
 전체 변수 맵(`get_variable_defs`)과 모션(`get_motion_context`, recursive)은 상위 그룹 `2483:12764`에 각 1회 호출해 확보했습니다. 2개 Component Set 전체 구조는 `get_metadata`(`2483:12764`)로 1회 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Selection S | 6px (`radius/03`) | 60% | 적용 |
+| Selection M | 10px (`radius/05`) | 60% | 적용 |
+| Selection L | 12px (`radius/06`) | 60% | 적용 |
+| Filter | 999px (`radius/12`) | 60% | 변화 없음(알약) |
+| 안쪽 Avatar 인스턴스 | 999px | 0% | 해당 없음(원) |
+
+- Outlined 테두리도 같은 squircle 을 따릅니다. 선택 축은 여전히 전환하지 않습니다.
+- 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 포커스 링(`outline`)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정).

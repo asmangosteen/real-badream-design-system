@@ -175,3 +175,15 @@ Figma는 사각형을 **Month 프레임의 자식**으로 두었지만(Week가 �
 | Week Number=6 (6개 Week 행, 328×270px) | `2208:10945` |
 
 `get_variable_defs`·`get_motion_context`는 상위 그룹(`2497:13877`)에서 패밀리 공용으로 이미 확보된 값을 재사용했습니다(재호출 없음).
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 모서리가 완전한 원·알약이라 Corner Smoothing 이 걸려 있어도 모양이 바뀌지 않습니다. 구현을 바꾸지 않았습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 날짜 칸(Date 인스턴스) | 999px | 60% | 변화 없음(원) |
+
+- 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.

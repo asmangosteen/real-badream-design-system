@@ -153,5 +153,19 @@
   "variableDefsQueriedNodeIds": ["2207:8075", "2207:8077", "2207:8256", "2207:8074", "2207:8073", "2207:8300", "2207:8081", "2207:8080"],
   "metadataVerifiedNodeIds": {
     "frame": "2207:8085"
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "원·알약이라 모양 변화 없음",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "트랙 · Thumb",
+        "radius": "999px (radius/12)",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(알약·원)"
+      }
+    ]
   }
 }

@@ -191,3 +191,20 @@ Dropdown의 `State=Selected`는 **"열린 모습"만** 그립니다 — 실제�
 | 토글 축(Size=M, State=Default) | Show Button=False `2292:7112` · Left Icon=False `2292:7366` · Show Label=False만 `2292:9156` · Supporting Text=False만 `2292:9884` · 4개 전부 False `2292:9568` |
 
 전체 288개 인스턴스의 레이어명·크기는 `get_metadata`(Frame `2292:6651`)로 전수 확보했으며, 이를 기반으로 축 구조(7개 축, 조합 규칙)를 도출했습니다. `get_variable_defs`는 S/M/L 대표 노드와 Disabled 노드에서 각각 호출해 확보했고, `get_motion_context`는 최상위 프레임에 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Input 박스 S · M | 10px (`radius/05`) | 60% | 적용 |
+| Input 박스 L | 12px (`radius/06`) | 60% | 적용 |
+| 우측 버튼(Button 인스턴스) S · M | 10px | 60% | 적용 |
+| 우측 버튼 L | 12px | 60% | 적용 |
+
+- State 별 테두리도 같은 squircle 을 따릅니다. Text Input 과 CSS(`TextInput.css`)를 공유하므로 규칙도 한곳에 있습니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 포커스 링(`outline`)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정).

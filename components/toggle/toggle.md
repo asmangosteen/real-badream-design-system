@@ -149,3 +149,15 @@ Checkbox·Radio Button과 달리 Toggle에는 **Hover/Pressed 등 세분화된 S
 - Label=True, Location=Right: Off `2207:8080` · Off+Disabled `2207:8289` · On `2207:8078` · On+Disabled `2207:8293`
 
 전체 변수 맵(`get_variable_defs`)은 대표 노드 8개(`2207:8075`, `2207:8077`, `2207:8256`, `2207:8074`, `2207:8073`, `2207:8300`, `2207:8081`, `2207:8080`)에 개별 호출해 확보했습니다. 모션(`get_motion_context`, recursive)과 전체 구조 확인(`get_metadata`)은 상위 Frame `2207:8085`에 각 1회 호출했습니다. 24개 인스턴스 전부에 `get_design_context`를 개별 호출했으며, Radio Button과 달리 baked SVG가 아니라 실제 코드로 반환되어 별도 보완 실측이 필요하지 않았습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 모서리가 완전한 원·알약이라 Corner Smoothing 이 걸려 있어도 모양이 바뀌지 않습니다. 구현을 바꾸지 않았습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 트랙 · Thumb | 999px (`radius/12`) | 60% | 변화 없음(알약·원) |
+
+- 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.

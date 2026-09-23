@@ -165,5 +165,37 @@
     "rounded16px": ["2173:6708", "2173:6706", "2173:6698", "2173:6705", "2173:6707", "2173:6703", "2173:6704", "2173:6702", "2173:6700", "2173:6699", "2173:6701", "2173:6697"],
     "rounded20px": ["2662:5296", "2662:5298", "2662:5300", "2662:5302", "2662:5304", "2662:5306", "2662:5308", "2662:5310", "2662:5312", "2662:5314", "2662:5316", "2662:5318"],
     "order": "각 배열은 Default · Hover · Pressed · Disabled 순서의 조합 3묶음(Angular: Checked=False / True+Off / True+On · Rounded: False+Outlined / False+Filled / True)"
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Angular 박스 16px",
+        "radius": "4px (radius/02)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Angular 박스 20px",
+        "radius": "6px (radius/03)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Rounded 박스",
+        "radius": "999px (radius/12)",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(원)"
+      }
+    ],
+    "notes": [
+      "미선택 테두리(1px)도 같은 squircle 을 따릅니다. 예전 구현은 진짜 border 였는데 레이어로 옮겼습니다 — 박스가 고정 크기라 바깥 크기·체크 위치는 그대로입니다.",
+      "완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.",
+      "포커스 링(outline)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정)."
+    ]
   }
 }

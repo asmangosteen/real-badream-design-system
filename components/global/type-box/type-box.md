@@ -137,3 +137,15 @@ Type Box의 State 전환(Placeholder↔Selected↔Typing↔Done)에는 반응이
 | **L** | `2111:7566` (87.5×24) | `2111:7565` (85×24) | `2111:7567` (73.5×24) | `2111:7564` (71×24) |
 
 전체 변수 맵(`get_variable_defs`)은 컴포넌트 셋 `2111:7576`에서 사전 확보한 값을 재사용했으며, 모션(`get_motion_context`, recursive)은 이 문서 작성 과정에서 컴포넌트 셋 `2111:7576`에 별도로 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 캐럿(Text Blinker) | 2px | 60% | 변화 없음(폭 2px) |
+
+- Type Box 자체에는 radius 가 없습니다.

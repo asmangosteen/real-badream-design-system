@@ -136,3 +136,19 @@ pill 의 배경·그림자·radius 는 `_Item` 의 Selected 값과 동일합니�
 **미실측(추정, 패턴 기반)**: XS Count=5(`2215:13517`), S Count=3(`2197:8771`) · Count=4(`2197:8775`) · Count=5(`2197:8761`), L Count=3(`2197:8770`) · Count=4(`2197:8764`) · Count=5(`2197:8768`), XL Count=3(`2197:8766`) · Count=4(`2197:8762`) · Count=5(`2197:8765`) — 총 10개. M의 Count 축 실측 결과(3장)에 따라 컨테이너 스펙은 Count 무관하게 동일할 것으로 추정하나 개별 실측하지 않았습니다.
 
 전체 20개 인스턴스의 레이어명·크기는 `get_metadata`로 확보되어 있습니다(Size=S였던 일부 노드가 Size=XS로 재라벨링된 이후 재조회로 재확인함, 0-1장 참고). `get_variable_defs`는 M(`2197:8774`)과 XS(`2215:13505`) 노드에서 각각 호출했고, `get_motion_context`는 최상위 프레임(`2197:8777`, recursive=true)에 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 컨테이너 XS · S | 8px (`radius/04`) | 60% | 적용 |
+| 컨테이너 M | 12px (`radius/06`) | 60% | 적용 |
+| 컨테이너 L · XL | 16px (`radius/07`) | 60% | 적용 |
+| 선택 알약(_Item) | 6 · 8 · 12px | 60% | 적용 |
+
+- 움직이는 흰 알약의 그림자도 `filter: drop-shadow` 로 squircle 을 따릅니다(_Item 문서 참고). 알약이 자리를 옮기는 전환은 그대로입니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.

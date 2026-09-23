@@ -98,3 +98,19 @@
 | XL | `2196:8561` | `2196:8560` |
 
 `get_variable_defs`는 `2196:8564`(M,True)와 `2215:13505`(Segmented Control Size=XS, Count=2 — `_Item` XS 변형이 내부에 쓰이는지 교차 확인용, [segmented-control.md](../../segmented-control/segmented-control.md) 2장 참고. 실측 당시 이 노드는 Figma에서 "Size=S"로 잘못 라벨링되어 있었으나 이후 "Size=XS"로 정정됨 — segmented-control.md 0-1장 참고)에서 호출했습니다. `get_motion_context`는 컴포넌트 최상위(`2196:8568`, recursive=true)에 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| XS · S | 6px (`radius/03`) | 60% | 적용 |
+| M | 8px (`radius/04`) | 60% | 적용 |
+| L · XL | 12px (`radius/06`) | 60% | 적용 |
+
+- Selected 그림자(0 2px 2px `gray-900-5`)는 `box-shadow` 대신 레이어의 `filter: drop-shadow` 로 그립니다. box-shadow 는 원호를 따라 생기는데 squircle 은 원호보다 안쪽에 있어(radius 12 기준 모서리에서 최대 1.2px) 흰 배경과 그림자 사이에 틈이 생기기 때문입니다. 값과 전환(200ms)은 그대로입니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 포커스 링(`outline`)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정).

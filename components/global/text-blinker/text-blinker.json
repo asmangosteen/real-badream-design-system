@@ -79,5 +79,22 @@
     },
     "constantAcrossSizes": ["width 1.5px", "radius/01 (2px)"],
     "verticalAlignment": "래퍼 프레임은 줄 높이만큼이고 그 안에서 캐럿이 세로 중앙에 놓입니다."
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "원·알약이라 모양 변화 없음",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "캐럿",
+        "radius": "2px (radius/01)",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(폭 1.5~2px)"
+      }
+    ],
+    "notes": [
+      "폭이 radius 의 두 배보다 좁아 사실상 알약입니다."
+    ]
   }
 }

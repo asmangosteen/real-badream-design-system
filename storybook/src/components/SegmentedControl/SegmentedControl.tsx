@@ -3,6 +3,7 @@ import {
   type SegItemSize,
   type SegmentedControlItemProps,
 } from '../SegmentedControlItem/SegmentedControlItem';
+import { Squircle } from '../../shared/Squircle';
 import './SegmentedControl.css';
 
 export type SegmentedControlSize = SegItemSize;
@@ -62,8 +63,11 @@ export function SegmentedControl({
       data-count={items.length}
       style={style}
     >
+      <Squircle />
       {/* 흰 pill 하나가 선택 위치로 이동합니다 (항목마다 배경을 켜고 끄지 않습니다) */}
-      <span className="bd-segmented-control__indicator" aria-hidden="true" />
+      <span className="bd-segmented-control__indicator" aria-hidden="true">
+        <Squircle />
+      </span>
       {items.map((item, i) => {
         /* 문자열이면 라벨만, 객체면 Item 속성 전부가 넘어갑니다 */
         const { label, ...entry } = typeof item === 'string' ? { label: item } : item;

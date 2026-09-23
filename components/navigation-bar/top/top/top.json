@@ -407,5 +407,25 @@
       "412": "중앙 212(여백 100/100) · Big Title 260 · Trailing 그대로",
       "430": "중앙 230(여백 100/100) · Big Title 278 · Trailing 그대로"
     }
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "자식 컴포넌트가 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Trailing 의 Icon Button",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Icon Button)"
+      },
+      {
+        "layer": "Smalltitle 의 Segmented Control",
+        "radius": "8 · 6px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Segmented Control)"
+      }
+    ]
   }
 }

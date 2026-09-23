@@ -149,5 +149,41 @@
     ],
     "countAxisCheck": { "node": "2197:8769", "size": "M", "count": 5, "itemWidth": "73.2px", "formula": "4 + 73.2x5 + 4x4 + 4 = 390px", "conclusion": "Count 축에서도 gap 4px 로 일관됨" },
     "unchanged": ["배경 color/gray/200", "컨테이너 radius (8/8/12/16/16)", "컨테이너 padding (2/2/4/4/4)", "전체 높이 (26/30/42/48/56)"]
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "컨테이너 XS · S",
+        "radius": "8px (radius/04)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "컨테이너 M",
+        "radius": "12px (radius/06)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "컨테이너 L · XL",
+        "radius": "16px (radius/07)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "선택 알약(_Item)",
+        "radius": "6 · 8 · 12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      }
+    ],
+    "notes": [
+      "움직이는 흰 알약의 그림자도 filter: drop-shadow 로 squircle 을 따릅니다(_Item 문서 참고). 알약이 자리를 옮기는 전환은 그대로입니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다."
+    ]
   }
 }

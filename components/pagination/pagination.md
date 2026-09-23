@@ -342,3 +342,22 @@ Figma 실측이 **4자리(`9999`)에서 64px**이고 Text Input `Size=M`의 좌�
 **예시 프레임**: `Frame 1` = `2292:22294`
 
 **⚠️ 상위 그룹 노드 ID는 깨질 수 있습니다.** 문서·코드에서 참조할 때는 그룹(`2733:8561`)이 아니라 **Component Set / Component ID**를 쓰세요. 다른 컴포넌트에서 실제로 그룹 ID가 바뀌어 스펙 10개 파일을 고친 적이 있습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Page Numbering | 10px (`radius/05`) | 60% | 적용 |
+| Page Direction | 10px (`radius/05`) | **0%** | **60% 로 적용** |
+| Per Page 상자(Dropdown) | 10px | 60% | 적용 (Dropdown) |
+| Move to Page 입력칸·버튼(Text Input · Button) | 10px | 60% | 적용 (각 컴포넌트) |
+
+- ⚠️ Page Direction 은 Figma 에서 smoothing 0% 이지만, 옆의 Page Numbering 과 맞춰 **60% 로 구현합니다** (2026-09-23 디자이너 결정 — Figma 는 디자이너가 수정 예정). 두 아톰이 같은 칸 규칙(`.bd-pg-cell`)을 공유하므로 한 번에 적용됩니다.
+- 배경색은 여전히 전환하지 않습니다(선택 전환 딸깍거림 방지 규칙 유지).
+- Per Page 목록은 Figma `Select Group` 의 임시 대체라 Figma 값이 없어 적용하지 않습니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 포커스 링(`outline`)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정).

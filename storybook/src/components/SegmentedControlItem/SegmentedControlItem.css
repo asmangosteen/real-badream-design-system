@@ -61,8 +61,8 @@
 /* Selected — 흰 배경 pill + 옅은 그림자 + 진한 글자
    ⚠️ 그림자가 저장소의 shadow/01~03 체계가 아니라 gray-900-5 를 직접 참조합니다 */
 .bd-seg-item[data-selected='true'] {
-  background-color: var(--sys-color-common-white-default);
-  box-shadow: 0 2px 2px 0 var(--ref-color-gray-900-5);
+  --bd-seg-bg: var(--sys-color-common-white-default);
+  --bd-seg-shadow: drop-shadow(0 2px 2px var(--ref-color-gray-900-5));   /* 그리는 곳: 아래 Corner Smoothing */
   color: var(--sys-color-neutral-800);
 }
 
@@ -80,8 +80,24 @@
    Segmented Control 안에서는 흰 알약을 부모의 인디케이터가 그리므로
    SegmentedControl.css 가 글자색만 남겨 덮어씁니다. */
 .bd-seg-item {
-  transition:
-    background-color var(--bd-motion-slide) var(--bd-motion-slide-easing),
-    box-shadow var(--bd-motion-slide) var(--bd-motion-slide-easing),
-    color var(--bd-motion-slide) var(--bd-motion-slide-easing);
+  /* 배경·그림자 전환은 <Squircle /> 레이어가 같은 값으로 맡습니다(아래 Corner Smoothing) */
+  transition: color var(--bd-motion-slide) var(--bd-motion-slide-easing);
+}
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma _Item 의 전 변형(radius 6·8·12)에 Corner smoothing 60% 가 걸려 있습니다.
+   Selected 의 흰 배경과 그림자를 첫 자식 <Squircle /> 레이어가 squircle 로 칠합니다.
+
+   그림자는 `box-shadow` 가 아니라 레이어의 `filter: drop-shadow` 입니다.
+   box-shadow 는 border-radius 원호를 따라 생기는데, squircle 은 원호보다 **안쪽**에 있어
+   (radius 12 기준 모서리에서 최대 1.2px) 흰 배경과 그림자 사이에 틈이 벌어집니다.
+   drop-shadow 는 실제로 칠해진 모양(= squircle)을 따라 생깁니다. 값(0 2px 2px)은 그대로입니다.
+   ⚠️ 글자에는 그림자가 생기지 않습니다 — filter 는 글자가 아니라 뒤에 깔린 레이어에만 걸립니다.
+   포커스 링(outline)은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-seg-item > .bd-sq {
+  --bd-sq-fill: var(--bd-seg-bg, transparent);
+  --bd-sq-filter: var(--bd-seg-shadow, none);   /* none ↔ drop-shadow 는 box-shadow none ↔ 그림자와 똑같이 보간됩니다 */
+  --bd-sq-transition: background-color, filter;   /* 예전 host 의 background-color · box-shadow 전환 */
+  --bd-sq-duration: var(--bd-motion-slide);
+  --bd-sq-easing: var(--bd-motion-slide-easing);
 }

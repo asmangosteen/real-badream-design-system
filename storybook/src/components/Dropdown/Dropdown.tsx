@@ -2,6 +2,7 @@ import { Label, type LabelProps } from '../Label/Label';
 import { TypeBox, type TypeBoxProps, type TypeBoxState } from '../TypeBox/TypeBox';
 import { SupportingText, type SupportingTextTheme, type SupportingTextProps } from '../SupportingText/SupportingText';
 import { Icon } from '../Icon/Icon';
+import { Squircle } from '../../shared/Squircle';
 // Figma 실측상 Input 박스·버튼의 패딩·radius·타이포 값이 Text Input 과 완전히 동일해
 // 값을 복제하지 않고 같은 스타일시트를 씁니다 (한 곳만 고치면 둘 다 반영됩니다).
 import '../TextInput/TextInput.css';
@@ -130,6 +131,7 @@ export function Dropdown({
           aria-haspopup="listbox"
           aria-expanded={open}
         >
+          <Squircle />
           {showLeftIcon && (
             <Icon
               name={leftIconName}
@@ -161,6 +163,7 @@ export function Dropdown({
 
         {showButton && (
           <button type="button" className="bd-text-input__button" disabled={state === 'disabled'}>
+            <Squircle />
             {buttonLabel}
           </button>
         )}

@@ -209,5 +209,25 @@
     "figma": "Figma 는 Line=On 에서 99px (strokeAlign INSIDE 이지만 HUG 프레임이라 스트로크가 hug 크기에 포함됨)",
     "implementation": "box-shadow: inset 0 calc(var(--ref-borderwidth-02) * -1) 0 0 var(--bd-top-bar-line) — 색·두께·위치는 그대로, 레이아웃 영향 없음",
     "note": "Button·Icon Button·Badge·Text Input·Chip 과 같은 기법이지만, 그쪽은 Figma 와 크기를 맞추려고 쓴 것이고 여기는 Figma 와 일부러 다르게 가려고 쓴 것입니다."
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "자식 컴포넌트가 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Icon Button 인스턴스",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Icon Button)"
+      },
+      {
+        "layer": "Status Bar 의 알약",
+        "radius": "100px",
+        "figmaSmoothing": "0%",
+        "implementation": "해당 없음(알약)"
+      }
+    ]
   }
 }

@@ -9,7 +9,7 @@
   /* 너비는 고정이 아니라 부모 폭에 맞춰 늘어나는 가변입니다
      (Figma 노드의 390px 는 진열 프레임 폭일 뿐입니다) */
   width: 100%;
-  background-color: var(--ref-color-gray-200);   /* #F1F2F3 — 전 Size 공통 */
+  /* 배경 #F1F2F3(`gray/200`, 전 Size 공통)은 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
 }
 
 /* ============================================================
@@ -31,9 +31,7 @@
   width: calc(
     (100% - var(--bd-sc-pad) * 2 - var(--bd-sc-gap) * (var(--bd-sc-count) - 1)) / var(--bd-sc-count)
   );
-  /* _Item 의 Selected 와 동일한 배경·그림자·radius */
-  background-color: var(--sys-color-common-white-default);
-  box-shadow: 0 2px 2px 0 var(--ref-color-gray-900-5);
+  /* _Item 의 Selected 와 동일한 배경·그림자·radius — 배경·그림자는 <Squircle /> 레이어가 칠합니다 */
   border-radius: var(--bd-sc-item-radius);
   /* 알약이 자리를 옮기는 움직임 — **이미 정해져 있던 값(200ms + 전용 곡선)** 을 그대로 유지합니다.
      이 값이 Tab 밑줄·Page Control 도트 등 다른 인디케이터의 기준이 됩니다. */
@@ -48,8 +46,8 @@
   transition: color var(--bd-motion-slide) var(--bd-motion-slide-easing);   /* 알약과 같은 값 */
 }
 .bd-segmented-control .bd-seg-item[data-selected='true'] {
-  background-color: transparent;
-  box-shadow: none;
+  --bd-seg-bg: transparent;
+  --bd-seg-shadow: none;
 }
 
 /* 누를 때 줄어드는(scale) 효과는 넣지 않습니다 (요청 사항) */
@@ -82,4 +80,17 @@
   padding: var(--bd-sc-pad);
   gap: var(--bd-sc-gap);
   border-radius: var(--ref-radius-07);         /* 16px */
+}
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Segmented Control 의 컨테이너(radius 8·12·16)와 알약(_Item 인스턴스, 6·8·12) 모두에
+   Corner smoothing 60% 가 걸려 있습니다. 둘 다 첫 자식 <Squircle /> 레이어가 칠합니다.
+   알약 그림자는 _Item 과 같은 이유로 `filter: drop-shadow` 입니다(SegmentedControlItem.css 참고).
+   알약이 **자리를 옮기는** 전환(left)은 그대로이고, 크기는 변하지 않아 경로를 다시 계산하지 않습니다. */
+.bd-segmented-control > .bd-sq {
+  --bd-sq-fill: var(--ref-color-gray-200);
+}
+.bd-segmented-control__indicator > .bd-sq {
+  --bd-sq-fill: var(--sys-color-common-white-default);
+  --bd-sq-filter: drop-shadow(0 2px 2px var(--ref-color-gray-900-5));
 }

@@ -193,3 +193,15 @@ Theme(색상 5종, 0~9): `2108:2224`(Success Solid) · `2108:2220`(Destructed So
 Theme(10+): `2108:2356`(Purple Solid)
 
 전체 변수 맵(`get_variable_defs`)과 모션(`get_motion_context`, recursive)은 상위 그룹 `2482:1618`에 각 1회 호출해 확보했습니다. 4개 Component Set 전체 구조는 `get_metadata`(`2482:1618`)로 1회 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 모서리가 완전한 원·알약이라 Corner Smoothing 이 걸려 있어도 모양이 바뀌지 않습니다. 구현을 바꾸지 않았습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Badge 전 변형 | 999px (`radius/12`) | 60% | 변화 없음(알약) |
+
+- 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.

@@ -111,7 +111,8 @@
   height: 32px;
   transform: translateY(-50%);
   border-radius: var(--ref-radius-06);
-  background: var(--sys-color-brand-primary-lightest);
+  /* 색은 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
+  --bd-ym-pill-bg: var(--sys-color-brand-primary-lightest);
   pointer-events: none;
 }
 
@@ -191,7 +192,7 @@
 /* ⚠️ 선택 알약 색이 Date Picker 안에서만 다릅니다 (Figma 인스턴스 오버라이드).
    컴포넌트 단독은 `brand/primary-lightest`(#eef4fc) 인데, 회색 본문 위에서는 너무 옅어
    Date Picker 안에서는 `color/blue/500-20`(#2c7be2 20%) 로 덮어씁니다. */
-.bd-date-picker .bd-ym-wheel__pill { background: var(--ref-color-blue-500-20); }
+.bd-date-picker .bd-ym-wheel__pill { --bd-ym-pill-bg: var(--ref-color-blue-500-20); }
 .bd-date-picker__time {
   display: flex;
   justify-content: center;
@@ -225,3 +226,13 @@
 
 /* 헤더는 패널 폭을 그대로 따릅니다 — 그룹 안에서는 패널이 360px 이라 352 로 못 박으면 어긋납니다 */
 .bd-date-picker .bd-calendar-header { width: 100%; }
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Year and Month Wheel 의 선택 알약(312×32, radius 12)에 Corner smoothing 60% 가 걸려 있습니다.
+   높이 32 의 절반(16)이 radius 12 × 1.6 = 19.2 보다 작아 곡선이 들어갈 자리가 모자랍니다 —
+   알고리즘이 smoothing 을 60% → 33% 로 줄여 radius 12 를 지킵니다(Figma 와 같은 동작).
+   Calendar Header 의 화살표는 Icon Button, 날짜 칸(Date)은 완전한 원이라 따로 할 일이 없습니다.
+   연·월 열의 포커스 링(radius/04)과 제목 버튼의 포커스 링은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-ym-wheel__pill > .bd-sq {
+  --bd-sq-fill: var(--bd-ym-pill-bg);
+}

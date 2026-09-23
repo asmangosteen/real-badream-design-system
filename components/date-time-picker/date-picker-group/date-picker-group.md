@@ -137,3 +137,14 @@ Date Picker Group은 **Type(Horizontal/Vertical) 1축, 2-변형 컴포넌트**�
 | **Vertical** | `2215:12846` | `2224:3700` | `2224:3803` | `2215:11757`(가로) |
 
 `get_metadata`로 두 변형의 정확한 자식 트리(각 3자식)를 확인했고, `get_design_context`를 두 변형에 각각 호출했습니다. `get_variable_defs`·`get_motion_context`는 패밀리 최상위 그룹(`2497:13877`)에서 공용으로 확보했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 헤더 화살표(Icon Button) | 12px | 60% | 적용 (Icon Button) |
+| 날짜 칸(Date) | 999px | 60% | 변화 없음(원) |

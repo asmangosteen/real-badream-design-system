@@ -152,5 +152,25 @@
   "openQuestions": [
     "접근성 마크업(role=group, aria-label) 연결 규정",
     "Vertical 에서도 기간 선택을 쓰는지 — 고정 표시로만 쓰기로 한 것과 상충할 수 있음"
-  ]
+  ],
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "자식 컴포넌트가 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "헤더 화살표(Icon Button)",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Icon Button)"
+      },
+      {
+        "layer": "날짜 칸(Date)",
+        "radius": "999px",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(원)"
+      }
+    ]
+  }
 }

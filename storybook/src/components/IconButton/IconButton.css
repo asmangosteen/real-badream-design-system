@@ -15,8 +15,7 @@
   box-sizing: content-box;   /* 패딩 + 아이콘 = 외곽 정사각형 */
   border: 0;
   cursor: pointer;
-  background-image: linear-gradient(var(--bd-ib-overlay), var(--bd-ib-overlay));
-  background-color: var(--bd-ib-bg, transparent);
+  background: none;          /* 배경·테두리는 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
   color: var(--bd-ib-fg);
   -webkit-tap-highlight-color: transparent;
 }
@@ -69,8 +68,7 @@
    `box-shadow: inset` 은 border-box 의 border 와 같은 자리에 같은 두께로 그려지면서
    레이아웃에 전혀 영향을 주지 않습니다. */
 .bd-icon-button[data-stroke='true'] {
-  --bd-ib-border: var(--ref-color-gray-900-10);
-  box-shadow: inset 0 0 0 var(--ref-borderwidth-02) var(--bd-ib-border);
+  --bd-ib-border: var(--ref-color-gray-900-10);   /* 그리는 곳: 아래 Corner Smoothing 의 <Squircle /> ::after */
 }
 .bd-icon-button[data-stroke='true'][data-bold-stroke='true'] {
   --bd-ib-border: var(--sys-color-neutral-400);
@@ -124,9 +122,23 @@
      Default → Hover   Smart animate · Slow · 150ms
      Hover   → Pressed Smart animate · Slow · 50ms   (`styles/motion.css`) */
 .bd-icon-button {
-  transition-property: --bd-ib-overlay, background-color, box-shadow, color, opacity;
+  /* 배경색·테두리색 전환은 <Squircle /> 레이어가 맡습니다(--bd-sq-transition) */
+  transition-property: --bd-ib-overlay, color, opacity;
   transition-duration: var(--bd-motion-duration);
   transition-timing-function: var(--bd-motion-easing);
 }
 .bd-icon-button:active:not(:disabled),
 .bd-icon-button[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Icon Button 셋의 전 변형(radius 8·12)에 Corner smoothing 60% 가 걸려 있습니다.
+   배경·오버레이·테두리를 첫 자식 <Squircle /> 레이어가 squircle 로 칠합니다(shared/Squircle.tsx).
+   radius 는 Size 규칙의 border-radius 를 레이어가 그대로 읽어 갑니다.
+   포커스 링(outline)은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-icon-button > .bd-sq {
+  --bd-sq-fill: var(--bd-ib-bg, transparent);
+  --bd-sq-overlay: var(--bd-ib-overlay);
+  --bd-sq-stroke: var(--bd-ib-border, transparent);
+  --bd-sq-stroke-width: var(--ref-borderwidth-02);
+  --bd-sq-transition: background-color;
+}

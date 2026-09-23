@@ -245,3 +245,19 @@ Stroke/Bold/Dark: `409:6238` · `409:6235` · `409:6642` · `409:6704`
 Icon-only 전 사이즈: `409:6217`(S) · `409:6245`(M) · `409:6329`(L) · `409:6472`(XL) · `2002:11666`(2XL)
 
 전체 변수 맵은 `get_variable_defs`를 컴포넌트 셋 `409:6752`에 1회 호출해 확보했습니다(단일 호출로 전체 반환됨).
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 컨테이너 S | 8px (`radius/04`) | 60% | 적용 |
+| 컨테이너 M · L | 10px (`radius/05`) | 60% | 적용 |
+| 컨테이너 XL · 2XL | 12px (`radius/06`) | 60% | 적용 |
+
+- Stroke / Bold Stroke 테두리도 같은 squircle 을 따릅니다. 테두리는 여전히 안쪽 1px 이고 크기를 키우지 않습니다.
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 포커스 링(`outline`)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정).

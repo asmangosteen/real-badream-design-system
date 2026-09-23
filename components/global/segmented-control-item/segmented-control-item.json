@@ -98,5 +98,36 @@
       "Selected=False 텍스트 명암비의 WCAG 충족 여부"
     ]
   },
-  "sampledNodeIds": ["2217:13546", "2217:13548", "2196:8567", "2196:8565", "2196:8564", "2196:8566", "2196:8563", "2196:8562", "2196:8561", "2196:8560"]
+  "sampledNodeIds": ["2217:13546", "2217:13548", "2196:8567", "2196:8565", "2196:8564", "2196:8566", "2196:8563", "2196:8562", "2196:8561", "2196:8560"],
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "XS · S",
+        "radius": "6px (radius/03)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "M",
+        "radius": "8px (radius/04)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "L · XL",
+        "radius": "12px (radius/06)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      }
+    ],
+    "notes": [
+      "Selected 그림자(0 2px 2px gray-900-5)는 box-shadow 대신 레이어의 filter: drop-shadow 로 그립니다. box-shadow 는 원호를 따라 생기는데 squircle 은 원호보다 안쪽에 있어(radius 12 기준 모서리에서 최대 1.2px) 흰 배경과 그림자 사이에 틈이 생기기 때문입니다. 값과 전환(200ms)은 그대로입니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.",
+      "포커스 링(outline)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정)."
+    ]
+  }
 }

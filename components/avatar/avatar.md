@@ -80,3 +80,16 @@ Avatar는 사용자 프로필 이미지를 원형으로 표시하는 순수 표�
 `2262:13274`(12px) · `2262:13273`(16px) · `2262:13272`(20px) · `2262:13271`(24px) · `2262:13270`(32px) · `2262:13269`(40px) · `2262:13268`(48px)
 
 전체 변수 맵(`get_variable_defs`)과 모션(`get_motion_context`, recursive)은 컴포넌트 셋 `2262:13275`에 각 1회 호출해 확보했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 모서리가 완전한 원·알약이라 Corner Smoothing 이 걸려 있어도 모양이 바뀌지 않습니다. 구현을 바꾸지 않았습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Avatar | 999px (`radius/12`) | 0% | 해당 없음(원) |
+
+- 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.
+- Figma 에서도 smoothing 0% 입니다. 원이라 60% 여도 모양이 같습니다.

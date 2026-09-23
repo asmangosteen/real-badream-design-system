@@ -150,3 +150,15 @@ Figma 6개 변형이 전부 그 모습이고, 단독 기본값 `'Input Text'`를
 | **L** | `2125:8046` (280×132) | `2125:8044` (280×188) |
 
 `get_metadata`(Frame `2125:8048`)로 6개 인스턴스 전체의 크기를 전수 확보했으며, `get_design_context`도 6개 전부 개별 실측했습니다(0장). `get_motion_context`는 최상위 프레임에 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 각 행의 Input 박스 | 10 · 12px | 60% | 적용 (Text Input) |
+
+- Text Input 을 쌓은 조합이라 Text Input 의 규칙을 그대로 따릅니다.

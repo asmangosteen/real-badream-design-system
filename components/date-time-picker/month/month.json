@@ -179,5 +179,19 @@
     "각 Week 행 Date 셀에 실제 날짜·Type이 매핑되는 규칙",
     "접근성 마크업(role=grid, aria-rowcount) 연결 규정",
     "기간 띠가 달의 빈 칸(Null)을 만났을 때 어디서 끊는지 — Figma 예시에 빈 칸이 없어 구현에서 정함"
-  ]
+  ],
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "원·알약이라 모양 변화 없음",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "날짜 칸(Date 인스턴스)",
+        "radius": "999px",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(원)"
+      }
+    ]
+  }
 }

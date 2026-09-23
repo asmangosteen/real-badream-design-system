@@ -145,3 +145,15 @@ Icon Button 래퍼(`p-spacing/06`=8px, `radius/06`=12px)는 다른 컴포넌트(
 | **Center** | `2224:3104` | `2224:3126` | `2212:2709` |
 
 6개 변형 전체가 `get_design_context` 1회 호출(`2212:2712`)로 병합 코드로 반환되었으며, 위 노드 ID는 그 코드의 조건부 `id={...}` 분기에 박힌 `data-node-id`를 정리한 것입니다. `get_variable_defs`·`get_motion_context`는 상위 그룹(`2497:13877`)에서 패밀리 공용으로 확보한 값을 재사용했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 화살표(Icon Button 인스턴스) | 12px | 60% | 적용 (Icon Button) |
+
+- 제목 버튼의 포커스 링(`radius/04`)은 Figma 에 없는 구현 값이라 적용하지 않습니다.

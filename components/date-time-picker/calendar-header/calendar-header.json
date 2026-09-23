@@ -141,5 +141,22 @@
       "finding": "Left+Arrows 의 두 화살표는 Arrow Box(80x40) 안에 gap 0 으로 붙어 있음. md 3장에 이미 기록돼 있던 내용",
       "impact": "구현이 두 버튼을 헤더 직계 자식으로 두어 헤더 gap 12px 이 사이에 들어가 있었음 — 별도 묶음으로 감싸 수정 완료"
     }
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "자식 컴포넌트가 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "화살표(Icon Button 인스턴스)",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용 (Icon Button)"
+      }
+    ],
+    "notes": [
+      "제목 버튼의 포커스 링(radius/04)은 Figma 에 없는 구현 값이라 적용하지 않습니다."
+    ]
   }
 }

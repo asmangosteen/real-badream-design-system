@@ -156,3 +156,17 @@ Year and Month Wheel은 [Date](../date/date.md)·[Week](../week/week.md)·[Week 
 구현이 연·월을 한 덩어리로 움직이고 있어서 `1999년 12월` 다음이 `1998년 11월` 이 되는
 잘못된 조합이 나왔습니다(정상은 `1998년 11월` 이 아니라 연도만 1 줄어든 값).
 2026-09-15 에 두 개의 독립 열로 고쳤습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트가 직접 그리는 모서리에 Corner Smoothing 을 적용했습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 선택 알약 (312×32) | 12px (`radius/06`) | 60% | 적용 — 실제 약 33% |
+
+- 높이 32 의 절반(16)이 12 × 1.6 = 19.2 보다 작아 곡선이 들어갈 자리가 모자랍니다. 알고리즘이 radius 12 를 지키고 smoothing 을 약 33% 로 줄입니다(Figma 와 같은 동작).
+- 스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 `<Squircle />` 레이어(`storybook/src/shared/Squircle.tsx`)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.
+- 연·월 열의 포커스 링(`radius/04`)은 Figma 에 없는 구현 값이라 적용하지 않습니다.

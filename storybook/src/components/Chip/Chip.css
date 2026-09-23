@@ -12,8 +12,7 @@
   font-family: var(--font-family-base);
   font-weight: var(--font-weight-medium);   /* 3개 Size 전부 Medium 고정 */
   white-space: nowrap;
-  background-image: linear-gradient(var(--bd-chip-overlay), var(--bd-chip-overlay));
-  background-color: var(--bd-chip-bg);
+  background: none;                         /* 배경·테두리는 첫 자식 <Squircle /> 레이어가 칠합니다 (아래 Corner Smoothing) */
   color: var(--bd-chip-fg);
   -webkit-tap-highlight-color: transparent;
 }
@@ -114,8 +113,7 @@
 .bd-chip[data-type='outlined'] {
   --bd-chip-bg: var(--sys-color-common-white-default);
   --bd-chip-fg: var(--sys-color-neutral-600);
-  --bd-chip-border: var(--ref-color-gray-900-10);
-  box-shadow: inset 0 0 0 var(--ref-borderwidth-02) var(--bd-chip-border);
+  --bd-chip-border: var(--ref-color-gray-900-10);   /* 그리는 곳: 아래 Corner Smoothing 의 <Squircle /> ::after */
 }
 .bd-chip[data-type='filled'] {
   --bd-chip-bg: var(--ref-color-gray-900-5);
@@ -232,3 +230,17 @@
 }
 .bd-chip:active:not(:disabled),
 .bd-chip[data-force-state='pressed'] { --bd-motion-duration: var(--bd-motion-pressed); }
+
+/* ---------------- Corner Smoothing (2026-09-23) ----------------
+   Figma Chip / Selection 의 전 변형(radius 6·10·12)과 Chip / Filter(999px)에 Corner smoothing 60% 가
+   걸려 있습니다. 배경·오버레이·테두리를 첫 자식 <Squircle /> 레이어가 squircle 로 칠합니다.
+   Filter 는 완전한 알약이라 smoothing 이 걸려도 곡선이 들어갈 자리가 없어 모양이 바뀌지 않습니다
+   (알고리즘이 smoothing 을 0 으로 줄임 — Figma 도 같습니다). 규칙을 나누지 않으려고 같은 레이어를 씁니다.
+   **선택 축은 여전히 전환하지 않습니다** — 레이어도 전환 속성을 두지 않습니다(위 motion 주석).
+   포커스 링(outline)은 Figma 에 없는 구현 값이라 원호 그대로입니다. */
+.bd-chip > .bd-sq {
+  --bd-sq-fill: var(--bd-chip-bg);
+  --bd-sq-overlay: var(--bd-chip-overlay);
+  --bd-sq-stroke: var(--bd-chip-border, transparent);
+  --bd-sq-stroke-width: var(--ref-borderwidth-02);
+}

@@ -1,4 +1,5 @@
 import { Icon } from '../Icon/Icon';
+import { Squircle } from '../../shared/Squircle';
 import './IconButton.css';
 
 export type IconButtonSize = 's' | 'm' | 'l';
@@ -90,6 +91,7 @@ export function IconButton({
       aria-label={ariaLabel}
       onClick={onClick}
     >
+      <Squircle />
       <Icon name={iconName} category="outlined" size={ICON_BUTTON_SPEC[size].icon} />
     </button>
   );

@@ -173,3 +173,15 @@ Fill이 다른 토글 조합과 결합되지 않는 이유는 Figma에 별도로
 | L | Fill | False | False | `2262:3123` | 390×48 |
 
 `get_metadata`로 10개 인스턴스 전체의 레이어명·크기를 사전 확보했고, `get_design_context`를 10개 전부에 개별 호출했습니다(전수 실측, 미실측 조합 없음 — Fill이 Size당 1개뿐이라 애초에 다른 토글 조합 자체가 Figma에 존재하지 않습니다). `get_variable_defs`는 `2262:2250`(S,Hug,TailingIcon=True,SidePadding=False)과 `2262:2247`(S,Fill)에서 각각 호출했고, `get_motion_context`는 최상위 프레임(`2262:2251`, recursive=true)에 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 이 컴포넌트는 자기 모서리가 없고, 안에 든 컴포넌트가 각자 Corner Smoothing 을 적용합니다. 이 문서에서 따로 구현한 것은 없습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| Icon Button 인스턴스 | 12px | 60% | 적용 (Icon Button) |
+
+- Tab Item 자체에는 radius 가 없습니다.

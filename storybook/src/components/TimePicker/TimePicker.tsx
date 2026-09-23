@@ -1,6 +1,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { TextBlinker, type TextBlinkerProps } from '../TextBlinker/TextBlinker';
 import { IconButton, type IconButtonProps } from '../IconButton/IconButton';
+import { Squircle } from '../../shared/Squircle';
 import './TimePicker.css';
 
 /* ==================== 값 다루기 ==================== */
@@ -181,6 +182,7 @@ export function TimeField({
 
   return (
     <div className={['bd-time-field', className].filter(Boolean).join(' ')} data-state={resolved}>
+      <Squircle />
       {/* 값은 항상 빈 문자열입니다 — 글자는 옆의 <span> 이 그리고 이 input 은 키 입력만 받습니다 */}
       <input
         ref={inputRef}

@@ -92,3 +92,16 @@ Text Blinker는 텍스트 입력 필드(Input/TextField/TextArea 등) 안에서 
 `2111:7482`(On) · `2111:7481`(Off)
 
 변수 맵(`get_variable_defs`)은 컴포넌트 셋 `2111:7483`에서 사전 확보한 값을 재사용했으며(`brand/primary-default`, `radius/01`, `common/white-emphasis`), 모션(`get_motion_context`, recursive)은 이 문서 작성 과정에서 컴포넌트 셋 `2111:7483`에 별도로 1회 호출해 빈 결과를 확인했습니다.
+
+## Corner Smoothing (2026-09-23 추가)
+
+바드림 디자인시스템은 모든 Radius 에 **Corner Smoothing 60%** 를 함께 씁니다(`docs/DESIGN.md` 9.2). 모서리가 완전한 원·알약이라 Corner Smoothing 이 걸려 있어도 모양이 바뀌지 않습니다. 구현을 바꾸지 않았습니다.
+
+Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포넌트 셋 안의 모든 노드).
+
+| 레이어 | Radius | Figma Smoothing | 구현 |
+|---|---|---|---|
+| 캐럿 | 2px (`radius/01`) | 60% | 변화 없음(폭 1.5~2px) |
+
+- 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.
+- 폭이 radius 의 두 배보다 좁아 사실상 알약입니다.

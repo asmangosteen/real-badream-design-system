@@ -3,6 +3,7 @@ import { Label, type LabelProps } from '../Label/Label';
 import { TypeBox, type TypeBoxProps, type TypeBoxState } from '../TypeBox/TypeBox';
 import { SupportingText, type SupportingTextTheme, type SupportingTextProps } from '../SupportingText/SupportingText';
 import { Icon } from '../Icon/Icon';
+import { Squircle } from '../../shared/Squircle';
 import './TextInput.css';
 
 export type TextInputSize = 's' | 'm' | 'l';
@@ -210,6 +211,7 @@ export function TextInput({
 
       <div className="bd-text-input__row">
         <div className="bd-text-input__box">
+          <Squircle />
           {showLeftIcon && (
             <Icon
               name={leftIconName}
@@ -301,6 +303,7 @@ export function TextInput({
 
         {showButton && (
           <button type="button" className="bd-text-input__button" disabled={disabled} onClick={onButtonClick}>
+            <Squircle />
             {buttonLabel}
           </button>
         )}

@@ -652,5 +652,48 @@
     "composed": "onFocus/onBlur 는 막지 않고 같이 호출 — 덮어쓰면 자동 State 전환이 죽음",
     "displayModeNote": "state 를 고정한 진열 모드에서는 <input> 자체가 놓이지 않아 적용되지 않음",
     "inheritedBy": "Text Input Group — 행 타입이 TextInputProps 라 행마다 다른 양식을 줄 수 있음"
+  },
+  "cornerSmoothing": {
+    "updatedAt": "2026-09-23",
+    "value": 0.6,
+    "status": "직접 적용",
+    "figmaCheck": "2026-09-23 Figma Plugin API cornerSmoothing 전수 조회(컴포넌트 셋 안의 모든 노드)",
+    "layers": [
+      {
+        "layer": "Input 박스 S · M",
+        "radius": "10px (radius/05)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "Input 박스 L",
+        "radius": "12px (radius/06)",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "우측 확정 버튼(Button 인스턴스) S · M",
+        "radius": "10px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "우측 확정 버튼 L",
+        "radius": "12px",
+        "figmaSmoothing": "60%",
+        "implementation": "적용"
+      },
+      {
+        "layer": "캐럿(Text Blinker)",
+        "radius": "2px",
+        "figmaSmoothing": "60%",
+        "implementation": "변화 없음(폭 2px)"
+      }
+    ],
+    "notes": [
+      "State 별 테두리도 같은 squircle 을 따릅니다. 테두리는 여전히 안쪽 1px 이고 크기를 키우지 않습니다.",
+      "스토리북은 컴포넌트 요소를 직접 자르지 않고, 첫 자식 <Squircle /> 레이어(storybook/src/shared/Squircle.tsx)가 배경·오버레이·테두리를 squircle 로 칠합니다. 요소를 직접 자르면 포커스 링과 바깥 그림자까지 잘리기 때문입니다.",
+      "포커스 링(outline)은 Figma 에 없는 구현 값이라 적용하지 않고 원호 그대로 둡니다(2026-09-23 결정)."
+    ]
   }
 }
