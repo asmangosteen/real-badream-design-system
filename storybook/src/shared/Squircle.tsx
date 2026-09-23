@@ -26,6 +26,18 @@ import './Squircle.css';
    radius 도 `border-radius: inherit` 로 부모 값을 그대로 받아 옵니다. 넘길 prop 이 없습니다.
    ============================================================ */
 
+/**
+ * 칠하는 상자(::before·::after)를 사방으로 넓히는 여백(px). Squircle.css 의 `inset: -1px` 와 같은 값이어야 합니다.
+ *
+ * 왜 필요한가 (2026-09-23 디자이너 제보 — "왼쪽 모서리는 squircle 인데 오른쪽은 원형"):
+ * 크롬은 배경 상자를 **기기 픽셀에 맞춰 반올림**해 칠하지만 clip-path 경로는 **소수점 좌표 그대로** 자릅니다.
+ * 컴포넌트가 x=942.37 처럼 픽셀 사이에 놓이면 오른쪽·아래 가장자리에서 반올림된 상자가 경로보다 안쪽에 오고,
+ * 그 모서리는 경로가 아니라 상자에 걸린 border-radius(원호)로 잘립니다. radius 가 작을수록(S 버튼 8px) 눈에 띕니다.
+ * 그래서 상자를 1px 넓히고 border-radius 를 없앤 뒤, 경로를 같은 만큼 옮겨 제자리에 그립니다 —
+ * 모양은 오직 경로가 정하고, 반올림 오차는 경로 바깥 여백에서 흡수됩니다.
+ */
+const BLEED = 1;
+
 /** 마지막으로 계산한 입력값. 같으면 style 을 다시 쓰지 않습니다 */
 const lastKey = new WeakMap<HTMLElement, string>();
 
@@ -57,7 +69,7 @@ function applySquircle(el: HTMLElement) {
     return;
   }
 
-  const outer = getSquirclePath({ width, height, cornerRadius: radius, cornerSmoothing: smoothing });
+  const outer = getSquirclePath({ width, height, cornerRadius: radius, cornerSmoothing: smoothing, x: BLEED, y: BLEED });
   el.style.setProperty('--bd-sq-fill-path', `path('${outer}')`);
 
   if (stroke > 0 && width > stroke * 2 && height > stroke * 2) {
@@ -66,8 +78,8 @@ function applySquircle(el: HTMLElement) {
       height: height - stroke * 2,
       cornerRadius: Math.max(radius - stroke, 0),
       cornerSmoothing: smoothing,
-      x: stroke,
-      y: stroke,
+      x: BLEED + stroke,
+      y: BLEED + stroke,
     });
     el.style.setProperty('--bd-sq-ring-path', `path(evenodd, '${outer} ${inner}')`);
   } else {
