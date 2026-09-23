@@ -257,4 +257,4 @@ Figma 실측: 2026-09-23 Figma Plugin API `cornerSmoothing` 전수 조회(컴포
 | 컴포넌트 틀 | 999px | 0% | 해당 없음 |
 
 - 완전한 원·알약은 곡선이 들어갈 자리가 없어 smoothing 이 자동으로 0 이 됩니다(Figma·구현 공통) — 모양이 바뀌지 않으므로 구현을 바꾸지 않았습니다.
-- 컨테이너 모서리 회피용 `radius` prop 은 **감싸는 컨테이너의** radius 를 받는 값이라 그대로 씁니다. 컨테이너가 squircle 이어도 thumb 이 물리지 않습니다 — squircle 은 원호보다 일찍(radius × 1.6 지점부터) 휘기 시작하지만, thumb 끝이 놓이는 자리(모서리에서 radius + 2px)에서 안쪽으로 들어온 양이 0.1~0.2px(radius 12~20 계산값)뿐이고 thumb 은 가장자리에서 2px 떨어져 있습니다.
+- 컨테이너 모서리 회피용 `radius` prop 은 **감싸는 컨테이너의** radius 를 받는 값이라 그대로 씁니다. 컨테이너가 squircle 이어도 thumb 이 물리지 않습니다 — squircle 은 원호보다 일찍(radius × 1.6 지점부터) 휘기 시작하지만, thumb 끝이 놓이는 자리(모서리에서 radius + 2px)에서 안쪽으로 들어온 양이 0.1px 미만(radius 12 브라우저 실측)이고 thumb 은 가장자리에서 2px 떨어져 있습니다.
